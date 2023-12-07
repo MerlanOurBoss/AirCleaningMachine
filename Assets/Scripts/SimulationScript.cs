@@ -8,7 +8,8 @@ using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class SimulationScript : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField _myTextMeshPro;
+    [SerializeField] private TMP_InputField _myTextMeshProTemper;
+    [SerializeField] private TMP_InputField _myTextMeshProContent;
 
     [SerializeField] private ParticleSystem[] _mySmokes;
     [SerializeField] private ParticleSystem _myBubble;
@@ -18,29 +19,34 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private Button _simulationButton;
     [SerializeField] private TextMeshProUGUI _simulationText;
 
-    public GameObject _errorText;
+    public GameObject _errorTextTemp;
+    public GameObject _errorTextContent;
 
-    private bool _startSimulation = false;
+    private bool _startSimulationTemp = false;
+    private bool _startSimulationContent = false;
     private float _simulationTime = 20f;
+    private float _fluidDelay = 20f;
 
     private void Update()
     {
         if (_simulationTime <= 0)
         {
-            _startSimulation = false;
+            _startSimulationTemp = false;
+            _startSimulationContent = false;
         }
-        if (_startSimulation)
+        if (_startSimulationTemp && _startSimulationContent)
         {
             _simulationButton.interactable = false;
             _simulationText.text = "Èäåò ñèìóëÿöèÿ";
             _simulationTime -= 1 * Time.deltaTime;
+            _fluidDelay -= 1 * Time.deltaTime;
             Debug.Log(_simulationTime.ToString("0"));
         }
         else
         {
             _simulationButton.interactable = true;
             _simulationText.text = "Ñèìóëèðîâàòü";
-            _simulationTime = 20f;
+            _simulationTime = 10f; // change here to 50f
 
             foreach (ParticleSystem smoke in _mySmokes)
             {
@@ -53,76 +59,85 @@ public class SimulationScript : MonoBehaviour
         }
     }
 
-    [System.Obsolete]
     public void StartSimulation()
     {
-        if (_myTextMeshPro.text == "")
+        if (_myTextMeshProTemper.text == "")
         {
             Debug.Log("null");
-            _errorText.SetActive(true);
+            _errorTextTemp.SetActive(true);
+            _startSimulationTemp = false;
         }
-        else if (_myTextMeshPro.text == "0 °Ñ")
+        else if (_myTextMeshProTemper.text == "25 °Ñ")
         {
-            Debug.Log("0 °Ñ");
-            _errorText.SetActive(false);
-            _startSimulation = true;
+            Debug.Log("25 °Ñ");
+            _errorTextTemp.SetActive(false);
+            _startSimulationTemp = true;
 
             foreach(ParticleSystem smoke in _mySmokes)
             {
                 smoke.Play();
                 _myBubble.Play();
-                smoke.startSpeed = smoke.startSpeed + 1;
-                smoke.startLifetime = smoke.startLifetime - 1;
-                smoke.startDelay = smoke.startDelay - 1;
             }
             foreach(PlayableDirector fluid in _myFluids)
             {
                 fluid.Play();
             }
         }
-        else if (_myTextMeshPro.text == "100 °Ñ")
+        else if (_myTextMeshProTemper.text == "60 °Ñ")
         {
-            Debug.Log("100 °Ñ");
-            _errorText.SetActive(false);
-            _startSimulation = true;
-
-            foreach (ParticleSystem smoke in _mySmokes)
-            {
-                smoke.Play();
-                _myBubble.Play();
-                smoke.startSpeed = smoke.startSpeed + 2;
-                smoke.startLifetime = smoke.startLifetime - 2;
-                smoke.startDelay = smoke.startDelay - 2;
-            }
-            foreach (PlayableDirector fluid in _myFluids)
-            {
-                fluid.Play();
-            }
+            Debug.Log("60 °Ñ");
+            _errorTextTemp.SetActive(false);
         }
-        else if (_myTextMeshPro.text == "300 °Ñ")
+        else if (_myTextMeshProTemper.text == "250 °Ñ")
+        {
+            Debug.Log("250 °Ñ");
+            _errorTextTemp.SetActive(false);
+        }
+        else if (_myTextMeshProTemper.text == "300 °Ñ")
         {
             Debug.Log("300 °Ñ");
-            _errorText.SetActive(false);
+            _errorTextTemp.SetActive(false);
         }
-        else if (_myTextMeshPro.text == "500 °Ñ")
+        else if (_myTextMeshProTemper.text == "450 °Ñ")
+        {
+            Debug.Log("450 °Ñ");
+            _errorTextTemp.SetActive(false);
+        }
+        else if (_myTextMeshProTemper.text == "500 °Ñ")
         {
             Debug.Log("500 °Ñ");
-            _errorText.SetActive(false);
+            _errorTextTemp.SetActive(false);
         }
-        else if (_myTextMeshPro.text == "600 °Ñ")
+
+    }
+
+    public void ContentChoseSimulation()
+    {
+        if (_myTextMeshProContent.text == "")
         {
-            Debug.Log("600 °Ñ");
-            _errorText.SetActive(false);
+            Debug.Log("null");  
+            _errorTextContent.SetActive(true);
+            _startSimulationContent = false;
         }
-        else if (_myTextMeshPro.text == "800 °Ñ")
+        else if (_myTextMeshProContent.text == "CO")
         {
-            Debug.Log("800 °Ñ");
-            _errorText.SetActive(false);
+            _errorTextContent.SetActive(false);
+            _startSimulationContent = true;           
         }
-        else if (_myTextMeshPro.text == "1000 °Ñ")
+        else if(_myTextMeshProContent.text == "CH4O2")
         {
-            Debug.Log("1000 °Ñ");
-            _errorText.SetActive(false);
+            _errorTextContent.SetActive(false);
+            _startSimulationContent = true;
+        }
+        else if(_myTextMeshProContent.text == "S2O4")
+        {
+            _errorTextContent.SetActive(false);
+            _startSimulationContent = true;
+        }
+        else if(_myTextMeshProContent.text == "N2O2")
+        {
+            _errorTextContent.SetActive(false);
+            _startSimulationContent = true;
         }
     }
 }
