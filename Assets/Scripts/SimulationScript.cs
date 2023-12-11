@@ -12,7 +12,6 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private TMP_InputField _myTextMeshProContent;
 
     [SerializeField] private ParticleSystem[] _mySmokes;
-    [SerializeField] private ParticleSystem _myBubble;
 
     [SerializeField] private PlayableDirector[] _myFluids;
 
@@ -46,7 +45,7 @@ public class SimulationScript : MonoBehaviour
         {
             _simulationButton.interactable = true;
             _simulationText.text = "Симулировать";
-            _simulationTime = 10f; // change here to 50f
+            _simulationTime = 100f; // change here to 50f
 
             foreach (ParticleSystem smoke in _mySmokes)
             {
@@ -76,7 +75,6 @@ public class SimulationScript : MonoBehaviour
             foreach(ParticleSystem smoke in _mySmokes)
             {
                 smoke.Play();
-                _myBubble.Play();
             }
             foreach(PlayableDirector fluid in _myFluids)
             {

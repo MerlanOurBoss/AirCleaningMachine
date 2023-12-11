@@ -10,6 +10,13 @@ public class PlayingAnimationMolec : MonoBehaviour
     public GameObject _S2O4;
     public GameObject _N2O2;
 
+    public Animator[] _animatorCO;
+    public Animator[] _animatorCH2H2O2;
+    public Animator[] _animatorS2O4;
+    public Animator[] _animatorN2O2;
+
+
+    [SerializeField] private Animation _molecAnimation;
     [SerializeField] private TMP_InputField _myTextMeshProContent;
 
 
