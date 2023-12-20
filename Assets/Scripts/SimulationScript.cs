@@ -18,6 +18,12 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private Button _simulationButton;
     [SerializeField] private TextMeshProUGUI _simulationText;
 
+    public Animator _electroFilter;
+    public Animator _electroDots;
+    public Animator _lightBulb;
+    public Collectors _myCollector;
+
+
     public GameObject _errorTextTemp;
     public GameObject _errorTextContent;
 
@@ -39,21 +45,44 @@ public class SimulationScript : MonoBehaviour
             _simulationText.text = "Идет симуляция";
             _simulationTime -= 1 * Time.deltaTime;
             _fluidDelay -= 1 * Time.deltaTime;
-            Debug.Log(_simulationTime.ToString("0"));
+            //Debug.Log(_simulationTime.ToString("0"));
         }
         else
         {
             _simulationButton.interactable = true;
             _simulationText.text = "Симулировать";
-            _simulationTime = 100f; // change here to 50f
+            _simulationTime = 140f; // change here to 50f
 
             foreach (ParticleSystem smoke in _mySmokes)
             {
                 smoke.Stop();
             }
+            _electroFilter.Play("ElectroFilterEnds");
+            _myCollector.StopColumnProcess();
+            _lightBulb.Play("LightsAnimationStops");
+            _electroDots.Play("DotsEnds");
             foreach (PlayableDirector fluid in _myFluids)
             {
                 fluid.Stop();
+            }
+        }
+    }
+
+    public void StartSmokesAndFluids()
+    {
+        if (_startSimulationTemp && _startSimulationContent)
+        {
+            foreach (ParticleSystem smoke in _mySmokes)
+            {
+                smoke.Play();
+            }
+            _electroFilter.Play("ElectroFilter");
+            _myCollector.StartColumnProcess();
+            _lightBulb.Play("LightsAnimation");
+            _electroDots.Play("Dots");
+            foreach (PlayableDirector fluid in _myFluids)
+            {
+                fluid.Play();
             }
         }
     }
@@ -71,15 +100,7 @@ public class SimulationScript : MonoBehaviour
             Debug.Log("25 °С");
             _errorTextTemp.SetActive(false);
             _startSimulationTemp = true;
-
-            foreach(ParticleSystem smoke in _mySmokes)
-            {
-                smoke.Play();
-            }
-            foreach(PlayableDirector fluid in _myFluids)
-            {
-                fluid.Play();
-            }
+            StartSmokesAndFluids();
         }
         else if (_myTextMeshProTemper.text == "60 °С")
         {
@@ -138,4 +159,5 @@ public class SimulationScript : MonoBehaviour
             _startSimulationContent = true;
         }
     }
+
 }

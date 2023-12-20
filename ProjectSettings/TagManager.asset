@@ -7,10 +7,26 @@ TagManager:
   - Russian
   - Kazakh
   - English
+  - ConnectionZone
+  - CO
+  - CHH
+  - COO
+  - HH
+  - NN
+  - OHH
+  - ON
+  - OO
+  - SOO
+  - SOOO
   - 1
-  - 2
-  - 3
   - 4
+  - 3
+  - 2
+  - OO2
+  - OO3
+  - ON2
+  - Cube1
+  - Cube2
   layers:
   - Default
   - TransparentFX
