@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,85 +11,101 @@ public class PrefabSpawnInfo
     public GameObject prefab;
     public Rigidbody rigid;
     public int count;
+    public TMP_InputField text;
 }
 public class MoleculasScript : MonoBehaviour
 {
 
     public PrefabSpawnInfo[] prefabsToSpawn;
-
+    private List<GameObject> molec = new List<GameObject>();
     public Collider spawnArea;
 
     public float moveSpeed = 0.5f;
     public float rotationSpeed = 1000f;
 
-    void Start()
-    {
-        StartCoroutine(SpawnPrefabsSequentially());
-    }
+    public TMP_InputField molec_N2;
+
     private void Update()
     {
-        MoveObjects(-0.3f);
+        MoveObjects(-0.05f);
     }
     void MoveObjects(float direction)
     {
         Rigidbody[] rigidbodies = FindObjectsOfType<Rigidbody>();
 
-        foreach (Rigidbody rb in rigidbodies)
+        for (int i = 0; i < rigidbodies.Length; i++)
         {
-            if (rb != null)
-            {
-                float rotation = rotationSpeed * Time.deltaTime * 1.5f;
+            Vector3 movement = new Vector3(0f, 0f, direction);
 
-                // Создаем вращающий кватернион
-                Quaternion deltaRotation = Quaternion.Euler(rotation, rotation, rotation);
+            // Используйте MovePosition для перемещения объекта
+            rigidbodies[i].MovePosition(rigidbodies[i].position + movement);
 
-                // Применяем вращение к Rigidbody
-                rb.MoveRotation(rb.rotation * deltaRotation);
+            float rotation = rotationSpeed * Time.deltaTime * 1.5f;
+            Quaternion deltaRotation = Quaternion.Euler(rotation, rotation, rotation);
 
-                Vector3 force = new Vector3(0f, 0f, direction);
-
-                rb.AddForce(force);                
-            }
+            rigidbodies[i].MoveRotation(rigidbodies[i].rotation * deltaRotation);
         }
+    }
+    public void StartSimulate()
+    {
+        StartCoroutine(SpawnPrefabsSequentially());
     }
     IEnumerator SpawnPrefabsSequentially()
     {
-        if (prefabsToSpawn == null || prefabsToSpawn.Length == 0)
+        while (true) 
         {
-            Debug.LogError("Prefab array is not set up!");
-            yield break;
-        }
-        int count = 0;
-        foreach (var prefabInfo in prefabsToSpawn)
-        {
-            if (count == 2)
+            if (prefabsToSpawn[1].text.text == "30")
             {
-                yield return new WaitForSeconds(5f);
+                prefabsToSpawn[4].text.text = "10";
+                prefabsToSpawn[6].text.text = "10";
             }
-            if (count == 5)
+            if (prefabsToSpawn[7].text.text == "20")
             {
-                yield return new WaitForSeconds(5f);
+                prefabsToSpawn[8].text.text = "10";
             }
-            if (count == 7)
+            if (prefabsToSpawn == null || prefabsToSpawn.Length == 0)
             {
-                yield return new WaitForSeconds(5f);
+                Debug.LogError("Prefab array is not set up!");
+                yield break;
             }
-            for (int i = 0; i < prefabInfo.count; i++)
+            int count = 0;
+            foreach (var prefabInfo in prefabsToSpawn)
             {
-                Vector3 randomSpawnPoint = GetRandomPointInBounds(spawnArea.bounds);
-                Instantiate(prefabInfo.prefab, randomSpawnPoint, Quaternion.identity);
-                yield return new WaitForSeconds(0.2f/*Random.Range(0.3f, 0.7f)*/);
+                if (count == 2)
+                {
+                    yield return new WaitForSeconds(1f);
+                }
+                if (count == 5)
+                {
+                    yield return new WaitForSeconds(1f);
+                }
+                if (count == 7)
+                {
+                    yield return new WaitForSeconds(1f);
+                }
+                for (int i = 0; i < int.Parse(prefabInfo.text.text) / 10; i++)
+                {
+                    Vector3 randomSpawnPoint = GetRandomPointInBounds(spawnArea.bounds);
+                    Instantiate(prefabInfo.prefab, randomSpawnPoint, Quaternion.identity);
+                    molec.Add(prefabInfo.prefab);
+                    yield return new WaitForSeconds(0.2f);
+                }
+                count++;
             }
-            count++;
+
+
+
+            yield return new WaitForSeconds(20f);
         }
     }
 
     Vector3 GetRandomPointInBounds(Bounds bounds)
     {
-        float randomX = Random.Range(bounds.min.x, bounds.max.x);
-        float randomY = Random.Range(bounds.min.y, bounds.max.y);
-        float randomZ = Random.Range(bounds.min.z, bounds.max.z);
+        float randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
+        float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
+        float randomZ = UnityEngine.Random.Range(bounds.min.z, bounds.max.z);
 
         return new Vector3(randomX, randomY, randomZ);
     }
+
 }

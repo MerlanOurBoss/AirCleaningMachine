@@ -8,14 +8,13 @@ using UnityEngine.Rendering;
 
 public class ConnectionZone : MonoBehaviour
 {
-    public string[] targetTags;// Массив тегов объектов, которые вы хотите притянуть
-    public string[] targetTags2; // Массив тегов объектов, которые вы хотите притянуть
-    public string[] targetTags3; // Массив тегов объектов, которые вы хотите притянуть
-    public string[] targetTags4; // Массив тегов объектов, которые вы хотите притянуть
+    public string[] targetTags;
+    public string[] targetTags2;
+    public string[] targetTags3; 
+    public string[] targetTags4;
 
-    public Transform attractorPoint; // Точка, к которой будут притягиваться объекты
-    public float attractionForce = 3f; // Сила притяжения
-    //public GameObject spawnPrefab;
+    public Transform attractorPoint;
+    public float attractionForce = 3f; 
     private Animator animator;
 
     private int totalObjects;
@@ -29,7 +28,6 @@ public class ConnectionZone : MonoBehaviour
         totalObjects2 = targetTags2.Sum(tag => GameObject.FindGameObjectsWithTag(tag).Length);
         totalObjects3 = targetTags3.Sum(tag => GameObject.FindGameObjectsWithTag(tag).Length);
         totalObjects4 = targetTags4.Sum(tag => GameObject.FindGameObjectsWithTag(tag).Length);
-        //Debug.Log(totalObjects);
     }
     private void OnTriggerStay(Collider other)
     {
@@ -128,14 +126,10 @@ public class ConnectionZone : MonoBehaviour
     }
     void Attract(Transform attractedObject)
     {
-        // Вычисляем направление к точке притяжения
         Vector3 direction = attractorPoint.position - attractedObject.position;
 
-        // Вычисляем силу притяжения
         float forceMagnitude = attractionForce * Time.deltaTime;
 
-        // Применяем силу к объекту
         attractedObject.Translate(direction.normalized * forceMagnitude, Space.World);
     }
-
 }

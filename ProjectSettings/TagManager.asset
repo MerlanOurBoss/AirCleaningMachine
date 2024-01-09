@@ -27,14 +27,29 @@ TagManager:
   - ON2
   - Cube1
   - Cube2
+  - C
+  - O
+  - O1
+  - O2
+  - O3
+  - N
+  - C2
+  - H
+  - O4
+  - Dots
+  - CO_Parent
+  - SOO_Parent
+  - CHH_Parent
+  - ON_Child
+  - OO4
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - trigger
   - Water
   - UI
-  - 
+  - Collider
   - 
   - 
   - 
