@@ -42,6 +42,11 @@ TagManager:
   - CHH_Parent
   - ON_Child
   - OO4
+  - OON
+  - O5
+  - N2
+  - CO2_Parent
+  - CO2
   layers:
   - Default
   - TransparentFX

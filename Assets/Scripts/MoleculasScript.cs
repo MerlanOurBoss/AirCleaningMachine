@@ -10,12 +10,10 @@ public class PrefabSpawnInfo
 {
     public GameObject prefab;
     public Rigidbody rigid;
-    public int count;
     public TMP_InputField text;
 }
 public class MoleculasScript : MonoBehaviour
 {
-
     public PrefabSpawnInfo[] prefabsToSpawn;
     private List<GameObject> molec = new List<GameObject>();
     public Collider spawnArea;
@@ -54,14 +52,18 @@ public class MoleculasScript : MonoBehaviour
     {
         while (true) 
         {
-            if (prefabsToSpawn[1].text.text == "30")
+            if (prefabsToSpawn[0].text.text == "30")
+            {
+                prefabsToSpawn[0].text.text = "20";
+            }
+            if (prefabsToSpawn[1].text.text == "20") //02 -> 2
+            {
+                prefabsToSpawn[4].text.text = "10";
+            }
+            if (prefabsToSpawn[1].text.text == "30") //02 -> 3
             {
                 prefabsToSpawn[4].text.text = "10";
                 prefabsToSpawn[6].text.text = "10";
-            }
-            if (prefabsToSpawn[7].text.text == "20")
-            {
-                prefabsToSpawn[8].text.text = "10";
             }
             if (prefabsToSpawn == null || prefabsToSpawn.Length == 0)
             {
@@ -95,7 +97,7 @@ public class MoleculasScript : MonoBehaviour
 
 
 
-            yield return new WaitForSeconds(20f);
+            yield return new WaitForSeconds(3f);
         }
     }
 
