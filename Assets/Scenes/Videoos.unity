@@ -75261,46 +75261,37 @@ MonoBehaviour:
   - prefab: {fileID: 3285919490954469416, guid: 39a92da16105be443b3e70707099130a,
       type: 3}
     rigid: {fileID: 144448285645852908, guid: 39a92da16105be443b3e70707099130a, type: 3}
-    count: 2
     text: {fileID: 1622012809}
   - prefab: {fileID: 8982591319606440126, guid: f130dfed105c9fc4eb03f326716656b0,
       type: 3}
     rigid: {fileID: 2006094061574941563, guid: f130dfed105c9fc4eb03f326716656b0, type: 3}
-    count: 1
     text: {fileID: 1171315999}
   - prefab: {fileID: 5437115262224614724, guid: 188eb3ee1807a3045b927dc00bd4b8f9,
       type: 3}
     rigid: {fileID: 4303972539476130771, guid: 188eb3ee1807a3045b927dc00bd4b8f9, type: 3}
-    count: 1
     text: {fileID: 1691994478}
   - prefab: {fileID: 2171350373454886880, guid: de87c483ab22ec845940faba80a8f2b9,
       type: 3}
     rigid: {fileID: 4229897008143253491, guid: de87c483ab22ec845940faba80a8f2b9, type: 3}
-    count: 1
     text: {fileID: 1574680784}
   - prefab: {fileID: 8982591319606440126, guid: 52822850d9abd6f41b50f00658f7cb10,
       type: 3}
     rigid: {fileID: 2006094061574941563, guid: 52822850d9abd6f41b50f00658f7cb10, type: 3}
-    count: 1
     text: {fileID: 1171315999}
   - prefab: {fileID: 255558028538584952, guid: 00f4d5772c247b043afd174dbddf4c34, type: 3}
     rigid: {fileID: 8352053766200810687, guid: 00f4d5772c247b043afd174dbddf4c34, type: 3}
-    count: 2
     text: {fileID: 1594951996}
   - prefab: {fileID: 8982591319606440126, guid: 3a621a6c91af1ff419d7a96a8b4e771f,
       type: 3}
     rigid: {fileID: 2006094061574941563, guid: 3a621a6c91af1ff419d7a96a8b4e771f, type: 3}
-    count: 1
     text: {fileID: 1171315999}
   - prefab: {fileID: 4279927154252596072, guid: 23662346c0ad88e41b092cbd4f46eb5a,
       type: 3}
     rigid: {fileID: 7828467027342971236, guid: 23662346c0ad88e41b092cbd4f46eb5a, type: 3}
-    count: 1
     text: {fileID: 1701409679}
   - prefab: {fileID: 4279927154252596072, guid: 650170bef8038654fb42ea92960911e0,
       type: 3}
     rigid: {fileID: 7828467027342971236, guid: 650170bef8038654fb42ea92960911e0, type: 3}
-    count: 1
     text: {fileID: 1701409679}
   spawnArea: {fileID: 1144954560}
   moveSpeed: 5
@@ -118754,13 +118745,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2027510706}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.022754615, y: 0.85489416, z: -0.49398345, w: 0.15690292}
-  m_LocalPosition: {x: -84.9, y: 215.1, z: 781.1}
+  m_LocalRotation: {x: -0.022903942, y: 0.799472, z: -0.4685266, w: 0.37523702}
+  m_LocalPosition: {x: -120.38, y: 206.61, z: 768.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 402431748}
-  m_LocalEulerAnglesHint: {x: 56.874, y: 147.857, z: -20.784}
+  m_LocalEulerAnglesHint: {x: 47.051, y: 114.205, z: -34.737}
 --- !u!1 &2030198211
 GameObject:
   m_ObjectHideFlags: 0

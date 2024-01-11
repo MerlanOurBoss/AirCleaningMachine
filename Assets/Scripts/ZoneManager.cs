@@ -45,9 +45,9 @@ public class ZoneManager : MonoBehaviour
                     }
                 }
 
-                O[0].transform.position = Vector3.MoveTowards(O[0].transform.position, CO[0].transform.position, forceMagnitude * 15);
+                O[0].transform.position = Vector3.MoveTowards(O[0].transform.position, CO[0].transform.position, forceMagnitude * 10);
 
-                O[1].transform.position = Vector3.MoveTowards(O[1].transform.position, CO[1].transform.position, forceMagnitude * 15);
+                O[1].transform.position = Vector3.MoveTowards(O[1].transform.position, CO[1].transform.position, forceMagnitude * 10);
 
                 foreach (GameObject child in CO)
                 {
@@ -90,9 +90,9 @@ public class ZoneManager : MonoBehaviour
                     }
                 }
 
-                O[0].transform.position = Vector3.MoveTowards(O[0].transform.position, SOO[0].transform.position, forceMagnitude * 20);
+                O[0].transform.position = Vector3.MoveTowards(O[0].transform.position, SOO[0].transform.position, forceMagnitude *  10);
 
-                O[1].transform.position = Vector3.MoveTowards(O[1].transform.position, SOO[1].transform.position, forceMagnitude * 20);
+                O[1].transform.position = Vector3.MoveTowards(O[1].transform.position, SOO[1].transform.position, forceMagnitude * 10);
 
                 foreach (GameObject child in O)
                 {
@@ -133,9 +133,9 @@ public class ZoneManager : MonoBehaviour
                 Destroy(child, 1f);
             }
 
-            O[0].transform.position = Vector3.MoveTowards(O[0].transform.position, CHH[0].transform.position, forceMagnitude * 15);
+            O[0].transform.position = Vector3.MoveTowards(O[0].transform.position, CHH[0].transform.position, forceMagnitude * 10);
 
-            O[1].transform.position = Vector3.MoveTowards(O[1].transform.position, HH[0].transform.position, forceMagnitude * 15);
+            O[1].transform.position = Vector3.MoveTowards(O[1].transform.position, HH[0].transform.position, forceMagnitude * 10);
 
             foreach (GameObject child in CHH)
             {
@@ -229,7 +229,7 @@ public class ZoneManager : MonoBehaviour
                 }
             }
 
-            O5[1].transform.position = Vector3.MoveTowards(O5[1].transform.position, O5[0].transform.position, forceMagnitude * 17);
+            O5[1].transform.position = Vector3.MoveTowards(O5[1].transform.position, O5[0].transform.position, forceMagnitude * 10);
 
             foreach(GameObject child in O5)
             {
@@ -268,7 +268,7 @@ public class ZoneManager : MonoBehaviour
                 }
             }
 
-            O3[1].transform.position = Vector3.MoveTowards(O3[1].transform.position, O3[0].transform.position, forceMagnitude * 17);
+            O3[1].transform.position = Vector3.MoveTowards(O3[1].transform.position, O3[0].transform.position, forceMagnitude * 10);
 
             foreach (GameObject child in O3)
             {
