@@ -35,18 +35,20 @@ public class SimulationScript : MonoBehaviour
     public GameObject _errorTextWidth;
 
     public GameObject _errorTextContent;
-    
-    
+
+    public GameObject[] _dropCreating;
     private bool _startSimulationTemp = false;
     private bool _startSimulationContent = false;
-    private float _simulationTime = 140f;
+    private float _simulationTime = 1400f;
     private float _fluidDelayWater = 15f;
     private float _fluidDelayReact = 32f;
 
     private int max = 110;
     private void Start()
     {
-        //StartSmokesAndFluids();
+        _startSimulationTemp = true;
+        _startSimulationContent = true;
+        StartSmokesAndFluids();
     }
 
     private void Update()
@@ -100,6 +102,10 @@ public class SimulationScript : MonoBehaviour
             {
                 fluid.Stop();
             }
+            foreach (GameObject drop in _dropCreating)
+            {
+                drop.SetActive(false);
+            }
         }
     }
 
@@ -127,6 +133,10 @@ public class SimulationScript : MonoBehaviour
             _electroFilter.Play("NewColecAnim");
             _myCollector.StartColumnProcess();
             _lightBulb.Play("LightsAnimation");
+            foreach (GameObject drop in _dropCreating)
+            {
+                drop.SetActive(true);
+            }
         }
     }
 

@@ -104,30 +104,6 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: 2100000, guid: f89eb7fc911aa694eb6f82df9290fc9c, type: 2}
-    - time: 80.55
-      value: {fileID: 2100000, guid: c67492e826f02784abb127e0dbd3f8f8, type: 2}
-    attribute: m_Materials.Array.data[0]
-    path: "\u041B\u0430\u043C\u043F\u043E\u0447\u043A\u0430 \u0421\u0431\u043E\u0440\u0430
-      \u0421\u041E2 2/Cylinder.040"
-    classID: 23
-    script: {fileID: 0}
-    flags: 2
-  - serializedVersion: 2
-    curve:
-    - time: 0
-      value: {fileID: 2100000, guid: f89eb7fc911aa694eb6f82df9290fc9c, type: 2}
-    - time: 80.55
-      value: {fileID: 2100000, guid: c67492e826f02784abb127e0dbd3f8f8, type: 2}
-    attribute: m_Materials.Array.data[0]
-    path: "\u041B\u0430\u043C\u043F\u043E\u0447\u043A\u0430 \u0421\u0431\u043E\u0440\u0430
-      \u0421\u041E2 5/Cylinder.040"
-    classID: 23
-    script: {fileID: 0}
-    flags: 2
-  - serializedVersion: 2
-    curve:
-    - time: 0
-      value: {fileID: 2100000, guid: f89eb7fc911aa694eb6f82df9290fc9c, type: 2}
     - time: 85.48333
       value: {fileID: 2100000, guid: c67492e826f02784abb127e0dbd3f8f8, type: 2}
     attribute: m_Materials.Array.data[0]
@@ -207,24 +183,6 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1148962253
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 23
-      customType: 21
-      isPPtrCurve: 1
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 565604109
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 23
-      customType: 21
-      isPPtrCurve: 1
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
       path: 1574390486
       attribute: 0
       script: {fileID: 0}
@@ -234,10 +192,6 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 2100000, guid: f89eb7fc911aa694eb6f82df9290fc9c, type: 2}
-    - {fileID: 2100000, guid: c67492e826f02784abb127e0dbd3f8f8, type: 2}
-    - {fileID: 2100000, guid: f89eb7fc911aa694eb6f82df9290fc9c, type: 2}
-    - {fileID: 2100000, guid: c67492e826f02784abb127e0dbd3f8f8, type: 2}
     - {fileID: 2100000, guid: f89eb7fc911aa694eb6f82df9290fc9c, type: 2}
     - {fileID: 2100000, guid: c67492e826f02784abb127e0dbd3f8f8, type: 2}
     - {fileID: 2100000, guid: f89eb7fc911aa694eb6f82df9290fc9c, type: 2}
