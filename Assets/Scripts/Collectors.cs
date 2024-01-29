@@ -77,7 +77,7 @@ public class Collectors : MonoBehaviour
                 _startingProcess = true;
             }
         }
-        //float t = Time.time / duration * 1.2f;
+        
         if (_startingProcess && count == 0)
         {
             if (filling && !unfilling)
@@ -151,7 +151,7 @@ public class Collectors : MonoBehaviour
     public void StartColumnProcess()
     {
         _startingDelay = true;
-        delay = 0;
+        delay = 60;
     }
 
     public void StopColumnProcess()

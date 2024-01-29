@@ -155,55 +155,6 @@ public class ZoneManager : MonoBehaviour
             }
 
         }
-        //if (other.CompareTag("ON") || other.CompareTag("ON2"))
-        //{
-        //    GameObject[] O3 = GameObject.FindGameObjectsWithTag("O3");
-        //    GameObject[] N = GameObject.FindGameObjectsWithTag("N");
-
-        //    other.transform.DetachChildren();
-        //    foreach (GameObject child in O3)
-        //    {
-        //        Rigidbody childRigidbody = child.GetComponent<Rigidbody>();
-        //        if (childRigidbody != null)
-        //        {
-        //            childRigidbody.isKinematic = false; 
-        //            childRigidbody.constraints &= ~RigidbodyConstraints.FreezePositionZ;
-        //        }
-        //    }
-        //    foreach (GameObject child in N)
-        //    {
-        //        Rigidbody childRigidbody = child.GetComponent<Rigidbody>();
-        //        if (childRigidbody != null)
-        //        {
-        //            childRigidbody.isKinematic = false;
-        //            childRigidbody.constraints &= ~RigidbodyConstraints.FreezePositionZ;
-        //        }
-        //    }
-
-        //    N[1].transform.position = Vector3.MoveTowards(N[1].transform.position, N[0].transform.position, forceMagnitude * 7);
-
-        //    O3[0].transform.position = Vector3.MoveTowards(O3[0].transform.position, O3[1].transform.position, forceMagnitude * 7);
-        //    foreach (GameObject child in O3)
-        //    {
-        //        Destroy(child, .6f);
-        //    }
-        //    foreach (GameObject child in N)
-        //    {
-        //        Destroy(child, .6f);
-        //    }
-        //    foreach (GameObject child in ON)
-        //    {
-        //        Destroy(child, .6f);
-        //    }
-        //    foreach (GameObject child in ON2)
-        //    {
-        //        Destroy(child, .6f);
-        //    }
-        //    foreach (GameObject child in ON_Child)
-        //    {
-        //        Destroy(child, .6f);
-        //    }
-        //}
         if (other.CompareTag("OON"))
         {
             GameObject[] O5 = GameObject.FindGameObjectsWithTag("O5");
