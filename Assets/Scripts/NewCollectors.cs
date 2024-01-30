@@ -24,6 +24,7 @@ public class NewCollectors : MonoBehaviour
 
     [SerializeField] private ParticleSystem _mySmoke;
     [SerializeField] private ParticleSystem _mySmoke1;
+    [SerializeField] private ParticleSystem _mySmoke2;
 
     private bool filling = true;
     private bool unfilling = false;
@@ -69,7 +70,7 @@ public class NewCollectors : MonoBehaviour
                 fillingCount += 5 * Time.fixedDeltaTime;
                 _firstColumnLight.material = _greenLight;
                 _secondColumnLight.material = _redLight;
-                absent[0].color = Color.Lerp(absent[0].color, targetColor, .2f * Time.fixedDeltaTime);
+                Invoke("StartColumnProcess0", 5f);
                 if (fillingCount >= 50)
                 {
                     filling = false;
@@ -89,14 +90,14 @@ public class NewCollectors : MonoBehaviour
                 thirdSmoke.Play();
 
                 _mySmoke.Stop();
+                _mySmoke2.Stop();
                 _mySmoke1.Play();
 
                 panels[1].rotation = Quaternion.Euler(0f, -157f, 0f);
                 panels[0].rotation = Quaternion.Euler(0f, 22f, 0f);
                 fillingCount += 5 * Time.fixedDeltaTime;
-                            
-                absent[1].color = Color.Lerp(absent[1].color, Color.white, .2f * Time.fixedDeltaTime);
-                absent[0].color = Color.Lerp(absent[0].color, targetColor, .2f * Time.fixedDeltaTime);
+
+                Invoke("StartColumnProcess", 5f);
 
                 _firstColumnLight.material = _greenLight;
                 _secondColumnLight.material = _redLight;
@@ -117,14 +118,14 @@ public class NewCollectors : MonoBehaviour
                 thirdSmoke.Stop();
 
                 _mySmoke.Play();
+                _mySmoke2.Play();
                 _mySmoke1.Stop();
                 
                 panels[0].rotation = Quaternion.Euler(0f, -22f, 0f);
                 panels[1].rotation = Quaternion.Euler(0f, -198f, 0f);
                 fillingCount += 5 * Time.fixedDeltaTime;
-                
-                absent[1].color = Color.Lerp(absent[1].color, targetColor, .2f * Time.fixedDeltaTime);
-                absent[0].color = Color.Lerp(absent[0].color, Color.white, .2f * Time.fixedDeltaTime);
+
+                Invoke("StartColumnProcess2", 5f);
 
                 _firstColumnLight.material = _redLight;
                 _secondColumnLight.material = _greenLight;
@@ -144,7 +145,20 @@ public class NewCollectors : MonoBehaviour
         }
     }
 
+    public void StartColumnProcess0()
+    {
+        absent[0].color = Color.Lerp(absent[0].color, targetColor, .1f * Time.fixedDeltaTime);
+    }
+
     public void StartColumnProcess()
     {
+        absent[1].color = Color.Lerp(absent[1].color, Color.white, .1f * Time.fixedDeltaTime);
+        absent[0].color = Color.Lerp(absent[0].color, targetColor, .1f * Time.fixedDeltaTime);
+    }
+
+    public void StartColumnProcess2()
+    {
+        absent[1].color = Color.Lerp(absent[1].color, targetColor, .1f * Time.fixedDeltaTime);
+        absent[0].color = Color.Lerp(absent[0].color, Color.white, .1f * Time.fixedDeltaTime);
     }
 }
