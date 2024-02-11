@@ -19,29 +19,36 @@ public class TemperatureCatalizator : MonoBehaviour
     public Color secondColor;
     public Color thirdColor;
 
-    private float delay = 16f;
+    private float delay = 18f;
     private float firsTemp1 = 26;
     private float firsTemp2 = 26;
     private bool canTemp1 = false;
     private bool canTemp2 = false;
+
+    private bool canStart = false;
 
     void Start()
     {
         firstMaterial.color = originColor;
         secondMaterial.color = originColor;
         thirdMaterial.color = originColor;
-        Invoke("StartSimulation", 15f);
+        //Invoke("StartSimulation", 15f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (canStart)
+        {
+            delay -= 1 * Time.deltaTime;
+        }
+        
         string str = firsTemp1.ToString("0");
         texTemp1.text = str + "°C";
 
         string str2 = firsTemp2.ToString("0");
         texTemp2.text = str2 + "°C";
-        delay -= 1 * Time.deltaTime;
+        
         
         if (canTemp1)
         {
@@ -82,5 +89,14 @@ public class TemperatureCatalizator : MonoBehaviour
         fire.Play();
         anim.Play("Catalizaotr_Anim");
         anim1.Play("Catalizaotr_Anim");
+        canStart = true;
+    }
+
+    public void StopSimulation()
+    {
+        fire.Stop();
+        anim.StopPlayback();
+        anim.StopPlayback();
+        canStart = false;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -9,34 +10,28 @@ using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class SimulationScript : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField _myTemperature;
-    [SerializeField] private TMP_InputField _mySpeed;
-    [SerializeField] private TMP_InputField _myWidth;
-    [SerializeField] private TMP_InputField _myTextMeshProContent;
-
     [SerializeField] private ParticleSystem[] _mySmokes;
-
     [SerializeField] private TMP_InputField[] _molecCount;
-    [SerializeField] private TextMeshProUGUI _N2molec;
-
     [SerializeField] private PlayableDirector[] _myFluidsWater;
     [SerializeField] private PlayableDirector[] _myFluidsReact;
+    [SerializeField] private GameObject[] _dropCreating;
+    //[SerializeField] private GameObject[] _errors;
+    [SerializeField] private TMP_InputField[] _myTexts;
+    [SerializeField] private TextMeshProUGUI[] _componentsText;
+    [SerializeField] private TextMeshProUGUI[] _molText;
 
+    [SerializeField] private TextMeshProUGUI _N2molec;
     [SerializeField] private Button _simulationButton;
     [SerializeField] private TextMeshProUGUI _simulationText;
 
-    public Animator _electroFilter;
-    public Animator _lightBulb;
-    public Collectors _myCollector;
+    [SerializeField] private Animator _electroFilter;
+    [SerializeField] private Animator _lightBulb;
+    [SerializeField] private NewCollectors _myCollector; 
+    [SerializeField] private TemperatureCatalizator _myCatalizator;
+    [SerializeField] private TextMeshProUGUI ElectroFilter;
+    [SerializeField] private GameObject ComponentsCameras;
 
-
-    public GameObject _errorTextTemp;
-    public GameObject _errorTextSpeed;
-    public GameObject _errorTextWidth;
-
-    public GameObject _errorTextContent;
-
-    public GameObject[] _dropCreating;
+    
     private bool _startSimulationTemp = false;
     private bool _startSimulationContent = false;
     private float _simulationTime = 1400f;
@@ -46,9 +41,9 @@ public class SimulationScript : MonoBehaviour
     private int max = 110;
     private void Start()
     {
-        _startSimulationTemp = true;
-        _startSimulationContent = true;
-        StartSmokesAndFluids();
+        //_startSimulationTemp = true;
+        //_startSimulationContent = true;
+        //StartSmokesAndFluids();
     }
 
     private void Update()
@@ -86,13 +81,14 @@ public class SimulationScript : MonoBehaviour
             _simulationButton.interactable = true;
             _simulationText.text = "Ñèìóëèðîâàòü";
             _simulationTime = 140f;
-
+            ComponentsCameras.SetActive(false);
             foreach (ParticleSystem smoke in _mySmokes)
             {
                 smoke.Stop();
             }
             _electroFilter.Play("NewColecAnimStop");
             _myCollector.StopColumnProcess();
+            _myCatalizator.StopSimulation();
             _lightBulb.Play("LightsAnimationStops");
             foreach (PlayableDirector fluid in _myFluidsWater)
             {
@@ -131,7 +127,8 @@ public class SimulationScript : MonoBehaviour
                 smoke.Play();
             }
             _electroFilter.Play("NewColecAnim");
-            _myCollector.StartColumnProcess();
+            _myCollector.StartColumnProcess3();
+            _myCatalizator.StartSimulation();
             _lightBulb.Play("LightsAnimation");
             foreach (GameObject drop in _dropCreating)
             {
@@ -142,52 +139,103 @@ public class SimulationScript : MonoBehaviour
 
     public void StartSimulation()
     {
-        foreach(var mol in _molecCount)
+        for(int i = 0; i <= 8; i++)
         {
-            if (mol.text == "")
+            if (_molecCount[i].text == "")
             {
+                _molText[i].color = Color.red;
                 _startSimulationContent = false;
-                _errorTextContent.SetActive(true);
-                break;
             }
             else
+            {
+                _molText[i].color = Color.black;
                 _startSimulationContent = true;
-                _errorTextContent.SetActive(false);
+            }
+            
         }
 
-        if (_mySpeed.text == "")
+        if (_myTexts[0].text == "" || _myTexts[1].text == "" || _myTexts[2].text == "")
         {
-            _errorTextSpeed.SetActive(true);
+            _componentsText[0].color = Color.red;
             _startSimulationTemp = false;
         }
         else
         {
-            _errorTextSpeed.SetActive(false);
+            _componentsText[0].color = Color.black;
             _startSimulationTemp = true;
         }
 
-        if (_myWidth.text == "")
+        if (_myTexts[3].text == "" || _myTexts[4].text == "" || _myTexts[5].text == "")
         {
-            _errorTextWidth.SetActive(true);
+            _componentsText[1].color = Color.red;
             _startSimulationTemp = false;
         }
         else
         {
-            _errorTextWidth.SetActive(false);
+            _componentsText[1].color = Color.black;
             _startSimulationTemp = true;
         }
 
-        if (_myTemperature.text == "")
+        if (_myTexts[6].text == "" || _myTexts[7].text == "" )
         {
-            Debug.Log("null");
-            _errorTextTemp.SetActive(true);
+            _componentsText[2].color = Color.red;
             _startSimulationTemp = false;
         }
         else
         {
-            _errorTextTemp.SetActive(false);
+            _componentsText[2].color = Color.black;
+            _startSimulationTemp = true;
+        }
+
+        if (_myTexts[8].text == "" || _myTexts[9].text == "")
+        {
+            _componentsText[3].color = Color.red;
+            _startSimulationTemp = false;
+        }
+        else
+        {
+            _componentsText[3].color = Color.black;
+            _startSimulationTemp = true;
+        }
+
+        if (_myTexts[10].text == "" || _myTexts[11].text == "")
+        {
+            _componentsText[4].color = Color.red;
+            _startSimulationTemp = false;
+        }
+        else
+        {
+            _componentsText[4].color = Color.black;
             _startSimulationTemp = true;
             StartSmokesAndFluids();
         }
+
+        if (_myTexts[0].text == "150 °C"  && _myTexts[3].text == "300 °C" 
+            && _myTexts[6].text == "5 °C" && _myTexts[8].text == "5 °C" && _myTexts[10].text == "5 °C")
+        {
+
+        }
+        else if (_myTexts[0].text == "300 °C" && _myTexts[3].text == "400 °C"
+            && _myTexts[6].text == "15 °C" && _myTexts[8].text == "15 °C" && _myTexts[10].text == "15 °C")
+        {
+            foreach (ParticleSystem smoke in _mySmokes)
+            {
+                smoke.startSpeed = smoke.startSpeed + 1f;
+            }
+        }
+        else if (_myTexts[0].text == "400 °C" && _myTexts[3].text == "500 °C"
+            && _myTexts[6].text == "25 °C" && _myTexts[8].text == "25 °C" && _myTexts[10].text == "25 °C")
+        {
+            foreach (ParticleSystem smoke in _mySmokes)
+            {
+                smoke.startLifetime = smoke.startLifetime - smoke.startLifetime / 2;
+                smoke.startSpeed = smoke.startSpeed + 2f;
+            }
+        }
+
+        float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text) * 2) / float.Parse(_myTexts[12].text));
+        Debug.Log(resEle);
+        ElectroFilter.text = "Ýôôåêò. ýëåêòðîôèëüòðà: " + (resEle * 100).ToString("0.") + " %";
+        ComponentsCameras.SetActive(true);
     }
 }

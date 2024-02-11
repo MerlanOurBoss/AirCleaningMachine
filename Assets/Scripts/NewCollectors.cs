@@ -46,7 +46,7 @@ public class NewCollectors : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
+    { 
         if (_startingDelay)
         {
             if (delay <= 0)
@@ -160,5 +160,21 @@ public class NewCollectors : MonoBehaviour
     {
         absent[1].color = Color.Lerp(absent[1].color, targetColor, .1f * Time.fixedDeltaTime);
         absent[0].color = Color.Lerp(absent[0].color, Color.white, .1f * Time.fixedDeltaTime);
+    }
+
+    public void StartColumnProcess3()
+    {
+        _startingDelay = true;
+        delay = 60;
+    }
+
+    public void StopColumnProcess()
+    {
+        _startingDelay = false;
+        _startingProcess = false;
+        _firstColumnLight.material = _redLight;
+        _firstColumnLight_1.material = _redLight;
+        _secondColumnLight.material = _redLight;
+        _secondColumnLight_2.material = _redLight;
     }
 }
