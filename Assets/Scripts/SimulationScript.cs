@@ -26,12 +26,18 @@ public class SimulationScript : MonoBehaviour
 
     [SerializeField] private Animator _electroFilter;
     [SerializeField] private Animator _lightBulb;
-    [SerializeField] private NewCollectors _myCollector; 
+    [SerializeField] private NewCollectors _myCollector;
     [SerializeField] private TemperatureCatalizator _myCatalizator;
-    [SerializeField] private TextMeshProUGUI ElectroFilter;
+
     [SerializeField] private GameObject ComponentsCameras;
 
-    
+    [SerializeField] private TextMeshProUGUI ElectroFilter;
+    [SerializeField] private TextMeshProUGUI Katalizator;
+    [SerializeField] private TextMeshProUGUI WaterEmul;
+    [SerializeField] private TextMeshProUGUI ReactEmul;
+    [SerializeField] private TextMeshProUGUI SborCO2;
+
+
     private bool _startSimulationTemp = false;
     private bool _startSimulationContent = false;
     private float _simulationTime = 1400f;
@@ -48,6 +54,54 @@ public class SimulationScript : MonoBehaviour
 
     private void Update()
     {
+        if (_myTexts[13].text != " " && _myTexts[12].text != " ")
+        {
+            float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text) * 2) / float.Parse(_myTexts[12].text));
+            Debug.Log(resEle);
+            ElectroFilter.text = "Ёффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
+        }
+
+        if (_myTexts[20].text != " ")
+        {
+            float resKataz = 0;
+            if (_myTexts[20].text == "300")
+            {
+                resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text) - (float.Parse(_myTexts[20].text) - 50f)) * 1f);
+                resKataz = 1 / resKataz;
+            }
+            else if (_myTexts[20].text == "400")
+            {
+                resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text) - (float.Parse(_myTexts[20].text) - 150f)) * 1f);
+                resKataz = 1 / resKataz;
+            }
+            else if (_myTexts[20].text == "500")
+            {
+                resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text) - (float.Parse(_myTexts[20].text) - 100f)) * 1f);
+                resKataz = 1 / resKataz;
+            }
+            Katalizator.text = "Ёффект. катализатора: " + (resKataz * 100).ToString("0.") + " %";
+        }
+
+        if (_myTexts[14].text != " " && _myTexts[15].text != " ")
+        {
+            float resWater = float.Parse(_myTexts[14].text) * 10 * float.Parse(_myTexts[15].text);
+            WaterEmul.text = "Ёффект. вод€ного эмуль.: " + (resWater * 100).ToString("0.") + " %";
+        }
+
+        if (_myTexts[16].text != " " && _myTexts[17].text != " ")
+        {
+            float resReact = float.Parse(_myTexts[16].text) * 10 * float.Parse(_myTexts[17].text);
+            ReactEmul.text = "Ёффект. реагент. эмуль.: " + (resReact * 100).ToString("0.") + " %";
+        }
+
+        if (_myTexts[18].text != " " && _myTexts[19].text != " ")
+        {
+            float resSborCO2 = (10 * float.Parse(_myTexts[18].text) * float.Parse(_myTexts[19].text)) / (1 + (float.Parse(_myTexts[18].text) * float.Parse(_myTexts[19].text)));
+            SborCO2.text = "Ёффект. сбор CO2: " + (resSborCO2 * 100).ToString("0.") + " %";
+        }
+        
+
+
         if (_simulationTime <= 0)
         {
             _startSimulationTemp = false;
@@ -233,9 +287,9 @@ public class SimulationScript : MonoBehaviour
             }
         }
 
-        float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text) * 2) / float.Parse(_myTexts[12].text));
-        Debug.Log(resEle);
-        ElectroFilter.text = "Ёффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
+        //float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text) * 2) / float.Parse(_myTexts[12].text));
+        //Debug.Log(resEle);
+        //ElectroFilter.text = "Ёффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
         ComponentsCameras.SetActive(true);
     }
 }
