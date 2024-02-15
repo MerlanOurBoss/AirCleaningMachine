@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,22 +11,32 @@ public class SubstractTheValue : MonoBehaviour
     public TMP_InputField[] _inputFields;
 
     public TMP_Text _maxValue;
-    private int totalValue = 110;
+    private int totalValue = 130;
     private int[] previousValues;
+    
 
     private void Start()
     {
         previousValues = new int[_inputFields.Length];
 
-       
         for (int i = 0; i < _inputFields.Length; i++)
         {
-            int index = i; 
-
-            _inputFields[i].onValueChanged.AddListener((newValue) => OnInputFieldValueChanged(index, newValue));
+            int defaultValue = 10;
+            _inputFields[i].text = defaultValue.ToString();
+            previousValues[i] = defaultValue;
+            totalValue -= defaultValue; 
         }
 
         UpdateTotalText();
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < _inputFields.Length; i++)
+        {
+            int index = i;
+            _inputFields[i].onValueChanged.AddListener((newValue) => OnInputFieldValueChanged(index, newValue));
+        }
     }
 
     private void OnInputFieldValueChanged(int index, string newValue)
