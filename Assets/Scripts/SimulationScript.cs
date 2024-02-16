@@ -19,6 +19,7 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private TMP_InputField[] _myTexts;
     [SerializeField] private TextMeshProUGUI[] _componentsText;
     [SerializeField] private TextMeshProUGUI[] _molText;
+    [SerializeField] private DropSpawner[] _dropSpawns;
 
     [SerializeField] private TextMeshProUGUI _N2molec;
     [SerializeField] private Button _simulationButton;
@@ -211,6 +212,7 @@ public class SimulationScript : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     public void StartSimulation()
     {
         for(int i = 0; i <= 8; i++)
@@ -294,7 +296,12 @@ public class SimulationScript : MonoBehaviour
         {
             foreach (ParticleSystem smoke in _mySmokes)
             {
-                smoke.startSpeed = smoke.startSpeed + 1f;
+                //smoke.startColor = new Color(smoke.startColor.r, smoke.startColor.g, smoke.startColor.b, 0.3f);
+                smoke.emissionRate = smoke.emissionRate - smoke.emissionRate / 2;
+            }
+            foreach (DropSpawner spawner in _dropSpawns)
+            {
+                spawner.spawnInterval = spawner.spawnInterval * 2;
             }
         }
         else if (_myTexts[0].text == "400 °C" && _myTexts[3].text == "500 °C"
@@ -302,8 +309,14 @@ public class SimulationScript : MonoBehaviour
         {
             foreach (ParticleSystem smoke in _mySmokes)
             {
-                smoke.startLifetime = smoke.startLifetime - smoke.startLifetime / 2;
-                smoke.startSpeed = smoke.startSpeed + 2f;
+                //smoke.startLifetime = smoke.startLifetime - smoke.startLifetime / 2;
+                //smoke.startSpeed = smoke.startSpeed + 2f;
+                //smoke.startColor = new Color(smoke.startColor.r, smoke.startColor.g, smoke.startColor.b, 0.7f);
+                smoke.emissionRate = smoke.emissionRate - smoke.emissionRate / 1.5f;
+            }
+            foreach (DropSpawner spawner in _dropSpawns)
+            {
+                spawner.spawnInterval = spawner.spawnInterval * 1.5f;
             }
         }
 
