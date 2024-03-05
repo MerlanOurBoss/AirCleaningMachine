@@ -68,9 +68,6 @@ public class SimulationScript : MonoBehaviour
         _myTexts[17].text = "1,5 моль/м";
         _myTexts[18].text = "0,5 кПа";
         _myTexts[19].text = "0,2 кПа";
-        //_startSimulationTemp = true;
-        //_startSimulationContent = true;
-        //StartSmokesAndFluids();
     }
 
     private void Update()
@@ -296,6 +293,7 @@ public class SimulationScript : MonoBehaviour
         {
             foreach (ParticleSystem smoke in _mySmokes)
             {
+                // Здесь можно задать что будет влиять на дымы
                 //smoke.startColor = new Color(smoke.startColor.r, smoke.startColor.g, smoke.startColor.b, 0.3f);
                 smoke.emissionRate = smoke.emissionRate - smoke.emissionRate / 2;
             }
