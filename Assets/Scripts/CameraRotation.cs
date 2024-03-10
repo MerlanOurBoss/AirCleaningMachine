@@ -10,8 +10,17 @@ public class CameraRotation : MonoBehaviour
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        if (Input.GetMouseButton(0))
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
 
-        playerBody.Rotate(Vector3.up * mouseX, Space.World);
+            playerBody.Rotate(Vector3.up * mouseX, Space.World);
+        }
+        if (Input.GetMouseButton(1))
+        {
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+            playerBody.Rotate(Vector3.right * mouseY, Space.World);
+        }
     }
 }
