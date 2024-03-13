@@ -36,141 +36,149 @@ public class KatalizatorTable : MonoBehaviour
 
     private float delay = 10f;
 
+    public TextMeshProUGUI[] tablesData;
+
+    public bool isEnable = false;
     void Start()
     {
-        kata_Temperature = 560;
-        kata_Dust = 100;
-        kata_SolidParticles = 215;
-        kata_Zola = 42;
+        kata_Temperature = float.Parse(tablesData[0].text);
+        kata_Dust = float.Parse(tablesData[1].text);
+        kata_SolidParticles = float.Parse(tablesData[2].text);
+        kata_Zola = float.Parse(tablesData[3].text);
 
-        kata_Temperature_exit = 560;
-        kata_Dust_exit = 100;
-        kata_SolidParticles_exit = 215;
-        kata_Zola_exit = 42;
+        kata_Temperature_exit = float.Parse(tablesData[0].text);
+        kata_Dust_exit = float.Parse(tablesData[1].text);
+        kata_SolidParticles_exit = float.Parse(tablesData[2].text);
+        kata_Zola_exit = float.Parse(tablesData[3].text);
 
-        kata_CO = 120;
-        kata_NO = 23;
-        kata_NO2 = 21;
+        kata_CO = float.Parse(tablesData[4].text); 
+        kata_NO = float.Parse(tablesData[5].text); 
+        kata_NO2 = float.Parse(tablesData[6].text);
     }
 
     void Update()
     {
-        delay -= 1 * Time.deltaTime;
-        if (delay < 2)
+        
+        if (isEnable)
         {
-            foreach (var e in Katalizator_Temperature_enter)
+            delay -= 1 * Time.deltaTime;
+            if (delay < 2)
             {
-                e.text = kata_Temperature.ToString("0.");
-            }
-            if (kata_Temperature > 120)
-            {
-                float n = kata_Temperature / 2;
-                kata_Temperature -= n * Time.deltaTime;
-            }
+                foreach (var e in Katalizator_Temperature_enter)
+                {
+                    e.text = kata_Temperature.ToString("0.");
+                }
+                if (kata_Temperature > float.Parse(tablesData[0].text) * 0.215)
+                {
+                    float n = kata_Temperature / 2;
+                    kata_Temperature -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Katalizator_Dust_enter)
-            {
-                e.text = kata_Dust.ToString("0.");
-            }
-            if (kata_Dust > 10)
-            {
-                float n = kata_Dust / 2;
-                kata_Dust -= n * Time.deltaTime;
-            }
+                foreach (var e in Katalizator_Dust_enter)
+                {
+                    e.text = kata_Dust.ToString("0.");
+                }
+                if (kata_Dust > float.Parse(tablesData[1].text) * 0.1)
+                {
+                    float n = kata_Dust / 2;
+                    kata_Dust -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Katalizator_SolidParticle_enter)
-            {
-                e.text = kata_SolidParticles.ToString("0.");
-            }
-            if (kata_SolidParticles > 20)
-            {
-                float n = kata_SolidParticles / 2;
-                kata_SolidParticles -= n * Time.deltaTime;
-            }
+                foreach (var e in Katalizator_SolidParticle_enter)
+                {
+                    e.text = kata_SolidParticles.ToString("0.");
+                }
+                if (kata_SolidParticles > float.Parse(tablesData[2].text) * 0.093)
+                {
+                    float n = kata_SolidParticles / 2;
+                    kata_SolidParticles -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Katalizator_Zola_enter)
-            {
-                e.text = kata_Zola.ToString("0.");
-            }
-            if (kata_Zola > 4)
-            {
-                float n = kata_Zola / 2;
-                kata_Zola -= n * Time.deltaTime;
-            }
+                foreach (var e in Katalizator_Zola_enter)
+                {
+                    e.text = kata_Zola.ToString("0.");
+                }
+                if (kata_Zola > float.Parse(tablesData[3].text) * 0.095)
+                {
+                    float n = kata_Zola / 2;
+                    kata_Zola -= n * Time.deltaTime;
+                }
 
 
+            }
+            if (delay < 0)
+            {
+                foreach (var e in Katalizator_Temperature_exit)
+                {
+                    e.text = kata_Temperature_exit.ToString("0.");
+                }      
+                if (kata_Temperature_exit > float.Parse(tablesData[0].text) * 0.895)
+                {
+                    float n = kata_Temperature_exit / 2;
+                    kata_Temperature_exit -= n * Time.deltaTime;
+                }
+
+                foreach (var e in Katalizator_Dust_exit)
+                {
+                    e.text = kata_Dust_exit.ToString("0.");
+                }
+                if (kata_Dust_exit > float.Parse(tablesData[1].text) * 0.1)
+                {
+                    float n = kata_Dust_exit / 2;
+                    kata_Dust_exit -= n * Time.deltaTime;
+                }
+
+                foreach (var e in Katalizator_SolidParticle_exit)
+                {
+                    e.text = kata_SolidParticles_exit.ToString("0.");
+                }
+                if (kata_SolidParticles_exit > float.Parse(tablesData[2].text) * 0.093)
+                {
+                    float n = kata_SolidParticles_exit / 2;
+                    kata_SolidParticles_exit -= n * Time.deltaTime;
+                }
+
+                foreach (var e in Katalizator_Zola_exit)
+                {
+                    e.text = kata_Zola_exit.ToString("0.");
+                }
+                if (kata_Zola_exit > float.Parse(tablesData[3].text) * 0.095)
+                {
+                    float n = kata_Zola_exit / 2;
+                    kata_Zola_exit -= n * Time.deltaTime;
+                }
+
+                foreach (var e in Katalizator_CO)
+                {
+                    e.text = kata_CO.ToString("0.");
+                }
+                if (kata_CO > float.Parse(tablesData[4].text) * 0.025)
+                {
+                    float n = kata_CO / 2;
+                    kata_CO -= n * Time.deltaTime;
+                }
+
+                foreach (var e in Katalizator_NO)
+                {
+                    e.text = kata_NO.ToString("0.");
+                }
+                if (kata_NO > float.Parse(tablesData[5].text) * 0.023)
+                {
+                    float n = kata_NO / 2;
+                    kata_NO -= n * Time.deltaTime;
+                }
+
+                foreach (var e in Katalizator_NO2)
+                {
+                    e.text = kata_NO2.ToString("0.");
+                }
+                if (kata_NO2 > float.Parse(tablesData[6].text) * 0.023)
+                {
+                    float n = kata_NO / 2;
+                    kata_NO2 -= n * Time.deltaTime;
+                }
+            }
         }
-        if (delay < 0)
-        {
-            foreach (var e in Katalizator_Temperature_exit)
-            {
-                e.text = kata_Temperature_exit.ToString("0.");
-            }
-            if (kata_Temperature_exit > 120)
-            {
-                float n = kata_Temperature_exit / 2;
-                kata_Temperature_exit -= n * Time.deltaTime;
-            }
 
-            foreach (var e in Katalizator_Dust_exit)
-            {
-                e.text = kata_Dust_exit.ToString("0.");
-            }
-            if (kata_Dust_exit > 10)
-            {
-                float n = kata_Dust_exit / 2;
-                kata_Dust_exit -= n * Time.deltaTime;
-            }
-
-            foreach (var e in Katalizator_SolidParticle_exit)
-            {
-                e.text = kata_SolidParticles_exit.ToString("0.");
-            }
-            if (kata_SolidParticles_exit > 20)
-            {
-                float n = kata_SolidParticles_exit / 2;
-                kata_SolidParticles_exit -= n * Time.deltaTime;
-            }
-
-            foreach (var e in Katalizator_Zola_exit)
-            {
-                e.text = kata_Zola_exit.ToString("0.");
-            }
-            if (kata_Zola_exit > 4)
-            {
-                float n = kata_Zola_exit / 2;
-                kata_Zola_exit -= n * Time.deltaTime;
-            }
-
-            foreach (var e in Katalizator_CO)
-            {
-                e.text = kata_CO.ToString("0.");   
-            }
-            if (kata_CO > 60)
-            {
-                float n = kata_CO / 2;
-                kata_CO -= n * Time.deltaTime;
-            }
-    
-            foreach (var e in Katalizator_NO)
-            {
-                e.text = kata_NO.ToString("0.");
-            }
-            if (kata_NO > 11.5)
-            {
-                float n = kata_NO / 2;
-                kata_NO -= n * Time.deltaTime;
-            }
-
-            foreach (var e in Katalizator_NO2)
-            {
-                e.text = kata_NO2.ToString("0.");
-            }
-            if (kata_NO2 > 10.5)
-            {
-                float n = kata_NO / 2;
-                kata_NO2 -= n * Time.deltaTime;
-            }
-        }
     }
 }

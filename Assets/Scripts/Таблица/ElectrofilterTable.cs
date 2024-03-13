@@ -16,57 +16,65 @@ public class ElectrofilterTable : MonoBehaviour
     private float electro_Zola;
 
     private float delay = 2f;
+
+    public TextMeshProUGUI[] tablesData;
+
+    public bool isEnable = false;
     private void Start()
     {
-        electro_Temperature = 560;
-        electro_Dust = 100;
-        electro_SolidParticles = 215;
-        electro_Zola = 42;
+        electro_Temperature = float.Parse(tablesData[0].text);
+        electro_Dust = float.Parse(tablesData[1].text);
+        electro_SolidParticles = float.Parse(tablesData[2].text);
+        electro_Zola = float.Parse(tablesData[3].text);
     }
 
     void Update()
     {
-        delay -= 1 * Time.deltaTime;
-        if (delay < 0)
+        
+        if (isEnable)
         {
-            foreach (var e in ElectroFilter_Temperature)
+            delay -= 1 * Time.deltaTime;
+            if (delay < 0)
             {
-                e.text = electro_Temperature.ToString("0.");
-            }
-            if (electro_Temperature > 120)
-            {
-                float n = electro_Temperature / 2;
-                electro_Temperature -= n * Time.deltaTime;
-            }
+                foreach (var e in ElectroFilter_Temperature)
+                {
+                    e.text = electro_Temperature.ToString("0.");
+                }
+                if (electro_Temperature > float.Parse(tablesData[0].text) * 0.215)
+                {
+                    float n = electro_Temperature / 2;
+                    electro_Temperature -= n * Time.deltaTime;
+                }
 
-            foreach (var e in ElectroFilter_Dust)
-            {
-                e.text = electro_Dust.ToString("0.");
-            }
-            if (electro_Dust > 10)
-            {
-                float n = electro_Dust / 2;
-                electro_Dust -= n * Time.deltaTime;
-            }
+                foreach (var e in ElectroFilter_Dust)
+                {
+                    e.text = electro_Dust.ToString("0.");
+                }
+                if (electro_Dust > float.Parse(tablesData[1].text) * 0.1)
+                {
+                    float n = electro_Dust / 2;
+                    electro_Dust -= n * Time.deltaTime;
+                }
 
-            foreach (var e in ElectroFilter_SolidParticles)
-            {
-                e.text = electro_SolidParticles.ToString("0.");
-            }
-            if (electro_SolidParticles > 20)
-            {
-                float n = electro_SolidParticles / 2;
-                electro_SolidParticles -= n * Time.deltaTime;
-            }
+                foreach (var e in ElectroFilter_SolidParticles)
+                {
+                    e.text = electro_SolidParticles.ToString("0.");
+                }
+                if (electro_SolidParticles > float.Parse(tablesData[2].text) * 0.093)
+                {
+                    float n = electro_SolidParticles / 2;
+                    electro_SolidParticles -= n * Time.deltaTime;
+                }
 
-            foreach (var e in ElectroFilter_Zola)
-            {
-                e.text = electro_Zola.ToString("0.");
-            }
-            if (electro_Zola > 4)
-            {
-                float n = electro_Zola / 2;
-                electro_Zola -= n * Time.deltaTime;
+                foreach (var e in ElectroFilter_Zola)
+                {
+                    e.text = electro_Zola.ToString("0.");
+                }
+                if (electro_Zola > float.Parse(tablesData[3].text) * 0.095)
+                {
+                    float n = electro_Zola / 2;
+                    electro_Zola -= n * Time.deltaTime;
+                }
             }
         }
     }

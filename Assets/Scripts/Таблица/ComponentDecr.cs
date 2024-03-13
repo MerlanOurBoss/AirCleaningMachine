@@ -6,65 +6,89 @@ using UnityEngine.UIElements;
 
 public class ComponentDecr : MonoBehaviour
 {
-    public TextMeshProUGUI[] ElectroFilter1;
-    public TextMeshProUGUI[] ElectroFilter2;
-    public TextMeshProUGUI[] ElectroFilter3;
-    public TextMeshProUGUI[] ElectroFilter4;
+    public TextMeshProUGUI[] Temperature;
+    public TextMeshProUGUI[] Dust;
+    public TextMeshProUGUI[] SolidParticles;
+    public TextMeshProUGUI[] Zola;
+    public TextMeshProUGUI[] CO;
+    public TextMeshProUGUI[] CO2;
+    public TextMeshProUGUI[] NO;
+    public TextMeshProUGUI[] NO2;
+    public TextMeshProUGUI[] SO2;
+    public TextMeshProUGUI[] CH4;
+    public TextMeshProUGUI[] H2S;
+    public TextMeshProUGUI[] O2;
+    public TextMeshProUGUI[] N2;
 
-    private float electro1;
-    private float electro2;
-    private float electro3;
-    private float electro4;
+    public TextMeshProUGUI Temperature_orig;
+    public TextMeshProUGUI Dust_orig;
+    public TextMeshProUGUI SolidParticles_orig;
+    public TextMeshProUGUI Zola_orig;
+    public TextMeshProUGUI CO_orig;
+    public TextMeshProUGUI CO2_orig;
+    public TextMeshProUGUI NO_orig;
+    public TextMeshProUGUI NO2_orig;
+    public TextMeshProUGUI SO2_orig;
+    public TextMeshProUGUI CH4_orig;
+    public TextMeshProUGUI H2S_orig;
+    public TextMeshProUGUI O2_orig;
+    public TextMeshProUGUI N2_orig;
+
 
     private void Start()
     {
-        electro1 = 560;
-        electro2 = 100;
-        electro3 = 215;
-        electro4 = 42;
+        foreach (TextMeshProUGUI m in Temperature)
+        {
+            m.text = Temperature_orig.text;
+        }
+        foreach (TextMeshProUGUI m in Dust)
+        {
+            m.text = Dust_orig.text;
+        }
+        foreach (TextMeshProUGUI m in SolidParticles)
+        {
+            m.text = SolidParticles_orig.text;
+        }
+        foreach (TextMeshProUGUI m in Zola)
+        {
+            m.text = Zola_orig.text;
+        }
+        foreach (TextMeshProUGUI m in CO)
+        {
+            m.text = CO_orig.text;
+        }
+        foreach (TextMeshProUGUI m in CO2)
+        {
+            m.text = CO2_orig.text;
+        }
+        foreach (TextMeshProUGUI m in NO)
+        {
+            m.text = NO_orig.text;
+        }
+        foreach (TextMeshProUGUI m in NO2)
+        {
+            m.text = NO2_orig.text;
+        }
+        foreach (TextMeshProUGUI m in SO2)
+        {
+            m.text = SO2_orig.text;
+        }
+        foreach (TextMeshProUGUI m in CH4)
+        {
+            m.text = CH4_orig.text;
+        }
+        foreach (TextMeshProUGUI m in H2S)
+        {
+            m.text = H2S_orig.text;
+        }
+        foreach (TextMeshProUGUI m in O2)
+        {
+            m.text = O2_orig.text;
+        }
+        foreach (TextMeshProUGUI m in N2)
+        {
+            m.text = N2_orig.text;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        foreach (var e in ElectroFilter1)
-        {
-            e.text = electro1.ToString("0.");
-        }
-        if (electro1 > 120)
-        {
-            float n = electro1 / 2;
-            electro1 -= n * Time.deltaTime;
-        }
-
-        foreach (var e in ElectroFilter2)
-        {
-            e.text = electro2.ToString("0.");
-        }
-        if (electro2 > 10)
-        {
-            float n = electro2 / 2;
-            electro2 -= n * Time.deltaTime;
-        }
-
-        foreach (var e in ElectroFilter3)
-        {
-            e.text = electro3.ToString("0.");
-        }
-        if (electro3 > 20)
-        {
-            float n = electro3 / 2;
-            electro3 -= n * Time.deltaTime;
-        }
-
-        foreach (var e in ElectroFilter4)
-        {
-            e.text = electro4.ToString("0.");
-        }
-        if(electro4 > 4)
-        {
-            float n = electro4 / 2;
-            electro4 -=  n * Time.deltaTime;
-        }
-    }
 }

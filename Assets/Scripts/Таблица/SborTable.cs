@@ -62,264 +62,271 @@ public class SborTable : MonoBehaviour
 
     private float delay = 60f;
 
+    public TextMeshProUGUI[] tablesData;
+
+    public bool isEnable = false;
+
     void Start()
     {
-        sbor_Temperature = 560;
-        sbor_Dust = 100;
-        sbor_SolidParticles = 215;
-        sbor_Zola = 42;
+        sbor_Temperature = float.Parse(tablesData[0].text);
+        sbor_Dust = float.Parse(tablesData[1].text);
+        sbor_SolidParticles = float.Parse(tablesData[2].text);
+        sbor_Zola = float.Parse(tablesData[3].text);
 
-        sbor_Temperature_exit = 560;
-        sbor_Dust_exit = 100;
-        sbor_SolidParticles_exit = 215;
-        sbor_Zola_exit = 42;
+        sbor_Temperature_exit = float.Parse(tablesData[0].text);
+        sbor_Dust_exit = float.Parse(tablesData[1].text);
+        sbor_SolidParticles_exit = float.Parse(tablesData[2].text);
+        sbor_Zola_exit = float.Parse(tablesData[3].text);
 
-        sbor_CO_enter = 120;
-        sbor_NO_enter = 23;
-        sbor_NO2_enter = 21;
+        sbor_CO_enter = float.Parse(tablesData[4].text);
+        sbor_NO_enter = float.Parse(tablesData[5].text);
+        sbor_NO2_enter = float.Parse(tablesData[6].text);
 
-        sbor_CO_exit = 120;
-        sbor_NO_exit = 23;
-        sbor_NO2_exit = 21;
+        sbor_CO_exit = float.Parse(tablesData[4].text);
+        sbor_NO_exit = float.Parse(tablesData[5].text);
+        sbor_NO2_exit = float.Parse(tablesData[6].text);
 
-        sbor_CO2 = 542;
-        sbor_SO2 = 2;
-        sbor_CH4 = 61;
-        sbor_H2S = 2.5f;
+        sbor_CO2 = float.Parse(tablesData[7].text);
+        sbor_SO2 = float.Parse(tablesData[8].text);
+        sbor_CH4 = float.Parse(tablesData[9].text);
+        sbor_H2S = float.Parse(tablesData[10].text);
 
-        sbor_CO2_exit = 542;
-        sbor_SO2_exit = 2;
-        sbor_CH4_exit = 61;
-        sbor_H2S_exit = 2.5f;
+        sbor_CO2_exit = float.Parse(tablesData[7].text);
+        sbor_SO2_exit = float.Parse(tablesData[8].text);
+        sbor_CH4_exit = float.Parse(tablesData[9].text);
+        sbor_H2S_exit = float.Parse(tablesData[10].text);
     }
 
     // Update is called once per frame
     void Update()
     {
-        delay -= 1 * Time.deltaTime;
-        if (delay < 2)
+        if (isEnable)
         {
-            foreach (var e in Sbor_Temperature_enter)
+            delay -= 1 * Time.deltaTime;
+            if (delay < 2)
             {
-                e.text = sbor_Temperature.ToString("0.");
-            }
-            if (sbor_Temperature > 50)
-            {
-                float n = sbor_Temperature / 2;
-                sbor_Temperature -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_Temperature_enter)
+                {
+                    e.text = sbor_Temperature.ToString("0.");
+                }
+                if (sbor_Temperature > float.Parse(tablesData[0].text) * 0.09)
+                {
+                    float n = sbor_Temperature / 2;
+                    sbor_Temperature -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_Dust_enter)
-            {
-                e.text = sbor_Dust.ToString("0.");
-            }
-            if (sbor_Dust > 1)
-            {
-                float n = sbor_Dust / 2;
-                sbor_Dust -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_Dust_enter)
+                {
+                    e.text = sbor_Dust.ToString("0.");
+                }
+                if (sbor_Dust > float.Parse(tablesData[1].text) * 0)
+                {
+                    float n = sbor_Dust / 2;
+                    sbor_Dust -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_SolidParticle_enter)
-            {
-                e.text = sbor_SolidParticles.ToString("0.");
-            }
-            if (sbor_SolidParticles > 1)
-            {
-                float n = sbor_SolidParticles / 2;
-                sbor_SolidParticles -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_SolidParticle_enter)
+                {
+                    e.text = sbor_SolidParticles.ToString("0.");
+                }
+                if (sbor_SolidParticles > float.Parse(tablesData[2].text) * 0.0047)
+                {
+                    float n = sbor_SolidParticles / 2;
+                    sbor_SolidParticles -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_Zola_enter)
-            {
-                e.text = sbor_Zola.ToString("0.");
-            }
-            if (sbor_Zola > 1)
-            {
-                float n = sbor_Zola / 2;
-                sbor_Zola -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_Zola_enter)
+                {
+                    e.text = sbor_Zola.ToString("0.");
+                }
+                if (sbor_Zola > float.Parse(tablesData[3].text) * 0)
+                {
+                    float n = sbor_Zola / 2;
+                    sbor_Zola -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_CO_enter)
-            {
-                e.text = sbor_CO_enter.ToString("0.");
-            }
-            if (sbor_CO_enter > 30)
-            {
-                float n = sbor_CO_enter / 2;
-                sbor_CO_enter -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_CO_enter)
+                {
+                    e.text = sbor_CO_enter.ToString("0.");
+                }
+                if (sbor_CO_enter > float.Parse(tablesData[4].text) * 0.0125)
+                {
+                    float n = sbor_CO_enter / 2;
+                    sbor_CO_enter -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_NO_enter)
-            {
-                e.text = sbor_NO_enter.ToString("0.");
-            }
-            if (sbor_NO_enter > 5)
-            {
-                float n = sbor_NO_enter / 2;
-                sbor_NO_enter -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_NO_enter)
+                {
+                    e.text = sbor_NO_enter.ToString("0.");
+                }
+                if (sbor_NO_enter > float.Parse(tablesData[5].text) * 0.0108)
+                {
+                    float n = sbor_NO_enter / 2;
+                    sbor_NO_enter -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_NO2_enter)
-            {
-                e.text = sbor_NO2_enter.ToString("0.");
-            }
-            if (sbor_NO2_enter > 5)
-            {
-                float n = sbor_NO2_enter / 2;
-                sbor_NO2_enter -= n * Time.deltaTime;
-            }
-            foreach (var e in Sbor_CO2)
-            {
-                e.text = sbor_CO2.ToString("0.");
-            }
-            if (sbor_CO2 > 250)
-            {
-                float n = sbor_CO2 / 2;
-                sbor_CO2 -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_NO2_enter)
+                {
+                    e.text = sbor_NO2_enter.ToString("0.");
+                }
+                if (sbor_NO2_enter > float.Parse(tablesData[6].text) * 0.0118)
+                {
+                    float n = sbor_NO2_enter / 2;
+                    sbor_NO2_enter -= n * Time.deltaTime;
+                }
+                foreach (var e in Sbor_CO2)
+                {
+                    e.text = sbor_CO2.ToString("0.");
+                }
+                if (sbor_CO2 > float.Parse(tablesData[7].text) * 0.462)
+                {
+                    float n = sbor_CO2 / 2;
+                    sbor_CO2 -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_SO2)
-            {
-                e.text = sbor_SO2.ToString("0.");
-            }
-            if (sbor_SO2 > 0)
-            {
-                float n = sbor_SO2 / 2;
-                sbor_SO2 -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_SO2)
+                {
+                    e.text = sbor_SO2.ToString("0.");
+                }
+                if (sbor_SO2 > float.Parse(tablesData[8].text) * 0)
+                {
+                    float n = sbor_SO2 / 2;
+                    sbor_SO2 -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_CH4)
-            {
-                e.text = sbor_CH4.ToString("0.");
-            }
-            if (sbor_CH4 > 15)
-            {
-                float n = sbor_CH4 / 2;
-                sbor_CH4 -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_CH4)
+                {
+                    e.text = sbor_CH4.ToString("0.");
+                }
+                if (sbor_CH4 > float.Parse(tablesData[9].text) * 0.15)
+                {
+                    float n = sbor_CH4 / 2;
+                    sbor_CH4 -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_H2S)
-            {
-                e.text = sbor_H2S.ToString("0.");
+                foreach (var e in Sbor_H2S)
+                {
+                    e.text = sbor_H2S.ToString("0.");
+                }
+                if (sbor_H2S > float.Parse(tablesData[10].text) * 0)
+                {
+                    float n = sbor_H2S / 2;
+                    sbor_H2S -= n * Time.deltaTime;
+                }
             }
-            if (sbor_H2S > 0)
+            if (delay < 0)
             {
-                float n = sbor_H2S / 2;
-                sbor_H2S -= n * Time.deltaTime;
-            }
-        }
-        if (delay < 0)
-        {
-            foreach (var e in Sbor_Temperature_exit)
-            {
-                e.text = sbor_Temperature_exit.ToString("0.");
-            }
-            if (sbor_Temperature_exit > 30)
-            {
-                float n = sbor_Temperature_exit / 2;
-                sbor_Temperature_exit -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_Temperature_exit)
+                {
+                    e.text = sbor_Temperature_exit.ToString("0.");
+                }
+                if (sbor_Temperature_exit > float.Parse(tablesData[0].text) * 0.054)
+                {
+                    float n = sbor_Temperature_exit / 2;
+                    sbor_Temperature_exit -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_Dust_exit)
-            {
-                e.text = sbor_Dust_exit.ToString("0.");
-            }
-            if (sbor_Dust_exit > 0)
-            {
-                float n = sbor_Dust_exit / 2;
-                sbor_Dust_exit -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_Dust_exit)
+                {
+                    e.text = sbor_Dust_exit.ToString("0.");
+                }
+                if (sbor_Dust_exit > float.Parse(tablesData[1].text) * 0)
+                {
+                    float n = sbor_Dust_exit / 2;
+                    sbor_Dust_exit -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_SolidParticle_exit)
-            {
-                e.text = sbor_SolidParticles_exit.ToString("0.");
-            }
-            if (sbor_SolidParticles_exit > 1)
-            {
-                float n = sbor_SolidParticles_exit / 2;
-                sbor_SolidParticles_exit -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_SolidParticle_exit)
+                {
+                    e.text = sbor_SolidParticles_exit.ToString("0.");
+                }
+                if (sbor_SolidParticles_exit > float.Parse(tablesData[2].text) * 0.0047)
+                {
+                    float n = sbor_SolidParticles_exit / 2;
+                    sbor_SolidParticles_exit -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_Zola_exit)
-            {
-                e.text = sbor_Zola_exit.ToString("0.");
-            }
-            if (sbor_Zola_exit > 0)
-            {
-                float n = sbor_Zola_exit / 2;
-                sbor_Zola_exit -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_Zola_exit)
+                {
+                    e.text = sbor_Zola_exit.ToString("0.");
+                }
+                if (sbor_Zola_exit > float.Parse(tablesData[3].text) * 0)
+                {
+                    float n = sbor_Zola_exit / 2;
+                    sbor_Zola_exit -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_CO_exit)
-            {
-                e.text = sbor_CO_exit.ToString("0.");
-            }
-            if (sbor_CO_exit > 30)
-            {
-                float n = sbor_CO_exit / 2;
-                sbor_CO_exit -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_CO_exit)
+                {
+                    e.text = sbor_CO_exit.ToString("0.");
+                }
+                if (sbor_CO_exit > float.Parse(tablesData[4].text) * 0.0125)
+                {
+                    float n = sbor_CO_exit / 2;
+                    sbor_CO_exit -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_NO_exit)
-            {
-                e.text = sbor_NO_exit.ToString("0.");
-            }
-            if (sbor_NO_exit > 5)
-            {
-                float n = sbor_NO_exit / 2;
-                sbor_NO_exit -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_NO_exit)
+                {
+                    e.text = sbor_NO_exit.ToString("0.");
+                }
+                if (sbor_NO_exit > float.Parse(tablesData[5].text) * 0.0108)
+                {
+                    float n = sbor_NO_exit / 2;
+                    sbor_NO_exit -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_NO2_exit)
-            {
-                e.text = sbor_NO2_exit.ToString("0.");
-            }
-            if (sbor_NO2_exit > 5)
-            {
-                float n = sbor_NO2_exit / 2;
-                sbor_NO2_exit -= n * Time.deltaTime;
-            }
-            ///////////////////////////////////////////////////////////////////
-            
-            ///////////////////////////////////////////////////////////////
-            foreach (var e in Sbor_CO2_exit)
-            {
-                e.text = sbor_CO2_exit.ToString("0.");
-            }
-            if (sbor_CO2_exit > 2)
-            {
-                float n = sbor_CO2_exit / 2;
-                sbor_CO2_exit -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_NO2_exit)
+                {
+                    e.text = sbor_NO2_exit.ToString("0.");
+                }
+                if (sbor_NO2_exit > float.Parse(tablesData[6].text) * 0.0118)
+                {
+                    float n = sbor_NO2_exit / 2;
+                    sbor_NO2_exit -= n * Time.deltaTime;
+                }
+                ///////////////////////////////////////////////////////////////////
 
-            foreach (var e in Sbor_SO2_exit)
-            {
-                e.text = sbor_SO2_exit.ToString("0.");
-            }
-            if (sbor_SO2_exit > 0)
-            {
-                float n = sbor_SO2_exit / 2;
-                sbor_SO2_exit -= n * Time.deltaTime;
-            }
+                ///////////////////////////////////////////////////////////////
+                foreach (var e in Sbor_CO2_exit)
+                {
+                    e.text = sbor_CO2_exit.ToString("0.");
+                }
+                if (sbor_CO2_exit > float.Parse(tablesData[7].text) * 0.0037)
+                {
+                    float n = sbor_CO2_exit / 2;
+                    sbor_CO2_exit -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_CH4_exit)
-            {
-                e.text = sbor_CH4_exit.ToString("0.");
-            }
-            if (sbor_CH4_exit > 15)
-            {
-                float n = sbor_CH4_exit / 2;
-                sbor_CH4_exit -= n * Time.deltaTime;
-            }
+                foreach (var e in Sbor_SO2_exit)
+                {
+                    e.text = sbor_SO2_exit.ToString("0.");
+                }
+                if (sbor_SO2_exit > float.Parse(tablesData[8].text) * 0)
+                {
+                    float n = sbor_SO2_exit / 2;
+                    sbor_SO2_exit -= n * Time.deltaTime;
+                }
 
-            foreach (var e in Sbor_H2S_exit)
-            {
-                e.text = sbor_H2S_exit.ToString("0.");
-            }
-            if (sbor_H2S_exit > 0)
-            {
-                float n = sbor_H2S_exit / 2;
-                sbor_H2S_exit -= n * Time.deltaTime;
+                foreach (var e in Sbor_CH4_exit)
+                {
+                    e.text = sbor_CH4_exit.ToString("0.");
+                }
+                if (sbor_CH4_exit > float.Parse(tablesData[9].text) * 0.15)
+                {
+                    float n = sbor_CH4_exit / 2;
+                    sbor_CH4_exit -= n * Time.deltaTime;
+                }
+
+                foreach (var e in Sbor_H2S_exit)
+                {
+                    e.text = sbor_H2S_exit.ToString("0.");
+                }
+                if (sbor_H2S_exit > float.Parse(tablesData[10].text) * 0)
+                {
+                    float n = sbor_H2S_exit / 2;
+                    sbor_H2S_exit -= n * Time.deltaTime;
+                }
             }
         }
     }

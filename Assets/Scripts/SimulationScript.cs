@@ -38,6 +38,12 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ReactEmul;
     [SerializeField] private TextMeshProUGUI SborCO2;
 
+    [SerializeField] private ElectrofilterTable elec;
+    [SerializeField] private KatalizatorTable kataz;
+    [SerializeField] private WaterTable water;
+    [SerializeField] private ReactTable react;
+    [SerializeField] private SborTable sbor;
+        
 
     private bool _startSimulationTemp = false;
     private bool _startSimulationContent = false;
@@ -212,7 +218,12 @@ public class SimulationScript : MonoBehaviour
     [System.Obsolete]
     public void StartSimulation()
     {
-        for(int i = 0; i <= 8; i++)
+        elec.isEnable = true;
+        kataz.isEnable = true;
+        water.isEnable = true;
+        react.isEnable = true;
+        sbor.isEnable = true;   
+        for (int i = 0; i <= 8; i++)
         {
             if (_molecCount[i].text == "")
             {
