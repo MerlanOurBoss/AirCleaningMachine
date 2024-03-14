@@ -55,7 +55,7 @@ public class NewCollectors : MonoBehaviour
                 _startingDelay = false;
             }
             delay -= 1 * Time.deltaTime;
-            Debug.Log(delay.ToString("0"));
+            //Debug.Log(delay.ToString("0"));
 
             
         }

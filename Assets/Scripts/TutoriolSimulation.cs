@@ -32,7 +32,6 @@ public class TutoriolSimulatio : MonoBehaviour
     private float _fluidDelayWater = 15f;
     private float _fluidDelayReact = 32f;
 
-    private int max = 130;
     private void Start()
     {
         _startSimulationTemp = true;

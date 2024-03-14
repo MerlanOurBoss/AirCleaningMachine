@@ -43,6 +43,7 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private WaterTable water;
     [SerializeField] private ReactTable react;
     [SerializeField] private SborTable sbor;
+    [SerializeField] private Canvas canvas;
         
 
     private bool _startSimulationTemp = false;
@@ -81,7 +82,7 @@ public class SimulationScript : MonoBehaviour
         if (_myTexts[13].text != " " && _myTexts[12].text != " ")
         {   
             float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text[.._myTexts[13].text.IndexOf(" ")]) * 2) / float.Parse(_myTexts[12].text[.._myTexts[12].text.IndexOf(" ")]));
-            Debug.Log(resEle);
+            //Debug.Log(resEle);
             ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
         }
 
@@ -133,6 +134,7 @@ public class SimulationScript : MonoBehaviour
         }
         if (_startSimulationTemp && _startSimulationContent)
         {
+            canvas.enabled = false;
             _simulationButton.interactable = false;
             _simulationText.text = "Идет симуляция";
             _simulationTime -= 1 * Time.deltaTime;
@@ -156,6 +158,7 @@ public class SimulationScript : MonoBehaviour
         }
         else
         {
+            canvas.enabled = true;
             _simulationButton.interactable = true;
             _simulationText.text = "Симулировать";
             _simulationTime = 140f;

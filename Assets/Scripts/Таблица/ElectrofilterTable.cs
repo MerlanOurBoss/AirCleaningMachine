@@ -30,16 +30,17 @@ public class ElectrofilterTable : MonoBehaviour
 
     void Update()
     {
-        
         if (isEnable)
         {
             delay -= 1 * Time.deltaTime;
+            Debug.Log(delay);
             if (delay < 0)
             {
                 foreach (var e in ElectroFilter_Temperature)
                 {
                     e.text = electro_Temperature.ToString("0.");
                 }
+                        //119  >  120
                 if (electro_Temperature > float.Parse(tablesData[0].text) * 0.215)
                 {
                     float n = electro_Temperature / 2;
@@ -75,7 +76,23 @@ public class ElectrofilterTable : MonoBehaviour
                     float n = electro_Zola / 2;
                     electro_Zola -= n * Time.deltaTime;
                 }
+
+                else if (delay > -5)
+                {
+                    isEnable = false;
+                    electro_Temperature = float.Parse(tablesData[0].text);
+                    electro_Dust = float.Parse(tablesData[1].text);
+                    electro_SolidParticles = float.Parse(tablesData[2].text);
+                    electro_Zola = float.Parse(tablesData[3].text);
+                }
             }
+
         }
+    }
+
+    public void RepeatCalculate()
+    {
+        delay = 5f;
+        isEnable = true;
     }
 }
