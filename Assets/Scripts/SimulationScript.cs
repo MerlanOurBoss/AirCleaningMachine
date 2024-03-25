@@ -38,16 +38,17 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ReactEmul;
     [SerializeField] private TextMeshProUGUI SborCO2;
 
+    [SerializeField] private GameObject tables;
     [SerializeField] private ElectrofilterTable elec;
     [SerializeField] private KatalizatorTable kataz;
     [SerializeField] private WaterTable water;
     [SerializeField] private ReactTable react;
     [SerializeField] private SborTable sbor;
     [SerializeField] private Canvas canvas;
-        
 
-    private bool _startSimulationTemp = false;
-    private bool _startSimulationContent = false;
+
+    public bool _startSimulationTemp = false;
+    public bool _startSimulationContent = false;
     private float _simulationTime = 1400f;
     private float _fluidDelayWater = 15f;
     private float _fluidDelayReact = 32f;
@@ -140,7 +141,7 @@ public class SimulationScript : MonoBehaviour
             _simulationTime -= 1 * Time.deltaTime;
             _fluidDelayWater -= 1 * Time.deltaTime;
             _fluidDelayReact -= 1 * Time.deltaTime;
-
+            tables.SetActive(true);
             if (_fluidDelayWater < 0)
             {
                 foreach (PlayableDirector fluid in _myFluidsWater)
@@ -171,6 +172,7 @@ public class SimulationScript : MonoBehaviour
             _myCollector.StopColumnProcess();
             _myCatalizator.StopSimulation();
             _lightBulb.Play("LightsAnimationStops");
+            tables.SetActive(false);
             foreach (PlayableDirector fluid in _myFluidsWater)
             {
                 fluid.Stop();
@@ -179,9 +181,9 @@ public class SimulationScript : MonoBehaviour
             {
                 fluid.Stop();
             }
-            foreach (GameObject drop in _dropCreating)
+            foreach (DropSpawner drop in _dropSpawns)
             {
-                drop.SetActive(false);
+                drop.stopCor();
             }
         }
     }
@@ -211,9 +213,9 @@ public class SimulationScript : MonoBehaviour
             _myCollector.StartColumnProcess3();
             _myCatalizator.StartSimulation();
             _lightBulb.Play("LightsAnimation");
-            foreach (GameObject drop in _dropCreating)
+            foreach (DropSpawner drop in _dropSpawns)
             {
-                drop.SetActive(true);
+                drop.startCor();
             }
         }
     }
@@ -222,6 +224,7 @@ public class SimulationScript : MonoBehaviour
     public void StartSimulation()
     {
         elec.isEnable = true;
+        elec.RecalculateData();
         kataz.isEnable = true;
         water.isEnable = true;
         react.isEnable = true;

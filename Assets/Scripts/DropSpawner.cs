@@ -9,12 +9,15 @@ public class DropSpawner : MonoBehaviour
     public float spawnInterval = 0.001f;
     public float _delay;
 
-    void Start()
+    public void startCor()
     {
         // Запускаем корутину SpawnCoroutine
         StartCoroutine(SpawnCoroutine());
     }
-
+    public void stopCor()
+    {
+        StopAllCoroutines();
+    }
     IEnumerator SpawnCoroutine()
     {
         yield return new WaitForSeconds(_delay);

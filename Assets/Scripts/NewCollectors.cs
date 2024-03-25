@@ -1,142 +1,173 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class NewCollectors : MonoBehaviour
 {
-    public ParticleSystem zeroSmoke;
-    public ParticleSystem firstSmoke;
-    public ParticleSystem secondSmoke;
-    public ParticleSystem thirdSmoke;
+    [SerializeField] private ParticleSystem dustAir_FirstTubeIn;
+    [SerializeField] private ParticleSystem dustAir_SecondTubeIn;
+
+    [SerializeField] private ParticleSystem co2_FirstTubeOut;
+    [SerializeField] private ParticleSystem co2_SecondTubeOut;
+
+    [SerializeField] private ParticleSystem cleanAir_FirstTubeOut;
+    [SerializeField] private ParticleSystem cleanAir_SecondTubeOut;
+
+    public GameObject[] gates;
 
     public Material[] absent;
-    public Transform[] panels;
 
     public Color targetColor;
     public Material _greenLight;
     public Material _redLight;
 
-    public MeshRenderer _firstColumnLight;
-    public MeshRenderer _firstColumnLight_1;
-    public MeshRenderer _secondColumnLight;
-    public MeshRenderer _secondColumnLight_2;
+    //public MeshRenderer _firstColumnLight;
+    //public MeshRenderer _firstColumnLight_1;
+    //public MeshRenderer _secondColumnLight;
+    //public MeshRenderer _secondColumnLight_2;
 
 
     [SerializeField] private ParticleSystem _mySmoke;
-    [SerializeField] private ParticleSystem _mySmoke1;
     [SerializeField] private ParticleSystem _mySmoke2;
 
     private bool filling = true;
     private bool unfilling = false;
 
     private bool _startingProcess = false; //false
-    private bool _startingDelay = true;
+    private bool _startingDelay = false;
 
-    private float delay = 60f; //update
+    private float delay = 5f; //update
     private float fillingCount = 0;
     private int count = 0;
 
     void Start()
     {
+
         absent[0].color = Color.white;
         absent[1].color = Color.white;
-
-        panels[0].rotation = Quaternion.Euler(0f, 22f, 0f);
-        panels[1].rotation = Quaternion.Euler(0f, -198f, 0f);
     }
 
-    void FixedUpdate()
-    { 
+    void Update()
+    {
         if (_startingDelay)
         {
+            delay -= 1 * Time.deltaTime;
             if (delay <= 0)
             {
                 _startingProcess = true;
                 _startingDelay = false;
             }
-            delay -= 1 * Time.deltaTime;
-            //Debug.Log(delay.ToString("0"));
-
-            
         }
 
         if (_startingProcess && count == 0)
         {
             if (filling && !unfilling)
             {
-                zeroSmoke.Play();
-                panels[0].rotation = Quaternion.Euler(0f, 22f, 0f);
+                if (fillingCount < 1)
+                {
+                    cleanAir_FirstTubeOut.Play();
+                    _mySmoke.Play();
+                    dustAir_FirstTubeIn.Play();
+                }
 
-                fillingCount += 5 * Time.fixedDeltaTime;
-                _firstColumnLight.material = _greenLight;
-                _secondColumnLight.material = _redLight;
+                gates[0].SetActive(true);
+                gates[3].SetActive(true);
+
                 Invoke("StartColumnProcess0", 5f);
-                if (fillingCount >= 50)
+
+                fillingCount += 5 * Time.deltaTime;
+                if (fillingCount >= 250)
                 {
                     filling = false;
                     unfilling = true;
                     count++;
                     fillingCount = 0;
                 }
+
+                //_firstColumnLight.material = _greenLight;
+                //_secondColumnLight.material = _redLight;
+
+
             }
         }
         else if (_startingProcess && count == 1)
         {
             if (filling && !unfilling)
             {
-                zeroSmoke.Play();
-                firstSmoke.Stop();
-                secondSmoke.Stop();
-                thirdSmoke.Play();
+                if (fillingCount < 1)
+                {
+                    co2_FirstTubeOut.Stop();
+                    co2_SecondTubeOut.Play();
 
-                _mySmoke.Stop();
-                _mySmoke2.Stop();
-                _mySmoke1.Play();
+                    dustAir_SecondTubeIn.Stop();
+                    _mySmoke2.Stop();
+                    cleanAir_SecondTubeOut.Stop();
 
-                panels[1].rotation = Quaternion.Euler(0f, -157f, 0f);
-                panels[0].rotation = Quaternion.Euler(0f, 22f, 0f);
-                fillingCount += 5 * Time.fixedDeltaTime;
+                    cleanAir_FirstTubeOut.Play();
+                    _mySmoke.Play();
+                    dustAir_FirstTubeIn.Play();
+                }
 
                 Invoke("StartColumnProcess", 5f);
 
-                _firstColumnLight.material = _greenLight;
-                _secondColumnLight.material = _redLight;
-                _firstColumnLight_1.material = _redLight;
-                _secondColumnLight_2.material = _greenLight;
-                if (fillingCount >= 50)
+                gates[0].SetActive(false);
+                gates[1].SetActive(true);
+                gates[2].SetActive(true);
+                gates[3].SetActive(false);
+
+                fillingCount += 5 * Time.deltaTime;
+                if (fillingCount >= 250)
                 {
                     filling = false;
                     unfilling = true;
                     fillingCount = 0;
                 }
+
+
+                //_firstColumnLight.material = _greenLight;
+                //_secondColumnLight.material = _redLight;
+                //_firstColumnLight_1.material = _redLight;
+                //_secondColumnLight_2.material = _greenLight;
+
             }
             else if (unfilling && !filling)
             {
-                zeroSmoke.Stop();
-                firstSmoke.Play();
-                secondSmoke.Play();
-                thirdSmoke.Stop();
+                if (fillingCount < 1)
+                {
+                    co2_FirstTubeOut.Play();
+                    co2_SecondTubeOut.Stop();
 
-                _mySmoke.Play();
-                _mySmoke2.Play();
-                _mySmoke1.Stop();
-                
-                panels[0].rotation = Quaternion.Euler(0f, -22f, 0f);
-                panels[1].rotation = Quaternion.Euler(0f, -198f, 0f);
-                fillingCount += 5 * Time.fixedDeltaTime;
+                    dustAir_SecondTubeIn.Play();
+                    _mySmoke2.Play();
+                    cleanAir_SecondTubeOut.Play();
+
+                    cleanAir_FirstTubeOut.Stop();
+                    _mySmoke.Stop();
+                    dustAir_FirstTubeIn.Stop();
+                }
+
+                gates[0].SetActive(true);
+                gates[1].SetActive(false);
+                gates[2].SetActive(false);
+                gates[3].SetActive(true);
 
                 Invoke("StartColumnProcess2", 5f);
 
-                _firstColumnLight.material = _redLight;
-                _secondColumnLight.material = _greenLight;
-                _firstColumnLight_1.material = _greenLight;
-                _secondColumnLight_2.material = _redLight;
-                if (fillingCount >= 50)
+                fillingCount += 5 * Time.deltaTime;
+                if (fillingCount >= 250)
                 {
                     filling = true;
                     unfilling = false;
                     fillingCount = 0;
                 }
+
+
+                //_firstColumnLight.material = _redLight;
+                //_secondColumnLight.material = _greenLight;
+                //_firstColumnLight_1.material = _greenLight;
+                //_secondColumnLight_2.material = _redLight;
+
             }
         }
         else if (!_startingProcess)
@@ -147,19 +178,19 @@ public class NewCollectors : MonoBehaviour
 
     public void StartColumnProcess0()
     {
-        absent[0].color = Color.Lerp(absent[0].color, targetColor, .1f * Time.fixedDeltaTime);
+        absent[0].color = Color.Lerp(absent[0].color, targetColor, .05f * Time.fixedDeltaTime);
     }
 
     public void StartColumnProcess()
     {
-        absent[1].color = Color.Lerp(absent[1].color, Color.white, .1f * Time.fixedDeltaTime);
-        absent[0].color = Color.Lerp(absent[0].color, targetColor, .1f * Time.fixedDeltaTime);
+        absent[1].color = Color.Lerp(absent[1].color, Color.white, .05f * Time.fixedDeltaTime);
+        absent[0].color = Color.Lerp(absent[0].color, targetColor, .05f * Time.fixedDeltaTime);
     }
 
     public void StartColumnProcess2()
     {
-        absent[1].color = Color.Lerp(absent[1].color, targetColor, .1f * Time.fixedDeltaTime);
-        absent[0].color = Color.Lerp(absent[0].color, Color.white, .1f * Time.fixedDeltaTime);
+        absent[1].color = Color.Lerp(absent[1].color, targetColor, .05f * Time.fixedDeltaTime);
+        absent[0].color = Color.Lerp(absent[0].color, Color.white, .05f * Time.fixedDeltaTime);
     }
 
     public void StartColumnProcess3()
@@ -172,9 +203,9 @@ public class NewCollectors : MonoBehaviour
     {
         _startingDelay = false;
         _startingProcess = false;
-        _firstColumnLight.material = _redLight;
-        _firstColumnLight_1.material = _redLight;
-        _secondColumnLight.material = _redLight;
-        _secondColumnLight_2.material = _redLight;
+        //_firstColumnLight.material = _redLight;
+        //_firstColumnLight_1.material = _redLight;
+        //_secondColumnLight.material = _redLight;
+        //_secondColumnLight_2.material = _redLight;
     }
 }
