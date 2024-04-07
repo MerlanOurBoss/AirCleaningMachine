@@ -13,17 +13,11 @@ public class TutoriolSimulatio : MonoBehaviour
     [SerializeField] private ParticleSystem[] _mySmokes;
     [SerializeField] private PlayableDirector[] _myFluidsWater;
     [SerializeField] private PlayableDirector[] _myFluidsReact;
-    [SerializeField] private GameObject[] _dropCreating;
     [SerializeField] private DropSpawner[] _dropSpawns;
 
-    [SerializeField] private Button _simulationButton;
-
     [SerializeField] private Animator _electroFilter;
-    [SerializeField] private Animator _lightBulb;
     [SerializeField] private NewCollectors _myCollector;
     [SerializeField] private TemperatureCatalizator _myCatalizator;
-
-    [SerializeField] private GameObject ComponentsCameras;
 
 
     private bool _startSimulationTemp = false;
@@ -70,7 +64,6 @@ public class TutoriolSimulatio : MonoBehaviour
         else
         {
             _simulationTime = 140f;
-            ComponentsCameras.SetActive(false);
             foreach (ParticleSystem smoke in _mySmokes)
             {
                 smoke.Stop();
@@ -78,7 +71,6 @@ public class TutoriolSimulatio : MonoBehaviour
             _electroFilter.Play("NewColecAnimStop");
             _myCollector.StopColumnProcess();
             _myCatalizator.StopSimulation();
-            _lightBulb.Play("LightsAnimationStops");
             foreach (PlayableDirector fluid in _myFluidsWater)
             {
                 fluid.Stop();
@@ -87,10 +79,7 @@ public class TutoriolSimulatio : MonoBehaviour
             {
                 fluid.Stop();
             }
-            foreach (GameObject drop in _dropCreating)
-            {
-                drop.SetActive(false);
-            }
+
         }
     }
 
@@ -105,11 +94,7 @@ public class TutoriolSimulatio : MonoBehaviour
             _electroFilter.Play("NewColecAnim");
             _myCollector.StartColumnProcess3();
             _myCatalizator.StartSimulation();
-            _lightBulb.Play("LightsAnimation");
-            foreach (GameObject drop in _dropCreating)
-            {
-                drop.SetActive(true);
-            }
+
         }
     }
 

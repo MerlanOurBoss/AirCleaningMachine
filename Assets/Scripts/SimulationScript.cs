@@ -14,8 +14,7 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private TMP_InputField[] _molecCount;
     [SerializeField] private PlayableDirector[] _myFluidsWater;
     [SerializeField] private PlayableDirector[] _myFluidsReact;
-    [SerializeField] private GameObject[] _dropCreating;
-    //[SerializeField] private GameObject[] _errors;
+
     [SerializeField] private TMP_InputField[] _myTexts;
     [SerializeField] private TextMeshProUGUI[] _componentsText;
     [SerializeField] private TextMeshProUGUI[] _molText;
@@ -47,9 +46,12 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private Canvas canvas;
 
 
+
+
+
     public bool _startSimulationTemp = false;
     public bool _startSimulationContent = false;
-    private float _simulationTime = 1400f;
+    private float _simulationTime = 3400f;
     private float _fluidDelayWater = 15f;
     private float _fluidDelayReact = 32f;
 
@@ -135,7 +137,7 @@ public class SimulationScript : MonoBehaviour
         }
         if (_startSimulationTemp && _startSimulationContent)
         {
-            canvas.enabled = false;
+            //canvas.enabled = false;
             _simulationButton.interactable = false;
             _simulationText.text = "Идет симуляция";
             _simulationTime -= 1 * Time.deltaTime;
@@ -159,11 +161,11 @@ public class SimulationScript : MonoBehaviour
         }
         else
         {
-            canvas.enabled = true;
+            //canvas.enabled = true;
             _simulationButton.interactable = true;
             _simulationText.text = "Симулировать";
-            _simulationTime = 140f;
-            ComponentsCameras.SetActive(false);
+            _simulationTime = 3400f;
+            //ComponentsCameras.SetActive(false);
             foreach (ParticleSystem smoke in _mySmokes)
             {
                 smoke.Stop();
@@ -338,6 +340,12 @@ public class SimulationScript : MonoBehaviour
         //float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text) * 2) / float.Parse(_myTexts[12].text));
         //Debug.Log(resEle);
         //ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
-        ComponentsCameras.SetActive(true);
+        //ComponentsCameras.SetActive(true);
+    }
+
+    public void StopSimulation()
+    {
+        _startSimulationTemp = false;
+        _startSimulationContent = false;
     }
 }

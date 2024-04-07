@@ -138,14 +138,14 @@ public class KatalizatorTable : MonoBehaviour
                 {
                     foreach (ParticleSystem item in smokes)
                     {
-                        item.startColor = new Color(0.9f, 0.9f, 0.9f, 0.3f);
+                        item.startColor = new Color(0.8f, 0.8f, 0.8f, 0.3f);
                     }
                 }
                 else if (Katalizator_Zola_enter.value > 10 && Katalizator_Zola_enter.value < 20)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
-                        item.startColor = new Color(0.8f, 0.8f, 0.8f, 0.8f);
+                        item.startColor = new Color(0.7f, 0.7f, 0.7f, 0.3f);
                     }
                 }
 

@@ -54,8 +54,6 @@ public class ElectrofilterTable : MonoBehaviour
     public SimulationScript _scriptSim;
     public TextMeshProUGUI[] tablesData;
     public TextMeshProUGUI[] originTablesData;
-    public GameObject solidError;
-    public GameObject zolaError;
 
     public bool isEnable = false;
     private void Start()
@@ -115,12 +113,6 @@ public class ElectrofilterTable : MonoBehaviour
                     smokes[1].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
                 }
 
-                if (ElectroFilter_SolidParticles_enter.value == 500)
-                {
-                    _scriptSim._startSimulationTemp = false;
-                    _scriptSim._startSimulationContent = false;
-                    solidError.SetActive(true);
-                }
                 if (ElectroFilter_SolidParticles_enter.value > 0 && ElectroFilter_SolidParticles_enter.value < 300)
                 {
                     foreach (ParticleSystem item in smokes)
@@ -147,12 +139,6 @@ public class ElectrofilterTable : MonoBehaviour
                 }
 
 
-                if (ElectroFilter_Zola_enter.value == 200)
-                {
-                    _scriptSim._startSimulationTemp = false;
-                    _scriptSim._startSimulationContent = false;
-                    zolaError.SetActive(true);
-                }
                 if (ElectroFilter_Zola_enter.value > 0 && ElectroFilter_Zola_enter.value < 50)
                 {
                     smokes[0].startColor = new Color(1f, 1f, 1f, 1f);
@@ -160,7 +146,7 @@ public class ElectrofilterTable : MonoBehaviour
                 }
                 else if (ElectroFilter_Zola_enter.value > 50 && ElectroFilter_Zola_enter.value < 100)
                 {
-                    smokes[0].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+                    smokes[0].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[1].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                 }
                 else if (ElectroFilter_Zola_enter.value > 100 && ElectroFilter_Zola_enter.value < 200)

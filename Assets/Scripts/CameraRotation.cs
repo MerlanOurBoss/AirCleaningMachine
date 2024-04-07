@@ -17,23 +17,39 @@ public class CameraRotation : MonoBehaviour
     public bool isEnabled = false;
 
     public float x, y, w, h;
+
+    private float moveSpeed = 1.0f; // Скорость перемещения камеры
+
+    public float sensitivityx = 0.1f; // Чувствительность к перемещению мыши
+    public Vector3 moveLimits = new Vector3(1000, 1000, 1000); // Ограничения на перемещение
+
+    private Vector3 startPosition;
     void Start()
     {
         limit = Mathf.Abs(limit);
         if (limit > 90) limit = 90;
         offset = new Vector3(offset.x, offset.y, -Mathf.Abs(zoomMax/2));
         //transform.position = target.position + offset;
-    }
-
-    void Update()
-    {
-
+        startPosition = target.position;
     }
 
     public void Blasla()
     {
-        //Debug.Log(str);
-        if (Input.GetMouseButton(0))
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(0))
+        {
+            // Вычисляем новую позицию объекта на основе движения мыши
+            float moveX = Input.GetAxis("Mouse X") * sensitivityx * moveSpeed;
+            float moveY = Input.GetAxis("Mouse Y") * sensitivityx * moveSpeed;
+
+            // Ограничиваем новую позицию используя начальную позицию и заданные лимиты
+            Vector3 newPosition = target.position + new Vector3(moveX, moveY, 0);
+            newPosition.x = Mathf.Clamp(newPosition.x, startPosition.x - moveLimits.x, startPosition.x + moveLimits.x);
+            newPosition.y = Mathf.Clamp(newPosition.y, startPosition.y - moveLimits.y, startPosition.y + moveLimits.y);
+
+            // Применяем новую позицию к объекту
+            target.position = newPosition;
+        }
+        else if (Input.GetMouseButton(0))
         {
             offset.z = Mathf.Clamp(offset.z, -Mathf.Abs(zoomMax), -Mathf.Abs(zoomMin));
 
@@ -43,6 +59,7 @@ public class CameraRotation : MonoBehaviour
             transform.localEulerAngles = new Vector3(-Y, X, 0);
             transform.position = transform.localRotation * offset + target.position;
         }
+
     }
 
     public void onScroll()
