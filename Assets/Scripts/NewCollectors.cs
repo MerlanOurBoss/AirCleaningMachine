@@ -196,6 +196,8 @@ public class NewCollectors : MonoBehaviour
                 }
                 else if (fillingCount > 15 && fillingCount < 20)
                 {
+                    
+
                     obj4.SetActive(false);
                     obj4_1.SetActive(true);
 
@@ -211,6 +213,13 @@ public class NewCollectors : MonoBehaviour
                 }
                 else if (fillingCount > 35 && fillingCount < 65)
                 {
+                    hotAir_First.Stop();
+                    gates[4].SetActive(true);
+                    gates[5].SetActive(false);
+
+                    obj7.SetActive(true);
+                    obj7_1.SetActive(false);
+
                     sixth_display = Mathf.Lerp(sixth_display, 100f, 2 * Time.deltaTime);
                     third_display = Mathf.Lerp(third_display, 0, 5f * Time.deltaTime);
                 }
@@ -261,17 +270,16 @@ public class NewCollectors : MonoBehaviour
                 gates[0].SetActive(false);
                 gates[1].SetActive(true);
                 gates[2].SetActive(true);
-                gates[4].SetActive(true);
+                
                 gates[3].SetActive(false);
-                gates[5].SetActive(false);
+                
                 gates[6].SetActive(true);
                  
                 if (fillingCount >= 250)
                 {
-                    hotAir_Second.Stop();
+                    
                     hotAir_Main.Stop();
-                    obj8.SetActive(true);
-                    obj8_1.SetActive(false);
+                    
                     filling = false;
                     unfilling = true;
                     fillingCount = 0;
@@ -308,6 +316,8 @@ public class NewCollectors : MonoBehaviour
                 }
                 else if (fillingCount > 15 && fillingCount < 20)
                 {
+                    
+
                     obj3.SetActive(false);
                     obj3_1.SetActive(true);
 
@@ -323,6 +333,13 @@ public class NewCollectors : MonoBehaviour
                 }
                 else if (fillingCount > 35 && fillingCount < 65)
                 {
+                    gates[4].SetActive(false);
+                    gates[5].SetActive(true);
+
+                    obj8.SetActive(true);
+                    obj8_1.SetActive(false);
+                    hotAir_Second.Stop();
+
                     fifth_display = Mathf.Lerp(fifth_display, 100f, 2  * Time.deltaTime);
                     first_display = Mathf.Lerp(first_display, 0, 5f * Time.deltaTime);
                 }
@@ -375,17 +392,15 @@ public class NewCollectors : MonoBehaviour
                 gates[1].SetActive(false);
                 gates[2].SetActive(false);
                 gates[3].SetActive(true);
-                gates[4].SetActive(false);
-                gates[5].SetActive(true);
+                
                 gates[6].SetActive(false);
 
 
                 if (fillingCount >= 250)
                 {
-                    hotAir_First.Stop();
+                    
                     hotAir_Main.Stop();
-                    obj7.SetActive(true);
-                    obj7_1.SetActive(false);
+                    
 
                     filling = true;
                     unfilling = false;
