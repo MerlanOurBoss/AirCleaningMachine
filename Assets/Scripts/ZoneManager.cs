@@ -9,6 +9,7 @@ public class ZoneManager : MonoBehaviour
 {
     public float attractionForce;
 
+    public GameObject spawnInObj;
     private void OnTriggerStay(Collider other)
     {
         GameObject[] CO_Parent = GameObject.FindGameObjectsWithTag("CO_Parent");
@@ -32,7 +33,7 @@ public class ZoneManager : MonoBehaviour
             GameObject[] OO = GameObject.FindGameObjectsWithTag("OO");
 
 
-            if (O.Length <= 2 && CO.Length == 2)
+            if (O.Length >= 2 && CO.Length == 2)
             {
                 other.transform.DetachChildren();
                 foreach (GameObject child in O)
@@ -77,7 +78,7 @@ public class ZoneManager : MonoBehaviour
             GameObject[] O = GameObject.FindGameObjectsWithTag("O4");
             GameObject[] OO3 = GameObject.FindGameObjectsWithTag("OO3");
 
-            if (O.Length <= 2 && SOO.Length == 2)
+            if (O.Length >= 2 && SOO.Length == 2)
             {
                 other.transform.DetachChildren();
                 foreach (GameObject child in O)
@@ -242,100 +243,14 @@ public class ZoneManager : MonoBehaviour
 
     public void DeleteAllMolec()
     {
-        GameObject[] COO = GameObject.FindGameObjectsWithTag("COO");
-        GameObject[] OHH = GameObject.FindGameObjectsWithTag("OHH");
-        GameObject[] SOOO = GameObject.FindGameObjectsWithTag("SOOO");
-        GameObject[] OO = GameObject.FindGameObjectsWithTag("OO");
-        GameObject[] OO2 = GameObject.FindGameObjectsWithTag("OO4");
-        GameObject[] NN = GameObject.FindGameObjectsWithTag("NN");
-
-        GameObject[] CO_Parent = GameObject.FindGameObjectsWithTag("CO_Parent");
-        GameObject[] CO2_Parent = GameObject.FindGameObjectsWithTag("CO2_Parent");
-        GameObject[] SOO_Parent = GameObject.FindGameObjectsWithTag("SOO_Parent");
-        GameObject[] CHH_Parent = GameObject.FindGameObjectsWithTag("CHH_Parent");
-        GameObject[] ON_Child = GameObject.FindGameObjectsWithTag("ON_Child");
-
-        GameObject[] O = GameObject.FindGameObjectsWithTag("O");
-        GameObject[] O1 = GameObject.FindGameObjectsWithTag("O1");
-        GameObject[] O3 = GameObject.FindGameObjectsWithTag("O3");
-        GameObject[] O4 = GameObject.FindGameObjectsWithTag("O4");
-        GameObject[] O5 = GameObject.FindGameObjectsWithTag("O5");
-        GameObject[] OO3 = GameObject.FindGameObjectsWithTag("OO3");
-        
-        GameObject[] N2 = GameObject.FindGameObjectsWithTag("N2");
-
-        foreach (GameObject child in COO)
+        for (var i = spawnInObj.transform.childCount - 1; i >= 0; i--)
         {
-            Destroy(child);
-        }
-        foreach (GameObject child in OHH)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in SOOO)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in OO)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in OO2)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in NN)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in CO_Parent)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in CO2_Parent)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in SOO_Parent)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in CHH_Parent)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in ON_Child)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in O)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in O1)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in O3)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in O4)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in O5)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in OO3)
-        {
-            Destroy(child);
-        }
-        foreach (GameObject child in N2)
-        {
-            Destroy(child);
+            Destroy(spawnInObj.transform.GetChild(i).gameObject);
         }
 
+        //foreach (Transform child in spawnInObj.transform)
+        //{
+        //    Destroy(child.gameObject);
+        //}
     }
 }

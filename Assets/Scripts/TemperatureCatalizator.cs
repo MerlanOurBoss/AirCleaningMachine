@@ -18,6 +18,7 @@ public class TemperatureCatalizator : MonoBehaviour
     public Color firstColor;
     public Color secondColor;
     public Color thirdColor;
+    public KatalizatorScript kataz;
 
     private float delay = 18f;
     private float firsTemp1 = 26;
@@ -49,22 +50,36 @@ public class TemperatureCatalizator : MonoBehaviour
         string str2 = firsTemp2.ToString("0");
         texTemp2.text = str2 + "°C";
         
+        if (!kataz.isSecond)
+        {
+            if (canTemp1)
+            {
+                thirdMaterial.color = Color.Lerp(thirdMaterial.color, Color.white, Time.deltaTime);
+                firsTemp1 = Mathf.Lerp(firsTemp1, 500, 1.5f * Time.deltaTime);
+            }
+
+            if (canTemp2)
+            {
+                firstMaterial.color = Color.Lerp(firstMaterial.color, Color.white, Time.deltaTime);
+                secondMaterial.color = Color.Lerp(secondMaterial.color, Color.white, Time.deltaTime);
+                firsTemp2 = Mathf.Lerp(firsTemp2, 320, 1.5f * Time.deltaTime);
+            }
+        }
+        if (kataz.isSecond) 
+        {
+            if (canTemp1)
+            {
+                thirdMaterial.color = Color.Lerp(thirdMaterial.color, Color.white, Time.deltaTime);
+            }
+
+            if (canTemp2)
+            {
+                firstMaterial.color = Color.Lerp(firstMaterial.color, Color.white, Time.deltaTime);
+                secondMaterial.color = Color.Lerp(secondMaterial.color, Color.white, Time.deltaTime);
+                firsTemp2 = Mathf.Lerp(firsTemp2, 320, 1.5f * Time.deltaTime);
+            }
+        }
         
-        if (canTemp1)
-        {
-            
-            thirdMaterial.color = Color.Lerp(thirdMaterial.color, Color.white, Time.deltaTime);
-
-            firsTemp1 = Mathf.Lerp(firsTemp1, 500, 1.5f * Time.deltaTime);
-        }
-
-        if (canTemp2) 
-        {
-            firstMaterial.color = Color.Lerp(firstMaterial.color, Color.white, Time.deltaTime);
-            secondMaterial.color = Color.Lerp(secondMaterial.color, Color.white, Time.deltaTime);
-
-            firsTemp2 = Mathf.Lerp(firsTemp2, 320, 1.5f * Time.deltaTime);
-        }
 
         if (delay < 10 && !canTemp1)
         {

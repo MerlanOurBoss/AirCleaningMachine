@@ -21,11 +21,12 @@ public class MoleculasScript : MonoBehaviour
     public float moveSpeed = 0.5f;
     public float rotationSpeed = 1000f;
 
-    public TMP_InputField molec_N2;
+    public GameObject spawnInObj;
 
     private void Update()
     {
         MoveObjects(-0.05f);
+        
     }
     void MoveObjects(float direction)
     {
@@ -88,10 +89,10 @@ public class MoleculasScript : MonoBehaviour
                 for (int i = 0; i < int.Parse(prefabInfo.text.text) / 10; i++)
                 {
                     Vector3 randomSpawnPoint = GetRandomPointInBounds(spawnArea.bounds);
-                    Instantiate(prefabInfo.prefab, randomSpawnPoint, Quaternion.identity);
+                    Instantiate(prefabInfo.prefab, randomSpawnPoint, Quaternion.identity, spawnInObj.transform);
                     molec.Add(prefabInfo.prefab);
-                    yield return new WaitForSeconds(0.2f);
-                }
+                    yield return new WaitForSeconds(.7f); //0.2f
+                } 
                 count++;
             }
 

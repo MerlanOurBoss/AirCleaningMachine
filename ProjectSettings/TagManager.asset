@@ -46,7 +46,7 @@ TagManager:
   - O5
   - N2
   - CO2_Parent
-  - CO2
+  - SpawnInObj
   layers:
   - Default
   - TransparentFX
@@ -55,7 +55,7 @@ TagManager:
   - Water
   - UI
   - Collider
-  - 
+  - Dots
   - 
   - 
   - 

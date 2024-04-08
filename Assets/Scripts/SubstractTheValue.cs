@@ -11,7 +11,7 @@ public class SubstractTheValue : MonoBehaviour
     public TMP_InputField[] _inputFields;
 
     public TMP_Text _maxValue;
-    private int totalValue = 130;
+    private int totalValue = 150;
     private int[] previousValues;
     
 
@@ -22,9 +22,30 @@ public class SubstractTheValue : MonoBehaviour
         for (int i = 0; i < _inputFields.Length; i++)
         {
             int defaultValue = 10;
+            if (i == 0)
+            {
+                defaultValue = 20;
+            }
+            else if (i == 1)
+            {
+                defaultValue = 30;
+            }
+            else if (i == 4)
+            {
+                defaultValue = 20;
+            }
+            else if (i == 5)
+            {
+                defaultValue = 20;
+            }
+            else if (i == 6)
+            {
+                defaultValue = 20;
+            }
+
             _inputFields[i].text = defaultValue.ToString();
             previousValues[i] = defaultValue;
-            totalValue -= defaultValue; 
+            totalValue -= defaultValue;
         }
 
         UpdateTotalText();

@@ -19,23 +19,25 @@ public class KatazInput : MonoBehaviour
         {
             kataz.changePosition0();
         }
-        if (count == 2)
-        {
-            kataz.changePosition1();
-        }
-        if (count == 3)
-        {
-            kataz.changePosition2();
-        }
         if (count > 3)
         {
             count = 1;
         }
     }
 
+    [System.Obsolete]
     public void PlusCount()
     {
         count++;
+
+        if (count == 2)
+        {
+            kataz.changePosition1();
+        }
+        else if (count == 3)
+        {
+            kataz.changePosition2();
+        } 
     }
 
     public void OnorOffObjectNasos()

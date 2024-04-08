@@ -55,6 +55,10 @@ public class NewCollectors : MonoBehaviour
     [SerializeField] private GameObject obj5_1;
     [SerializeField] private GameObject obj6;
     [SerializeField] private GameObject obj6_1;
+    [SerializeField] private GameObject obj7;
+    [SerializeField] private GameObject obj7_1;
+    [SerializeField] private GameObject obj8;
+    [SerializeField] private GameObject obj8_1;
 
     private bool filling = true;
     private bool unfilling = false;
@@ -94,6 +98,10 @@ public class NewCollectors : MonoBehaviour
         obj5_1.SetActive(false);
         obj6.SetActive(true);
         obj6_1.SetActive(false);
+        obj7.SetActive(true);
+        obj7_1.SetActive(false);
+        obj8.SetActive(true);
+        obj8_1.SetActive(false);
     }
 
     void Update()
@@ -175,9 +183,6 @@ public class NewCollectors : MonoBehaviour
                     _mySmoke2.Stop();
                     cleanAir_SecondTubeOut.Stop();
 
-                    obj4.SetActive(false);
-                    obj4_1.SetActive(true);
-
                     co2_SecondTubeOut.Play();
                     co2_ThirdTubeOut.Play();
                     co2_FourthTubeOut.Play();
@@ -188,6 +193,11 @@ public class NewCollectors : MonoBehaviour
                     dustAir_FirstTubeIn.Play();
 
                     par_Second.Play();
+                }
+                else if (fillingCount > 15 && fillingCount < 20)
+                {
+                    obj4.SetActive(false);
+                    obj4_1.SetActive(true);
 
                     obj1_1.SetActive(true);
                     obj1.SetActive(false);
@@ -228,17 +238,16 @@ public class NewCollectors : MonoBehaviour
                     co2_SixthTubeOut.Stop();
 
                 }
-                else if (fillingCount > 153 && fillingCount < 160)
+                else if (fillingCount > 168 && fillingCount < 170)
                 {
-
-                    obj4.SetActive(true);
-                    obj4_1.SetActive(false);
-
+                    obj8.SetActive(false);
+                    obj8_1.SetActive(true);
                 }
-                else if (fillingCount > 160 && fillingCount < 200)
+                else if (fillingCount > 170 && fillingCount < 200)
                 {
                     fourth_display = Mathf.Lerp(fourth_display, 0f, 2 * Time.deltaTime);
-                    
+                    obj4.SetActive(true);
+                    obj4_1.SetActive(false);
                 }
                 else if (fillingCount > 200 && fillingCount < 220)
                 {
@@ -261,7 +270,8 @@ public class NewCollectors : MonoBehaviour
                 {
                     hotAir_Second.Stop();
                     hotAir_Main.Stop();
-                    
+                    obj8.SetActive(true);
+                    obj8_1.SetActive(false);
                     filling = false;
                     unfilling = true;
                     fillingCount = 0;
@@ -285,10 +295,6 @@ public class NewCollectors : MonoBehaviour
                     _mySmoke.Stop();
                     dustAir_FirstTubeIn.Stop();
 
-                    obj3.SetActive(false);
-                    obj3_1.SetActive(true);
-
-
                     co2_FirstTubeOut.Play();
                     co2_ThirdTubeOut.Play();
                     co2_FourthTubeOut.Play();
@@ -299,6 +305,11 @@ public class NewCollectors : MonoBehaviour
                     cleanAir_SecondTubeOut.Play();
 
                     par_First.Play();
+                }
+                else if (fillingCount > 15 && fillingCount < 20)
+                {
+                    obj3.SetActive(false);
+                    obj3_1.SetActive(true);
 
                     obj1_1.SetActive(false);
                     obj1.SetActive(true);
@@ -340,16 +351,16 @@ public class NewCollectors : MonoBehaviour
                     flows.CurrentTime = 0;
 
                 }
-                else if (fillingCount > 153 && fillingCount < 160)
+                else if (fillingCount > 168 && fillingCount < 170)
                 {
-
-                    obj3.SetActive(true);
-                    obj3_1.SetActive(false);
+                    obj7.SetActive(false);
+                    obj7_1.SetActive(true);
                 }
-
-                else if (fillingCount > 160 && fillingCount < 200)
+                else if (fillingCount > 170 && fillingCount < 200)
                 {
                     second_display = Mathf.Lerp(second_display, 0f, 2 * Time.deltaTime);
+                    obj3.SetActive(true);
+                    obj3_1.SetActive(false);
                 }
                 else if (fillingCount > 200 && fillingCount < 220)
                 {
@@ -373,7 +384,8 @@ public class NewCollectors : MonoBehaviour
                 {
                     hotAir_First.Stop();
                     hotAir_Main.Stop();
-
+                    obj7.SetActive(true);
+                    obj7_1.SetActive(false);
 
                     filling = true;
                     unfilling = false;
@@ -406,7 +418,7 @@ public class NewCollectors : MonoBehaviour
     public void StartColumnProcess3()
     {
         _startingDelay = true;
-        delay = 60; // update to 60f
+        delay = 5; // update to 60f
     }
 
     public void StopColumnProcess()
@@ -429,6 +441,10 @@ public class NewCollectors : MonoBehaviour
         obj5_1.SetActive(false);
         obj6.SetActive(true);
         obj6_1.SetActive(false);
+        obj7.SetActive(true);
+        obj7_1.SetActive(false);
+        obj8.SetActive(true);
+        obj8_1.SetActive(false);
 
         absent[0].color = Color.Lerp(absent[0].color, Color.white, .15f * Time.fixedDeltaTime);
         absent[1].color = Color.Lerp(absent[1].color, Color.white, .15f * Time.fixedDeltaTime);
