@@ -30,6 +30,8 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private TemperatureCatalizator _myCatalizator;
 
     [SerializeField] private GameObject ComponentsCameras;
+    [SerializeField] private GameObject ElectoroObject;
+    [SerializeField] private GameObject NoElectroObject;
 
     [SerializeField] private TextMeshProUGUI ElectroFilter;
     [SerializeField] private TextMeshProUGUI Katalizator;
@@ -44,10 +46,6 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private ReactTable react;
     [SerializeField] private SborTable sbor;
     [SerializeField] private Canvas canvas;
-
-
-
-
 
     public bool _startSimulationTemp = false;
     public bool _startSimulationContent = false;
@@ -78,6 +76,7 @@ public class SimulationScript : MonoBehaviour
         _myTexts[17].text = "1,5 моль/м";
         _myTexts[18].text = "0,5 кПа";
         _myTexts[19].text = "0,2 кПа";
+        _myTexts[21].text = "Включить";
     }
 
     private void Update()
@@ -127,8 +126,18 @@ public class SimulationScript : MonoBehaviour
             float resSborCO2 = (10 * float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])) / (1 + (float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])));
             SborCO2.text = "Эффект. сбор CO2: " + (resSborCO2 * 100).ToString("0.") + " %";
         }
-        
 
+        if (_myTexts[21].text == "Включить")
+        {
+            ElectoroObject.SetActive(true);
+            NoElectroObject.SetActive(false);
+        }
+        else if (_myTexts[21].text == "Отключить")
+        {
+            ElectoroObject.SetActive(false);
+            NoElectroObject.SetActive(true);
+            ElectroFilter.text = "Эффект. электрофильтра: 0%";
+        }
 
         if (_simulationTime <= 0)
         {
@@ -246,6 +255,8 @@ public class SimulationScript : MonoBehaviour
             
         }
 
+
+
         if (_myTexts[0].text == "" || _myTexts[1].text == "" || _myTexts[2].text == "")
         {
             _componentsText[0].color = Color.red;
@@ -336,6 +347,7 @@ public class SimulationScript : MonoBehaviour
                 spawner.spawnInterval = spawner.spawnInterval * 1.5f;
             }
         }
+
 
         //float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text) * 2) / float.Parse(_myTexts[12].text));
         //Debug.Log(resEle);

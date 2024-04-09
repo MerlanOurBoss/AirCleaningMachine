@@ -10,7 +10,6 @@ public class TemperatureCatalizator : MonoBehaviour
     public Material thirdMaterial;
     public ParticleSystem[] fire;
     public Animator anim;
-    public Animator anim1;
     public TextMeshProUGUI texTemp1;
     public TextMeshProUGUI texTemp2;
 
@@ -106,7 +105,6 @@ public class TemperatureCatalizator : MonoBehaviour
             item.Play();
         }
         anim.Play("Catalizaotr_Anim");
-        anim1.Play("Catalizaotr_Anim");
         canStart = true;
     }
 

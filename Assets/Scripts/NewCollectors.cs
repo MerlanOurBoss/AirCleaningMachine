@@ -433,7 +433,7 @@ public class NewCollectors : MonoBehaviour
     public void StartColumnProcess3()
     {
         _startingDelay = true;
-        delay = 5; // update to 60f
+        delay = 60; // update to 60f
     }
 
     public void StopColumnProcess()
