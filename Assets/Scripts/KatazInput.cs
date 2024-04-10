@@ -8,6 +8,7 @@ public class KatazInput : MonoBehaviour
     public Slider mySliderNasos;
     public KatalizatorScript kataz;
     public GameObject nasoso;
+    public SimulationScript myscript;
 
     private int count = 1;
     private bool isEnableNasos = false;
@@ -22,6 +23,10 @@ public class KatazInput : MonoBehaviour
         if (count > 3)
         {
             count = 1;
+        }
+        if (myscript._startSimulationTemp)
+        {
+            nasoso.SetActive(false); isEnableNasos = false;
         }
     }
 
@@ -42,7 +47,7 @@ public class KatazInput : MonoBehaviour
 
     public void OnorOffObjectNasos()
     {
-        if (isEnableNasos == false)
+        if (isEnableNasos == false && !myscript._startSimulationTemp)
         {
             nasoso.SetActive(true); isEnableNasos = true;
         }

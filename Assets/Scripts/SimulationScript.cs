@@ -31,7 +31,11 @@ public class SimulationScript : MonoBehaviour
 
     [SerializeField] private GameObject ComponentsCameras;
     [SerializeField] private GameObject ElectoroObject;
+    [SerializeField] private GameObject ElectoroObjectTable;
     [SerializeField] private GameObject NoElectroObject;
+
+    [SerializeField] private Button electro;
+    [SerializeField] private TMP_InputField electroInput;
 
     [SerializeField] private TextMeshProUGUI ElectroFilter;
     [SerializeField] private TextMeshProUGUI Katalizator;
@@ -41,7 +45,10 @@ public class SimulationScript : MonoBehaviour
 
     [SerializeField] private GameObject tables;
     [SerializeField] private ElectrofilterTable elec;
+
     [SerializeField] private KatalizatorTable kataz;
+    [SerializeField] private KatalizatorTableOutElectro katazOutElectro;
+
     [SerializeField] private WaterTable water;
     [SerializeField] private ReactTable react;
     [SerializeField] private SborTable sbor;
@@ -127,26 +134,35 @@ public class SimulationScript : MonoBehaviour
             SborCO2.text = "Эффект. сбор CO2: " + (resSborCO2 * 100).ToString("0.") + " %";
         }
 
+
         if (_myTexts[21].text == "Включить")
         {
             ElectoroObject.SetActive(true);
             NoElectroObject.SetActive(false);
+            ElectoroObjectTable.SetActive(true);
+            kataz.enabled = true;
+            katazOutElectro.enabled = false;
         }
         else if (_myTexts[21].text == "Отключить")
         {
             ElectoroObject.SetActive(false);
             NoElectroObject.SetActive(true);
+            ElectoroObjectTable.SetActive(false);
             ElectroFilter.text = "Эффект. электрофильтра: 0%";
+            kataz.enabled = false;
+            katazOutElectro.enabled = true;
         }
 
         if (_simulationTime <= 0)
         {
             _startSimulationTemp = false;
             _startSimulationContent = false;
+
         }
         if (_startSimulationTemp && _startSimulationContent)
         {
-            //canvas.enabled = false;
+            electro.interactable = false;
+            electroInput.interactable = false;
             _simulationButton.interactable = false;
             _simulationText.text = "Идет симуляция";
             _simulationTime -= 1 * Time.deltaTime;
@@ -170,6 +186,8 @@ public class SimulationScript : MonoBehaviour
         }
         else
         {
+            electro.interactable = true;
+            electroInput.interactable = true;
             //canvas.enabled = true;
             _simulationButton.interactable = true;
             _simulationText.text = "Симулировать";
@@ -234,9 +252,19 @@ public class SimulationScript : MonoBehaviour
     [System.Obsolete]
     public void StartSimulation()
     {
+        if (_myTexts[21].text == "Включить")
+        {
+            kataz.isEnable = true;
+            katazOutElectro.isEnable = false;
+        }
+        else if (_myTexts[21].text == "Отключить")
+        {
+            kataz.isEnable = false;
+            katazOutElectro.isEnable = true;
+        }
+
         elec.isEnable = true;
         elec.RecalculateData();
-        kataz.isEnable = true;
         water.isEnable = true;
         react.isEnable = true;
         sbor.isEnable = true;   
