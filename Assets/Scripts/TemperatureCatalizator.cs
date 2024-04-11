@@ -114,8 +114,15 @@ public class TemperatureCatalizator : MonoBehaviour
         {
             item.Stop();
         }
-        anim.StopPlayback();
-        anim.StopPlayback();
+        delay = 18f;
         canStart = false;
+        anim.StopPlayback();
+        anim.StopPlayback();
+        canTemp1 = false;
+        canTemp2 = false;
+
+        firstMaterial.color = originColor;
+        secondMaterial.color = originColor;
+        thirdMaterial.color = originColor;
     }
 }

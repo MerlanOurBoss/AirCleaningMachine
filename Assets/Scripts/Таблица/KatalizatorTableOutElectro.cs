@@ -198,7 +198,22 @@ public class KatalizatorTableOutElectro : MonoBehaviour
 
         }
     }
-
+    public void RecalculateData()
+    {
+        Katalizator_Temperature_enter.value = float.Parse(originTablesData[0].text);
+        Katalizator_Dust_enter.value = float.Parse(originTablesData[1].text);
+        Katalizator_SolidParticle_enter.value = float.Parse(originTablesData[2].text);
+        Katalizator_Zola_enter.value = float.Parse(originTablesData[3].text);
+        Katalizator_CO.value = float.Parse(originTablesData[4].text);
+        Katalizator_CO2.value = float.Parse(originTablesData[5].text);
+        Katalizator_NO.value = float.Parse(originTablesData[6].text);
+        Katalizator_NO2.value = float.Parse(originTablesData[7].text);
+        Katalizator_SO2.value = float.Parse(originTablesData[8].text);
+        Katalizator_CH4.value = float.Parse(originTablesData[9].text);
+        Katalizator_H2S.value = float.Parse(originTablesData[10].text);
+        Katalizator_O2.value = float.Parse(originTablesData[11].text);
+        Katalizator_N2.value = float.Parse(originTablesData[12].text);
+    }
     public void RepeatCalculateKataz()
     {
         //Katalizator_Temperature_enter.onValueChanged.RemoveListener(delegate { RepeatCalculateKataz(); });
