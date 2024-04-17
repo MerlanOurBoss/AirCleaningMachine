@@ -21,13 +21,7 @@ public class KatalizatorScript : MonoBehaviour
 
     private void Start()
     {
-        modules[0].transform.position = new Vector3(0, 0, 0);
-        modules[1].transform.position = new Vector3(0, 0, 0);
-        modules[2].transform.position = new Vector3(0, 0, 0);
-        modules[3].transform.position = new Vector3(0, 0, 0);
-        traingleOrig.SetActive(true);
-        traingleSecond.SetActive(false);
-        fourthObj.material = realMat;
+        changePosition0();
     }
 
     [System.Obsolete]

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.Formats.Alembic.Importer;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public class NasosScript : MonoBehaviour
@@ -12,10 +14,11 @@ public class NasosScript : MonoBehaviour
     public Slider mySliderWater;
     public GameObject[] fluids;
     public MeshRenderer[] fluidsWater;
+    public PlayableDirector[] fliudDirector;
     public GameObject nasoso;
     public GameObject water;
     private int count = 1;
-    public int countWater = 1;
+    private int countWater = 1;
     private bool isEnableNasos = false;
     private bool isEnableWater = false;
 
@@ -29,12 +32,29 @@ public class NasosScript : MonoBehaviour
             {
                 item.transform.localScale = new Vector3(1f, 1f, 1f);
             }
+            foreach (PlayableDirector item in fliudDirector)
+            {
+                int a = item.playableGraph.GetRootPlayableCount();
+                for (int i = 0; i < a; i++)
+                {
+                    item.playableGraph.GetRootPlayable(i).SetSpeed(1f);
+                }
+            }
         }
         if (count == 3)
         {
             foreach (GameObject item in fluids)
             {
                 item.transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
+
+            }
+            foreach (PlayableDirector item in fliudDirector)
+            {
+                int a = item.playableGraph.GetRootPlayableCount();
+                for (int i = 0; i < a; i++)
+                {
+                    item.playableGraph.GetRootPlayable(i).SetSpeed(1.5f);
+                }
             }
         }
         if (count == 4)
@@ -42,6 +62,14 @@ public class NasosScript : MonoBehaviour
             foreach (GameObject item in fluids)
             {
                 item.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+            }
+            foreach (PlayableDirector item in fliudDirector)
+            {
+                int a = item.playableGraph.GetRootPlayableCount();
+                for (int i = 0; i < a; i++)
+                {
+                    item.playableGraph.GetRootPlayable(i).SetSpeed(1.7f);
+                }
             }
         }
         if (count > 4)
@@ -57,15 +85,13 @@ public class NasosScript : MonoBehaviour
                 item.material.color = new Color(1, 1, 1, 0.6f);
             }
         }
-
-        if (countWater == 2 )
+        if (countWater == 2)
         {
-            foreach(MeshRenderer item in fluidsWater)
+            foreach (MeshRenderer item in fluidsWater)
             {
                 item.material.color = new Color(0.7f, 1, 0, 0.6f);
             }
         }
-
         if (countWater == 3)
         {
             foreach (MeshRenderer item in fluidsWater)
@@ -96,8 +122,7 @@ public class NasosScript : MonoBehaviour
     {
         if (isEnableNasos == false) { nasoso.SetActive(true); isEnableNasos = true;
             water.SetActive(false); isEnableWater = false;
-            Debug.Log("is EnableWater" + isEnableWater);
-            Debug.Log("is EnableNasos" + isEnableNasos);
+
         }
         else { nasoso.SetActive(false); isEnableNasos = false; isEnableWater = false;
 

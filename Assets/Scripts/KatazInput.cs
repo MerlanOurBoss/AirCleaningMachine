@@ -1,28 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class KatazInput : MonoBehaviour
 {
     public Slider mySliderNasos;
+
     public KatalizatorScript kataz;
+
     public GameObject nasoso;
+
     public SimulationScript myscript;
 
     private int count = 1;
     private bool isEnableNasos = false;
 
+    
     void Update()
     {
         mySliderNasos.value = count;
-        if (count == 1)
-        {
-            kataz.changePosition0();
-        }
+
         if (count > 3)
         {
-            count = 1;
+            count = 0;
         }
         if (myscript._startSimulationTemp)
         {
@@ -34,7 +36,10 @@ public class KatazInput : MonoBehaviour
     public void PlusCount()
     {
         count++;
-
+        if (count == 1)
+        {
+            kataz.changePosition0();
+        }
         if (count == 2)
         {
             kataz.changePosition1();
@@ -44,6 +49,7 @@ public class KatazInput : MonoBehaviour
             kataz.changePosition2();
         } 
     }
+
 
     public void OnorOffObjectNasos()
     {

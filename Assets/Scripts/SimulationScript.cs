@@ -34,6 +34,9 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private GameObject ElectoroObjectTable;
     [SerializeField] private GameObject NoElectroObject;
 
+    [SerializeField] private NasosScript waterNasos;
+    [SerializeField] private NasosScript reactNasos;
+
     [SerializeField] private Button electro;
     [SerializeField] private TMP_InputField electroInput;
 
@@ -53,6 +56,13 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private ReactTable react;
     [SerializeField] private SborTable sbor;
     [SerializeField] private Canvas canvas;
+
+    [SerializeField] private KatalizatorScriptwith1 katazScriptWith1_1;
+    [SerializeField] private Button kataz1;
+    [SerializeField] private KatalizatorScriptwith1 katazScriptWith1_2;
+    [SerializeField] private Button kataz2;
+
+
 
     public bool _startSimulationTemp = false;
     public bool _startSimulationContent = false;
@@ -84,12 +94,14 @@ public class SimulationScript : MonoBehaviour
         _myTexts[18].text = "0,5 кПа";
         _myTexts[19].text = "0,2 кПа";
         _myTexts[21].text = "Включить";
+        _myTexts[22].text = "2";
+        _myTexts[23].text = "2";
     }
 
     private void Update()
     {
         if (_myTexts[13].text != " " && _myTexts[12].text != " ")
-        {   
+        {
             float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text[.._myTexts[13].text.IndexOf(" ")]) * 2) / float.Parse(_myTexts[12].text[.._myTexts[12].text.IndexOf(" ")]));
             //Debug.Log(resEle);
             ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
@@ -153,6 +165,8 @@ public class SimulationScript : MonoBehaviour
             katazOutElectro.enabled = true;
         }
 
+        
+
         if (_simulationTime <= 0)
         {
             _startSimulationTemp = false;
@@ -163,8 +177,14 @@ public class SimulationScript : MonoBehaviour
         {
             electro.interactable = false;
             electroInput.interactable = false;
+            katazScriptWith1_1.text.interactable = false;
+            kataz1.interactable = false;
+            katazScriptWith1_2.text.interactable = false;
+            kataz2.interactable = false;
             _simulationButton.interactable = false;
             _simulationText.text = "Идет симуляция";
+            waterNasos.enabled = true;
+            reactNasos.enabled = true;
             _simulationTime -= 1 * Time.deltaTime;
             _fluidDelayWater -= 1 * Time.deltaTime;
             _fluidDelayReact -= 1 * Time.deltaTime;
@@ -188,7 +208,13 @@ public class SimulationScript : MonoBehaviour
         {
             electro.interactable = true;
             electroInput.interactable = true;
+            katazScriptWith1_1.text.interactable = true;
+            kataz1.interactable = true;
+            katazScriptWith1_2.text.interactable = true;
+            kataz2.interactable = true;
             //canvas.enabled = true;
+            waterNasos.enabled = false;
+            reactNasos.enabled = false;
             _simulationButton.interactable = true;
             _simulationText.text = "Симулировать";
             _simulationTime = 3400f;
@@ -261,6 +287,24 @@ public class SimulationScript : MonoBehaviour
         {
             kataz.isEnable = false;
             katazOutElectro.isEnable = true;
+        }
+
+        if (_myTexts[22].text == "2")
+        {
+            katazScriptWith1_1.obj2Void();
+        }
+        else if (_myTexts[22].text == "1")
+        {
+            katazScriptWith1_1.obj1Void();
+        }
+
+        if (_myTexts[23].text == "2")
+        {
+            katazScriptWith1_2.obj2Void();
+        }
+        else if (_myTexts[23].text == "1")
+        {
+            katazScriptWith1_2.obj1Void();
         }
 
         elec.isEnable = true;
@@ -387,5 +431,7 @@ public class SimulationScript : MonoBehaviour
     {
         _startSimulationTemp = false;
         _startSimulationContent = false;
-    }
+        _fluidDelayWater = 15f; //15f
+        _fluidDelayReact = 32f; //32f
+}
 }
