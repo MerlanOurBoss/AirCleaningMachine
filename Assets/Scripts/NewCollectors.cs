@@ -66,7 +66,8 @@ public class NewCollectors : MonoBehaviour
     private bool _startingProcess = false; //false
     private bool _startingDelay = false;
 
-    private float delay = 5f; //update
+    public float delay; //update
+    public float delayUpdate; //update
     private float fillingCount = 0;
     private int count = 0;
 
@@ -433,7 +434,7 @@ public class NewCollectors : MonoBehaviour
     public void StartColumnProcess3()
     {
         _startingDelay = true;
-        delay = 60; // update to 60f
+        delay = delayUpdate;
     }
 
     public void StopColumnProcess()
