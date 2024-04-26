@@ -19,6 +19,12 @@ public class KatalizatorScript : MonoBehaviour
 
     public bool isSecond = false;
 
+    public float x;
+    public float y;
+    public float z;
+
+    public float delaySmoke; //13
+
     private void Start()
     {
         changePosition0();
@@ -27,17 +33,17 @@ public class KatalizatorScript : MonoBehaviour
     [System.Obsolete]
     public void changePosition0()
     {
-        modules[0].transform.position = new Vector3(0, 0, 0);
-        modules[1].transform.position = new Vector3(0, 0, 0);
-        modules[2].transform.position = new Vector3(0, 0, 0);
-        modules[3].transform.position = new Vector3(0, 0, 0);
+        modules[0].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
+        modules[1].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
+        modules[2].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
+        modules[3].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
         traingleOrig.SetActive(true);
         traingleSecond.SetActive(false);
         fourthObj.material = realMat;
 
-        smokes2[0].startDelay = 13f;
-        smokes2[1].startDelay = 14f;
-        smokes2[2].startDelay = 15f;
+        smokes2[0].startDelay = delaySmoke;
+        smokes2[1].startDelay = delaySmoke + 1;
+        smokes2[2].startDelay = delaySmoke + 2;
 
         isSecond = false;
     }
@@ -45,18 +51,18 @@ public class KatalizatorScript : MonoBehaviour
     [System.Obsolete]
     public void changePosition1()
     {
-        modules[0].transform.position = new Vector3(0, 0, 0);
-        modules[1].transform.position = new Vector3(0, 0, 0);
+        modules[0].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
+        modules[1].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
 
-        modules[2].transform.position = new Vector3(147f, -0.315589905f, 0);
-        modules[3].transform.position = new Vector3(-147f, 0, 0);
+        modules[2].transform.position = new Vector3(147f - x, -0.315589905f - y, 0 - z);
+        modules[3].transform.position = new Vector3(-147f - x, 0 - y, 0 - z);
         traingleOrig.SetActive(false);
         traingleSecond.SetActive(true);
         fourthObj.material = secondMat;
 
-        smokes2[0].startDelay = 13f;
-        smokes2[1].startDelay = 14f;
-        smokes2[2].startDelay = 15f;
+        smokes2[0].startDelay = delaySmoke;
+        smokes2[1].startDelay = delaySmoke + 1;
+        smokes2[2].startDelay = delaySmoke + 2;
 
         isSecond = true;
     }
@@ -64,18 +70,18 @@ public class KatalizatorScript : MonoBehaviour
     [System.Obsolete]
     public void changePosition2()
     {
-        modules[0].transform.position = new Vector3(0, 0, 0);
-        modules[1].transform.position = new Vector3(99.7f, 0, 0);
+        modules[0].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
+        modules[1].transform.position = new Vector3(99.7f - x, 0 - y, 0 - z);
 
-        modules[2].transform.position = new Vector3(147f, -0.315589905f, 0);
-        modules[3].transform.position = new Vector3(-194.05f, -0.1f, 0);
+        modules[2].transform.position = new Vector3(147f - x, -0.315589905f - y, 0 - z);
+        modules[3].transform.position = new Vector3(-194.05f - x, -0.1f - y, 0 - z);
         traingleOrig.SetActive(false);
         traingleSecond.SetActive(true);
 
         fourthObj.material = secondMat;
-        smokes2[0].startDelay = 11f;
-        smokes2[1].startDelay = 12f;
-        smokes2[2].startDelay = 13f;
+        smokes2[0].startDelay = delaySmoke - 2;
+        smokes2[1].startDelay = delaySmoke - 1;
+        smokes2[2].startDelay = delaySmoke;
         isSecond = true;
     }
 }

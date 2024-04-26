@@ -12,6 +12,7 @@ public class SimulationScript : MonoBehaviour
 {
     [SerializeField] private ParticleSystem[] _mySmokes;
     [SerializeField] private TMP_InputField[] _molecCount;
+    [SerializeField] private PlayableDirector[] _myFluidsZero;
     [SerializeField] private PlayableDirector[] _myFluidsWater;
     [SerializeField] private PlayableDirector[] _myFluidsReact;
 
@@ -34,6 +35,7 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private GameObject ElectoroObjectTable;
     [SerializeField] private GameObject NoElectroObject;
 
+    [SerializeField] private NasosScript waterZeroNasos;
     [SerializeField] private NasosScript waterNasos;
     [SerializeField] private NasosScript reactNasos;
 
@@ -67,8 +69,13 @@ public class SimulationScript : MonoBehaviour
     public bool _startSimulationTemp = false;
     public bool _startSimulationContent = false;
     private float _simulationTime = 3400f;
-    private float _fluidDelayWater = 15f;
-    private float _fluidDelayReact = 32f;
+
+    public float _fluidDelayZero;
+    private float _fluidDelayZeroPrivate = 15f;
+    public float _fluidDelayWater;
+    private float _fluidDelayWaterPrivate = 30f;
+    public float _fluidDelayReact;
+    private float _fluidDelayReactPrivate = 43f;
 
     private int max = 130;
     private void Start()
@@ -183,12 +190,22 @@ public class SimulationScript : MonoBehaviour
             kataz2.interactable = false;
             _simulationButton.interactable = false;
             _simulationText.text = "Идет симуляция";
+            waterZeroNasos.enabled = true;
             waterNasos.enabled = true;
             reactNasos.enabled = true;
             _simulationTime -= 1 * Time.deltaTime;
             _fluidDelayWater -= 1 * Time.deltaTime;
             _fluidDelayReact -= 1 * Time.deltaTime;
+            _fluidDelayZero -= 1 * Time.deltaTime;
             tables.SetActive(true);
+
+            if (_fluidDelayZero < 0)
+            {
+                foreach (PlayableDirector fluid in _myFluidsZero)
+                {
+                    fluid.Play();
+                }
+            }
             if (_fluidDelayWater < 0)
             {
                 foreach (PlayableDirector fluid in _myFluidsWater)
@@ -213,6 +230,7 @@ public class SimulationScript : MonoBehaviour
             katazScriptWith1_2.text.interactable = true;
             kataz2.interactable = true;
             //canvas.enabled = true;
+            waterZeroNasos.enabled = false;
             waterNasos.enabled = false;
             reactNasos.enabled = false;
             _simulationButton.interactable = true;
@@ -431,7 +449,8 @@ public class SimulationScript : MonoBehaviour
     {
         _startSimulationTemp = false;
         _startSimulationContent = false;
-        _fluidDelayWater = 15f; //15f
-        _fluidDelayReact = 32f; //32f
+        _fluidDelayZero = _fluidDelayZeroPrivate;
+        _fluidDelayWater = _fluidDelayWaterPrivate; //15f
+        _fluidDelayReact = _fluidDelayReactPrivate ; //32f
 }
 }

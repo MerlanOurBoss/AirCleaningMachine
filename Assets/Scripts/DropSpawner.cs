@@ -11,7 +11,6 @@ public class DropSpawner : MonoBehaviour
 
     public void startCor()
     {
-        // Запускаем корутину SpawnCoroutine
         StartCoroutine(SpawnCoroutine());
     }
     public void stopCor()
