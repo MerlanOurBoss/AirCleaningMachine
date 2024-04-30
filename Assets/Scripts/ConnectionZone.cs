@@ -104,7 +104,6 @@ public class ConnectionZone : MonoBehaviour
         {
             foreach (string tag in targetTags4)
             {
-                // Находим все объекты с текущим тегом
                 GameObject[] objectss = GameObject.FindGameObjectsWithTag(tag);
                 if (totalObjects4 < 2)
                 {
@@ -112,7 +111,6 @@ public class ConnectionZone : MonoBehaviour
                 }
                 else
                 {
-                    // Притягиваем каждый объект к точке
                     foreach (GameObject obj in objectss)
                     {
                         animator = obj.GetComponent<Animator>();

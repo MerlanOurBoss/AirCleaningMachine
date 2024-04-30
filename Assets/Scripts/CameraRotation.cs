@@ -7,21 +7,21 @@ public class CameraRotation : MonoBehaviour
     public Transform target;
     public Camera myCamera;
     public Vector3 offset;
-    public float sensitivity = 3; // чувствительность мышки
-    public float limit = 80; // ограничение вращения по Y
-    public float zoom = 1f; // чувствительность при увеличении, колесиком мышки
-    public float zoomMax = 100; // макс. увеличение
-    public float zoomMin = 3; // мин. увеличение
+    public float sensitivity = 3; 
+    public float limit = 80;
+    public float zoom = 1f; 
+    public float zoomMax = 100;
+    public float zoomMin = 3;
     private float X, Y;
     public string str;
     public bool isEnabled = false;
 
     public float x, y, w, h;
 
-    private float moveSpeed = 1.0f; // Скорость перемещения камеры
+    private float moveSpeed = 1.0f; 
 
-    public float sensitivityx = 0.1f; // Чувствительность к перемещению мыши
-    public Vector3 moveLimits = new Vector3(1000, 1000, 1000); // Ограничения на перемещение
+    public float sensitivityx = 0.1f; 
+    public Vector3 moveLimits = new Vector3(1000, 1000, 1000); 
 
     private Vector3 startPosition;
     void Start()
@@ -29,7 +29,6 @@ public class CameraRotation : MonoBehaviour
         limit = Mathf.Abs(limit);
         if (limit > 90) limit = 90;
         offset = new Vector3(offset.x, offset.y, -Mathf.Abs(zoomMax/2));
-        //transform.position = target.position + offset;
         startPosition = target.position;
     }
 
@@ -37,16 +36,13 @@ public class CameraRotation : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(0))
         {
-            // Вычисляем новую позицию объекта на основе движения мыши
             float moveX = Input.GetAxis("Mouse X") * sensitivityx * moveSpeed;
             float moveY = Input.GetAxis("Mouse Y") * sensitivityx * moveSpeed;
 
-            // Ограничиваем новую позицию используя начальную позицию и заданные лимиты
             Vector3 newPosition = target.position + new Vector3(moveX, moveY, 0);
             newPosition.x = Mathf.Clamp(newPosition.x, startPosition.x - moveLimits.x, startPosition.x + moveLimits.x);
             newPosition.y = Mathf.Clamp(newPosition.y, startPosition.y - moveLimits.y, startPosition.y + moveLimits.y);
 
-            // Применяем новую позицию к объекту
             target.position = newPosition;
         }
         else if (Input.GetMouseButton(0))

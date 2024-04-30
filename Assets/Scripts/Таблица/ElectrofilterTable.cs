@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ElectrofilterTable : MonoBehaviour
 {
-    public ElectrofilterTable elec;
     public Slider ElectroFilter_Temperature_enter;
     public Slider ElectroFilter_Dust_enter;
     public Slider ElectroFilter_SolidParticles_enter;
@@ -51,7 +50,6 @@ public class ElectrofilterTable : MonoBehaviour
     private float electro_N2;
 
     private float delay = 2f;
-    public SimulationScript _scriptSim;
     public TextMeshProUGUI[] tablesData;
     public TextMeshProUGUI[] originTablesData;
 

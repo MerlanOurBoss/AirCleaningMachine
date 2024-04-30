@@ -26,7 +26,6 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _simulationText;
 
     [SerializeField] private Animator _electroFilter;
-    [SerializeField] private Animator _lightBulb;
     [SerializeField] private NewCollectors _myCollector;
     [SerializeField] private TemperatureCatalizator _myCatalizator;
 
@@ -54,6 +53,7 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private KatalizatorTable kataz;
     [SerializeField] private KatalizatorTableOutElectro katazOutElectro;
 
+    [SerializeField] private SheloshTable shelosh;
     [SerializeField] private WaterTable water;
     [SerializeField] private ReactTable react;
     [SerializeField] private SborTable sbor;
@@ -244,7 +244,6 @@ public class SimulationScript : MonoBehaviour
             _electroFilter.Play("NewColecAnimStop");
             _myCollector.StopColumnProcess();
             _myCatalizator.StopSimulation();
-            _lightBulb.Play("LightsAnimationStops");
             tables.SetActive(false);
             foreach (PlayableDirector fluid in _myFluidsWater)
             {
@@ -285,7 +284,6 @@ public class SimulationScript : MonoBehaviour
             _electroFilter.Play("NewColecAnim");
             _myCollector.StartColumnProcess3();
             _myCatalizator.StartSimulation();
-            _lightBulb.Play("LightsAnimation");
             foreach (DropSpawner drop in _dropSpawns)
             {
                 drop.startCor();
@@ -327,9 +325,11 @@ public class SimulationScript : MonoBehaviour
 
         elec.isEnable = true;
         elec.RecalculateData();
+        shelosh.isEnable = true;
         water.isEnable = true;
         react.isEnable = true;
-        sbor.isEnable = true;   
+        sbor.isEnable = true;
+
         for (int i = 0; i <= 8; i++)
         {
             if (_molecCount[i].text == "")

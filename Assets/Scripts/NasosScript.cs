@@ -18,7 +18,7 @@ public class NasosScript : MonoBehaviour
     public GameObject nasoso;
     public GameObject water;
     private int count = 1;
-    private int countWater = 1;
+    public int countWater = 1;
     private bool isEnableNasos = false;
     private bool isEnableWater = false;
 
