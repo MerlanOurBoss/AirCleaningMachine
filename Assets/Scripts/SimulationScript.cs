@@ -53,6 +53,7 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private KatalizatorTable kataz;
     [SerializeField] private KatalizatorTableOutElectro katazOutElectro;
 
+    [SerializeField] private CoolingDisplays coolDisplay;
     [SerializeField] private SheloshTable shelosh;
     [SerializeField] private WaterTable water;
     [SerializeField] private ReactTable react;
@@ -154,23 +155,23 @@ public class SimulationScript : MonoBehaviour
         }
 
 
-        if (_myTexts[21].text == "Включить")
-        {
-            ElectoroObject.SetActive(true);
-            NoElectroObject.SetActive(false);
-            ElectoroObjectTable.SetActive(true);
-            kataz.enabled = true;
-            katazOutElectro.enabled = false;
-        }
-        else if (_myTexts[21].text == "Отключить")
-        {
-            ElectoroObject.SetActive(false);
-            NoElectroObject.SetActive(true);
-            ElectoroObjectTable.SetActive(false);
-            ElectroFilter.text = "Эффект. электрофильтра: 0%";
-            kataz.enabled = false;
-            katazOutElectro.enabled = true;
-        }
+        //if (_myTexts[21].text == "Включить")
+        //{
+        //    ElectoroObject.SetActive(true);
+        //    NoElectroObject.SetActive(false);
+        //    ElectoroObjectTable.SetActive(true);
+        //    kataz.enabled = true;
+        //    katazOutElectro.enabled = false;
+        //}
+        //else if (_myTexts[21].text == "Отключить")
+        //{
+        //    ElectoroObject.SetActive(false);
+        //    NoElectroObject.SetActive(true);
+        //    ElectoroObjectTable.SetActive(false);
+        //    ElectroFilter.text = "Эффект. электрофильтра: 0%";
+        //    kataz.enabled = false;
+        //    katazOutElectro.enabled = true;
+        //}
 
         
 
@@ -182,7 +183,7 @@ public class SimulationScript : MonoBehaviour
         }
         if (_startSimulationTemp && _startSimulationContent)
         {
-            electro.interactable = false;
+            //electro.interactable = false;
             electroInput.interactable = false;
             katazScriptWith1_1.text.interactable = false;
             kataz1.interactable = false;
@@ -223,7 +224,7 @@ public class SimulationScript : MonoBehaviour
         }
         else
         {
-            electro.interactable = true;
+            //electro.interactable = true;
             electroInput.interactable = true;
             katazScriptWith1_1.text.interactable = true;
             kataz1.interactable = true;
@@ -243,6 +244,7 @@ public class SimulationScript : MonoBehaviour
             }
             _electroFilter.Play("NewColecAnimStop");
             _myCollector.StopColumnProcess();
+            coolDisplay.StopDelay();
             _myCatalizator.StopSimulation();
             tables.SetActive(false);
             foreach (PlayableDirector fluid in _myFluidsWater)
@@ -325,6 +327,7 @@ public class SimulationScript : MonoBehaviour
 
         elec.isEnable = true;
         elec.RecalculateData();
+        coolDisplay.isEnbale = true;
         shelosh.isEnable = true;
         water.isEnable = true;
         react.isEnable = true;

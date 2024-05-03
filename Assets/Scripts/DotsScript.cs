@@ -8,7 +8,6 @@ public class DotsScript : MonoBehaviour
     public Transform spawnArea;
     public int numberOfPrefabs = 200; 
     public float respawnTime = 10f;
-
     public Transform parentObject;
 
     private int spawnedCount = 0;
