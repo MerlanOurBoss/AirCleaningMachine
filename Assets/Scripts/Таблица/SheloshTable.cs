@@ -71,13 +71,15 @@ public class SheloshTable : MonoBehaviour
     private float shelosh_CH4_exit;
     private float shelosh_H2S_exit;
 
-    private float delay = 16f;
+    public float delay;
+    private float delayPrivate;
 
     public TextMeshProUGUI[] tablesData;
     public ParticleSystem[] smokes;
     public bool isEnable = false;
     void Start()
     {
+        delayPrivate = delay;
         shelosh_Temperature = float.Parse(tablesData[0].text);
         shelosh_Dust = float.Parse(tablesData[1].text);
         shelosh_SolidParticles = float.Parse(tablesData[2].text);
@@ -208,7 +210,7 @@ public class SheloshTable : MonoBehaviour
     }
     public void RepeatCalculateShelosh()
     {
-        delay = 19f;
+        delay = delayPrivate;
         isEnable = true;
         shelosh_Temperature = float.Parse(tablesData[0].text);
         shelosh_Dust = float.Parse(tablesData[1].text);

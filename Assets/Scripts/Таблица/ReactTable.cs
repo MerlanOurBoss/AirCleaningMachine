@@ -71,7 +71,8 @@ public class ReactTable : MonoBehaviour
     private float react_CH4_exit;
     private float react_H2S_exit;
 
-    private float delay = 38f;
+    public float delay;
+    private float delayPrivate; 
 
     public TextMeshProUGUI[] tablesData;
     public ParticleSystem[] smokes;
@@ -79,6 +80,7 @@ public class ReactTable : MonoBehaviour
     public bool isEnable = false;
     void Start()
     {
+        delayPrivate = delay;
         react_Temperature = float.Parse(tablesData[0].text);
         react_Dust = float.Parse(tablesData[1].text); 
         react_SolidParticles = float.Parse(tablesData[2].text); 
@@ -203,7 +205,7 @@ public class ReactTable : MonoBehaviour
 
     public void RepeatCalculateReact()
     {
-        delay = 19f;
+        delay = delayPrivate;
         isEnable = true;
         react_Temperature = float.Parse(tablesData[0].text);
         react_Dust = float.Parse(tablesData[1].text);

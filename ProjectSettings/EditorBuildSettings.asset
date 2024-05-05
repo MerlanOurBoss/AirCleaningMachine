@@ -10,7 +10,7 @@ EditorBuildSettings:
     guid: 193da58a8899aad4391ed89d6dd343e0
   - enabled: 1
     path: Assets/Scenes/Construct Scenes/1/1.unity
-    guid: 13a4cfcbcdec0694e85e718396dcd622
+    guid: 8c5ddc850c9828f4bafa8463a35948c2
   - enabled: 1
     path: Assets/Scenes/Construct Scenes/1/2.unity
     guid: 07987db249b196743958f7cd5dd769f9
@@ -30,6 +30,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Construct Scenes/2/3.unity
     guid: aa1ea9c9b24ddfa4681973a5378c6a43
   - enabled: 1
+    path: Assets/Scenes/Construct Scenes/3/1.unity
+    guid: 62c76d1ce8ec3824989389262ff94e16
+  - enabled: 1
     path: Assets/Scenes/Construct Scenes/3/2.unity
     guid: 2f7020544a1d6174a95534e880b7da4e
+  - enabled: 1
+    path: Assets/Scenes/Construct Scenes/3/3.unity
+    guid: 393182e395d8a3c46ad85db1f3b9c186
   m_configObjects: {}

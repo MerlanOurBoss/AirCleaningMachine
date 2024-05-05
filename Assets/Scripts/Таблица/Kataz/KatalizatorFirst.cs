@@ -50,7 +50,6 @@ public class KatalizaotrFirst : MonoBehaviour
     private float kataz_N2;
 
     private float delay = 2f;
-    public SimulationScript _scriptSim;
     public TextMeshProUGUI[] tablesData;
     public TextMeshProUGUI[] originTablesData;
 

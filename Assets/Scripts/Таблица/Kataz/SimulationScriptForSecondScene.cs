@@ -55,6 +55,7 @@ public class SimulationScriptForSecondScene : MonoBehaviour
     [SerializeField] private KatalizatorTableOutElectro katazOutElectro;
 
     [SerializeField] private CoolingDisplays coolDisplay;
+    [SerializeField] private SheloshTable shelosh;
     [SerializeField] private WaterTable water;
     [SerializeField] private ReactTable react;
     [SerializeField] private SborTable sbor;
@@ -343,6 +344,7 @@ public class SimulationScriptForSecondScene : MonoBehaviour
         elec.RecalculateData();
         coolDisplay.isEnbale = true;
         water.isEnable = true;
+        shelosh.isEnable = true;
         react.isEnable = true;
         sbor.isEnable = true;   
         for (int i = 0; i <= 8; i++)

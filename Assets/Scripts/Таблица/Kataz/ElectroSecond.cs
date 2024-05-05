@@ -62,7 +62,8 @@ public class ElectroSecond : MonoBehaviour
     private float elec_O2;
     private float elec_N2;
 
-    private float delay = 13f;
+    public float delay;
+    private float delayPrivate;
 
     public TextMeshProUGUI[] tablesData;
     public ParticleSystem[] smokes;
@@ -70,6 +71,7 @@ public class ElectroSecond : MonoBehaviour
     public bool isEnable = false;
     void Start()
     {
+        delayPrivate = delay;
         elec_Temperature = float.Parse(tablesData[0].text);
         elec_Dust = float.Parse(tablesData[1].text);
         elec_SolidParticle = float.Parse(tablesData[2].text);
@@ -245,7 +247,7 @@ public class ElectroSecond : MonoBehaviour
     public void RepeatCalculateelecz()
     {
         //Electrofilter_Temperature_enter.onValueChanged.RemoveListener(delegate { RepeatCalculateelecz(); });
-        delay = 12f;
+        delay = delayPrivate;
         isEnable = true;
         elec_Temperature = float.Parse(tablesData[0].text);
         elec_Dust = float.Parse(tablesData[1].text);

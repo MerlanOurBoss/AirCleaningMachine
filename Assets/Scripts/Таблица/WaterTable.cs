@@ -71,13 +71,15 @@ public class WaterTable : MonoBehaviour
     private float water_CH4_exit;
     private float water_H2S_exit;
 
-    private float delay = 20f;
+    public float delay;
+    private float delayPrivate;
 
     public TextMeshProUGUI[] tablesData;
     public ParticleSystem[] smokes;
     public bool isEnable = false;
     void Start()
     {
+        delayPrivate = delay;
         water_Temperature = float.Parse(tablesData[0].text);
         water_Dust = float.Parse(tablesData[1].text);
         water_SolidParticles = float.Parse(tablesData[2].text);
@@ -208,7 +210,7 @@ public class WaterTable : MonoBehaviour
     }
     public void RepeatCalculateWater()
     {
-        delay = 19f;
+        delay = delayPrivate;
         isEnable = true;
         water_Temperature = float.Parse(tablesData[0].text);
         water_Dust = float.Parse(tablesData[1].text);
