@@ -109,7 +109,7 @@ public class KatalizaotrFirst : MonoBehaviour
                         item.startColor = new Color(0.9f, 0.9f, 0.9f, 0.3f);
                     }
                 }
-                else if (Katalizaotr_Dust_enter.value > 200 && Katalizaotr_Dust_enter.value < 300)
+                else if (Katalizaotr_Dust_enter.value > 200 && Katalizaotr_Dust_enter.value <= 300)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -131,7 +131,7 @@ public class KatalizaotrFirst : MonoBehaviour
                         item.startColor = new Color(0.8f, 0.8f, 0.8f, 0.3f);
                     }
                 }
-                else if (Katalizaotr_Zola_enter.value > 100 && Katalizaotr_Zola_enter.value < 200)
+                else if (Katalizaotr_Zola_enter.value > 100 && Katalizaotr_Zola_enter.value <= 200)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -152,7 +152,7 @@ public class KatalizaotrFirst : MonoBehaviour
                     smokes[1].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[2].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                 }
-                else if (Katalizaotr_Zola_enter.value > 100 && Katalizaotr_Zola_enter.value < 200)
+                else if (Katalizaotr_Zola_enter.value > 100 && Katalizaotr_Zola_enter.value <= 200)
                 {
                     smokes[0].startColor = new Color(0f, 0f, 0f, 1f);
                     smokes[1].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);

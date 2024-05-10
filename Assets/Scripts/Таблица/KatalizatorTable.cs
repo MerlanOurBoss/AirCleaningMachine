@@ -62,7 +62,8 @@ public class KatalizatorTable : MonoBehaviour
     private float kata_O2;
     private float kata_N2;
 
-    private float delay = 13f;
+    public float delay;
+    private float delayPrivate;
 
     public TextMeshProUGUI[] tablesData;
     public ParticleSystem[] smokes;
@@ -70,6 +71,7 @@ public class KatalizatorTable : MonoBehaviour
     public bool isEnable = false;
     void Start()
     {
+        delayPrivate = delay;
         kata_Temperature = float.Parse(tablesData[0].text);
         kata_Dust = float.Parse(tablesData[1].text);
         kata_SolidParticles = float.Parse(tablesData[2].text);
@@ -119,7 +121,7 @@ public class KatalizatorTable : MonoBehaviour
                         item.startColor = new Color(0.9f, 0.9f, 0.9f, 0.3f);
                     }
                 }
-                else if (Katalizator_Dust_enter.value > 20 && Katalizator_Dust_enter.value < 30)
+                else if (Katalizator_Dust_enter.value > 20 && Katalizator_Dust_enter.value <= 30)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -141,7 +143,7 @@ public class KatalizatorTable : MonoBehaviour
                         item.startColor = new Color(0.8f, 0.8f, 0.8f, 0.3f);
                     }
                 }
-                else if (Katalizator_Zola_enter.value > 10 && Katalizator_Zola_enter.value < 20)
+                else if (Katalizator_Zola_enter.value > 10 && Katalizator_Zola_enter.value <= 20)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -225,7 +227,7 @@ public class KatalizatorTable : MonoBehaviour
     public void RepeatCalculateKataz()
     {
         //Katalizator_Temperature_enter.onValueChanged.RemoveListener(delegate { RepeatCalculateKataz(); });
-        delay = 12f;
+        delay = delayPrivate;
         isEnable = true;
         kata_Temperature = float.Parse(tablesData[0].text);
         kata_Dust = float.Parse(tablesData[1].text);

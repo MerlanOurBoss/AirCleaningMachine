@@ -127,7 +127,7 @@ public class ReactTable : MonoBehaviour
                         item.startColor = new Color(1f, 1f, 1f, 0.2f);
                     }
                 }
-                else if (React_SolidParticle_enter.value > 2 && React_SolidParticle_enter.value < 5)
+                else if (React_SolidParticle_enter.value > 2 && React_SolidParticle_enter.value <= 5)
                 {
                     foreach (ParticleSystem item in smokes)
                     {

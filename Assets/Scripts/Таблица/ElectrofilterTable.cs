@@ -107,7 +107,7 @@ public class ElectrofilterTable : MonoBehaviour
                     smokes[1].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[2].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                 }
-                else if (ElectroFilter_Dust_enter.value > 200 && ElectroFilter_Dust_enter.value < 300)
+                else if (ElectroFilter_Dust_enter.value > 200 && ElectroFilter_Dust_enter.value <= 300)
                 {
                     smokes[0].startColor = new Color(0f, 0f, 0f, 1f);
                     smokes[1].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
@@ -130,7 +130,7 @@ public class ElectrofilterTable : MonoBehaviour
                         item.startSpeed = 4.5f;
                     }
                 }
-                else if (ElectroFilter_SolidParticles_enter.value > 400 && ElectroFilter_SolidParticles_enter.value < 500)  
+                else if (ElectroFilter_SolidParticles_enter.value > 400 && ElectroFilter_SolidParticles_enter.value <= 500)  
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -152,7 +152,7 @@ public class ElectrofilterTable : MonoBehaviour
                     smokes[1].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[2].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                 }
-                else if (ElectroFilter_Zola_enter.value > 100 && ElectroFilter_Zola_enter.value < 200)
+                else if (ElectroFilter_Zola_enter.value > 100 && ElectroFilter_Zola_enter.value <= 200)
                 {
                     smokes[0].startColor = new Color(0f, 0f, 0f, 1f);
                     smokes[1].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);

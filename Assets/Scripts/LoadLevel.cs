@@ -49,5 +49,13 @@ public class LoadLevel : MonoBehaviour
         {
             SceneManager.LoadScene(scenes[8]);
         }
+        if (typeOfSystem.text == "4 Классический " && numberOfEmul.text == "1")
+        {
+            SceneManager.LoadScene(scenes[9]);
+        }
+        if (typeOfSystem.text == "4 Классический " && numberOfEmul.text == "2")
+        {
+            SceneManager.LoadScene(scenes[10]);
+        }
     }
 }

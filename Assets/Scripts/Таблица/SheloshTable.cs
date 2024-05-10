@@ -127,7 +127,7 @@ public class SheloshTable : MonoBehaviour
                         item.startColor = new Color(1f, 1f, 1f, 0.5f);
                     }
                 }
-                else if (Shelosh_SolidParticle_enter.value > 20 && Shelosh_SolidParticle_enter.value < 50)
+                else if (Shelosh_SolidParticle_enter.value > 20 && Shelosh_SolidParticle_enter.value <= 50)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
