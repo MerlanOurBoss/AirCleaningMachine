@@ -48,6 +48,9 @@ TagManager:
   - CO2_Parent
   - SpawnInObj
   - Pipe
+  - Pipe_T
+  - Pipe_90
+  - ConnectionPoint
   layers:
   - Default
   - TransparentFX
@@ -58,7 +61,7 @@ TagManager:
   - Collider
   - Dots
   - Pipe
-  - 
+  - PipeConnection
   - 
   - 
   - 

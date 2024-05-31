@@ -60,11 +60,15 @@ public class CameraRotation : MonoBehaviour
 
     public void onScroll()
     {
-        Debug.Log("scrolling");
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) offset.z += zoom;
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0) offset.z -= zoom;
-        offset.z = Mathf.Clamp(offset.z, -Mathf.Abs(zoomMax), -Mathf.Abs(zoomMin));
-        transform.position = transform.localRotation * offset + target.position;
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            Debug.Log("scrolling");
+            if (Input.GetAxis("Mouse ScrollWheel") > 0) offset.z += zoom;
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0) offset.z -= zoom;
+            offset.z = Mathf.Clamp(offset.z, -Mathf.Abs(zoomMax), -Mathf.Abs(zoomMin));
+            transform.position = transform.localRotation * offset + target.position;
+        }
+        
     }
     public void setReact()
     {
