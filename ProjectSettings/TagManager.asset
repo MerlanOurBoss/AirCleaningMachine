@@ -51,6 +51,22 @@ TagManager:
   - Pipe_T
   - Pipe_90
   - ConnectionPoint
+  - Facilities
+  - Pipe_45
+  - Facilities_Capsul
+  - Facilities_DryAir
+  - Facilities_Steam
+  - Smoke
+  - Facilities_Oven
+  - StartSmoke
+  - VFX
+  - TriggerForOven
+  - TriggerForCollector
+  - TriggerForDryAir
+  - TriggerForSteam
+  - SmokeDryAir
+  - SmokeStream
+  - TriggerToDryAir
   layers:
   - Default
   - TransparentFX
@@ -62,7 +78,7 @@ TagManager:
   - Dots
   - Pipe
   - PipeConnection
-  - 
+  - Facilities
   - 
   - 
   - 
@@ -93,4 +109,7 @@ TagManager:
     locked: 0
   - name: Buble
     uniqueID: 2894471921
+    locked: 0
+  - name: SmokeNew
+    uniqueID: 1777173509
     locked: 0

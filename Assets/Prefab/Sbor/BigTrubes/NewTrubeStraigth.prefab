@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5654200169724890452}
   - component: {fileID: 4345914466125781092}
   - component: {fileID: 1508583594016650129}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Target2
   m_TagString: ConnectionPoint
   m_Icon: {fileID: 0}
@@ -68,7 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entrance: {fileID: 8043935822422722340}
+  isConnected: 0
   isClicked: 0
+  isActivated: 0
 --- !u!54 &1508583594016650129
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -85,10 +87,10 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -110,6 +112,7 @@ GameObject:
   - component: {fileID: 5436126822483364964}
   - component: {fileID: 8392959264656976368}
   - component: {fileID: 217822209873189645}
+  - component: {fileID: 1211347730524526768}
   m_Layer: 8
   m_Name: NewTrubeStraigth
   m_TagString: Pipe
@@ -162,7 +165,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53c36de3fe81b2a41bb98fb4613eea53, type: 2}
+  - {fileID: 2100000, guid: 3729418ba48186e41936299fdf6e2b2b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -201,7 +204,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 63.6, y: 14.4, z: 14.3}
   m_Center: {x: -31.18, y: 0, z: 0}
@@ -225,6 +228,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   isSelected: 1
+  isConnected: 0
+  isActivated: 0
+  mouseOffset: {x: 1, y: 1, z: 0}
 --- !u!54 &217822209873189645
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -252,6 +258,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &1211347730524526768
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3748451919365321489}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7468461995773229039, guid: 21d927a1e767d82419def5c17cb8a685, type: 3}
 --- !u!1 &7589348897474068527
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,7 +292,7 @@ GameObject:
   - component: {fileID: 4827992461991786855}
   - component: {fileID: 2782372967097993482}
   - component: {fileID: 790081266177539573}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Target1
   m_TagString: ConnectionPoint
   m_Icon: {fileID: 0}
@@ -320,7 +348,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entrance: {fileID: 1961535548194111657}
+  isConnected: 0
   isClicked: 0
+  isActivated: 0
 --- !u!54 &790081266177539573
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -337,10 +367,10 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
