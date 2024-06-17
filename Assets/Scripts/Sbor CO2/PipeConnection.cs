@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 
@@ -15,6 +16,7 @@ public class PipeConnection : MonoBehaviour
         if (isClicked)
         {
             FindSelectedObject();
+            FindSelectedFacilities();
         }
         if (isConnected)
         {
@@ -41,6 +43,7 @@ public class PipeConnection : MonoBehaviour
     void FindSelectedObject()
     {
         MoveObjectWithMouse[] moveScript = FindObjectsOfType<MoveObjectWithMouse>();
+
         foreach (MoveObjectWithMouse obj in moveScript)
         {
             MoveObjectWithMouse script = obj.GetComponent<MoveObjectWithMouse>(); 
@@ -48,6 +51,20 @@ public class PipeConnection : MonoBehaviour
             if (script != null && script.isSelected && script.isActivated == false)
             {
                 HandlePipe(obj.gameObject, 0, 0, 0, 0, 0, 0, "pipe");
+                return;
+            }
+        }
+    }
+
+    void FindSelectedFacilities()
+    {
+        MovingFacilities[] moveFace = FindObjectsOfType<MovingFacilities>();
+
+        foreach (MovingFacilities obj in moveFace)
+        {
+            if (obj != null && obj.isDragging)
+            {
+                HandleFacilities(obj.gameObject, gameObject.transform.position.x, obj.transform.position.y, gameObject.transform.position.z, 0, 0, 0, "pipe");
                 return;
             }
         }
@@ -90,16 +107,6 @@ public class PipeConnection : MonoBehaviour
             }                
         }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Pipe"))
-    //    {
-    //        gameObject.GetComponent<Collider>().enabled = false;
-    //        gameObject.tag = "Untagged";
-    //    }
-    //}
-
     private void HandlePipe(GameObject other, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, string debugMessage)
     {
         Debug.Log(debugMessage);
@@ -109,6 +116,19 @@ public class PipeConnection : MonoBehaviour
         other.GetComponent<MoveObjectWithMouse>().isDragging = false;
         Destroy(other.GetComponent<BoxCollider>());
         other.gameObject.tag = "Untagged";
+        isClicked = false;
+        isConnected = true;
+    }
+
+    private void HandleFacilities(GameObject other, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, string debugMessage)
+    {
+        Debug.Log(debugMessage);
+        //other.transform.SetParent(transform);
+        other.transform.position = new Vector3(posX, posY, posZ);
+        other.transform.localScale = new Vector3(1, 1, 1);
+        other.GetComponent<MovingFacilities>().isDragging = false;
+        //Destroy(other.GetComponent<BoxCollider>());
+        //other.gameObject.tag = "Untagged";
         isClicked = false;
         isConnected = true;
     }

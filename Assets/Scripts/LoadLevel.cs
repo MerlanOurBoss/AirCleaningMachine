@@ -57,5 +57,9 @@ public class LoadLevel : MonoBehaviour
         {
             SceneManager.LoadScene(scenes[10]);
         }
+        if (typeOfSystem.text == "Конструктор")
+        {
+            SceneManager.LoadScene(scenes[11]);
+        }
     }
 }
