@@ -35,13 +35,10 @@ public class NewCollectors : MonoBehaviour
     public Material[] absent;
 
     public Color targetColor;
-    public Material _cylinder;
+    public Animator waterFilling;
 
     [SerializeField] private ParticleSystem _mySmoke;
     [SerializeField] private ParticleSystem _mySmoke2;
-
-    [SerializeField] private PlayableDirector flow;
-    [SerializeField] private AlembicStreamPlayer flows;
 
     [SerializeField] private GameObject obj1;
     [SerializeField] private GameObject obj1_1;
@@ -78,12 +75,9 @@ public class NewCollectors : MonoBehaviour
     private float fifth_display = 0;
     private float sixth_display = 0;
 
-    public float cylinder_filling = -29f;
-    private float a;
 
     void Start()
     {
-        a = cylinder_filling;
         absent[0].color = Color.white;
         absent[1].color = Color.white;
 
@@ -107,17 +101,13 @@ public class NewCollectors : MonoBehaviour
 
     void Update()
     {
-        _cylinder.SetFloat("_Filling", cylinder_filling);
         displays[0].text = first_display.ToString("0.");
         displays[1].text = second_display.ToString("0.");
         displays[2].text = third_display.ToString("0.");
         displays[3].text = fourth_display.ToString("0.");
         displays[4].text = fifth_display.ToString("0.");
         displays[5].text = sixth_display.ToString("0.");
-        if (cylinder_filling >= 29)
-        {
-            cylinder_filling = -29;
-        }
+
         if (_startingDelay)
         {
             delay -= 1 * Time.deltaTime;
@@ -226,14 +216,8 @@ public class NewCollectors : MonoBehaviour
                 }
                 else if (fillingCount > 85 && fillingCount < 90)
                 {
-                    flow.Play();
+                    waterFilling.Play("WaterAnimation");
                     //first_display = Mathf.Lerp(first_display, 1950f, 2 * Time.deltaTime);
-                }
-                else if (fillingCount > 105 && fillingCount < 125)
-                {
-                    flow.Stop();
-                    flows.CurrentTime = 0;
-                    cylinder_filling = Mathf.Lerp(cylinder_filling, cylinder_filling + 3, 1 * Time.deltaTime);
                 }
                 else if (fillingCount > 150 && fillingCount < 152)
                 {
@@ -346,14 +330,9 @@ public class NewCollectors : MonoBehaviour
                 }
                 else if (fillingCount > 85 && fillingCount < 90)
                 {
-                    flow.Play();
+                    waterFilling.Play("WaterAnimation");
                 }
-                else if (fillingCount > 105 && fillingCount < 125)
-                {
-                    flow.Stop();
-                    flows.CurrentTime = 0;
-                    cylinder_filling = Mathf.Lerp(cylinder_filling, cylinder_filling + 3, 1 * Time.deltaTime);
-                }
+
                 else if (fillingCount > 150 && fillingCount < 152)
                 {
                     hotAir_First.Play();
@@ -365,8 +344,6 @@ public class NewCollectors : MonoBehaviour
                     co2_FourthTubeOut.Stop();
                     co2_FifthTubeOut.Stop();
                     co2_SixthTubeOut.Stop();
-                    
-                    flows.CurrentTime = 0;
 
                 }
                 else if (fillingCount > 168 && fillingCount < 170)
@@ -443,7 +420,6 @@ public class NewCollectors : MonoBehaviour
         _startingProcess = false;
         _startingDelay = false;
         fillingCount = 0;
-        cylinder_filling = -29;
 
         obj1.SetActive(true);
         obj1_1.SetActive(false);
