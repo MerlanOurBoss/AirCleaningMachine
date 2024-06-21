@@ -67,6 +67,15 @@ TagManager:
   - SmokeDryAir
   - SmokeStream
   - TriggerToDryAir
+  - Facilities_Emul
+  - TriggerForEmul
+  - TriggerForCoolingSystem
+  - Facilities_Cool
+  - TriggerForElectro
+  - Facilities_Electro
+  - TriggerForKataz
+  - Facilities_Kataz
+  - TipForEmul
   layers:
   - Default
   - TransparentFX

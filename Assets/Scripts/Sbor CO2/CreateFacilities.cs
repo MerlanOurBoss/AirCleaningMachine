@@ -7,7 +7,7 @@ public class CreateFacilities : MonoBehaviour
     public GameObject prefabToSpawn;
     public Transform spawnPosition;
     public Transform parentTransform;
-    public int RotY = 0;
+    public float RotY = 0;
     public int PosY = 0;
 
     public void SpawnTrube()

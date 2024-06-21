@@ -17,12 +17,31 @@ public class MaterialChange : MonoBehaviour
         SmokeTriggerToSteam ss = FindAnyObjectByType<SmokeTriggerToSteam>();
         SmokeTriggerToDryAir sda = FindAnyObjectByType<SmokeTriggerToDryAir>();
 
-        sm.StartSmoke();
-        so.StartSmoke();
-        sc.StartSmoke();
-        ss.StartSmoke();
-        sda.StartSmoke();
+        if (sm != null)
+        {
+            sm.StartSmoke();
+        }
 
+        if (so != null)
+        {
+            so.StartSmoke();
+        }
+        
+        if (sc != null)
+        {
+            sc.StartSmoke();
+        }
+        
+        if (ss != null)
+        {
+            ss.StartSmoke();
+        }
+        
+        if (sda != null)
+        {
+            sda.StartSmoke();
+        }
+        
         smoke.GetComponent<ParticleSystem>().Play();
         MoveObjectWithMouse[] moveScript = FindObjectsOfType<MoveObjectWithMouse>();
         foreach (MoveObjectWithMouse move in moveScript)

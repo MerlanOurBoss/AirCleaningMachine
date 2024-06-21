@@ -16,7 +16,7 @@ public class PipeConnection : MonoBehaviour
         if (isClicked)
         {
             FindSelectedObject();
-            FindSelectedFacilities();
+            //FindSelectedFacilities();
         }
         if (isConnected)
         {
@@ -56,19 +56,19 @@ public class PipeConnection : MonoBehaviour
         }
     }
 
-    void FindSelectedFacilities()
-    {
-        MovingFacilities[] moveFace = FindObjectsOfType<MovingFacilities>();
+    //void FindSelectedFacilities()
+    //{
+    //    MovingFacilities[] moveFace = FindObjectsOfType<MovingFacilities>();
 
-        foreach (MovingFacilities obj in moveFace)
-        {
-            if (obj != null && obj.isDragging)
-            {
-                HandleFacilities(obj.gameObject, gameObject.transform.position.x, obj.transform.position.y, gameObject.transform.position.z, 0, 0, 0, "pipe");
-                return;
-            }
-        }
-    }
+    //    foreach (MovingFacilities obj in moveFace)
+    //    {
+    //        if (obj != null && obj.isDragging)
+    //        {
+    //            HandleFacilities(obj.gameObject, gameObject.transform.position.x, obj.transform.position.y, gameObject.transform.position.z, 0, 0, 0, "pipe");
+    //            return;
+    //        }
+    //    }
+    //}
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))
@@ -120,16 +120,16 @@ public class PipeConnection : MonoBehaviour
         isConnected = true;
     }
 
-    private void HandleFacilities(GameObject other, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, string debugMessage)
-    {
-        Debug.Log(debugMessage);
-        //other.transform.SetParent(transform);
-        other.transform.position = new Vector3(posX, posY, posZ);
-        other.transform.localScale = new Vector3(1, 1, 1);
-        other.GetComponent<MovingFacilities>().isDragging = false;
-        //Destroy(other.GetComponent<BoxCollider>());
-        //other.gameObject.tag = "Untagged";
-        isClicked = false;
-        isConnected = true;
-    }
+    //private void HandleFacilities(GameObject other, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, string debugMessage)
+    //{
+    //    Debug.Log(debugMessage);
+    //    //other.transform.SetParent(transform);
+    //    other.transform.position = new Vector3(posX, posY, posZ);
+    //    other.transform.localScale = new Vector3(1, 1, 1);
+    //    other.GetComponent<MovingFacilities>().isDragging = false;
+    //    //Destroy(other.GetComponent<BoxCollider>());
+    //    //other.gameObject.tag = "Untagged";
+    //    isClicked = false;
+    //    isConnected = true;
+    //}
 }

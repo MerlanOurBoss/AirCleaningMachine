@@ -15,10 +15,15 @@ public class MovingFacilities : MonoBehaviour
 
     public Vector3 mouseOffset = new Vector3(1.0f, 1.0f, 0.0f);
 
+    private string startTag;
     void Start()
     {
         objectCollider = GetComponent<Collider>();
         mainCamera = Camera.main;
+
+        startTag = gameObject.tag;
+
+
     }
     bool IsChildCollider(Collider collider)
     {
@@ -52,7 +57,9 @@ public class MovingFacilities : MonoBehaviour
             {
                 if (!IsChildCollider(hit.collider))
                 {
-                    if (hit.transform == transform && (gameObject.tag == "Facilities" || gameObject.tag == "Facilities_Capsul" || gameObject.tag == "Facilities_Stream" || gameObject.tag == "Facilities_DryAir" || gameObject.tag == "Facilities_Oven"))
+                    if (hit.transform == transform && (gameObject.tag == "Facilities" || gameObject.tag == "Facilities_Capsul" || gameObject.tag == "Facilities_Stream" 
+                        || gameObject.tag == "Facilities_DryAir" || gameObject.tag == "Facilities_Oven" || gameObject.tag == "Facilities_Emul" 
+                        || gameObject.tag == "Facilities_Cool" || gameObject.tag == "Facilities_Electro" || gameObject.tag == "Facilities_Kataz"))
                     {
                         isSelected = true;
                         isDragging = !isDragging;
@@ -75,11 +82,23 @@ public class MovingFacilities : MonoBehaviour
         }
         if ( Input.GetKey(KeyCode.R))
         {
-            gameObject.tag = "Facilities";
+            gameObject.tag = startTag;
             gameObject.GetComponent<Collider>().enabled = true;
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (gameObject.GetComponent<ChamgingEmul>()  != null && isSelected == true)
+            {
+                gameObject.GetComponent<ChamgingEmul>().ChangingE();
+            }
+                
         }
         if (isSelected)
         {
+            if (gameObject.GetComponent<ChamgingEmul>() != null )
+            {
+                FindAnyObjectByType<FindEmulTag>().tip.SetActive(true);
+            }
             if (Input.GetKeyDown(KeyCode.A))
             {
                 transform.Rotate(0f, -90f, 0f);
@@ -96,7 +115,13 @@ public class MovingFacilities : MonoBehaviour
             gameObject.GetComponent<Collider>().enabled = false;
             gameObject.tag = "Untagged";
         }
-
+        if (!isSelected)
+        {
+            if (gameObject.GetComponent<ChamgingEmul>() != null )
+            {
+                FindAnyObjectByType<FindEmulTag>().tip.SetActive(false);
+            }
+        }
 
         if (isDragging)
         {
