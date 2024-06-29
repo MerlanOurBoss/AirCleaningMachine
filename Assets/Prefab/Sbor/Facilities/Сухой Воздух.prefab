@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 7618307638755579786}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: DryAir
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5415,13 +5415,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7529368231200405335}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 13.55, y: 33.43, z: -0.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7618307638755579786}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!65 &8764380762200486066
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5441,7 +5441,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.9, y: 16, z: 16}
+  m_Size: {x: 16, y: 3.9, z: 16}
   m_Center: {x: 0.24, y: 0, z: 0}
 --- !u!114 &3201033231814009435
 MonoBehaviour:

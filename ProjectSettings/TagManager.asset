@@ -76,6 +76,15 @@ TagManager:
   - TriggerForKataz
   - Facilities_Kataz
   - TipForEmul
+  - Emul
+  - Electro
+  - Cooling
+  - Kataz
+  - Sbor
+  - Collector
+  - Par
+  - DryAir
+  - Oven
   layers:
   - Default
   - TransparentFX
