@@ -8,7 +8,7 @@ public class TemperatureCatalizator : MonoBehaviour
     public Material firstMaterial;
     public Material secondMaterial;
     public Material thirdMaterial;
-    public ParticleSystem[] fire;
+    [SerializeField] private ParticleSystem[] fire;
     public Animator anim;
     public TextMeshProUGUI texTemp1;
     public TextMeshProUGUI texTemp2;
@@ -19,7 +19,7 @@ public class TemperatureCatalizator : MonoBehaviour
     public Color thirdColor;
     public KatalizatorScript kataz;
 
-    private float delay = 18f;
+    private float delay = 6f;
     private float firsTemp1 = 26;
     private float firsTemp2 = 26;
     private bool canTemp1 = false;
@@ -80,11 +80,11 @@ public class TemperatureCatalizator : MonoBehaviour
         }
         
 
-        if (delay < 10 && !canTemp1)
+        if (delay < 5 && !canTemp1)
         {
             firsTemp2 = Mathf.Lerp(firsTemp2, 160, 1.5f * Time.deltaTime);
         }
-        if (delay < 8 && !canTemp2)
+        if (delay < 3 && !canTemp2)
         {
             firsTemp1 = Mathf.Lerp(firsTemp1, 160, 1.5f * Time.deltaTime);
         }
@@ -100,12 +100,13 @@ public class TemperatureCatalizator : MonoBehaviour
 
     public void StartSimulation()
     {
+        anim.Play("Catalizaotr_Anim");
+        canStart = true;
         foreach (ParticleSystem item in fire)
         {
             item.Play();
         }
-        anim.Play("Catalizaotr_Anim");
-        canStart = true;
+
     }
 
     public void StopSimulation()
@@ -114,7 +115,7 @@ public class TemperatureCatalizator : MonoBehaviour
         {
             item.Stop();
         }
-        delay = 18f;
+        delay = 6f;
         canStart = false;
         anim.StopPlayback();
         anim.StopPlayback();

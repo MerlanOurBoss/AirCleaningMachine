@@ -4,38 +4,41 @@ using UnityEngine;
 
 public class SmokeTriggerForOven : MonoBehaviour
 {
-    public string needTag = "";
-    private ParticleSystem ps;
-    public GameObject colliders;
+    [SerializeField] string _targetTag;
+    [SerializeField] string _colliderTargetTag;
 
+    private ParticleSystem ps;
     private bool hasTriggered = false;
     void Start()
     {
         ps = gameObject.GetComponent<ParticleSystem>();
-
-    }
-    private void Update()
-    {
-        colliders = GameObject.FindGameObjectWithTag(needTag);
-    }
-    public void StartSmoke()
-    {
-        if (colliders != null)
-        {
-            ps.trigger.AddCollider(colliders.GetComponent<Collider>());
-        }
     }
 
     [System.Obsolete]
-    private void OnParticleTrigger()
+    private void OnParticleCollision(GameObject other)
     {
-        Debug.Log("Smoke entered to trigger");
-        CapsulScript cs = GameObject.FindAnyObjectByType<CapsulScript>();
-
-        if (!hasTriggered)
+        if (other.CompareTag(_targetTag))
         {
-            cs.isTriggerFromOven = true;
-            hasTriggered = true;
+            Debug.Log(other.name);
+            GeneralManagerForElectroFilter parent = other.transform.GetComponent<GeneralManagerForElectroFilter>();
+            if (parent != null)
+            {
+                parent.StartElectroFilterSystem();
+            }
+            if (!hasTriggered)
+            {
+                Collider[] allChildColliders = other.GetComponentsInChildren<Collider>();
+
+                foreach (Collider childCollider in allChildColliders)
+                {
+                    if (childCollider.CompareTag(_colliderTargetTag))
+                    {
+                        childCollider.isTrigger = true;
+                        ps.trigger.AddCollider(childCollider);
+                    }
+                }
+                hasTriggered = true;
+            }
         }
     }
 }

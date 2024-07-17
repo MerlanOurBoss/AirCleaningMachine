@@ -8,7 +8,7 @@ public class PipeConnectionTest : MonoBehaviour
 {
     // Assign the pipe prefabs in the inspector
     public GameObject straightPipePrefab;
-    public GameObject curvedPipePrefab;
+    public GameObject[] curvedPipePrefabs; // Array of curved pipe prefabs for different rotations
     public GameObject starterCurvedPipePrefab;
 
     // Assign the two objects between which the pipe will be placed
@@ -17,7 +17,6 @@ public class PipeConnectionTest : MonoBehaviour
 
     public float pipeOffset = 0.1f; // Set the offset between pipes
     public float verticalOffset = 0.1f; // Offset to place pipes above the 
-
 
     void Start()
     {
@@ -30,13 +29,17 @@ public class PipeConnectionTest : MonoBehaviour
         Vector3 midPoint;
 
         // Check if the X, Y, or Z coordinates are approximately equal within ±5 units
-        bool xEqual = Mathf.Abs(startPos.x - endPos.x) <= 10f; 
-        bool yEqual = Mathf.Abs(startPos.y - endPos.y) <= 10f; 
-        bool zEqual = Mathf.Abs(startPos.z - endPos.z) <= 10f; 
+        bool xEqual = Mathf.Abs(startPos.x - endPos.x) <= 10f;
+        bool yEqual = Mathf.Abs(startPos.y - endPos.y) <= 10f;
+        bool zEqual = Mathf.Abs(startPos.z - endPos.z) <= 10f;
 
         // Check if either object1 or object2 has localEulerAngles.z equal to 90 degrees
         bool object1ZRotated = Mathf.Approximately(object1.localEulerAngles.z, 90f);
         bool object2ZRotated = Mathf.Approximately(object2.localEulerAngles.z, 90f);
+
+        Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
+        Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+        Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
         if (xEqual && yEqual)
         {
@@ -53,7 +56,7 @@ public class PipeConnectionTest : MonoBehaviour
         else if (yEqual && zEqual && object2ZRotated) //////////////////////////////////////////////////////////// offset addded
         {
             // Create a straight pipe along the X axis
-            Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
+            
             midPoint = (startPos + endPos) / 2f;
 
             midPoint.y += verticalOffset;
@@ -82,7 +85,7 @@ public class PipeConnectionTest : MonoBehaviour
             CreateStraightPipe((startPos + intermediatePos) / 2f, intermediatePos - startPos, (intermediatePos - startPos).magnitude);
             CreateCurvedPipeY(intermediatePos, intermediatePos - startPos, endPos - intermediatePos);
             CreateStraightPipe((intermediatePos + endPos) / 2f, endPos - intermediatePos, (endPos - intermediatePos).magnitude);
-            
+
         }
         else if (zEqual)
         {
@@ -91,7 +94,7 @@ public class PipeConnectionTest : MonoBehaviour
             CreateStraightPipe((startPos + intermediatePos) / 2f, intermediatePos - startPos, (intermediatePos - startPos).magnitude);
             CreateCurvedPipe(intermediatePos, intermediatePos - startPos, endPos - intermediatePos);
             CreateStraightPipe((intermediatePos + endPos) / 2f, endPos - intermediatePos, (endPos - intermediatePos).magnitude);
-            
+
         }
         else if ((!zEqual && !xEqual && !yEqual) && object1ZRotated && object2ZRotated)
         {
@@ -119,7 +122,7 @@ public class PipeConnectionTest : MonoBehaviour
             float horizontalOffset = 10f; // Change this value as needed
 
             CreateStraightPipe((startPos + intermediatePos1) / 2f, intermediatePos1 - startPos, (intermediatePos1 - startPos).magnitude);
-            CreateCurvedPipe(intermediatePos1 + Vector3.right * horizontalOffset, intermediatePos1 - startPos, intermediatePos2 - intermediatePos1);
+            CreateCurvedPipe(midPointX, midPointX,midPointZ);
             CreateStraightPipe((intermediatePos1 + intermediatePos2) / 2f, intermediatePos2 - intermediatePos1, (intermediatePos2 - intermediatePos1).magnitude);
             CreateCurvedPipe(intermediatePos2 + Vector3.right * horizontalOffset, intermediatePos2 - intermediatePos1, endPos - intermediatePos2);
             CreateStraightPipe((intermediatePos2 + endPos) / 2f, endPos - intermediatePos2, (endPos - intermediatePos2).magnitude);
@@ -144,162 +147,54 @@ public class PipeConnectionTest : MonoBehaviour
 
     void CreateCurvedPipe(Vector3 position, Vector3 startDirection, Vector3 endDirection)
     {
-        // Instantiate the curved pipe prefab at the specified position
-        GameObject pipe = Instantiate(curvedPipePrefab, position, Quaternion.identity);
+        // Calculate the direction for the curve
+        Vector3 curveDirection = endDirection - startDirection;
+        Vector3 normalizedDirection = curveDirection.normalized;
+
+        // Determine the type of curved pipe to use based on the curve direction
+        int curveType = GetCurveType(normalizedDirection);
+
+        // Instantiate the appropriate curved pipe prefab
+        GameObject pipe = Instantiate(curvedPipePrefabs[curveType], position, Quaternion.identity);
 
         // Calculate the rotation needed to align the curved pipe
         Vector3 direction = startDirection - endDirection;
+        //Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-        // Rotate the pipe to align with the average direction
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        // Check the x rotation and adjust if needed
-
-        // Apply the calculated rotation to the pipe
-        pipe.transform.rotation = targetRotation;
-
-        Debug.Log(pipe.transform.localRotation.x);
-        Debug.Log(pipe.transform.eulerAngles.x);
-        Debug.Log(pipe.transform.localEulerAngles.x);
-        Debug.Log(pipe.transform.localEulerAngles.z);
-
-        if (pipe.transform.localEulerAngles.x > 0)
-        {
-            if (pipe.transform.localEulerAngles.x > 256f)
-            {
-                pipe.transform.localRotation = Quaternion.Euler(0f, pipe.transform.localEulerAngles.y, pipe.transform.localEulerAngles.z);
-            }
-            else
-                pipe.transform.localRotation = Quaternion.Euler(90f, pipe.transform.localEulerAngles.y, pipe.transform.localEulerAngles.z);
-        }
-        else if (pipe.transform.localEulerAngles.x == 0)
-        {
-            pipe.transform.localRotation = Quaternion.Euler(90f, pipe.transform.localEulerAngles.y, pipe.transform.localEulerAngles.z);
-        }
-        else
-        {
-            pipe.transform.localRotation = Quaternion.Euler(0f, pipe.transform.localEulerAngles.y, pipe.transform.localEulerAngles.z);
-        }
-
-
-        //if (pipe.transform.localEulerAngles.y > 0)
-        //{
-        //    if (pipe.transform.localEulerAngles.y > 256f)
-        //    {
-        //        pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, 0f, pipe.transform.localEulerAngles.z);
-        //    }
-        //    else
-        //        pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, 90f, pipe.transform.localEulerAngles.z);
-        //}
-        //else if (pipe.transform.localEulerAngles.y == 0)
-        //{
-        //    pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, 90f, pipe.transform.localEulerAngles.z);
-        //}
-        //else
-        //{
-        //    pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, 0f, pipe.transform.localEulerAngles.z);
-        //}
-
-
-        //if (pipe.transform.localEulerAngles.z > 0)
-        //{
-        //    if (pipe.transform.localEulerAngles.z > 256f)
-        //    {
-        //        pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, pipe.transform.localEulerAngles.y, 0f);
-        //    }
-        //    else
-        //        pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, pipe.transform.localEulerAngles.y, 90f);
-        //}
-        //else if (pipe.transform.localEulerAngles.z == 0)
-        //{
-        //    pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, pipe.transform.localEulerAngles.y, 90f);
-        //}
-        //else
-        //{
-        //    pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, pipe.transform.localEulerAngles.y, 90f);
-        //}
+        //// Apply the calculated rotation to the pipe
+        //pipe.transform.rotation = targetRotation;
     }
 
     void CreateCurvedPipeY(Vector3 position, Vector3 startDirection, Vector3 endDirection)
     {
-        // Instantiate the curved pipe prefab at the specified position
-        GameObject pipe = Instantiate(curvedPipePrefab, position, Quaternion.identity);
+        // Implementation for Y-axis curved pipe
+    }
 
-        // Calculate the rotation needed to align the curved pipe
+    void CreateStarterCurvedPipe(Vector3 position, Vector3 startDirection, Vector3 endDirection)
+    {
+        // Instantiate the starter curved pipe prefab at the specified position
+        GameObject pipe = Instantiate(starterCurvedPipePrefab, position, Quaternion.identity);
+
+        // Calculate the rotation needed to align the starter curved pipe
         Vector3 direction = startDirection - endDirection;
-
-        // Rotate the pipe to align with the average direction
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        // Check the x rotation and adjust if needed
 
         // Apply the calculated rotation to the pipe
         pipe.transform.rotation = targetRotation;
-
-        Debug.Log(pipe.transform.localRotation.x);
-        Debug.Log(pipe.transform.eulerAngles.x);
-        Debug.Log(pipe.transform.localEulerAngles.x);
-        Debug.Log(pipe.transform.localEulerAngles.z);
-
-        if (pipe.transform.localEulerAngles.x > 0)
-        {
-            if (pipe.transform.localEulerAngles.x > 256f)
-            {
-                pipe.transform.localRotation = Quaternion.Euler(0f, pipe.transform.localEulerAngles.y, pipe.transform.localEulerAngles.z);
-            }
-            else
-                pipe.transform.localRotation = Quaternion.Euler(90f, pipe.transform.localEulerAngles.y, pipe.transform.localEulerAngles.z);
-        }
-        else if (pipe.transform.localEulerAngles.x == 0)
-        {
-            pipe.transform.localRotation = Quaternion.Euler(90f, pipe.transform.localEulerAngles.y, pipe.transform.localEulerAngles.z);
-        }
-        else
-        {
-            pipe.transform.localRotation = Quaternion.Euler(0f, pipe.transform.localEulerAngles.y, pipe.transform.localEulerAngles.z);
-        }
-
-        if (pipe.transform.localEulerAngles.y > 0)
-        {
-            if (pipe.transform.localEulerAngles.y > 256f)
-            {
-                pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, 0f, pipe.transform.localEulerAngles.z);
-            }
-            else
-                pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, 90f, pipe.transform.localEulerAngles.z);
-        }
-        else if (pipe.transform.localEulerAngles.y == 0)
-        {
-            pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, 90f, pipe.transform.localEulerAngles.z);
-        }
-        else
-        {
-            pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, 0f, pipe.transform.localEulerAngles.z);
-        }
-
-        if (pipe.transform.localEulerAngles.z > 0)
-        {
-            if (pipe.transform.localEulerAngles.z > 256f)
-            {
-                pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, pipe.transform.localEulerAngles.y, 0f);
-            }
-            else
-                pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, pipe.transform.localEulerAngles.y, 90f);
-        }
-        else if (pipe.transform.localEulerAngles.z == 0)
-        {
-            pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, pipe.transform.localEulerAngles.y, 90f);
-        }
-        else
-        {
-            pipe.transform.localRotation = Quaternion.Euler(pipe.transform.localEulerAngles.x, pipe.transform.localEulerAngles.y, 90f);
-        }
     }
 
-    void CreateStarterCurvedPipe(Vector3 position, Vector3 start, Vector3 end)
+    int GetCurveType(Vector3 curveDirection)
     {
-        GameObject curvedPipe = Instantiate(starterCurvedPipePrefab, position, Quaternion.identity);
-
-        curvedPipe.transform.LookAt(end);
-
-        curvedPipe.transform.position = position;
+        // Determine the type of curve based on the direction of the curve
+        if (curveDirection == Vector3.up)
+            return 3; // Turn up
+        else if (curveDirection == Vector3.down)
+            return 2; // Turn down
+        else if (curveDirection == Vector3.right)
+            return 0; // Turn right
+        else if (curveDirection == Vector3.left)
+            return 1; // Turn left
+        else
+            return 0; // Default to right turn
     }
 }

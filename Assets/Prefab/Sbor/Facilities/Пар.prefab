@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 5965337729697924742}
   - component: {fileID: 6426089992632353569}
   - component: {fileID: 1866603805855868622}
+  - component: {fileID: 94211484156629713}
   m_Layer: 0
   m_Name: Par Came First Tube
   m_TagString: SmokeStream
@@ -3657,7 +3658,7 @@ ParticleSystem:
     type: 1
     collisionMode: 0
     colliderForce: 1
-    multiplyColliderForceByParticleSize: 0
+    multiplyColliderForceByParticleSize: 1
     multiplyColliderForceByParticleSpeed: 0
     multiplyColliderForceByCollisionAngle: 1
     m_Planes: []
@@ -3825,11 +3826,11 @@ ParticleSystem:
     radiusScale: 2
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 1151
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -4876,8 +4877,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4f2e8d9eaacab4ba1ccbefcc0be021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  needTag: TriggerForSteam
-  colliders: {fileID: 0}
+  _targetTag: Facilities_Capsul
+  _colliderTargetTag: TriggerForSteam
+--- !u!114 &94211484156629713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5207858278605693538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8cf769c7485f14ab7e48a2f531782d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetTag: Klapon
+  _colliderTargetTag: Klapon
 --- !u!1 &5633646850883644328
 GameObject:
   m_ObjectHideFlags: 0

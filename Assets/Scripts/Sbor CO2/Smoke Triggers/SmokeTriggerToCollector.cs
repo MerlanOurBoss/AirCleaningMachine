@@ -30,7 +30,7 @@ public class SmokeTriggerToCollector : MonoBehaviour
     private void OnParticleTrigger()
     {
         Debug.Log("Smoke entered to trigger");
-        colliders = GameObject.FindGameObjectWithTag(needTag);
+        
         GameObject smokeFromDryAir = GameObject.FindGameObjectWithTag("SmokeDryAir");
 
         if (!hasTriggered)

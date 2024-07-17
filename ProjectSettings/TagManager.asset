@@ -85,6 +85,8 @@ TagManager:
   - Par
   - DryAir
   - Oven
+  - Emul2
+  - Klapon
   layers:
   - Default
   - TransparentFX

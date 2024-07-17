@@ -73,7 +73,7 @@ public class CapsulScript : MonoBehaviour
                 smokeToCollector.Play();
                 smokeInCapsul.Stop();
                 smokeOutCapsul.Stop();
-                hasTriggered1 = false;
+                hasTriggered1 = true;
             }
                 
             bool a1 = false;

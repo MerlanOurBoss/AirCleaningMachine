@@ -56,19 +56,6 @@ public class PipeConnection : MonoBehaviour
         }
     }
 
-    //void FindSelectedFacilities()
-    //{
-    //    MovingFacilities[] moveFace = FindObjectsOfType<MovingFacilities>();
-
-    //    foreach (MovingFacilities obj in moveFace)
-    //    {
-    //        if (obj != null && obj.isDragging)
-    //        {
-    //            HandleFacilities(obj.gameObject, gameObject.transform.position.x, obj.transform.position.y, gameObject.transform.position.z, 0, 0, 0, "pipe");
-    //            return;
-    //        }
-    //    }
-    //}
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))

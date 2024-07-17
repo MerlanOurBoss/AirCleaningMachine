@@ -174,11 +174,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6, y: 6, z: 6}
+  m_Size: {x: 12, y: 6, z: 12}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1399051275036715902
 GameObject:
@@ -5439,6 +5439,7 @@ GameObject:
   - component: {fileID: 4306924103219574066}
   - component: {fileID: 908239639360537658}
   - component: {fileID: 7840519610951919379}
+  - component: {fileID: 5278351432046708655}
   m_Layer: 0
   m_Name: CO2 First Tube Out
   m_TagString: Untagged
@@ -5455,7 +5456,7 @@ Transform:
   m_GameObject: {fileID: 3286693775877748419}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.90000594, y: 75.369995, z: 28.61127}
+  m_LocalPosition: {x: -0.47, y: 75.369995, z: 29.38}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6100,7 +6101,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 1}
+    m_Scale: {x: 0.7, y: 0.7, z: 0.7}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -9220,11 +9221,11 @@ ParticleSystem:
     radiusScale: 3
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 1151
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -10271,8 +10272,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ada114dc2e3654e46a9f8e23e945ceb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  needTag: TriggerForCollector
-  colliders: {fileID: 0}
+  _targetTag: Facilities_Capsul
+  _colliderTargetTag: TriggerForCollector
+--- !u!114 &5278351432046708655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3286693775877748419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8cf769c7485f14ab7e48a2f531782d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetTag: Klapon
+  _colliderTargetTag: Klapon
 --- !u!1 &3532383911875135151
 GameObject:
   m_ObjectHideFlags: 0
@@ -15988,11 +16003,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 5, z: 5}
+  m_Size: {x: 10, y: 10, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4860407406725460808
 GameObject:
@@ -16117,7 +16132,7 @@ GameObject:
   - component: {fileID: 4961288243551336554}
   m_Layer: 6
   m_Name: 'Trigger1 '
-  m_TagString: TriggerForOven
+  m_TagString: Facilities_Capsul
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16152,7 +16167,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -16386,10 +16401,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9061269622441237660}
-  - component: {fileID: 2664367554927718349}
   m_Layer: 10
   m_Name: Triggera
-  m_TagString: Untagged
+  m_TagString: Facilities_Capsul
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16412,32 +16426,6 @@ Transform:
   - {fileID: 1678758763421791624}
   m_Father: {fileID: 4737483861217378397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2664367554927718349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5328098067722829753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9189a45496580fc40826bee759d5c300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTriggerFromOven: 0
-  isTriggerFromDryAir: 0
-  isTriggerFromSteam: 0
-  smokeToCollector: {fileID: 4306924103219574066}
-  smokeInCapsul: {fileID: 34657012422591054}
-  smokeOutCapsul: {fileID: 2683017910523162277}
-  absent: {fileID: 2100000, guid: deb4e7eaccf17e541a2ef3af4e4b8d0a, type: 2}
-  displays:
-  - {fileID: 7651387798445976437}
-  - {fileID: 1697631028869061674}
-  - {fileID: 4111055933177070922}
-  targetColor: {r: 0.4292453, g: 0.8749742, b: 1, a: 1}
-  smokeFromStream: {fileID: 0}
-  a: 0
 --- !u!1 &5333077473389494799
 GameObject:
   m_ObjectHideFlags: 0
@@ -17487,6 +17475,7 @@ GameObject:
   - component: {fileID: 8047711836837298816}
   - component: {fileID: 6849745205146078636}
   - component: {fileID: 7793972529392418687}
+  - component: {fileID: 8038339122823423869}
   m_Layer: 10
   m_Name: Capsul First
   m_TagString: Facilities_Capsul
@@ -17584,3 +17573,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8038339122823423869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9152649718795703574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9189a45496580fc40826bee759d5c300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTriggerFromOven: 0
+  isTriggerFromDryAir: 0
+  isTriggerFromSteam: 0
+  smokeToCollector: {fileID: 4306924103219574066}
+  smokeInCapsul: {fileID: 34657012422591054}
+  smokeOutCapsul: {fileID: 2683017910523162277}
+  absent: {fileID: 2100000, guid: deb4e7eaccf17e541a2ef3af4e4b8d0a, type: 2}
+  displays:
+  - {fileID: 7651387798445976437}
+  - {fileID: 1697631028869061674}
+  - {fileID: 4111055933177070922}
+  targetColor: {r: 0.4292453, g: 0.8749742, b: 1, a: 1}
+  smokeFromStream: {fileID: 0}
+  a: 0

@@ -10,6 +10,5 @@ public class CreateTrube : MonoBehaviour
     public void SpawnTrube()
     {
         Instantiate(prefabToSpawn, spawnPosition.position, Quaternion.identity);
-        prefabToSpawn.GetComponent<MoveObjectWithMouse>().isDragging = true;
     }
 }

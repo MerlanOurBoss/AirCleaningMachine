@@ -4,43 +4,41 @@ using UnityEngine;
 
 public class SmokeFindTrigger : MonoBehaviour
 {
-    public string needTag = "";
-    private ParticleSystem ps;
-    public GameObject colliders;
+    [SerializeField] string _targetTag;
+    [SerializeField] string _colliderTargetTag;
 
+    private ParticleSystem ps;
     private bool hasTriggered = false;
+
     void Start()
     {
         ps = gameObject.GetComponent<ParticleSystem>();
-
-    }
-    private void Update()
-    {
-        colliders = GameObject.FindGameObjectWithTag(needTag);
-    }
-    public void StartSmoke()
-    {
-        if (colliders != null)
-        {
-            ps.trigger.AddCollider(colliders.GetComponent<Collider>());
-        }
     }
 
     [System.Obsolete]
-    private void OnParticleTrigger()
+    private void OnParticleCollision(GameObject other)
     {
-        Debug.Log("Smoke entered to trigger");
-        colliders = GameObject.FindGameObjectWithTag(needTag);
-        
-        if (!hasTriggered)
+        if (other.CompareTag(_targetTag))
         {
-            int i = colliders.transform.GetChildCount();
-            for (int j = 0; j < i; j++)
+            if (!hasTriggered)
             {
-                colliders.transform.GetChild(j).GetComponent<ParticleSystem>().Play();
+                Collider[] allChildColliders = other.GetComponentsInChildren<Collider>();
+
+                foreach (Collider childCollider in allChildColliders)
+                {
+                    if (childCollider.CompareTag(_colliderTargetTag))
+                    {
+                        int i = childCollider.transform.GetChildCount();
+                        for (int j = 0; j < i; j++)
+                        {
+                            childCollider.transform.GetChild(j).GetComponent<ParticleSystem>().Play();
+                        }
+                        hasTriggered = true;
+                    }
+                }
             }
-            hasTriggered = true;
+
+
         }
     }
-
 }

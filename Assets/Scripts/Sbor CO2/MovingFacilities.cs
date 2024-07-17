@@ -113,7 +113,7 @@ public class MovingFacilities : MonoBehaviour
             isSelected = false;
             isDragging = false;
             gameObject.GetComponent<Collider>().enabled = false;
-            gameObject.tag = "Untagged";
+            //gameObject.tag = "Untagged";
         }
         if (!isSelected)
         {
