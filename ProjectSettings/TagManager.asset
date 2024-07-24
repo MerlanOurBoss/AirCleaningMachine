@@ -87,6 +87,7 @@ TagManager:
   - Oven
   - Emul2
   - Klapon
+  - Gate
   layers:
   - Default
   - TransparentFX

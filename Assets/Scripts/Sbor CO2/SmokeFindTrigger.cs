@@ -23,7 +23,7 @@ public class SmokeFindTrigger : MonoBehaviour
             if (!hasTriggered)
             {
                 Collider[] allChildColliders = other.GetComponentsInChildren<Collider>();
-
+                other.GetComponent<CollectorScript>().isTrigger = true;
                 foreach (Collider childCollider in allChildColliders)
                 {
                     if (childCollider.CompareTag(_colliderTargetTag))

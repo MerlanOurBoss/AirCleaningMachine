@@ -26,8 +26,7 @@ public class SimulationScriptForFourthScene: MonoBehaviour
     [SerializeField] private TextMeshProUGUI _simulationText;
 
     [SerializeField] private Animator _electroFilter;
-    [SerializeField] private Animator _lightBulb;
-    [SerializeField] private NewCollectors _myCollector;
+    [SerializeField] private NewSborScript _myCollector;
     [SerializeField] private TemperatureCatalizator _myCatalizator;
 
     [SerializeField] private GameObject ComponentsCameras;
@@ -54,7 +53,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
     [SerializeField] private ElectroSecond elec;
     [SerializeField] private KatalizatorTableOutElectro katazOutElectro;
 
-    [SerializeField] private CoolingDisplays coolDisplay;
     [SerializeField] private SheloshTable shelosh;
     [SerializeField] private WaterEmulFirst water;
     [SerializeField] private ReactTable react;
@@ -258,9 +256,8 @@ public class SimulationScriptForFourthScene: MonoBehaviour
             }
             _electroFilter.Play("NewColecAnimStop");
             _myCollector.StopColumnProcess();
-            coolDisplay.StopDelay();
+            
             _myCatalizator.StopSimulation();
-            _lightBulb.Play("LightsAnimationStops");
             tables.SetActive(false);
             foreach (PlayableDirector fluid in _myFluidsWater)
             {
@@ -301,7 +298,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
 
             _myCollector.StartColumnProcess3();
             _myCatalizator.StartSimulation();
-            _lightBulb.Play("LightsAnimation");
             foreach (DropSpawner drop in _dropSpawns)
             {
                 drop.startCor();
@@ -342,7 +338,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
 
         water.isEnable = true;
         water.RecalculateData();
-        coolDisplay.isEnbale = true;
         elec.isEnable = true;
         shelosh.isEnable = true;
         react.isEnable = true;

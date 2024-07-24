@@ -58,7 +58,7 @@ public class CapsulScript : MonoBehaviour
                 first_display = Mathf.Lerp(first_display, 100f, 2 * Time.deltaTime);
                 if (ApproximatelyEqual(first_display, 100f))
                 {
-                    smokeFromStream.GetComponent<ParticleSystem>().Play();
+                    //smokeFromStream.GetComponent<ParticleSystem>().Play();
                     a = true;
                 }
             }
