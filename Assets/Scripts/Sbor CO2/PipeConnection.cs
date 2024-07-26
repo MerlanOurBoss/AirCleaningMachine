@@ -102,7 +102,7 @@ public class PipeConnection : MonoBehaviour
         other.transform.localScale = new Vector3(1,1,1);
         other.GetComponent<MoveObjectWithMouse>().isDragging = false;
         Destroy(other.GetComponent<BoxCollider>());
-        other.gameObject.tag = "Untagged";
+        //other.gameObject.tag = "Untagged";
         isClicked = false;
         isConnected = true;
     }

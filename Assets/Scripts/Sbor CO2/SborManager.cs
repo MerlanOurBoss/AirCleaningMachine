@@ -5,8 +5,25 @@ using UnityEngine;
 
 public class SborManager : MonoBehaviour
 {
+    public GameObject prefabSborCO2;
+
+    private GameObject obj;
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        SpawnPrefab();
+        //DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (obj == null)
+        {
+            SpawnPrefab();
+        }
+    }
+
+    void SpawnPrefab()
+    {
+        obj = Instantiate(prefabSborCO2, gameObject.transform);
     }
 }

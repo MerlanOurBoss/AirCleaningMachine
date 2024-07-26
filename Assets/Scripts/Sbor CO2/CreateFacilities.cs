@@ -10,6 +10,10 @@ public class CreateFacilities : MonoBehaviour
     public float RotY = 0;
     public int PosY = 0;
 
+    private void Update()
+    {
+        parentTransform = GameObject.FindGameObjectWithTag("SborCO2").transform;
+    }
     public void SpawnTrube()
     {
         Instantiate(prefabToSpawn, new Vector3(spawnPosition.position.x, spawnPosition.position.y - PosY, spawnPosition.position.z), new Quaternion(0, RotY, 0,0), parentTransform);

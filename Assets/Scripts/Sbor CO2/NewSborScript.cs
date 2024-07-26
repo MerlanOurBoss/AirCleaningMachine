@@ -31,8 +31,17 @@ public class NewSborScript : MonoBehaviour
     private float fillingCount = 0;
     private int count = 0;
 
+    public GameObject[] gates;
     void Start()
     {
+        gates[1].SetActive(true);
+        gates[3].SetActive(true);
+        gates[5].SetActive(true);
+
+        gates[0].SetActive(false);
+        gates[2].SetActive(false);
+        gates[4].SetActive(false);
+
         absent.color = Color.white;
     }
 
@@ -70,12 +79,22 @@ public class NewSborScript : MonoBehaviour
 
                 Invoke("AbsentOn", 5f);
 
+                gates[0].SetActive(true);
+                gates[1].SetActive(false);
+
+
+                gates[4].SetActive(false);
+                gates[5].SetActive(true);
+
+
                 if (fillingCount >= 150)
                 {
                     filling = false;
                     unfilling = true;
                     count++;
                     fillingCount = 0;
+                    gates[2].SetActive(false);
+                    gates[3].SetActive(true);
                 }
             }
         }
@@ -98,6 +117,12 @@ public class NewSborScript : MonoBehaviour
 
                 Invoke("AbsentOff", 5f);
 
+                gates[4].SetActive(true);
+                gates[5].SetActive(false);
+
+                gates[0].SetActive(false);
+                gates[1].SetActive(true);
+
 
                 if (fillingCount >= 150)
                 {
@@ -105,6 +130,8 @@ public class NewSborScript : MonoBehaviour
                     unfilling = false;
                     count= 0;
                     fillingCount = 0;
+                    gates[2].SetActive(true);
+                    gates[3].SetActive(false);
                 }
             }
         }

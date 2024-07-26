@@ -41,7 +41,7 @@ public class MaterialChange : MonoBehaviour
 
     public void BackColor()
     {
-            GameObject smoke = GameObject.FindGameObjectWithTag("StartSmoke");
+        GameObject smoke = GameObject.FindGameObjectWithTag("StartSmoke");
         if (smoke != null)
         {
             MoveObjectWithMouse[] moveScript = FindObjectsOfType<MoveObjectWithMouse>();

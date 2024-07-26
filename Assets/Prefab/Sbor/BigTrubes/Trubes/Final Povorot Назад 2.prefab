@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9033668870494037372}
   m_Layer: 6
   m_Name: "Final Povorot \u041D\u0430\u0437\u0430\u0434 2"
-  m_TagString: Untagged
+  m_TagString: Pipe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

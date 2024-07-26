@@ -94,6 +94,7 @@ TagManager:
   - LittleKataz
   - Facilities_Emul_Reagent
   - Facilities_Emul_Soda
+  - SborCO2
   layers:
   - Default
   - TransparentFX
