@@ -21717,6 +21717,7 @@ GameObject:
   - component: {fileID: 2049455667279185583}
   - component: {fileID: 4436595111365817773}
   - component: {fileID: 4866286411508823823}
+  - component: {fileID: 6658779087825008624}
   m_Layer: 9
   m_Name: Target1 Sbor
   m_TagString: ConnectionPoint
@@ -21803,6 +21804,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6658779087825008624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8097216886419779739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94fb9a56deef4d243a9c06b4d6802d7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8202549937246427644
 GameObject:
   m_ObjectHideFlags: 0

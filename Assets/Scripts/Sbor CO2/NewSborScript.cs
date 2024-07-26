@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class NewSborScript : MonoBehaviour
 {
-    public ParticleSystem smokeToExit;
     public ParticleSystem smokeInCapsul;
+    public ParticleSystem smokeOutCapsul;
+    public ParticleSystem smokeOutCapsulSecond;
+    public ParticleSystem smokeParInCapsul;
 
     public TextMeshProUGUI display;
 
@@ -57,6 +59,9 @@ public class NewSborScript : MonoBehaviour
                 if (fillingCount < 1)
                 {
                     smokeInCapsul.Play();
+                    smokeOutCapsul.Play();
+                    smokeParInCapsul.Stop();
+                    smokeOutCapsulSecond.Stop();
                 }
                 if (fillingCount > 60 && fillingCount < 80)
                 {
@@ -81,8 +86,10 @@ public class NewSborScript : MonoBehaviour
                 fillingCount += 5 * Time.deltaTime;
 
                 gate.SetActive(true);
-                smokeToExit.Play();
+                smokeParInCapsul.Play();
+                smokeOutCapsulSecond.Play();
                 smokeInCapsul.Stop();
+                smokeOutCapsul.Stop();
 
                 if (fillingCount > 60 && fillingCount < 80)
                 {
@@ -124,10 +131,9 @@ public class NewSborScript : MonoBehaviour
         _startingProcess = false;
         _startingDelay = false;
         fillingCount = 0;
-        delay = delayUpdate;
         gate.SetActive(true);
 
-        smokeToExit.Stop();
+        smokeOutCapsul.Stop();
         smokeInCapsul.Stop();
 
         absent.color = Color.Lerp(absent.color, Color.white, .15f * Time.fixedDeltaTime);

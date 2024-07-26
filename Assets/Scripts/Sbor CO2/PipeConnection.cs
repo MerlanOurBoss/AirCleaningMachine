@@ -66,8 +66,8 @@ public class PipeConnection : MonoBehaviour
                 {
                     Debug.Log("connected for " + other.gameObject.name);
                     //this.enabled = false;
-                    gameObject.GetComponent<Collider>().enabled = false;
-                    gameObject.tag = "Untagged";
+                    //gameObject.GetComponent<Collider>().enabled = false;
+                    //gameObject.tag = "Untagged";
                     PipeConnection otherScript = other.GetComponent<PipeConnection>();
                     Collider collider = other.GetComponent<Collider>();
                     
@@ -87,8 +87,8 @@ public class PipeConnection : MonoBehaviour
                     if (otherScript != null)
                     {
                         //otherScript.enabled = false;
-                        collider.enabled = false;
-                        other.tag = "Untagged";
+                        //collider.enabled = false;
+                        //other.tag = "Untagged";
                     }
                 }
             }                

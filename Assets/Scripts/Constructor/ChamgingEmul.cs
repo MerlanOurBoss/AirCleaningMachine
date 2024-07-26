@@ -25,6 +25,7 @@ public class ChamgingEmul : MonoBehaviour
             {
                 item.material = blued;
             }
+            gameObject.tag = "Facilities_Emul";
         }
         if (countWater == 2)
         {
@@ -37,6 +38,7 @@ public class ChamgingEmul : MonoBehaviour
             {
                 item.material = reded;
             }
+            gameObject.tag = "Facilities_Emul_Reagent";
         }
         if (countWater == 3)
         {
@@ -49,6 +51,7 @@ public class ChamgingEmul : MonoBehaviour
             {
                 item.material = greened;
             }
+            gameObject.tag = "Facilities_Emul_Soda";
         }
         if (countWater > 3)
         {

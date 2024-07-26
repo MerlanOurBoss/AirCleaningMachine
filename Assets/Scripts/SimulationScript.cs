@@ -45,6 +45,7 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Katalizator;
     [SerializeField] private TextMeshProUGUI WaterEmul;
     [SerializeField] private TextMeshProUGUI ReactEmul;
+    [SerializeField] private TextMeshProUGUI SheloshEmul;
     [SerializeField] private TextMeshProUGUI SborCO2;
 
     [SerializeField] private GameObject tables;
@@ -146,6 +147,12 @@ public class SimulationScript : MonoBehaviour
         {
             float resReact = float.Parse(_myTexts[16].text[.._myTexts[16].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[17].text[.._myTexts[17].text.IndexOf(" ")]);
             ReactEmul.text = "Эффект. реагент. эмуль.: " + (resReact * 100).ToString("0.") + " %";
+        }
+
+        if (_myTexts[24].text != " " && _myTexts[25].text != " ")
+        {
+            float resReact = float.Parse(_myTexts[24].text[.._myTexts[24].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[25].text[.._myTexts[25].text.IndexOf(" ")]);
+            SheloshEmul.text = "Эффект. реагент. эмуль.: " + (resReact * 100).ToString("0.") + " %";
         }
 
         if (_myTexts[18].text != " " && _myTexts[19].text != " ")

@@ -21,6 +21,9 @@ public class LookAroundScript : MonoBehaviour
     public GameObject sphere;
     public GameObject[] curvedPipes;
 
+    public GameObject littlePipePrefab;
+    public GameObject littlecurvedPipePrefabForStartsAndEnds;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // Detect left mouse button click
@@ -145,6 +148,22 @@ public class LookAroundScript : MonoBehaviour
                     {
                         GenerateForElectroAndKataz(startObject.position, endObject.position);
                     }
+                    else if (startObject.parent.tag == "NewSbor" && endObject.parent.tag == "Kataz")
+                    {
+                        //GenerateForKatazAndNewSbor(startObject.position, endObject.position);
+                    }
+                    else if (startObject.parent.tag == "Kataz" && endObject.parent.tag == "NewSbor")
+                    {
+                        GenerateForKatazAndNewSbor(startObject.position, endObject.position);
+                    }
+                    else if (startObject.parent.tag == "LittleKataz" && endObject.parent.tag == "LittleSbor")
+                    {
+                        GenerateLittleForKatazAndNewSbor(startObject.position, endObject.position);
+                    }
+                    else if (startObject.parent.tag == "LittleSbor" && endObject.parent.tag == "LittleKataz")
+                    {
+                        //GenerateForKatazAndNewSbor(startObject.position, endObject.position);
+                    }
                     else
                     {
                         GeneratePipes(startObject.position, endObject.position);
@@ -158,6 +177,7 @@ public class LookAroundScript : MonoBehaviour
 
     void GeneratePipes(Vector3 startPos, Vector3 endPos)
     {
+        
         Vector3 direction = endPos - startPos;
         Vector3 midPoint;
 
@@ -188,21 +208,21 @@ public class LookAroundScript : MonoBehaviour
         {
             // Create a straight pipe along the Z axis
             GameObject parent = new GameObject("parent");
-            parent.AddComponent<ClickForDestroy>();
+            parent.transform.SetParent(endObject.transform);
             CreatePipe(startPos, endPos, parent);
         }
         else if (xEqual && zEqual)
         {
             // Create a straight pipe along the Y axis
             GameObject parent = new GameObject("parent");
-            parent.AddComponent<ClickForDestroy>();
+            parent.transform.SetParent(endObject.transform);
             CreatePipe(startPos, endPos, parent);
         }
         else if (yEqual && zEqual)
         {
             // Create a straight pipe along the X axis
             GameObject parent = new GameObject("parent");
-            parent.AddComponent<ClickForDestroy>();
+            parent.transform.SetParent(endObject.transform);
             CreatePipe(startPos, endPos, parent);
         }
 
@@ -210,8 +230,7 @@ public class LookAroundScript : MonoBehaviour
         else if (xEqual)
         {
             GameObject parent = new GameObject("parent");
-            parent.AddComponent<ClickForDestroy>();
-
+            parent.transform.SetParent(endObject.transform);
             if (startPos.y > endPos.y)
             {
                 Vector3 startNew = startPos;
@@ -235,8 +254,7 @@ public class LookAroundScript : MonoBehaviour
         else if (yEqual)
         {
             GameObject parent = new GameObject("parent");
-            parent.AddComponent<ClickForDestroy>();
-
+            parent.transform.SetParent(endObject.transform);
             if (startPos.x > endPos.x)
             {
                 Vector3 startNew = startPos;
@@ -262,8 +280,7 @@ public class LookAroundScript : MonoBehaviour
         else if (zEqual)
         {
             GameObject parent = new GameObject("parent");
-            parent.AddComponent<ClickForDestroy>();
-
+            parent.transform.SetParent(endObject.transform);
             if (startPos.y > endPos.y)
             {
                 Vector3 startNew = startPos;
@@ -289,8 +306,7 @@ public class LookAroundScript : MonoBehaviour
         else
         {
             GameObject parent = new GameObject("parent");
-            parent.AddComponent<ClickForDestroy>();
-
+            parent.transform.SetParent(endObject.transform);
             if (startPos.y < endPos.y)
             {
                 Vector3 startNew = startPos;
@@ -326,7 +342,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForOvenAndElectro(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
 
         if (startPos.y > endPos.y)
         {
@@ -416,7 +432,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForKatazAndOven(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
         startPos.y += 12;
         if (startPos.y < endPos.y)
         {
@@ -432,7 +448,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForCoolingAndKataz(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
 
         if (startPos.y < endPos.y)
         {
@@ -454,7 +470,8 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForEmulAndCooling(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+
+        parent.transform.SetParent(endObject.transform);
 
         if (startPos.y > endPos.y)
         {
@@ -475,7 +492,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForTwoEmuls(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
 
         if (startPos.y < endPos.y)
         {
@@ -517,7 +534,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForCollectorAndSbor(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
         startPos.y += verticalOffset;
         endPos.y += verticalOffset;
 
@@ -563,7 +580,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForSborAndEmul(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
         if (startPos.y < endPos.y)
         {
             Vector3 startNew = startPos;
@@ -625,7 +642,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForParAndSbor(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
         if (startPos.y < endPos.y)
         {
             Vector3 startNew = startPos;
@@ -654,7 +671,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForDryairAndSbor(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
         if (startPos.y > endPos.y)
         {
             Vector3 startNew = startPos;
@@ -685,7 +702,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForCoolingAndElectro(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
         if (startPos.y < endPos.y)
         {
             Vector3 startNew = startPos;
@@ -706,7 +723,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForOvenAndSbor(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
         startPos.y += verticalOffset;
         endPos.y += verticalOffset;
 
@@ -815,8 +832,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForElectroAndEmul(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
-
+        parent.transform.SetParent(endObject.transform);
         if (startPos.x > endPos.x)
         {
             Vector3 startNew = startPos;
@@ -898,8 +914,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForKatazAndEmul(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
-
+        parent.transform.SetParent(endObject.transform);
         if (startPos.x > endPos.x)
         {
             Vector3 startNew = startPos;
@@ -981,7 +996,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForOvenAndEmul(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
         startPos.y += verticalOffset;
         endPos.y += verticalOffset;
 
@@ -1035,7 +1050,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForElectroAndEmul2(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
 
         if (startPos.x > endPos.x)
         {
@@ -1147,7 +1162,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForKatazAndEmul2(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
 
         if (startPos.x > endPos.x)
         {
@@ -1230,7 +1245,7 @@ public class LookAroundScript : MonoBehaviour
     void GenerateForElectroAndKataz(Vector3 startPos, Vector3 endPos)
     {
         GameObject parent = new GameObject("parent");
-        parent.AddComponent<ClickForDestroy>();
+        parent.transform.SetParent(endObject.transform);
 
         if (startPos.x > endPos.x)
         {
@@ -1306,9 +1321,150 @@ public class LookAroundScript : MonoBehaviour
         }
     }
 
+    void GenerateForKatazAndNewSbor(Vector3 startPos, Vector3 endPos)
+    {
+        GameObject parent = new GameObject("parent");
+        parent.transform.SetParent(endObject.transform);
+        if (startPos.x < endPos.x)
+        {
+            Vector3 startNew = startPos;
+            startPos = endPos;
+            endPos = startNew;
+            Debug.Log("dknaoifubhnsuefg");
+        }
+
+        if (Mathf.Approximately(endObject.parent.parent.localEulerAngles.y, 180))
+        {
+            if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z > endPos.z)
+            {
+                endPos.x -= pipeOffset;
+                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
+                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
+
+                CreatePipeForStart(startPos, midPointX, parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(-180, -90, -90), parent);
+                CreatePipeWithOffset(midPointY, endPos, parent);
+                CreateCurveforNotSpecial(endPos, new Vector3(0, 0, 90), parent);
+                Debug.Log("dasdasdadsasdawdawdawd1212");
+
+            }
+            else if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z < endPos.z)
+            {
+                endPos.x -= pipeOffset;
+                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
+                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
+
+                CreatePipeForStart(startPos, midPointX, parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(180, -90, 90), parent);
+                CreatePipeWithOffset(midPointY, endPos, parent);
+                CreateCurveforNotSpecial(endPos, new Vector3(0, 180, -90), parent);
+                Debug.Log("dasdasdadsasdawdawdawd1212");
+            }
+            else
+            {
+                CreatePipe(startPos, endPos, parent);
+            }
+        }
+        else if (Mathf.Approximately(endObject.parent.parent.localEulerAngles.y, 0))
+        {
+            if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z > endPos.z)
+            {
+                startPos.x += pipeOffset;
+                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
+                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
+
+                CreatePipeForStart(endPos, new Vector3(startPos.x, startPos.y, endPos.z), parent);
+                CreateCurveforNotSpecial(new Vector3(startPos.x, startPos.y, endPos.z), new Vector3(0, 0, -90), parent);
+                CreatePipeWithOffset(new Vector3(startPos.x, startPos.y, endPos.z), startPos, parent);
+                CreateCurveforNotSpecial(startPos, new Vector3(-180, 0, -90), parent);
+                Debug.Log("dasdasdadsasdawdawdawd1212");
+
+            }
+            else if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z < endPos.z)
+            {
+                startPos.x += pipeOffset;
+                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
+                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
+
+                CreatePipeForStart(endPos, new Vector3(startPos.x, startPos.y, endPos.z), parent);
+                CreateCurveforNotSpecial(new Vector3(startPos.x, startPos.y, endPos.z), new Vector3(0, -90, -90), parent);
+                CreatePipeWithOffset(new Vector3(startPos.x, startPos.y, endPos.z), startPos, parent);
+                CreateCurveforNotSpecial(startPos, new Vector3(0, 0, -90), parent);
+                Debug.Log("dasdasdadsasdawdawdawd1212");
+            }
+            else
+            {
+                CreatePipe(startPos, endPos, parent);
+            }
+        }
+    }
+
+    void GenerateLittleForKatazAndNewSbor(Vector3 startPos, Vector3 endPos)
+    {
+        GameObject parent = new GameObject("parent");
+        parent.transform.SetParent(endObject.transform);
+        if (Mathf.Approximately(endObject.parent.parent.localEulerAngles.y, 180))
+        {
+            if (startPos.x > endPos.x)
+            {
+                Vector3 startNew = startPos;
+                startPos = endPos;
+                endPos = startNew;
+                Debug.Log("dknaoifubhnsuefg");
+            }
+
+            Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
+            Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+            Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
+
+            CreateLittleCurveforNotSpecial(endPos, new Vector3(0, 0, 0), parent);
+            CreateLittlePipeWithOffset(midPointY, endPos, parent);
+            CreateLittleCurveforNotSpecial(midPointY, new Vector3(0, 180, 0), parent);
+            CreateLittlePipeWithOffset(midPointX, midPointY, parent);
+            CreateLittleCurveforNotSpecial(midPointX, new Vector3(0, -90, 180), parent);
+            CreateLittlePipeForStart(startPos, midPointX, parent);
+        }
+        else if (Mathf.Approximately(endObject.parent.parent.localEulerAngles.y, 0))
+        {
+            if (startPos.x < endPos.x)
+            {
+                Vector3 startNew = startPos;
+                startPos = endPos;
+                endPos = startNew;
+                Debug.Log("dknaoifubhnsuefg");
+            }
+
+            Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
+            Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+            Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
+
+            CreateLittlePipeForStart(startPos, midPointX, parent);
+            CreateLittleCurveforNotSpecial(midPointX, new Vector3(0, 90, 180), parent);
+            CreateLittlePipeWithOffset(midPointX, midPointY, parent);
+            CreateLittleCurveforNotSpecial(midPointY, new Vector3(0, 0, 0), parent);
+            CreateLittlePipeWithOffset(midPointY, endPos, parent);
+            CreateLittleCurveforNotSpecial(endPos, new Vector3(0, -180, 0), parent);
+        }
+
+
+    }
+
     void CreateCurveforNotSpecial(Vector3 position, Vector3 direction, GameObject parent)
     {
         GameObject curvedPipe = Instantiate(curvedPipePrefabForStartsAndEnds, position, Quaternion.identity);
+        curvedPipe.transform.SetParent(parent.transform);
+        curvedPipe.transform.position = position;
+        curvedPipe.transform.Rotate(direction);
+        curvedPipe.transform.SetParent(parent.transform);
+    }
+
+    void CreateLittleCurveforNotSpecial(Vector3 position, Vector3 direction, GameObject parent)
+    {
+        GameObject curvedPipe = Instantiate(littlecurvedPipePrefabForStartsAndEnds, position, Quaternion.identity);
         curvedPipe.transform.SetParent(parent.transform);
         curvedPipe.transform.position = position;
         curvedPipe.transform.Rotate(direction);
@@ -1330,6 +1486,21 @@ public class LookAroundScript : MonoBehaviour
         Vector3 adjustedEnd = end - direction * pipeOffset;
 
         GameObject pipe = Instantiate(pipePrefab, adjustedStart, Quaternion.identity);
+        direction = adjustedEnd - adjustedStart;
+        float distance = direction.magnitude;
+        pipe.transform.position = (adjustedStart + adjustedEnd) / 2; // Position the pipe in the middle of the two points
+        pipe.transform.up = direction; // Rotate the pipe to face the second point
+        pipe.transform.localScale = new Vector3(pipe.transform.localScale.x, distance / 2, pipe.transform.localScale.z); // Scale the pipe to fit the distance
+        pipe.transform.SetParent(parent.transform);
+    }
+
+    void CreateLittlePipeWithOffset(Vector3 start, Vector3 end, GameObject parent)
+    {
+        Vector3 direction = (end - start).normalized;
+        Vector3 adjustedStart = start + direction * pipeOffset/2.3f;
+        Vector3 adjustedEnd = end - direction * pipeOffset/2.3f;
+
+        GameObject pipe = Instantiate(littlePipePrefab, adjustedStart, Quaternion.identity);
         direction = adjustedEnd - adjustedStart;
         float distance = direction.magnitude;
         pipe.transform.position = (adjustedStart + adjustedEnd) / 2; // Position the pipe in the middle of the two points
@@ -1360,6 +1531,21 @@ public class LookAroundScript : MonoBehaviour
         Vector3 adjustedEnd = end - direction * pipeOffset;
 
         GameObject pipe = Instantiate(pipePrefab, adjustedStart, Quaternion.identity);
+        direction = adjustedEnd - adjustedStart;
+        float distance = direction.magnitude;
+        pipe.transform.position = (adjustedStart + adjustedEnd) / 2; // Position the pipe in the middle of the two points
+        pipe.transform.up = direction; // Rotate the pipe to face the second point
+        pipe.transform.localScale = new Vector3(pipe.transform.localScale.x, distance / 2, pipe.transform.localScale.z); // Scale the pipe to fit the distance
+        pipe.transform.SetParent(parent.transform);
+    }
+
+    void CreateLittlePipeForStart(Vector3 start, Vector3 end, GameObject parent)
+    {
+        Vector3 direction = (end - start).normalized;
+        Vector3 adjustedStart = start + direction;
+        Vector3 adjustedEnd = end - direction * pipeOffset/2.3f;
+
+        GameObject pipe = Instantiate(littlePipePrefab, adjustedStart, Quaternion.identity);
         direction = adjustedEnd - adjustedStart;
         float distance = direction.magnitude;
         pipe.transform.position = (adjustedStart + adjustedEnd) / 2; // Position the pipe in the middle of the two points

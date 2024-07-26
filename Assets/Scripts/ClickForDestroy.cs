@@ -16,7 +16,7 @@ public class ClickForDestroy : MonoBehaviour
                 // Проверка, является ли объект дочерним объектом текущего объекта
                 if (hit.transform.IsChildOf(transform))
                 {
-                    Destroy(gameObject); // Удаление родительского объекта
+                    Destroy(transform.GetChild(0).gameObject);
                 }
             }
         }

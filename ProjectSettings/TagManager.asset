@@ -88,6 +88,12 @@ TagManager:
   - Emul2
   - Klapon
   - Gate
+  - Facilities_NewCapsul
+  - NewSbor
+  - LittleSbor
+  - LittleKataz
+  - Facilities_Emul_Reagent
+  - Facilities_Emul_Soda
   layers:
   - Default
   - TransparentFX

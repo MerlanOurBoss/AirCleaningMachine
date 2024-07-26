@@ -59,7 +59,8 @@ public class MovingFacilities : MonoBehaviour
                 {
                     if (hit.transform == transform && (gameObject.tag == "Facilities" || gameObject.tag == "Facilities_Capsul" || gameObject.tag == "Facilities_Steam" 
                         || gameObject.tag == "Facilities_DryAir" || gameObject.tag == "Facilities_Oven" || gameObject.tag == "Facilities_Emul" 
-                        || gameObject.tag == "Facilities_Cool" || gameObject.tag == "Facilities_Electro" || gameObject.tag == "Facilities_Kataz"))
+                        || gameObject.tag == "Facilities_Cool" || gameObject.tag == "Facilities_Electro" || gameObject.tag == "Facilities_Kataz" || gameObject.tag == "Facilities_NewCapsul"
+                        || gameObject.tag == "Facilities_Emul_Reagent" || gameObject.tag == "Facilities_Emul_Soda"))
                     {
                         isSelected = true;
                         isDragging = !isDragging;

@@ -5227,6 +5227,7 @@ GameObject:
   - component: {fileID: 1151825860657032434}
   - component: {fileID: 2498072018019777031}
   - component: {fileID: 3901940910295950623}
+  - component: {fileID: 5811497174240165190}
   m_Layer: 9
   m_Name: Collider 1
   m_TagString: ConnectionPoint
@@ -5313,6 +5314,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5811497174240165190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576970043507092685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94fb9a56deef4d243a9c06b4d6802d7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7693265333848917125
 GameObject:
   m_ObjectHideFlags: 0
