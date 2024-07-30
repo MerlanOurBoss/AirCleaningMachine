@@ -9,7 +9,7 @@ public class MaterialChange : MonoBehaviour
     public void ChangeColor()
     {
         GameObject smoke = GameObject.FindGameObjectWithTag("StartSmoke");
-
+        GameObject streamSmoke = GameObject.FindGameObjectWithTag("SmokeStream");
         SmokeTriggerForCooling coo = FindAnyObjectByType<SmokeTriggerForCooling>();
         SmokeTriggerToCollector sc = FindAnyObjectByType<SmokeTriggerToCollector>();
 
@@ -21,6 +21,11 @@ public class MaterialChange : MonoBehaviour
         if (sc != null)
         {
             sc.StartSmoke();
+        }
+
+        if (streamSmoke != null)
+        {
+            streamSmoke.GetComponent<ParticleSystem>().Play();
         }
 
         if (smoke != null)
