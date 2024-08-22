@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraRotation : MonoBehaviour
 {
@@ -21,8 +22,9 @@ public class CameraRotation : MonoBehaviour
     private float moveSpeed = 1.0f; 
 
     public float sensitivityx = 0.1f; 
-    public Vector3 moveLimits = new Vector3(1000, 1000, 1000); 
+    public Vector3 moveLimits = new Vector3(1000, 1000, 1000);
 
+    public bool isMoving = false;
     private Vector3 startPosition;
     void Start()
     {
@@ -31,7 +33,13 @@ public class CameraRotation : MonoBehaviour
         offset = new Vector3(offset.x, offset.y, -Mathf.Abs(zoomMax/2));
         startPosition = target.position;
     }
-
+    private void Update()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            isMoving = false;
+        }
+    }
     public void Blasla()
     {
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(0))
@@ -47,15 +55,14 @@ public class CameraRotation : MonoBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
+            isMoving = true;
             offset.z = Mathf.Clamp(offset.z, -Mathf.Abs(zoomMax), -Mathf.Abs(zoomMin));
-
             X = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
             Y += Input.GetAxis("Mouse Y") * sensitivity;
             Y = Mathf.Clamp(Y, -limit, limit);
             transform.localEulerAngles = new Vector3(-Y, X, 0);
             transform.position = transform.localRotation * offset + target.position;
         }
-
     }
 
     public void onScroll()

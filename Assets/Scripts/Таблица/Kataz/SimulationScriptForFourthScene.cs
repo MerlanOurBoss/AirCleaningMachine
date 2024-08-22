@@ -307,31 +307,31 @@ public class SimulationScriptForFourthScene: MonoBehaviour
 
     public void StartSimulation()
     {
-        if (_myTexts[21].text == "Включить")
+        if (_myTexts[18].text == "Включить")
         {
             kataz.isEnable = true;
             katazOutElectro.isEnable = false;
         }
-        else if (_myTexts[21].text == "Отключить")
+        else if (_myTexts[18].text == "Отключить")
         {
             kataz.isEnable = false;
             katazOutElectro.isEnable = true;
         }
 
-        if (_myTexts[22].text == "2")
+        if (_myTexts[19].text == "2")
         {
             katazScriptWith1_1.obj2Void();
         }
-        else if (_myTexts[22].text == "1")
+        else if (_myTexts[19].text == "1")
         {
             katazScriptWith1_1.obj1Void();
         }
 
-        if (_myTexts[23].text == "2")
+        if (_myTexts[20].text == "2")
         {
             katazScriptWith1_2.obj2Void();
         }
-        else if (_myTexts[23].text == "1")
+        else if (_myTexts[20].text == "1")
         {
             katazScriptWith1_2.obj1Void();
         }
