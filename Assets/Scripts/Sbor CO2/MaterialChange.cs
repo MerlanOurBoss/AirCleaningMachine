@@ -10,6 +10,7 @@ public class MaterialChange : MonoBehaviour
     {
         GameObject smoke = GameObject.FindGameObjectWithTag("StartSmoke");
         GameObject streamSmoke = GameObject.FindGameObjectWithTag("SmokeStream");
+        GameObject drySmoke = GameObject.FindGameObjectWithTag("SmokeDryAir");
         SmokeTriggerForCooling coo = FindAnyObjectByType<SmokeTriggerForCooling>();
         SmokeTriggerToCollector sc = FindAnyObjectByType<SmokeTriggerToCollector>();
 
@@ -26,6 +27,11 @@ public class MaterialChange : MonoBehaviour
         if (streamSmoke != null)
         {
             streamSmoke.GetComponent<ParticleSystem>().Play();
+        }
+        
+        if (drySmoke != null)
+        {
+            drySmoke.GetComponent<ParticleSystem>().Play();
         }
 
         if (smoke != null)
@@ -47,6 +53,8 @@ public class MaterialChange : MonoBehaviour
     public void BackColor()
     {
         GameObject smoke = GameObject.FindGameObjectWithTag("StartSmoke");
+        GameObject streamSmoke = GameObject.FindGameObjectWithTag("SmokeStream");
+        GameObject drySmoke = GameObject.FindGameObjectWithTag("SmokeDryAir");
         if (smoke != null)
         {
             MoveObjectWithMouse[] moveScript = FindObjectsOfType<MoveObjectWithMouse>();
@@ -60,6 +68,16 @@ public class MaterialChange : MonoBehaviour
             {
                 obj.GetComponent<ParticleSystem>().Stop();
             }
+        }
+
+        if (streamSmoke != null)
+        {
+            streamSmoke.GetComponent<ParticleSystem>().Stop();
+        }
+
+        if (drySmoke != null)
+        {
+            drySmoke.GetComponent<ParticleSystem>().Stop();
         }
 
     }

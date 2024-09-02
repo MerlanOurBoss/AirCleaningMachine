@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class SborCO2 : MonoBehaviour
 {
+    [Header("Texts")]
     public TMP_InputField sorbentSbor;
     public TMP_InputField volumeSbor;
     public TMP_InputField tempAdsorbSbor;
     public TMP_InputField tempDisorbSbor;
     public TMP_InputField diametrSbor;
 
+    [Header("Sbor Script")]
+    public NewSborScript newSbor;
+
+    [Header("Smoke")]
+    public ParticleSystem[] smokes;
 
     private void Start()
     {
@@ -19,5 +25,21 @@ public class SborCO2 : MonoBehaviour
         tempAdsorbSbor.text = "40 °C";
         tempDisorbSbor.text = "200 °C";
         diametrSbor.text = "0.1 ì";
+    }
+
+    public void ChangeSmoke()
+    {
+        if (volumeSbor.text == "100 ì3/÷")
+        {
+            newSbor.timingDelay = 150f;
+        }
+        else if (volumeSbor.text == "150 ì3/÷")
+        {
+            newSbor.timingDelay = 170f;
+        }
+        else if (volumeSbor.text == "200 ì3/÷")
+        {
+            newSbor.timingDelay = 200f;
+        }
     }
 }

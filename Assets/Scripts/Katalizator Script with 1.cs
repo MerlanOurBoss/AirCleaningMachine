@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,24 +7,33 @@ public class KatalizatorScriptwith1 : MonoBehaviour
 
     public GameObject obj1;
     public GameObject obj2;
-
     public GameObject obj3;
 
     public ParticleSystem smokes;
 
-    public void obj2Void()
+    public void SetObjectsState(bool state)
     {
-        obj1.SetActive(true);
-        obj2.SetActive(true);
-        obj3.SetActive(false);
-        smokes.Play();
+        obj1.SetActive(state);
+        obj2.SetActive(state);
+        obj3.SetActive(!state);
+
+        if (state)
+        {
+            smokes.Play();
+        }
+        else
+        {
+            smokes.Stop();
+        }
     }
 
-    public void obj1Void()
+    public void ActivateObj2()
     {
-        obj1.SetActive(false);
-        obj2.SetActive(false);
-        obj3.SetActive(true);
-        smokes.Stop();
+        SetObjectsState(true);
+    }
+
+    public void ActivateObj1()
+    {
+        SetObjectsState(false);
     }
 }

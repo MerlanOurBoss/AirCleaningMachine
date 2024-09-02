@@ -324,20 +324,20 @@ public class SimulationScriptForSecondScene : MonoBehaviour
 
         if (_myTexts[22].text == "2")
         {
-            katazScriptWith1_1.obj2Void();
+            katazScriptWith1_1.SetObjectsState(false);
         }
         else if (_myTexts[22].text == "1")
         {
-            katazScriptWith1_1.obj1Void();
+            katazScriptWith1_1.SetObjectsState(true);
         }
 
         if (_myTexts[23].text == "2")
         {
-            katazScriptWith1_2.obj2Void();
+            katazScriptWith1_2.SetObjectsState(false);
         }
         else if (_myTexts[23].text == "1")
         {
-            katazScriptWith1_2.obj1Void();
+            katazScriptWith1_2.SetObjectsState(true);
         }
 
         elec.isEnable = true;

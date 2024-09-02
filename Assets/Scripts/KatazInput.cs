@@ -26,7 +26,7 @@ public class KatazInput : MonoBehaviour
         {
             count = 0;
         }
-        if (myscript._startSimulationTemp)
+        if (myscript.StartSimulationTemp)
         {
             nasoso.SetActive(false); isEnableNasos = false;
         }
@@ -38,22 +38,22 @@ public class KatazInput : MonoBehaviour
         count++;
         if (count == 1)
         {
-            kataz.changePosition0();
+            kataz.ChangePosition(0);
         }
         if (count == 2)
         {
-            kataz.changePosition1();
+            kataz.ChangePosition(1);
         }
         else if (count == 3)
         {
-            kataz.changePosition2();
+            kataz.ChangePosition(2);
         } 
     }
 
 
     public void OnorOffObjectNasos()
     {
-        if (isEnableNasos == false && !myscript._startSimulationTemp)
+        if (isEnableNasos == false && !myscript.StartSimulationTemp)
         {
             nasoso.SetActive(true); isEnableNasos = true;
         }

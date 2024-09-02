@@ -1,466 +1,245 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class SimulationScript : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem[] _mySmokes;
-    [SerializeField] private TMP_InputField[] _molecCount;
-    [SerializeField] private PlayableDirector[] _myFluidsZero;
-    [SerializeField] private PlayableDirector[] _myFluidsWater;
-    [SerializeField] private PlayableDirector[] _myFluidsReact;
+    [SerializeField] private ParticleSystem[] _smokes;
+    [SerializeField] private TMP_InputField[] _molecCounts;
+    [SerializeField] private PlayableDirector[] _fluidsZero;
+    [SerializeField] private PlayableDirector[] _fluidsWater;
+    [SerializeField] private PlayableDirector[] _fluidsReact;
+    [SerializeField] private TMP_InputField[] _texts;
+    [SerializeField] private TextMeshProUGUI[] _componentTexts;
+    [SerializeField] private TextMeshProUGUI[] _molecTexts;
+    [SerializeField] private DropSpawner[] _dropSpawners;
 
-    [SerializeField] private TMP_InputField[] _myTexts;
-    [SerializeField] private TextMeshProUGUI[] _componentsText;
-    [SerializeField] private TextMeshProUGUI[] _molText;
-    [SerializeField] private DropSpawner[] _dropSpawns;
-
-    [SerializeField] private TextMeshProUGUI _N2molec;
+    [SerializeField] private TextMeshProUGUI _n2Molec;
     [SerializeField] private Button _simulationButton;
     [SerializeField] private TextMeshProUGUI _simulationText;
-
     [SerializeField] private Animator _electroFilter;
-    [SerializeField] private NewCollectors _myCollector;
-    [SerializeField] private TemperatureCatalizator _myCatalizator;
+    [SerializeField] private NewCollectors _collector;
+    [SerializeField] private TemperatureCatalizator _catalizator;
+    [SerializeField] private GameObject _componentsCameras;
+    [SerializeField] private GameObject _electroObject;
+    [SerializeField] private GameObject _electroObjectTable;
+    [SerializeField] private GameObject _noElectroObject;
+    [SerializeField] private NasosScript _waterZeroNasos;
+    [SerializeField] private NasosScript _waterNasos;
+    [SerializeField] private NasosScript _reactNasos;
+    [SerializeField] private Button _electroButton;
+    [SerializeField] private TMP_InputField _electroInput;
+    [SerializeField] private TextMeshProUGUI _electroFilterText;
+    [SerializeField] private TextMeshProUGUI _catalizatorText;
+    [SerializeField] private TextMeshProUGUI _waterEmulText;
+    [SerializeField] private TextMeshProUGUI _reactEmulText;
+    [SerializeField] private TextMeshProUGUI _sheloshEmulText;
+    [SerializeField] private TextMeshProUGUI _sborCO2Text;
+    [SerializeField] private GameObject _tables;
+    [SerializeField] private ElectrofilterTable _electroTable;
+    [SerializeField] private KatalizatorTable _catalizatorTable;
+    [SerializeField] private KatalizatorTableOutElectro _catalizatorOutElectroTable;
+    [SerializeField] private CoolingDisplays _coolingDisplay;
+    [SerializeField] private SheloshTable _sheloshTable;
+    [SerializeField] private WaterTable _waterTable;
+    [SerializeField] private ReactTable _reactTable;
+    [SerializeField] private SborTable _sborTable;
+    [SerializeField] private Canvas _canvas;
+    [SerializeField] private KatalizatorScriptwith1 _catalizatorScript1_1;
+    [SerializeField] private Button _catalizatorButton1;
+    [SerializeField] private KatalizatorScriptwith1 _catalizatorScript1_2;
+    [SerializeField] private Button _catalizatorButton2;
 
-    [SerializeField] private GameObject ComponentsCameras;
-    [SerializeField] private GameObject ElectoroObject;
-    [SerializeField] private GameObject ElectoroObjectTable;
-    [SerializeField] private GameObject NoElectroObject;
-
-    [SerializeField] private NasosScript waterZeroNasos;
-    [SerializeField] private NasosScript waterNasos;
-    [SerializeField] private NasosScript reactNasos;
-
-    [SerializeField] private Button electro;
-    [SerializeField] private TMP_InputField electroInput;
-
-    [SerializeField] private TextMeshProUGUI ElectroFilter;
-    [SerializeField] private TextMeshProUGUI Katalizator;
-    [SerializeField] private TextMeshProUGUI WaterEmul;
-    [SerializeField] private TextMeshProUGUI ReactEmul;
-    [SerializeField] private TextMeshProUGUI SheloshEmul;
-    [SerializeField] private TextMeshProUGUI SborCO2;
-
-    [SerializeField] private GameObject tables;
-    [SerializeField] private ElectrofilterTable elec;
-
-    [SerializeField] private KatalizatorTable kataz;
-    [SerializeField] private KatalizatorTableOutElectro katazOutElectro;
-
-    [SerializeField] private CoolingDisplays coolDisplay;
-    [SerializeField] private SheloshTable shelosh;
-    [SerializeField] private WaterTable water;
-    [SerializeField] private ReactTable react;
-    [SerializeField] private SborTable sbor;
-    [SerializeField] private Canvas canvas;
-
-    [SerializeField] private KatalizatorScriptwith1 katazScriptWith1_1;
-    [SerializeField] private Button kataz1;
-    [SerializeField] private KatalizatorScriptwith1 katazScriptWith1_2;
-    [SerializeField] private Button kataz2;
-
-
-
-    public bool _startSimulationTemp = false;
-    public bool _startSimulationContent = false;
+    public bool StartSimulationTemp { get; private set; }
+    public bool StartSimulationContent { get; private set; }
     private float _simulationTime = 3400f;
+    public float FluidDelayZero { get; set; } = 0f;
+    public float FluidDelayWater { get; set; } = 15f;
+    public float FluidDelayReact { get; set; } = 30f;
+    private int _maxMolecCount = 130;
 
-    public float _fluidDelayZero;
-    private float _fluidDelayZeroPrivate = 15f;
-    public float _fluidDelayWater;
-    private float _fluidDelayWaterPrivate = 30f;
-    public float _fluidDelayReact;
-    private float _fluidDelayReactPrivate = 43f;
-
-    private int max = 130;
     private void Start()
     {
-        _myTexts[0].text = "150 °C";
-        _myTexts[1].text = "0.01 мА/см²";
-        _myTexts[2].text = "80 %";
-        _myTexts[4].text = "Циолит";
-        _myTexts[5].text = "Платина";
-        _myTexts[6].text = "5 °C";
-        _myTexts[7].text = "Вода";
-        _myTexts[8].text = "5 °C";
-        _myTexts[9].text = "Едкий натрий ";
-        _myTexts[10].text = "5 °C";
-        _myTexts[11].text = "Цеолиты";
-        _myTexts[12].text = "0,5 м/с";
-        _myTexts[13].text = "3 кВ/м";
-        _myTexts[20].text = "500 °C";
-        _myTexts[14].text = "0,085 м/с";
-        _myTexts[15].text = "1 моль/м";
-        _myTexts[16].text = "0,05 м/с";
-        _myTexts[17].text = "1,5 моль/м";
-        _myTexts[18].text = "0,5 кПа";
-        _myTexts[19].text = "0,2 кПа";
-        _myTexts[21].text = "Включить";
-        _myTexts[22].text = "2";
-        _myTexts[23].text = "2";
+        InitializeTexts();
     }
 
     private void Update()
     {
-        if (_myTexts[13].text != " " && _myTexts[12].text != " ")
+        UpdateSimulationTime();
+        UpdateComponentStates();
+    }
+
+    private void InitializeTexts()
+    {
+        string[] initialTexts = {
+            "150 °C", "0.01 мА/см²", "80 %", "Циолит", "Платина", "5 °C", "Вода", "5 °C", "Едкий натрий", "Цеолиты",
+            "0,5 м/с", "3 кВ/м", "500 °C", "0,085 м/с", "1 моль/м", "0,05 м/с", "1,5 моль/м", "0,5 кПа", "0,2 кПа", "Включить", "2", "2"
+        };
+        for (int i = 0; i < initialTexts.Length; i++)
         {
-            float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text[.._myTexts[13].text.IndexOf(" ")]) * 2) / float.Parse(_myTexts[12].text[.._myTexts[12].text.IndexOf(" ")]));
-            //Debug.Log(resEle);
-            ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
-        }
-
-        if (_myTexts[20].text != " ")
-        {
-            float resKataz = 0;
-            if (_myTexts[20].text == "300 °C")
-            {
-                resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 50f)) * 1f);
-                resKataz = 1 / resKataz;
-            }
-            else if (_myTexts[20].text == "400 °C")
-            {
-                resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 150f)) * 1f);
-                resKataz = 1 / resKataz;
-            }
-            else if (_myTexts[20].text == "500 °C")
-            {
-                resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 100f)) * 1f);
-                resKataz = 1 / resKataz;
-            }
-            Katalizator.text = "Эффект. катализатора: " + (resKataz * 100).ToString("0.") + " %";
-        }
-
-        if (_myTexts[14].text != " " && _myTexts[15].text != " ")
-        {
-            float resWater = float.Parse(_myTexts[14].text[.._myTexts[14].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[15].text[.._myTexts[15].text.IndexOf(" ")]);
-            WaterEmul.text = "Эффект. водяного эмуль.: " + (resWater * 100).ToString("0.") + " %";
-        }
-
-        if (_myTexts[16].text != " " && _myTexts[17].text != " ")
-        {
-            float resReact = float.Parse(_myTexts[16].text[.._myTexts[16].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[17].text[.._myTexts[17].text.IndexOf(" ")]);
-            ReactEmul.text = "Эффект. реагент. эмуль.: " + (resReact * 100).ToString("0.") + " %";
-        }
-
-        if (_myTexts[24].text != " " && _myTexts[25].text != " ")
-        {
-            float resReact = float.Parse(_myTexts[24].text[.._myTexts[24].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[25].text[.._myTexts[25].text.IndexOf(" ")]);
-            SheloshEmul.text = "Эффект. реагент. эмуль.: " + (resReact * 100).ToString("0.") + " %";
-        }
-
-        if (_myTexts[18].text != " " && _myTexts[19].text != " ")
-        {
-            float resSborCO2 = (10 * float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])) / (1 + (float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])));
-            SborCO2.text = "Эффект. сбор CO2: " + (resSborCO2 * 100).ToString("0.") + " %";
-        }
-
-
-        //if (_myTexts[21].text == "Включить")
-        //{
-        //    ElectoroObject.SetActive(true);
-        //    NoElectroObject.SetActive(false);
-        //    ElectoroObjectTable.SetActive(true);
-        //    kataz.enabled = true;
-        //    katazOutElectro.enabled = false;
-        //}
-        //else if (_myTexts[21].text == "Отключить")
-        //{
-        //    ElectoroObject.SetActive(false);
-        //    NoElectroObject.SetActive(true);
-        //    ElectoroObjectTable.SetActive(false);
-        //    ElectroFilter.text = "Эффект. электрофильтра: 0%";
-        //    kataz.enabled = false;
-        //    katazOutElectro.enabled = true;
-        //}
-
-        
-
-        if (_simulationTime <= 0)
-        {
-            _startSimulationTemp = false;
-            _startSimulationContent = false;
-
-        }
-        if (_startSimulationTemp && _startSimulationContent)
-        {
-            //electro.interactable = false;
-            electroInput.interactable = false;
-            katazScriptWith1_1.text.interactable = false;
-            kataz1.interactable = false;
-            katazScriptWith1_2.text.interactable = false;
-            kataz2.interactable = false;
-            _simulationButton.interactable = false;
-            _simulationText.text = "Идет симуляция";
-            waterZeroNasos.enabled = true;
-            waterNasos.enabled = true;
-            reactNasos.enabled = true;
-            _simulationTime -= 1 * Time.deltaTime;
-            _fluidDelayWater -= 1 * Time.deltaTime;
-            _fluidDelayReact -= 1 * Time.deltaTime;
-            _fluidDelayZero -= 1 * Time.deltaTime;
-            tables.SetActive(true);
-
-            if (_fluidDelayZero < 0)
-            {
-                foreach (PlayableDirector fluid in _myFluidsZero)
-                {
-                    fluid.Play();
-                }
-            }
-            if (_fluidDelayWater < 0)
-            {
-                foreach (PlayableDirector fluid in _myFluidsWater)
-                {
-                    fluid.Play();
-                }
-            }
-            if (_fluidDelayReact < 0)
-            {
-                foreach (PlayableDirector fluid in _myFluidsReact)
-                {
-                    fluid.Play();
-                }
-            }
-        }
-        else
-        {
-            //electro.interactable = true;
-            electroInput.interactable = true;
-            katazScriptWith1_1.text.interactable = true;
-            kataz1.interactable = true;
-            katazScriptWith1_2.text.interactable = true;
-            kataz2.interactable = true;
-            //canvas.enabled = true;
-            waterZeroNasos.enabled = false;
-            waterNasos.enabled = false;
-            reactNasos.enabled = false;
-            _simulationButton.interactable = true;
-            _simulationText.text = "Симулировать";
-            _simulationTime = 3400f;
-            //ComponentsCameras.SetActive(false);
-            foreach (ParticleSystem smoke in _mySmokes)
-            {
-                smoke.Stop();
-            }
-            _electroFilter.Play("NewColecAnimStop");
-            _myCollector.StopColumnProcess();
-            coolDisplay.StopDelay();
-            _myCatalizator.StopSimulation();
-            tables.SetActive(false);
-            foreach (PlayableDirector fluid in _myFluidsWater)
-            {
-                fluid.Stop();
-            }
-            foreach (PlayableDirector fluid in _myFluidsReact)
-            {
-                fluid.Stop();
-            }
-            foreach (DropSpawner drop in _dropSpawns)
-            {
-                drop.stopCor();
-            }
+            _texts[i].text = initialTexts[i];
         }
     }
 
-    public void SubstractValue()
+    private void UpdateSimulationTime()
     {
-        foreach (var mol in _molecCount)
+        if (_simulationTime > 0)
         {
-            int n = int.Parse(mol.text.ToString());
-
-            max -= n;
-
-            Debug.Log(n + "  " + max);
-
-            _N2molec.text = max.ToString() + " %";
-        }
-    }
-    public void StartSmokesAndFluids()
-    {
-        if (_startSimulationTemp && _startSimulationContent)
-        {
-            foreach (ParticleSystem smoke in _mySmokes)
+            if (StartSimulationTemp && StartSimulationContent)
             {
-                smoke.Play();
-            }
-            _electroFilter.Play("NewColecAnim");
-            _myCollector.StartColumnProcess3();
-            _myCatalizator.StartSimulation();
-            foreach (DropSpawner drop in _dropSpawns)
-            {
-                drop.startCor();
-            }
-        }
-    }
+                _simulationTime -= Time.deltaTime;
+                FluidDelayWater -= Time.deltaTime;
+                FluidDelayReact -= Time.deltaTime;
+                FluidDelayZero -= Time.deltaTime;
+                _tables.SetActive(true);
 
-    [System.Obsolete]
-    public void StartSimulation()
-    {
-        if (_myTexts[21].text == "Включить")
-        {
-            kataz.isEnable = true;
-            katazOutElectro.isEnable = false;
-        }
-        else if (_myTexts[21].text == "Отключить")
-        {
-            kataz.isEnable = false;
-            katazOutElectro.isEnable = true;
-        }
-
-        if (_myTexts[22].text == "2")
-        {
-            katazScriptWith1_1.obj2Void();
-        }
-        else if (_myTexts[22].text == "1")
-        {
-            katazScriptWith1_1.obj1Void();
-        }
-
-        if (_myTexts[23].text == "2")
-        {
-            katazScriptWith1_2.obj2Void();
-        }
-        else if (_myTexts[23].text == "1")
-        {
-            katazScriptWith1_2.obj1Void();
-        }
-
-        elec.isEnable = true;
-        elec.RecalculateData();
-        coolDisplay.isEnbale = true;
-        shelosh.isEnable = true;
-        water.isEnable = true;
-        react.isEnable = true;
-        sbor.isEnable = true;
-
-        for (int i = 0; i <= 8; i++)
-        {
-            if (_molecCount[i].text == "")
-            {
-                _molText[i].color = Color.red;
-                _startSimulationContent = false;
+                if (FluidDelayZero < 0) PlayFluids(_fluidsZero);
+                if (FluidDelayWater < 0) PlayFluids(_fluidsWater);
+                if (FluidDelayReact < 0) PlayFluids(_fluidsReact);
             }
             else
             {
-                _molText[i].color = Color.black;
-                _startSimulationContent = true;
-            }
-            
-        }
-
-
-
-        if (_myTexts[0].text == "" || _myTexts[1].text == "" || _myTexts[2].text == "")
-        {
-            _componentsText[0].color = Color.red;
-            _startSimulationTemp = false;
-        }
-        else
-        {
-            _componentsText[0].color = Color.black;
-            _startSimulationTemp = true;
-        }
-
-        if (_myTexts[3].text == "" || _myTexts[4].text == "" || _myTexts[5].text == "")
-        {
-            _componentsText[1].color = Color.red;
-            _startSimulationTemp = false;
-        }
-        else
-        {
-            _componentsText[1].color = Color.black;
-            _startSimulationTemp = true;
-        }
-
-        if (_myTexts[6].text == "" || _myTexts[7].text == "" )
-        {
-            _componentsText[2].color = Color.red;
-            _startSimulationTemp = false;
-        }
-        else
-        {
-            _componentsText[2].color = Color.black;
-            _startSimulationTemp = true;
-        }
-
-        if (_myTexts[8].text == "" || _myTexts[9].text == "")
-        {
-            _componentsText[3].color = Color.red;
-            _startSimulationTemp = false;
-        }
-        else
-        {
-            _componentsText[3].color = Color.black;
-            _startSimulationTemp = true;
-        }
-
-        if (_myTexts[10].text == "" || _myTexts[11].text == "")
-        {
-            _componentsText[4].color = Color.red;
-            _startSimulationTemp = false;
-        }
-        else
-        {
-            _componentsText[4].color = Color.black;
-            _startSimulationTemp = true;
-            StartSmokesAndFluids();
-        }
-
-        if (_myTexts[0].text == "150 °C"  && _myTexts[3].text == "300 °C" 
-            && _myTexts[6].text == "5 °C" && _myTexts[8].text == "5 °C" && _myTexts[10].text == "5 °C")
-        {
-
-        }
-        else if (_myTexts[0].text == "300 °C" && _myTexts[3].text == "400 °C"
-            && _myTexts[6].text == "15 °C" && _myTexts[8].text == "15 °C" && _myTexts[10].text == "15 °C")
-        {
-            foreach (ParticleSystem smoke in _mySmokes)
-            {
-                // Здесь можно задать что будет влиять на дымы
-                //smoke.startColor = new Color(smoke.startColor.r, smoke.startColor.g, smoke.startColor.b, 0.3f);
-                smoke.emissionRate = smoke.emissionRate - smoke.emissionRate / 2;
-            }
-            foreach (DropSpawner spawner in _dropSpawns)
-            {
-                spawner.spawnInterval = spawner.spawnInterval * 2;
+                ResetSimulation();
             }
         }
-        else if (_myTexts[0].text == "400 °C" && _myTexts[3].text == "500 °C"
-            && _myTexts[6].text == "25 °C" && _myTexts[8].text == "25 °C" && _myTexts[10].text == "25 °C")
-        {
-            foreach (ParticleSystem smoke in _mySmokes)
-            {
-                //smoke.startLifetime = smoke.startLifetime - smoke.startLifetime / 2;
-                //smoke.startSpeed = smoke.startSpeed + 2f;
-                //smoke.startColor = new Color(smoke.startColor.r, smoke.startColor.g, smoke.startColor.b, 0.7f);
-                smoke.emissionRate = smoke.emissionRate - smoke.emissionRate / 1.5f;
-            }
-            foreach (DropSpawner spawner in _dropSpawns)
-            {
-                spawner.spawnInterval = spawner.spawnInterval * 1.5f;
-            }
-        }
-
-
-        //float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text) * 2) / float.Parse(_myTexts[12].text));
-        //Debug.Log(resEle);
-        //ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
-        //ComponentsCameras.SetActive(true);
     }
 
-    public void StopSimulation()
+    private void PlayFluids(PlayableDirector[] fluids)
     {
-        _startSimulationTemp = false;
-        _startSimulationContent = false;
-        _fluidDelayZero = _fluidDelayZeroPrivate;
-        _fluidDelayWater = _fluidDelayWaterPrivate; //15f
-        _fluidDelayReact = _fluidDelayReactPrivate ; //32f
-}
+        foreach (var fluid in fluids)
+        {
+            fluid.Play();
+        }
+    }
+
+    public void ResetSimulation()
+    {
+        _electroButton.interactable = true;
+        _electroInput.interactable = true;
+        _catalizatorButton1.interactable = true;
+        _catalizatorButton2.interactable = true;
+        _simulationButton.interactable = true;
+        _simulationText.text = "Симулировать";
+        _simulationTime = 3400f;
+        _componentsCameras.SetActive(false);
+
+        foreach (var smoke in _smokes) smoke.Stop();
+        _electroFilter.Play("NewColecAnimStop");
+        _collector.StopColumnProcess();
+        _coolingDisplay.StopDelay();
+        _catalizator.StopSimulation();
+        _tables.SetActive(false);
+        StopFluids(_fluidsWater);
+        StopFluids(_fluidsReact);
+        StopDropSpawners();
+    }
+
+    private void StopFluids(PlayableDirector[] fluids)
+    {
+        foreach (var fluid in fluids)
+        {
+            fluid.Stop();
+        }
+    }
+
+    private void StopDropSpawners()
+    {
+        foreach (var dropSpawner in _dropSpawners)
+        {
+            dropSpawner.stopCor();
+        }
+    }
+
+    private void UpdateComponentStates()
+    {
+        UpdateTextFields();
+        UpdateSimulationStatus();
+        CheckMolecularCounts();
+    }
+
+    private void UpdateTextFields()
+    {
+        //if (_texts[13].text != " " && _texts[12].text != " ")
+        //{
+        //    float result = 1 - Mathf.Exp(-float.Parse(_texts[13].text) * 2 / float.Parse(_texts[12].text));
+        //    _electroFilterText.text = $"Эффект. электрофильтра: " + (result * 100).ToString("0.")+ " %";
+        //}
+
+        //if (_texts[20].text != " ")
+        //{
+        //    float result = CalculateCatalizatorEffect(_texts[20].text);
+        //    _catalizatorText.text = $"Эффект. катализатора: " + (result * 100).ToString("0.") + " %";
+        //}
+
+        //if (_texts[14].text != " " && _texts[15].text != " ")
+        //{
+        //    float result = float.Parse(_texts[14].text) * 10 * float.Parse(_texts[15].text);
+        //    _waterEmulText.text = $"Эффект. водяного эмуль.:" + (result * 100).ToString("0.") + " %";
+        //}
+
+        //if (_texts[16].text != " " && _texts[17].text != " ")
+        //{
+        //    float result = float.Parse(_texts[16].text) * 10 * float.Parse(_texts[17].text);
+        //    _reactEmulText.text = $"Эффект. реагент. эмуль.: " + (result * 100).ToString("0.") + " %";
+        //}
+
+        //if (_texts[18].text != " " && _texts[19].text != " ")
+        //{
+        //    float result = (10 * float.Parse(_texts[18].text) * float.Parse(_texts[19].text)) /
+        //                    (1 + float.Parse(_texts[18].text) * float.Parse(_texts[19].text));
+        //    _sborCO2Text.text = $"Эффект. сбор CO2: " + (result * 100).ToString("0.") + " %";
+        //}
+    }
+
+    private float CalculateCatalizatorEffect(string temperatureText)
+    {
+        float temperature = float.Parse(temperatureText);
+        float result = 1;
+        if (temperature > 5) result -= (temperature - 5) * 0.01f;
+        return Mathf.Clamp(result, 0.1f, 1f);
+    }
+
+    private void UpdateSimulationStatus()
+    {
+        if (_simulationText.text == "Симулировать")
+        {
+            StartSimulationTemp = false;
+            StartSimulationContent = false;
+        }
+        else
+        {
+            StartSimulationTemp = true;
+            StartSimulationContent = true;
+        }
+    }
+
+    private void CheckMolecularCounts()
+    {
+        if (_molecCounts[0].text != " " && int.Parse(_molecCounts[0].text) > _maxMolecCount)
+        {
+            _molecCounts[0].text = _maxMolecCount.ToString();
+        }
+
+        if (_molecCounts[1].text != " " && int.Parse(_molecCounts[1].text) > _maxMolecCount)
+        {
+            _molecCounts[1].text = _maxMolecCount.ToString();
+        }
+
+        if (_molecCounts[2].text != " " && int.Parse(_molecCounts[2].text) > _maxMolecCount)
+        {
+            _molecCounts[2].text = _maxMolecCount.ToString();
+        }
+    }
+
+    public void Simulate()
+    {
+        StartSimulationTemp = true;
+        StartSimulationContent = true;
+        foreach (var smoke in _smokes) smoke.Play();
+        _simulationButton.interactable = false;
+        _simulationText.text = "Остановить";
+    }
 }

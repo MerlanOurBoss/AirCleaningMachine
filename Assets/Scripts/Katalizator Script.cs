@@ -5,13 +5,10 @@ using UnityEngine;
 public class KatalizatorScript : MonoBehaviour
 {
     [SerializeField] private GameObject[] modules;
-
-    [SerializeField] private GameObject traingleOrig;
-    [SerializeField] private GameObject traingleSecond;
-
+    [SerializeField] private GameObject triangleOrig;
+    [SerializeField] private GameObject triangleSecond;
     [SerializeField] private ParticleSystem[] smokes1;
     [SerializeField] private ParticleSystem[] smokes2;
-
     [SerializeField] private MeshRenderer fourthObj;
 
     public Material realMat;
@@ -23,65 +20,85 @@ public class KatalizatorScript : MonoBehaviour
     public float y;
     public float z;
 
-    public float delaySmoke; //13
+    public float delaySmoke;
 
     private void Start()
     {
-        changePosition0();
+        ChangePosition(0);
     }
 
-    [System.Obsolete]
-    public void changePosition0()
+    public void ChangePosition(int positionIndex)
     {
-        modules[0].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
-        modules[1].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
-        modules[2].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
-        modules[3].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
-        traingleOrig.SetActive(true);
-        traingleSecond.SetActive(false);
-        fourthObj.material = realMat;
+        Vector3[] positions = GetModulePositions(positionIndex);
+        for (int i = 0; i < modules.Length; i++)
+        {
+            modules[i].transform.position = positions[i];
+        }
 
-        smokes2[0].startDelay = delaySmoke;
-        smokes2[1].startDelay = delaySmoke + 1;
-        smokes2[2].startDelay = delaySmoke + 2;
-
-        isSecond = false;
+        UpdateVisuals(positionIndex);
     }
 
-    [System.Obsolete]
-    public void changePosition1()
+    private Vector3[] GetModulePositions(int index)
     {
-        modules[0].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
-        modules[1].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
-
-        modules[2].transform.position = new Vector3(147f - x, -0.315589905f - y, 0 - z);
-        modules[3].transform.position = new Vector3(-147f - x, 0 - y, 0 - z);
-        traingleOrig.SetActive(false);
-        traingleSecond.SetActive(true);
-        fourthObj.material = secondMat;
-
-        smokes2[0].startDelay = delaySmoke;
-        smokes2[1].startDelay = delaySmoke + 1;
-        smokes2[2].startDelay = delaySmoke + 2;
-
-        isSecond = true;
+        switch (index)
+        {
+            case 1:
+                return new Vector3[]
+                {
+                    new Vector3(0 - x, 0 - y, 0 - z),
+                    new Vector3(0 - x, 0 - y, 0 - z),
+                    new Vector3(147f - x, -0.315589905f - y, 0 - z),
+                    new Vector3(-147f - x, 0 - y, 0 - z)
+                };
+            case 2:
+                return new Vector3[]
+                {
+                    new Vector3(0 - x, 0 - y, 0 - z),
+                    new Vector3(99.7f - x, 0 - y, 0 - z),
+                    new Vector3(147f - x, -0.315589905f - y, 0 - z),
+                    new Vector3(-194.05f - x, -0.1f - y, 0 - z)
+                };
+            case 0:
+            default:
+                return new Vector3[]
+                {
+                    new Vector3(0 - x, 0 - y, 0 - z),
+                    new Vector3(0 - x, 0 - y, 0 - z),
+                    new Vector3(0 - x, 0 - y, 0 - z),
+                    new Vector3(0 - x, 0 - y, 0 - z)
+                };
+        }
     }
 
-    [System.Obsolete]
-    public void changePosition2()
+    private void UpdateVisuals(int positionIndex)
     {
-        modules[0].transform.position = new Vector3(0 - x, 0 - y, 0 - z);
-        modules[1].transform.position = new Vector3(99.7f - x, 0 - y, 0 - z);
+        bool isPosition0 = positionIndex == 0;
+        triangleOrig.SetActive(isPosition0);
+        triangleSecond.SetActive(!isPosition0);
+        fourthObj.material = isPosition0 ? realMat : secondMat;
+        isSecond = !isPosition0;
 
-        modules[2].transform.position = new Vector3(147f - x, -0.315589905f - y, 0 - z);
-        modules[3].transform.position = new Vector3(-194.05f - x, -0.1f - y, 0 - z);
-        traingleOrig.SetActive(false);
-        traingleSecond.SetActive(true);
+        UpdateSmokeDelays(positionIndex);
+    }
 
-        fourthObj.material = secondMat;
-        smokes2[0].startDelay = delaySmoke - 2;
-        smokes2[1].startDelay = delaySmoke - 1;
-        smokes2[2].startDelay = delaySmoke;
-        isSecond = true;
+    private void UpdateSmokeDelays(int positionIndex)
+    {
+        float[] delays = GetSmokeDelays(positionIndex);
+        for (int i = 0; i < smokes2.Length; i++)
+        {
+            smokes2[i].startDelay = delays[i];
+        }
+    }
+
+    private float[] GetSmokeDelays(int index)
+    {
+        switch (index)
+        {
+            case 2:
+                return new float[] { delaySmoke - 2, delaySmoke - 1, delaySmoke };
+            case 1:
+            default:
+                return new float[] { delaySmoke, delaySmoke + 1, delaySmoke + 2 };
+        }
     }
 }

@@ -40,23 +40,6 @@ public class NewCollectors : MonoBehaviour
     [SerializeField] private ParticleSystem _mySmoke;
     [SerializeField] private ParticleSystem _mySmoke2;
 
-    [SerializeField] private GameObject obj1;
-    [SerializeField] private GameObject obj1_1;
-    [SerializeField] private GameObject obj2;
-    [SerializeField] private GameObject obj2_1;
-    [SerializeField] private GameObject obj3;
-    [SerializeField] private GameObject obj3_1;
-    [SerializeField] private GameObject obj4;
-    [SerializeField] private GameObject obj4_1;
-    [SerializeField] private GameObject obj5;
-    [SerializeField] private GameObject obj5_1;
-    [SerializeField] private GameObject obj6;
-    [SerializeField] private GameObject obj6_1;
-    [SerializeField] private GameObject obj7;
-    [SerializeField] private GameObject obj7_1;
-    [SerializeField] private GameObject obj8;
-    [SerializeField] private GameObject obj8_1;
-
     private bool filling = true;
     private bool unfilling = false;
 
@@ -80,23 +63,6 @@ public class NewCollectors : MonoBehaviour
     {
         absent[0].color = Color.white;
         absent[1].color = Color.white;
-
-        obj1.SetActive(true);
-        obj1_1.SetActive(false);
-        obj2.SetActive(true);
-        obj2_1.SetActive(false);
-        obj3.SetActive(true);
-        obj3_1.SetActive(false);
-        obj4.SetActive(true);
-        obj4_1.SetActive(false);
-        obj5.SetActive(true);
-        obj5_1.SetActive(false);
-        obj6.SetActive(true);
-        obj6_1.SetActive(false);
-        obj7.SetActive(true);
-        obj7_1.SetActive(false);
-        obj8.SetActive(true);
-        obj8_1.SetActive(false);
     }
 
     void Update()
@@ -129,10 +95,6 @@ public class NewCollectors : MonoBehaviour
                     cleanAir_FirstTubeOut.Play();
                     _mySmoke.Play();
                     dustAir_FirstTubeIn.Play();
-                    obj1.SetActive(false);
-                    obj1_1.SetActive(true);
-                    obj5.SetActive(false);
-                    obj5_1.SetActive(true);
                 }
                 if (fillingCount > 60 && fillingCount < 80)
                 {
@@ -185,31 +147,12 @@ public class NewCollectors : MonoBehaviour
 
                     par_Second.Play();
                 }
-                else if (fillingCount > 15 && fillingCount < 20)
-                {
-                    
-
-                    obj4.SetActive(false);
-                    obj4_1.SetActive(true);
-
-                    obj1_1.SetActive(true);
-                    obj1.SetActive(false);
-                    obj5_1.SetActive(true);
-                    obj5.SetActive(false);
-
-                    obj2.SetActive(true);
-                    obj2_1.SetActive(false);
-                    obj6.SetActive(true);
-                    obj6_1.SetActive(false);
-                }
                 else if (fillingCount > 35 && fillingCount < 65)
                 {
                     hotAir_First.Stop();
                     gates[4].SetActive(true);
                     gates[5].SetActive(false);
 
-                    obj7.SetActive(true);
-                    obj7_1.SetActive(false);
 
                     sixth_display = Mathf.Lerp(sixth_display, 100f, 2 * Time.deltaTime);
                     third_display = Mathf.Lerp(third_display, 0, 5f * Time.deltaTime);
@@ -232,16 +175,11 @@ public class NewCollectors : MonoBehaviour
                     co2_SixthTubeOut.Stop();
 
                 }
-                else if (fillingCount > 168 && fillingCount < 170)
-                {
-                    obj8.SetActive(false);
-                    obj8_1.SetActive(true);
-                }
+
                 else if (fillingCount > 170 && fillingCount < 200)
                 {
                     fourth_display = Mathf.Lerp(fourth_display, 0f, 2 * Time.deltaTime);
-                    obj4.SetActive(true);
-                    obj4_1.SetActive(false);
+
                 }
                 else if (fillingCount > 200 && fillingCount < 220)
                 {
@@ -299,30 +237,12 @@ public class NewCollectors : MonoBehaviour
 
                     par_First.Play();
                 }
-                else if (fillingCount > 15 && fillingCount < 20)
-                {
-                    
 
-                    obj3.SetActive(false);
-                    obj3_1.SetActive(true);
-
-                    obj1_1.SetActive(false);
-                    obj1.SetActive(true);
-                    obj5_1.SetActive(false);
-                    obj5.SetActive(true);
-
-                    obj2.SetActive(false);
-                    obj2_1.SetActive(true);
-                    obj6.SetActive(false);
-                    obj6_1.SetActive(true);
-                }
                 else if (fillingCount > 35 && fillingCount < 65)
                 {
                     gates[4].SetActive(false);
                     gates[5].SetActive(true);
 
-                    obj8.SetActive(true);
-                    obj8_1.SetActive(false);
                     hotAir_Second.Stop();
 
                     fifth_display = Mathf.Lerp(fifth_display, 100f, 2  * Time.deltaTime);
@@ -346,16 +266,11 @@ public class NewCollectors : MonoBehaviour
                     co2_SixthTubeOut.Stop();
 
                 }
-                else if (fillingCount > 168 && fillingCount < 170)
-                {
-                    obj7.SetActive(false);
-                    obj7_1.SetActive(true);
-                }
+
                 else if (fillingCount > 170 && fillingCount < 200)
                 {
                     second_display = Mathf.Lerp(second_display, 0f, 2 * Time.deltaTime);
-                    obj3.SetActive(true);
-                    obj3_1.SetActive(false);
+
                 }
                 else if (fillingCount > 200 && fillingCount < 220)
                 {
@@ -421,22 +336,6 @@ public class NewCollectors : MonoBehaviour
         _startingDelay = false;
         fillingCount = 0;
 
-        obj1.SetActive(true);
-        obj1_1.SetActive(false);
-        obj2.SetActive(true);
-        obj2_1.SetActive(false);
-        obj3.SetActive(true);
-        obj3_1.SetActive(false);
-        obj4.SetActive(true);
-        obj4_1.SetActive(false);
-        obj5.SetActive(true);
-        obj5_1.SetActive(false);
-        obj6.SetActive(true);
-        obj6_1.SetActive(false);
-        obj7.SetActive(true);
-        obj7_1.SetActive(false);
-        obj8.SetActive(true);
-        obj8_1.SetActive(false);
 
         absent[0].color = Color.Lerp(absent[0].color, Color.white, .15f * Time.fixedDeltaTime);
         absent[1].color = Color.Lerp(absent[1].color, Color.white, .15f * Time.fixedDeltaTime);

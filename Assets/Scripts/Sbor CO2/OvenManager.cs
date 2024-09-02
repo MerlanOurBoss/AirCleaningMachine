@@ -5,54 +5,55 @@ using UnityEngine.UI;
 
 public class OvenManager : MonoBehaviour
 {
+    [Header("UI Elements")]
     public Toggle[] toggles;
+
+    [Header("Particle System")]
     public ParticleSystem smoke;
 
-    public bool isElectrofilterOn = false;
-    public bool isKatalizatorOn = false;
-    public bool isWaterEmulgator = false;
-    public bool isReagentEmulgator = false;
-    public bool isSheloshEmulgator = false;
-    public bool isSborCO2 = false;
+    private readonly Color defaultColor = new Color(0.6075471f, 0.6075471f, 0.6075471f);
+    private readonly Color electrofilterColor = new Color(0.6235294f, 0.4130386f, 0);
+    private readonly Color katalizatorColor = new Color(0.7450981f, 0.8078431f, 0.7176471f);
+    private readonly Color emulgatorColor = new Color(0.5686275f, 0.7529412f, 0.8078431f);
+    private readonly Color sborCO2Color = new Color(0.7764706f, 0.9215686f, 1f);
 
-
-    public void Update()
+    void Update()
     {
-        isElectrofilterOn = toggles[0].isOn;
-        isKatalizatorOn = toggles[1].isOn;
-        isWaterEmulgator = toggles[2].isOn;
-        isReagentEmulgator = toggles[3].isOn;
-        isSheloshEmulgator = toggles[4].isOn;
-        isSborCO2 = toggles[5].isOn;
+        UpdateSmokeColor();
+    }
 
+    private void UpdateSmokeColor()
+    {
+        if (!AnyToggleOn())
+        {
+            smoke.startColor = defaultColor;
+            return;
+        }
 
-        if (!isElectrofilterOn && !isKatalizatorOn && !isWaterEmulgator && !isReagentEmulgator && !isSheloshEmulgator && !isSborCO2)
+        if (toggles[0].isOn)
         {
-            smoke.startColor = new Color(0.6075471f, 0.6075471f, 0.6075471f);
+            smoke.startColor = electrofilterColor;
         }
-        else if (isElectrofilterOn)
+        else if (toggles[1].isOn)
         {
-            smoke.startColor = new Color(0.6235294f, 0.4130386f, 0);
+            smoke.startColor = katalizatorColor;
         }
-        else if(isKatalizatorOn)
+        else if (toggles[2].isOn || toggles[3].isOn || toggles[4].isOn)
         {
-            smoke.startColor = new Color(0.7450981f, 0.8078431f, 7176471f);
+            smoke.startColor = emulgatorColor;
         }
-        else if(isWaterEmulgator)
+        else if (toggles[5].isOn)
         {
-            smoke.startColor = new Color(0.5686275f, 0.7529412f, 0.8078431f);
+            smoke.startColor = sborCO2Color;
         }
-        else if(isReagentEmulgator)
+    }
+
+    private bool AnyToggleOn()
+    {
+        foreach (var toggle in toggles)
         {
-            smoke.startColor = new Color(0.5686275f, 0.7529412f, 0.8078431f);
+            if (toggle.isOn) return true;
         }
-        else if(isSheloshEmulgator)
-        {
-            smoke.startColor = new Color(0.5686275f, 0.7529412f, 0.8078431f);
-        }
-        else if(isSborCO2)
-        {
-            smoke.startColor = new Color(0.7764706f, 0.9215686f, 1f);
-        }
+        return false;
     }
 }

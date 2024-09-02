@@ -37,15 +37,15 @@ public class KatazInputSecond : MonoBehaviour
         count++;
         if (count == 1)
         {
-            kataz.changePosition0();
+            kataz.ChangePosition(0);
         }
         if (count == 2)
         {
-            kataz.changePosition1();
+            kataz.ChangePosition(1);
         }
         else if (count == 3)
         {
-            kataz.changePosition2();
+            kataz.ChangePosition(2);
         } 
     }
 

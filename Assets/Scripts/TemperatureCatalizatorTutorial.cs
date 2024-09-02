@@ -88,7 +88,7 @@ public class TemperatureCatalizatorTutorial : MonoBehaviour
             item.Play();
         }
         anim.Play("Catalizaotr_Anim");
-        anim1.Play("Catalizaotr_Anim");
+        //anim1.Play("Catalizaotr_Anim");
         canStart = true;
     }
 

@@ -296,7 +296,7 @@ public class SimulationScriptForFourthScene: MonoBehaviour
                 smoke.Play();
             }
 
-            _myCollector.StartColumnProcess3();
+            _myCollector.StartColumnProcess();
             _myCatalizator.StartSimulation();
             foreach (DropSpawner drop in _dropSpawns)
             {
@@ -320,20 +320,20 @@ public class SimulationScriptForFourthScene: MonoBehaviour
 
         if (_myTexts[19].text == "2")
         {
-            katazScriptWith1_1.obj2Void();
+            katazScriptWith1_1.SetObjectsState(false);
         }
         else if (_myTexts[19].text == "1")
         {
-            katazScriptWith1_1.obj1Void();
+            katazScriptWith1_1.SetObjectsState(true);
         }
 
         if (_myTexts[20].text == "2")
         {
-            katazScriptWith1_2.obj2Void();
+            katazScriptWith1_2.SetObjectsState(false);
         }
         else if (_myTexts[20].text == "1")
         {
-            katazScriptWith1_2.obj1Void();
+            katazScriptWith1_2.SetObjectsState(true);
         }
 
         water.isEnable = true;
