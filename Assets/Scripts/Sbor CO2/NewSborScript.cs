@@ -11,9 +11,11 @@ public class NewSborScript : MonoBehaviour
 
     [Header("UI Elements")]
     public TextMeshProUGUI display;
+    public TextMeshProUGUI display2;
 
     [Header("Materials")]
     public Material absent;
+    public Material absent2;
     public Color targetColor;
 
     [Header("Gate Configuration")]
@@ -28,6 +30,7 @@ public class NewSborScript : MonoBehaviour
     private int state = 0;
 
     private float displayValue = 0f;
+    private float displayValue2 = 0f;
 
     private bool isFilling = true;
     private bool isProcessActive = false;
@@ -51,12 +54,13 @@ public class NewSborScript : MonoBehaviour
 
     private void InitializeGates()
     {
-        SetGatesState(new[] { true, false, true, false, true, false });
+        SetGatesState(new[] { true, false, true, false, true, false, true, false });
     }
 
     private void UpdateDisplay()
     {
         display.text = displayValue.ToString("0.");
+        display2.text = displayValue2.ToString("0.");
     }
 
     private void HandleDelay()
@@ -115,15 +119,17 @@ public class NewSborScript : MonoBehaviour
         if (fillingCount >= ((timingDelay/2) - 15) && fillingCount < ((timingDelay / 2) + 5))
         {
             displayValue = Mathf.Lerp(displayValue, 100f, 2 * Time.deltaTime);
+            displayValue2 = Mathf.Lerp(displayValue2, 0f, 2 * Time.deltaTime);
         }
 
         AbsentOn();
-        Invoke("ActivateGatesForFilling", 5f);
+        AbsentOff2();
+        ActivateGatesForFilling();
     }
 
     private void ActivateGatesForFilling()
     {
-        SetGatesState(new[] { true, false, true, false, false, true });
+        SetGatesState(new[] { false, true, false, true, true, false, true, false });
     }
 
     private void UpdateFillingDisplay()
@@ -131,6 +137,7 @@ public class NewSborScript : MonoBehaviour
         if (fillingCount >= ((timingDelay / 2) - 15) && fillingCount < ((timingDelay / 2) + 5))
         {
             displayValue = Mathf.Lerp(displayValue, 100f, 2 * Time.deltaTime);
+            displayValue2 = Mathf.Lerp(displayValue2, 0f, 2 * Time.deltaTime);
         }
     }
 
@@ -145,15 +152,17 @@ public class NewSborScript : MonoBehaviour
         if (fillingCount >= ((timingDelay / 2) - 15) && fillingCount < ((timingDelay / 2) + 5))
         {
             displayValue = Mathf.Lerp(displayValue, 0f, 2 * Time.deltaTime);
+            displayValue2 = Mathf.Lerp(displayValue2, 100f, 2 * Time.deltaTime);
         }
 
         AbsentOff();
-        Invoke("ActivateGatesForUnfilling", 5f);
+        AbsentOn2();
+        ActivateGatesForUnfilling();
     }
 
     private void ActivateGatesForUnfilling()
     {
-        SetGatesState(new[] { false, true, false, true, true, false });
+        SetGatesState(new[] { true, false, true, false, false, true, false, true });
     }
 
     private void UpdateUnfillingDisplay()
@@ -161,6 +170,7 @@ public class NewSborScript : MonoBehaviour
         if (fillingCount >= ((timingDelay / 2) - 15) && fillingCount < ((timingDelay / 2) + 5))
         {
             displayValue = Mathf.Lerp(displayValue, 0f, 2 * Time.deltaTime);
+            displayValue2 = Mathf.Lerp(displayValue2, 100f, 2 * Time.deltaTime);
         }
     }
 
@@ -169,7 +179,7 @@ public class NewSborScript : MonoBehaviour
         isFilling = false;
         state = 1;
         fillingCount = 0;
-        SetGatesState(new[] { false, true, false, true, true, false });
+        //SetGatesState(new[] { false, true, false, true, true, false, false, true });
     }
 
     private void TransitionToFilling()
@@ -177,7 +187,7 @@ public class NewSborScript : MonoBehaviour
         isFilling = true;
         state = 0;
         fillingCount = 0;
-        SetGatesState(new[] { true, false, true, false, false, true });
+        //SetGatesState(new[] { true, false, true, false, false, true, true, false });
     }
 
     private void SetGatesState(bool[] states)
@@ -196,6 +206,16 @@ public class NewSborScript : MonoBehaviour
     public void AbsentOff()
     {
         absent.color = Color.Lerp(absent.color, Color.white, .15f * Time.fixedDeltaTime);
+    }
+
+    public void AbsentOn2()
+    {
+        absent2.color = Color.Lerp(absent2.color, targetColor, 1f * Time.fixedDeltaTime);
+    }
+
+    public void AbsentOff2()
+    {
+        absent2.color = Color.Lerp(absent2.color, Color.white, .15f * Time.fixedDeltaTime);
     }
 
     public void StartColumnProcess()
@@ -217,6 +237,8 @@ public class NewSborScript : MonoBehaviour
         smokeInCapsul.Stop();
 
         AbsentOff();
+        AbsentOff2();
         displayValue = 0f;
+        displayValue2 = 0f;
     }
 }

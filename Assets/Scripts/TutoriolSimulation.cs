@@ -16,7 +16,7 @@ public class TutoriolSimulatio : MonoBehaviour
     [SerializeField] private DropSpawner[] _dropSpawns;
 
     [SerializeField] private Animator _electroFilter;
-    [SerializeField] private NewCollectors _myCollector;
+    [SerializeField] private NewSborScript _myCollector;
     [SerializeField] private TemperatureCatalizatorTutorial _myCatalizator;
 
 
@@ -92,7 +92,7 @@ public class TutoriolSimulatio : MonoBehaviour
                 smoke.Play();
             }
             _electroFilter.Play("NewColecAnim");
-            _myCollector.StartColumnProcess3();
+            _myCollector.StartColumnProcess();
             _myCatalizator.StartSimulation();
 
         }
