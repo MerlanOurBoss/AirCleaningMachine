@@ -124,9 +124,12 @@ public class SimulationScript : MonoBehaviour
         _simulationButton.interactable = true;
         _simulationText.text = "Симулировать";
         _simulationTime = 3400f;
-        _componentsCameras.SetActive(false);
+        //_componentsCameras.SetActive(false);
 
-        foreach (var smoke in _smokes) smoke.Stop();
+        foreach (var smoke in _smokes)
+        {
+            smoke.Stop();
+        }
         _electroFilter.Play("NewColecAnimStop");
         _collector.StopColumnProcess();
         _coolingDisplay.StopDelay();
@@ -240,6 +243,6 @@ public class SimulationScript : MonoBehaviour
         StartSimulationContent = true;
         foreach (var smoke in _smokes) smoke.Play();
         _simulationButton.interactable = false;
-        _simulationText.text = "Остановить";
+        _simulationText.text = "Идет симуляция";
     }
 }
