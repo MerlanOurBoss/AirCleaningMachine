@@ -42,6 +42,7 @@ public class NewSborScript : MonoBehaviour
     {
         InitializeGates();
         absent.color = Color.white;
+        absent2.color = Color.white;
     }
 
     void Update()
@@ -54,7 +55,7 @@ public class NewSborScript : MonoBehaviour
 
     private void InitializeGates()
     {
-        SetGatesState(new[] { true, false, true, false, true, false, true, false });
+        SetGatesState(new[] { true, false, false, true, true, false, false, true });
     }
 
     private void UpdateDisplay()
