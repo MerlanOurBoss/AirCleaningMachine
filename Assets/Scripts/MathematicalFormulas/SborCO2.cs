@@ -11,6 +11,7 @@ public class SborCO2 : MonoBehaviour
     public TMP_InputField tempAdsorbSbor;
     public TMP_InputField tempDisorbSbor;
     public TMP_InputField diametrSbor;
+    public TMP_InputField fanSpeedSbor;
 
     [Header("Sbor Script")]
     public NewSborScript newSbor;
@@ -18,13 +19,17 @@ public class SborCO2 : MonoBehaviour
     [Header("Smoke")]
     public ParticleSystem[] smokes;
 
+    [Header("Fan Animation")]
+    public Animator[] fansAnim;
+
     private void Start()
     {
         sorbentSbor.text = "÷еолиты";
         volumeSbor.text = "100 м3/ч";
         tempAdsorbSbor.text = "40 ∞C";
         tempDisorbSbor.text = "200 ∞C";
-        diametrSbor.text = "0.1 м";
+        diametrSbor.text = "0,1 м";
+        fanSpeedSbor.text = "500 об/мин";
     }
 
     public void ChangeSmoke()
@@ -40,6 +45,23 @@ public class SborCO2 : MonoBehaviour
         else if (volumeSbor.text == "200 м3/ч")
         {
             newSbor.timingDelay = 200f;
+        }
+
+
+        if (fanSpeedSbor.text == "1000 об/мин")
+        {
+            fansAnim[0].speed = 3;
+            fansAnim[1].speed = 3;
+        }
+        else if (fanSpeedSbor.text == "1500 об/мин")
+        {
+            fansAnim[0].speed = 5;
+            fansAnim[1].speed = 5;
+        }
+        else if (fanSpeedSbor.text == "500 об/мин")
+        {
+            fansAnim[0].speed = 1;
+            fansAnim[1].speed = 1;
         }
     }
 }

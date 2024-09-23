@@ -26,6 +26,7 @@ public class NewSborScript : MonoBehaviour
     public float delay;
     private float delayUpdate;
 
+
     private float fillingCount = 0;
     private int state = 0;
 
