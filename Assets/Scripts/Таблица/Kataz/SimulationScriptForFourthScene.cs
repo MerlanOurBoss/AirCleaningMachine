@@ -108,9 +108,9 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         _myTexts[17].text = "1,5 моль/м";
         _myTexts[18].text = "0,5 кПа";
         _myTexts[19].text = "0,2 кПа";
-        _myTexts[21].text = "Включить";
-        _myTexts[22].text = "2";
-        _myTexts[23].text = "2";
+        //_myTexts[21].text = "Включить";
+        //_myTexts[22].text = "2";
+        //_myTexts[23].text = "2";
     }
 
     private void Update()

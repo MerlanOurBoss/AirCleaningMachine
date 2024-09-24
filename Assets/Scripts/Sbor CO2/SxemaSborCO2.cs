@@ -26,6 +26,8 @@ public class SxemaSborCO2 : MonoBehaviour
     private bool isStarted2_1 = false;
     private float fillingCount = 0;
 
+    private float volumeValue = 0;
+    private float diametValue = 0;
     // Update is called once per frame
     public void Starting()
     {
@@ -33,8 +35,19 @@ public class SxemaSborCO2 : MonoBehaviour
     }
     void Update()
     {
+
+        if (mathVolume.text.Length > 0 && mathDiametr.text.Length > 0)
+        {
+            volumeValue = float.Parse(mathVolume.text[..mathVolume.text.IndexOf(" ")]);
+            diametValue = float.Parse(mathDiametr.text[..mathDiametr.text.IndexOf(" ")]);
+        }
+
+        mathGasSpeed = (4 * volumeValue) / (3600 * 3.14f * (diametValue * diametValue));
+        mathSpeed.text = "U = " + mathGasSpeed.ToString("0.") + " ì/ñ";
+        
         if (isStarting)
         {
+            
             delay -= Time.deltaTime;
             if (delay < 0)
             {
@@ -195,10 +208,7 @@ public class SxemaSborCO2 : MonoBehaviour
                 fillingCount = 0;
             }
         }
-        float volumeValue = float.Parse(mathVolume.text[..mathVolume.text.IndexOf(" ")]); 
-        float DiametValue = float.Parse(mathDiametr.text[..mathDiametr.text.IndexOf(" ")]);
-        mathGasSpeed = (4 * volumeValue) / (3600 * 3.14f * (DiametValue * DiametValue));
-        mathSpeed.text = "U = " + mathGasSpeed.ToString("0.") + " ì/ñ";
+
 
 
     }

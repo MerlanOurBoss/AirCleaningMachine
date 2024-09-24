@@ -6,7 +6,7 @@ public class HDRchange : MonoBehaviour
 {
     [SerializeField] private GameObject obj;
     
-    private bool isActiveGameObject = false;
+    private bool isActiveGameObject = true;
 
     private void Update()
     {
