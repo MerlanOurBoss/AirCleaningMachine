@@ -25,4 +25,10 @@ public class LoadLevel : MonoBehaviour
             SceneManager.LoadScene(scenes[1]);
         }
     }
+
+
+    public void LoadLevelFromInt(int i)
+    {
+        SceneManager.LoadScene(i);
+    }
 }
