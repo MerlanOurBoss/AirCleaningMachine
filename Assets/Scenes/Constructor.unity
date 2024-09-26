@@ -4568,22 +4568,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggleBack:
   - {fileID: 1177119629}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   fullscreen: {fileID: 21300000, guid: 71208d5941cb648428737c8c092e80e9, type: 3}
   windowed: {fileID: 21300000, guid: 187d2839836703a4a94178403419a4af, type: 3}
   myToggle:
   - {fileID: 1055041996}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   res: {fileID: 198952412}
 --- !u!114 &330585550
 MonoBehaviour:
@@ -10661,7 +10649,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -19005,7 +18993,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 330585549}
         m_TargetAssemblyTypeName: Fullscreen, Assembly-CSharp
-        m_MethodName: Change
+        m_MethodName: ChangeToFullScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -41352,7 +41340,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
