@@ -13,6 +13,9 @@ public class SaveLoadManager : MonoBehaviour
     public GameObject buttonPrefab; // Prefab for the button
     public Transform buttonContainer; // Parent for the buttons
 
+    public Camera cam;
+    private GameObject CameraUI;
+
     private Dictionary<Button, int> buttonToSceneDataMap = new Dictionary<Button, int>();
     private Dictionary<int, List<GameObject>> sceneObjects = new Dictionary<int, List<GameObject>>();
 
@@ -23,6 +26,7 @@ public class SaveLoadManager : MonoBehaviour
     }
     private void Start()
     {
+        CameraUI = gameObject.transform.parent.parent.gameObject;
         // Create a button for each SceneData that contains saved data
         for (int i = 0; i < sceneDatas.Length; i++)
         {
@@ -140,6 +144,7 @@ public class SaveLoadManager : MonoBehaviour
 
             // Create a button for the newly saved SceneData
             int index = System.Array.IndexOf(sceneDatas, currentSceneData);
+            ScreenShotTake(index);
             if (index != -1)
             {
                 CreateLoadButton(index);
@@ -270,6 +275,31 @@ public class SaveLoadManager : MonoBehaviour
         });
     }
 
+    private void ScreenShotTake(int index)
+    {
+        CameraUI.SetActive(false);
+        cam.rect = new Rect(0, 0, 1, 1);
+        RenderTexture screenTexture = new RenderTexture(Screen.width * 3, Screen.height * 3, 24);
+        cam.targetTexture = screenTexture;
+        RenderTexture.active = screenTexture;
+        cam.Render();
+
+        Texture2D renderedTexture = new Texture2D(Screen.width * 3, Screen.height * 3); 
+        renderedTexture.ReadPixels(new Rect(0, 0, Screen.width * 3, Screen.height * 3), 0, 0);
+        renderedTexture.Apply();
+        RenderTexture.active = null;
+
+        byte[] byteArray = renderedTexture.EncodeToPNG();
+
+        string filePath = Application.dataPath + "/SavedObjects/Images/cameracapture_" + index + ".png";
+        System.IO.File.WriteAllBytes(filePath, byteArray);
+
+        cam.rect = new Rect(0.22f, 0.051f, 0.753f, 0.883f);
+        cam.targetTexture = null;
+        CameraUI.SetActive(true);
+
+        sceneDatas[index].screenshotPath = filePath;
+    }
     private void ClearSceneData(int sceneIndex)
     {
         if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)

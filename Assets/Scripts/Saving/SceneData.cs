@@ -17,5 +17,6 @@ public class ObjectData
 public class SceneData : ScriptableObject
 {
     public ObjectData[] objectsData;
+    public string screenshotPath;
 }
 

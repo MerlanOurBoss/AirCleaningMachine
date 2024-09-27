@@ -12,4 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb24e01e0f337f3449f33fd4896d4e89, type: 3}
   m_Name: SceneData
   m_EditorClassIdentifier: 
-  objectsData: []
+  objectsData:
+  - objectName: Neo Trube
+    position: {x: 178.61554, y: 100.95, z: -73.072464}
+    rotation: {x: -0.50000006, y: 0.50000006, z: -0.50000006, w: 0.50000006}
+    scale: {x: 15, y: 23.70703, z: 15}
+  - objectName: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u0444\u0438\u043B\u044C\u0442\u0440"
+    position: {x: 274.11804, y: 92.649994, z: -64.50513}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    scale: {x: 1, y: 1, z: 1}
+  - objectName: New Sbor
+    position: {x: -50.498657, y: 182.65, z: 74.78229}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    scale: {x: 1, y: 1, z: 1}
+  - objectName: "\u041A\u0430\u0442\u0430\u043B\u0438\u0437\u0430\u0442\u043E\u0440"
+    position: {x: 178.31555, y: 94.649994, z: 70.52759}
+    rotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+    scale: {x: 1, y: 1, z: 1}
+  screenshotPath: D:/Project/AirCleaningMachine/Assets/SavedObjects/Images/cameracapture_0.png

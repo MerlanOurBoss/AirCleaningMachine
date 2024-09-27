@@ -290,6 +290,143 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13170963}
   m_Mesh: {fileID: 70948873267775455, guid: 1ad41126f51b62049a298d69e4b8a6bd, type: 3}
+--- !u!1 &14197586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 14197590}
+  - component: {fileID: 14197589}
+  - component: {fileID: 14197588}
+  - component: {fileID: 14197587}
+  m_Layer: 0
+  m_Name: ScreenShotCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &14197587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14197586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
+--- !u!81 &14197588
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14197586}
+  m_Enabled: 1
+--- !u!20 &14197589
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14197586}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 10000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 1
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &14197590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14197586}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0041369353, y: -0.96422726, z: 0.2650022, w: -0.004741009}
+  m_LocalPosition: {x: 121.6, y: 414.4, z: 576.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 30.731, y: -180.756, z: -0.699}
 --- !u!1 &16708923
 GameObject:
   m_ObjectHideFlags: 0
@@ -4980,7 +5117,7 @@ MonoBehaviour:
   - {fileID: 9152649718795703574, guid: 8405ce75d9fd2a846b55dcd37543184d, type: 3}
   - {fileID: 5670280482867971504, guid: 09b12ac6903cf184c84a8329d96a6b86, type: 3}
   - {fileID: 895103380380840493, guid: e2c6c794335998745a8687702c5ae445, type: 3}
-  - {fileID: 3355329261112420758, guid: 5b45d5b65e743954e8327b6dd2d0a931, type: 3}
+  - {fileID: 9222385866014648385, guid: 5b45d5b65e743954e8327b6dd2d0a931, type: 3}
   - {fileID: 634215230898665860, guid: 18a87760d20b1b94da9442682500169b, type: 3}
   - {fileID: 6687793742355303885, guid: 8122058f6d848c149b73fffc8e6ff41e, type: 3}
   - {fileID: 6129086550243944755, guid: 70023f2363480664eb821f1bf6b3a41d, type: 3}
@@ -4998,10 +5135,11 @@ MonoBehaviour:
   - {fileID: 8617806051858178155, guid: 7b589fb45ff9d6742bc3b8d19fa5a734, type: 3}
   - {fileID: 3748451919365321489, guid: 200597750cfdbc846ad7b004be1653d3, type: 3}
   - {fileID: 5808686690200776553, guid: fef36c3b329ac154eb28e9a0a7f00b38, type: 3}
-  sborCO2: {fileID: 0}
+  sborCO2: {fileID: 325731267}
   buttonPrefab: {fileID: 8321415571918111901, guid: 59a1174ffb2107e429f5eb441fd4ab32,
     type: 3}
   buttonContainer: {fileID: 689837170}
+  cam: {fileID: 14197589}
 --- !u!1 &362206880
 GameObject:
   m_ObjectHideFlags: 0
@@ -5594,7 +5732,7 @@ GameObject:
   - component: {fileID: 406858909}
   m_Layer: 0
   m_Name: Neo Trube (4)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6049,9 +6187,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 441511927}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u043E\u043D (1)"
-  m_TagString: Klapon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6084,7 +6222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 445290558}
   - component: {fileID: 445290559}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: 'Collider 1 '
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -8337,7 +8475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 627045319}
   - component: {fileID: 627045320}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Collider 2
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -8389,9 +8527,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 629320131}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u043E\u043D"
-  m_TagString: Klapon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8676,7 +8814,7 @@ GameObject:
   m_Component:
   - component: {fileID: 675821914}
   - component: {fileID: 675821915}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: 'Collider 1 '
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -9612,7 +9750,7 @@ GameObject:
   - component: {fileID: 733772225}
   m_Layer: 0
   m_Name: Neo Trube (1)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11021,7 +11159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 834123828}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16395,7 +16533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 862612688}
   - component: {fileID: 862612689}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Collider 2
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -16448,7 +16586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 866445892}
   - component: {fileID: 866445893}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: 'Collider 1 '
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -16588,7 +16726,7 @@ GameObject:
   - component: {fileID: 888571886}
   m_Layer: 0
   m_Name: Neo Trube
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20330,7 +20468,7 @@ GameObject:
   - component: {fileID: 1145932998}
   m_Layer: 0
   m_Name: Neo Trube (2)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21858,7 +21996,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1225524209}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23578,7 +23716,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1346496785}
   - component: {fileID: 1346496786}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Collider 2
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -23635,7 +23773,7 @@ GameObject:
   - component: {fileID: 1350157996}
   m_Layer: 0
   m_Name: Neo Trube (5)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35344,7 +35482,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1521516961}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44160,7 +44298,7 @@ GameObject:
   - component: {fileID: 1791543903}
   m_Layer: 0
   m_Name: Neo Trube (3)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47855,9 +47993,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2075967633}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u043E\u043D (2)"
-  m_TagString: Klapon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73678,3 +73816,4 @@ SceneRoots:
   - {fileID: 1748085316}
   - {fileID: 373084439}
   - {fileID: 1169810739}
+  - {fileID: 14197590}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3757574273735279409}
   - component: {fileID: 4320432634276605138}
   - component: {fileID: 152507494638694779}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Neo Trube
   m_TagString: Pipe
   m_Icon: {fileID: 0}
