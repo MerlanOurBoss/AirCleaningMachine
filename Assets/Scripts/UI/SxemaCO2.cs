@@ -7,8 +7,7 @@ public class SxemaCO2 : MonoBehaviour
     [SerializeField] private Animator sxemSborCO2Anim;
     [SerializeField] private Animator cubesAnim;
     [SerializeField] private GameObject sxema;
-    [SerializeField] private GameObject mycamera;
-    [SerializeField] private GameObject cameraUI;
+    [SerializeField] private GameObject sxemaOriginal;
 
     private bool isOff = false;
 
@@ -19,16 +18,16 @@ public class SxemaCO2 : MonoBehaviour
         if (!isActivated)
         {
             sxema.SetActive(true);
-            mycamera.SetActive(false);
-            cameraUI.SetActive(false);
+            sxemaOriginal.SetActive(false);
+            sxemSborCO2Anim.Play("LinesCO2Stop");
             isActivated = true;
         }
         else
         {
             isOff = true;
             sxema.SetActive(false);
-            mycamera.SetActive(true);
-            cameraUI.SetActive(true);
+            sxemaOriginal.SetActive(true);
+            sxemSborCO2Anim.Play("LinesCO2Stop");
             isActivated = false;
         }
     }
@@ -38,15 +37,12 @@ public class SxemaCO2 : MonoBehaviour
         if (isOff)
         {
             sxemSborCO2Anim.Play("LinesCO2Stop");
-            //cubesAnim.Play("CubesStop");
             isOff = false;
         }
     }
     public void SxemaStart()
     {
         sxemSborCO2Anim.Play("LinesCO2Anim");
-        Invoke(nameof(SxemaStart2), 7f);
-        //cubesAnim.Play("CubesAnim");
     }
 
     public void SxemaStart2()
@@ -56,6 +52,5 @@ public class SxemaCO2 : MonoBehaviour
     public void SxemasStop()
     {
         sxemSborCO2Anim.Play("LinesCO2Stop");
-        //cubesAnim.Play("CubesStop");
     }
 }
