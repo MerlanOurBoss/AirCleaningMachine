@@ -19,7 +19,7 @@ public class SxemaCO2 : MonoBehaviour
         {
             sxema.SetActive(true);
             sxemaOriginal.SetActive(false);
-            sxemSborCO2Anim.Play("LinesCO2Stop");
+            sxemSborCO2Anim.Play("LinesStopSbor");
             isActivated = true;
         }
         else
@@ -27,7 +27,7 @@ public class SxemaCO2 : MonoBehaviour
             isOff = true;
             sxema.SetActive(false);
             sxemaOriginal.SetActive(true);
-            sxemSborCO2Anim.Play("LinesCO2Stop");
+            sxemSborCO2Anim.Play("LinesStopSbor");
             isActivated = false;
         }
     }
@@ -36,21 +36,21 @@ public class SxemaCO2 : MonoBehaviour
     {
         if (isOff)
         {
-            sxemSborCO2Anim.Play("LinesCO2Stop");
+            sxemSborCO2Anim.Play("LinesStopSbor");
             isOff = false;
         }
     }
     public void SxemaStart()
     {
-        sxemSborCO2Anim.Play("LinesCO2Anim");
+        sxemSborCO2Anim.Play("LinesZeroAction");
     }
 
     public void SxemaStart2()
     {
-        sxemSborCO2Anim.Play("LinesCO2AnimSecond");
+        sxemSborCO2Anim.Play("LinesMainAction");
     }
     public void SxemasStop()
     {
-        sxemSborCO2Anim.Play("LinesCO2Stop");
+        sxemSborCO2Anim.Play("LinesStopSbor");
     }
 }
