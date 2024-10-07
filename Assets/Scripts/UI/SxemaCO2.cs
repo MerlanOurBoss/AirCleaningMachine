@@ -199,7 +199,6 @@ public class SxemaCO2 : MonoBehaviour
 
     public void ResetGaz()
     {
-        Debug.Log("dadadadasd");
         gaz1 = 0;
         gaz2 = 0;
         gaz3 = 0;
@@ -215,5 +214,21 @@ public class SxemaCO2 : MonoBehaviour
     public void SxemasStop()
     {
         sxemSborCO2Anim.Play("LinesStopSbor");
-    }
+        gaz1 = 0;
+        gaz2 = 0;
+        gaz3 = 0;
+        man1 = 0;
+        man2 = 0;
+        man3 = 0;
+
+        ifFirstGazeOpen = false;
+        ifSecondGazeOpen = false;
+        ifThirdGazeOpen = false;
+        ifSecondGazeOpenCO2 = false;
+        ifThirdGazeOpenCO2 = false;
+
+        ifFirstManOpen = false;
+        ifSecondManOpen = false;
+        ifThirdManOpen = false;
+}
 }
