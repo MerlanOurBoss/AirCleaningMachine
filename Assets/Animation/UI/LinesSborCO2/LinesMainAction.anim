@@ -1726,14 +1726,14 @@ AnimationClip:
       - serializedVersion: 3
         time: 7.3333335
         value: 0.06
-        inSlope: -0.0028426407
-        outSlope: -0.0028426407
+        inSlope: -0.00081316585
+        outSlope: -0.00081316585
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 9.85
+        time: 34.433334
         value: -0.06
         inSlope: 0
         outSlope: 0
@@ -2444,7 +2444,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 47.683334
+        time: 73.3
         value: -0.06
         inSlope: 0
         outSlope: 0
@@ -5326,14 +5326,14 @@ AnimationClip:
       - serializedVersion: 3
         time: 7.3333335
         value: 0.06
-        inSlope: -0.0028426407
-        outSlope: -0.0028426407
+        inSlope: -0.00081316585
+        outSlope: -0.00081316585
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 9.85
+        time: 34.433334
         value: -0.06
         inSlope: 0
         outSlope: 0
@@ -6044,7 +6044,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 47.683334
+        time: 73.3
         value: -0.06
         inSlope: 0
         outSlope: 0
@@ -6100,6 +6100,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: ResetGaz
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 3.9333334
     functionName: StartFirstGaz
     data: 

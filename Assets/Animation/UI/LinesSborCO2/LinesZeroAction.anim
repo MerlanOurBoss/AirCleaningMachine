@@ -1058,7 +1058,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 11.45
+        time: 33.783333
         value: -0.06
         inSlope: 0
         outSlope: 0
@@ -2867,7 +2867,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 11.45
+        time: 33.783333
         value: -0.06
         inSlope: 0
         outSlope: 0
@@ -3020,13 +3020,6 @@ AnimationClip:
     messageOptions: 0
   - time: 13.033334
     functionName: StartSecondGaz
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 34
-    functionName: ResetGaz
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

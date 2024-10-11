@@ -12,6 +12,7 @@ public class SxemaCO2 : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI[] gazValue;
     [SerializeField] private TextMeshProUGUI[] manValue;
+    [SerializeField] private TextMeshProUGUI pauseText;
     private float gaz1 = 0;
     private float gaz2 = 0;
     private float gaz3 = 0;
@@ -34,8 +35,11 @@ public class SxemaCO2 : MonoBehaviour
 
     private bool isActivated = false;
 
+    private bool isPaused = false;
+
     public void Start()
     {
+        pauseText.text = "Pause";
         gazValue[0].text = "0.0";
         gazValue[1].text = "0.0";
         gazValue[2].text = "0.0";
@@ -207,6 +211,21 @@ public class SxemaCO2 : MonoBehaviour
         man3 = 0;
     }
 
+    public void PauseSxema()
+    {
+        if (!isPaused)
+        {
+            pauseText.text = "Resume";
+            sxemSborCO2Anim.speed = 0;
+            isPaused = true;
+        }
+        else
+        {
+            pauseText.text = "Pause";
+            sxemSborCO2Anim.speed = 1;
+            isPaused = false;
+        }
+    }
     public void SxemaStart2()
     {
         sxemSborCO2Anim.Play("LinesMainAction");
