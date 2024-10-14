@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SxemaCO2 : MonoBehaviour
@@ -13,6 +14,7 @@ public class SxemaCO2 : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] gazValue;
     [SerializeField] private TextMeshProUGUI[] manValue;
     [SerializeField] private TextMeshProUGUI pauseText;
+    [SerializeField] private AborberPercent[] aborberPercents;
     private float gaz1 = 0;
     private float gaz2 = 0;
     private float gaz3 = 0;
@@ -36,6 +38,8 @@ public class SxemaCO2 : MonoBehaviour
     private bool isActivated = false;
 
     private bool isPaused = false;
+
+    private List<string> boolStates = new List<string>();
 
     public void Start()
     {
@@ -69,7 +73,6 @@ public class SxemaCO2 : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("ifFirstGazeOpen = " + ifFirstGazeOpen);
         gazValue[0].text = gaz1.ToString("0.0");
         gazValue[1].text = gaz2.ToString("0.0");
         gazValue[2].text = gaz3.ToString("0.0");
@@ -161,6 +164,32 @@ public class SxemaCO2 : MonoBehaviour
         sxemSborCO2Anim.Play("LinesZeroAction");
     }
 
+    public void StartAbsorber(int i)
+    {
+        aborberPercents[i].startProcess = true;
+        aborberPercents[i].backProcess = false;
+        aborberPercents[i].stopProcess = false;
+    }
+
+    public void StopAbsorber(int i)
+    {
+        aborberPercents[i].backProcess = true;
+        aborberPercents[i].startProcess = false;
+
+        aborberPercents[i].stopProcess = false;
+    }
+
+    public void ImmediatelyStopAbsorbers()
+    {
+        aborberPercents[0].stopProcess = true;
+        aborberPercents[0].backProcess = false;
+        aborberPercents[0].startProcess = false;
+
+        aborberPercents[1].stopProcess = true;
+        aborberPercents[1].backProcess = false;
+        aborberPercents[1].startProcess = false;
+    }
+
     public void StartFirstGaz()
     {
         ifFirstGazeOpen = true;
@@ -218,12 +247,48 @@ public class SxemaCO2 : MonoBehaviour
             pauseText.text = "Resume";
             sxemSborCO2Anim.speed = 0;
             isPaused = true;
+            if (aborberPercents[0].startProcess)
+            {
+                boolStates.Add("aborberPercents[0].startProcess");
+            }
+            if (aborberPercents[1].startProcess)
+            {
+                boolStates.Add("aborberPercents[1].startProcess");
+            }
+
+            if (aborberPercents[0].backProcess)
+            {
+                boolStates.Add("aborberPercents[0].backProcess");
+            }
+            if (aborberPercents[1].backProcess)
+            {
+                boolStates.Add("aborberPercents[1].backProcess");
+            }
+            aborberPercents[0].startProcess = false;
+            aborberPercents[1].startProcess = false;
+            aborberPercents[0].backProcess = false;
+            aborberPercents[1].backProcess = false;
+
+            foreach (string boolName in boolStates)
+            {
+                Debug.Log(boolName);
+            }
         }
         else
         {
             pauseText.text = "Pause";
             sxemSborCO2Anim.speed = 1;
             isPaused = false;
+
+            foreach (string boolName in boolStates)
+            {
+                if (boolName == "aborberPercents[0].startProcess") aborberPercents[0].startProcess = true;
+                if (boolName == "aborberPercents[1].startProcess") aborberPercents[1].startProcess = true;
+                if (boolName == "aborberPercents[0].backProcess") aborberPercents[0].backProcess = true;
+                if (boolName == "aborberPercents[1].backProcess") aborberPercents[1].backProcess = true;
+            }
+
+            boolStates.Clear();
         }
     }
     public void SxemaStart2()
