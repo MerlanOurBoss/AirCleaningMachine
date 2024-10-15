@@ -19,9 +19,9 @@ public class SxemaCO2 : MonoBehaviour
     private float gaz2 = 0;
     private float gaz3 = 0;
 
-    private float man1 = 0;
-    private float man2 = 0;
-    private float man3 = 0;
+    private float man1 = 1;
+    private float man2 = 1;
+    private float man3 = 1;
 
     private bool ifFirstGazeOpen = false;
     private bool ifSecondGazeOpen = false;

@@ -72,7 +72,7 @@ public class AborberPercent : MonoBehaviour
         }
         if (backProcess)
         {
-            percentValue = Mathf.Lerp(percentValue, 0f, 0.2f * Time.deltaTime);
+            percentValue = Mathf.Lerp(percentValue, 0f, 0.3f * Time.deltaTime);
             
             if (percentValue < 90)
             {
