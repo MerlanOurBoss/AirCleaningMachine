@@ -73,13 +73,13 @@ public class SxemaCO2 : MonoBehaviour
 
     private void Update()
     {
-        gazValue[0].text = gaz1.ToString("0.0");
-        gazValue[1].text = gaz2.ToString("0.0");
-        gazValue[2].text = gaz3.ToString("0.0");
+        gazValue[0].text = gaz1.ToString("0") + "%";
+        gazValue[1].text = gaz2.ToString("0") + "%";
+        gazValue[2].text = gaz3.ToString("0") + "%";
 
-        manValue[0].text = man1.ToString("0.0");
-        manValue[1].text = man2.ToString("0.0");
-        manValue[2].text = man3.ToString("0.0");
+        manValue[0].text = man1.ToString("0");
+        manValue[1].text = man2.ToString("0");
+        manValue[2].text = man3.ToString("0");
 
         if (isOff)
         {
@@ -89,8 +89,8 @@ public class SxemaCO2 : MonoBehaviour
 
         if (ifFirstManOpen)
         {
-            man1 = Mathf.Lerp(man1, 1800f, 3 * Time.deltaTime);
-            if (man1 >= 1799.99)
+            man1 = Mathf.Lerp(man1, 960f, 3 * Time.deltaTime);
+            if (man1 >= 959.99)
             {
                 ifFirstManOpen = false;
             }
@@ -98,8 +98,8 @@ public class SxemaCO2 : MonoBehaviour
 
         if (ifSecondManOpen)
         {
-            man2 = Mathf.Lerp(man2, 1800f, 3 * Time.deltaTime);
-            if (man2 >= 1799.99)
+            man2 = Mathf.Lerp(man2, 960f, 3 * Time.deltaTime);
+            if (man2 >= 959.99)
             {
                 ifSecondManOpen = false;
             }
@@ -107,8 +107,8 @@ public class SxemaCO2 : MonoBehaviour
 
         if (ifThirdManOpen)
         {
-            man3 = Mathf.Lerp(man3, 1800f, 3 * Time.deltaTime);
-            if (man3 >= 1799.99)
+            man3 = Mathf.Lerp(man3, 960f, 3 * Time.deltaTime);
+            if (man3 >= 959.99)
             {
                 ifThirdManOpen = false;
             }
@@ -116,8 +116,8 @@ public class SxemaCO2 : MonoBehaviour
 
         if (ifFirstGazeOpen)
         {
-            gaz1 = Mathf.Lerp(gaz1, 1000f, 3 * Time.deltaTime);
-            if (gaz1 >= 999.99)
+            gaz1 = Mathf.Lerp(gaz1, 6f, 0.8f * Time.deltaTime);
+            if (gaz1 >= 5.99)
             {
                 ifFirstGazeOpen = false;
             }
@@ -125,8 +125,8 @@ public class SxemaCO2 : MonoBehaviour
 
         if (ifSecondGazeOpen)
         {
-            gaz2 = Mathf.Lerp(gaz2, 100f, 2 * Time.deltaTime);
-            if (gaz2 >= 99.99)
+            gaz2 = Mathf.Lerp(gaz2, 1, 0.8f * Time.deltaTime);
+            if (gaz2 >= 5.99)
             {
                 ifSecondGazeOpen = false;
             }
@@ -134,8 +134,8 @@ public class SxemaCO2 : MonoBehaviour
 
         if (ifThirdGazeOpen)
         {
-            gaz3 = Mathf.Lerp(gaz3, 100f, 2 * Time.deltaTime);
-            if (gaz3 >= 99.99)
+            gaz3 = Mathf.Lerp(gaz3, 1f, 0.8f * Time.deltaTime);
+            if (gaz3 >= 5.99)
             {
                 ifThirdGazeOpen = false;
             }
@@ -143,8 +143,8 @@ public class SxemaCO2 : MonoBehaviour
 
         if (ifSecondGazeOpenCO2)
         {
-            gaz2 = Mathf.Lerp(gaz2, 1000f, 3 * Time.deltaTime);
-            if (gaz2 >= 999.99)
+            gaz2 = Mathf.Lerp(gaz2, 80f, 1f * Time.deltaTime);
+            if (gaz2 >= 79.99)
             {
                 ifSecondGazeOpenCO2 = false;
             }
@@ -152,8 +152,8 @@ public class SxemaCO2 : MonoBehaviour
 
         if (ifThirdGazeOpenCO2)
         {
-            gaz3 = Mathf.Lerp(gaz3, 1000f, 3 * Time.deltaTime);
-            if (gaz3 >= 999.99)
+            gaz3 = Mathf.Lerp(gaz3, 80f, 1f * Time.deltaTime);
+            if (gaz3 >= 79.99)
             {
                 ifThirdGazeOpenCO2 = false;
             }
