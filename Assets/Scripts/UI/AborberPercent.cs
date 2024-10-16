@@ -40,7 +40,7 @@ public class AborberPercent : MonoBehaviour
 
         if (startProcess)
         {
-            percentValue = Mathf.Lerp(percentValue, 100f, 0.2f * Time.deltaTime);
+            percentValue = Mathf.Lerp(percentValue, 100f, 0.23f * Time.deltaTime);
             if (percentValue > 1)
             {
                 _objects[0].SetActive(true);

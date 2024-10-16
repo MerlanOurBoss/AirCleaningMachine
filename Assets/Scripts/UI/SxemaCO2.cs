@@ -33,6 +33,9 @@ public class SxemaCO2 : MonoBehaviour
     private bool ifSecondManOpen = false;
     private bool ifThirdManOpen = false;
 
+    private bool ifFirstManStop = false;
+    private bool ifSecondManStop = false;
+
     private bool isOff = false;
 
     private bool isActivated = false;
@@ -125,7 +128,7 @@ public class SxemaCO2 : MonoBehaviour
 
         if (ifSecondGazeOpen)
         {
-            gaz2 = Mathf.Lerp(gaz2, 1, 0.8f * Time.deltaTime);
+            gaz2 = Mathf.Lerp(gaz2, 1f, 0.8f * Time.deltaTime);
             if (gaz2 >= 5.99)
             {
                 ifSecondGazeOpen = false;
@@ -156,6 +159,24 @@ public class SxemaCO2 : MonoBehaviour
             if (gaz3 >= 79.99)
             {
                 ifThirdGazeOpenCO2 = false;
+            }
+        }
+
+        if (ifFirstManStop)
+        {
+            man1 = Mathf.Lerp(man1, 1f, 1.1f * Time.deltaTime);
+            if (man1 <= 1.0001)
+            {
+                ifFirstManStop = false;
+            }
+        }
+
+        if (ifSecondManStop)
+        {
+            man2 = Mathf.Lerp(man2, 1f, 1.1f * Time.deltaTime);
+            if (man2 <= 1.0001)
+            {
+                ifSecondManStop = false;
             }
         }
     }
@@ -230,14 +251,24 @@ public class SxemaCO2 : MonoBehaviour
         ifThirdManOpen = true;
     }
 
+    public void StopFirsrMan()
+    {
+        ifFirstManStop = true;
+    }
+
+    public void StopSecondMan()
+    {
+        ifSecondManStop = true;
+    }
+
     public void ResetGaz()
     {
         gaz1 = 0;
         gaz2 = 0;
         gaz3 = 0;
-        man1 = 0;
-        man2 = 0;
-        man3 = 0;
+        //man1 = 1;
+        //man2 = 1;
+        man3 = 1;
     }
 
     public void PauseSxema()
@@ -301,9 +332,9 @@ public class SxemaCO2 : MonoBehaviour
         gaz1 = 0;
         gaz2 = 0;
         gaz3 = 0;
-        man1 = 0;
-        man2 = 0;
-        man3 = 0;
+        man1 = 1;
+        man2 = 1;
+        man3 = 1;
 
         ifFirstGazeOpen = false;
         ifSecondGazeOpen = false;
@@ -314,5 +345,8 @@ public class SxemaCO2 : MonoBehaviour
         ifFirstManOpen = false;
         ifSecondManOpen = false;
         ifThirdManOpen = false;
+
+        ifFirstManStop = false;
+        ifSecondManStop = false;
 }
 }
