@@ -98,7 +98,7 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         _myTexts[8].text = "5 °C";
         _myTexts[9].text = "Едкий натрий ";
         _myTexts[10].text = "5 °C";
-        _myTexts[11].text = "Цеолиты";
+        _myTexts[11].text = "3 кВ/м";
         _myTexts[12].text = "0,5 м/с";
         _myTexts[13].text = "3 кВ/м";
         _myTexts[20].text = "500 °C";
@@ -405,13 +405,11 @@ public class SimulationScriptForFourthScene: MonoBehaviour
 
         if (_myTexts[10].text == "" || _myTexts[11].text == "")
         {
-            _componentsText[4].color = Color.red;
-            _startSimulationTemp = false;
+            _electroFilter.speed = 1;
         }
         else
         {
-            _componentsText[4].color = Color.black;
-            _startSimulationTemp = true;
+            _electroFilter.speed = 0.8f;
             StartSmokesAndFluids();
         }
 
