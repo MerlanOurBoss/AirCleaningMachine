@@ -13,6 +13,8 @@ public class SxemaGeneral : MonoBehaviour
     [SerializeField] private GameObject cameraUI;
     [SerializeField] private TextMeshProUGUI pauseText;
 
+    [SerializeField] private GameObject[] backgrounds;
+
     private bool isOff = false;
 
     private bool isActivated = false;
@@ -30,6 +32,8 @@ public class SxemaGeneral : MonoBehaviour
             mycamera.SetActive(false);
             cameraUI.SetActive(false);
             isActivated = true;
+            backgrounds[1].SetActive(true);
+            backgrounds[0].SetActive(false);
         }
         else
         {
@@ -38,6 +42,8 @@ public class SxemaGeneral : MonoBehaviour
             mycamera.SetActive(true);
             cameraUI.SetActive(true);
             isActivated = false;
+            backgrounds[0].SetActive(true);
+            backgrounds[1].SetActive(false);
         }
     }
 
