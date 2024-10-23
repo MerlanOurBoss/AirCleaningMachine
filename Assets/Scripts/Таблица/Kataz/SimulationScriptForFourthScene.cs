@@ -403,14 +403,23 @@ public class SimulationScriptForFourthScene: MonoBehaviour
             _startSimulationTemp = true;
         }
 
-        if (_myTexts[10].text == "" || _myTexts[11].text == "")
+        if (_myTexts[10].text != "" || _myTexts[11].text != "")
         {
-            _electroFilter.speed = 1;
-        }
-        else
-        {
-            _electroFilter.speed = 0.8f;
-            StartSmokesAndFluids();
+            if (_myTexts[11].text == "3 кВ/м")
+            {
+                _electroFilter.speed = 0.7f;
+                StartSmokesAndFluids();
+            }
+            else if (_myTexts[11].text == "4 кВ/м")
+            {
+                _electroFilter.speed = 0.8f;
+                StartSmokesAndFluids();
+            }
+            else
+            {
+                _electroFilter.speed = 1f;
+                StartSmokesAndFluids();
+            }
         }
 
         if (_myTexts[0].text == "150 °C"  && _myTexts[3].text == "300 °C" 

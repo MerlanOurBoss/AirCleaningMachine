@@ -76,7 +76,7 @@ public class SimulationScript : MonoBehaviour
     {
         string[] initialTexts = {
             "150 °C", "0.01 мА/см²", "80 %", "Циолит", "Платина", "5 °C", "Вода", "5 °C", "Едкий натрий", "Цеолиты",
-            "0,5 м/с", "3 кВ/м", "500 °C", "0,085 м/с", "1 моль/м", "0,05 м/с", "1,5 моль/м", "0,5 кПа", "0,2 кПа", "Включить", "2", "2"
+            "0,5 м/с", "3 кВ/м", "500 °C", "3 кВ/м", "1 моль/м", "0,05 м/с", "1,5 моль/м", "0,5 кПа", "0,2 кПа", "Включить", "2", "2"
         };
         for (int i = 0; i < initialTexts.Length; i++)
         {
@@ -244,5 +244,24 @@ public class SimulationScript : MonoBehaviour
         foreach (var smoke in _smokes) smoke.Play();
         _simulationButton.interactable = false;
         _simulationText.text = "Идет симуляция";
+
+        if (_texts[13].text != "")
+        {
+            if (_texts[13].text == "3 кВ/м")
+            {
+                _electroFilter.speed = 0.7f;
+                Debug.Log("0.7");
+            }
+            else if (_texts[13].text == "4 кВ/м")
+            {
+                _electroFilter.speed = 0.8f;
+                Debug.Log("0.8");
+            }
+            else
+            {
+                _electroFilter.speed = 1f;
+                Debug.Log("1");
+            }
+        }
     }
 }

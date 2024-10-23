@@ -11,7 +11,7 @@ public class DotsScript : MonoBehaviour
     public Transform parentObject;
 
     private int spawnedCount = 0;
-
+    private bool isFull = false;
     public void StartDots()
     {
         InvokeRepeating("SpawnPrefab", 1f, .1f);
@@ -29,7 +29,15 @@ public class DotsScript : MonoBehaviour
         else
         {
             CancelInvoke("SpawnPrefab");
+            isFull = true;
+            
+        }
+    }
 
+    public void DropPrefabs()
+    {
+        if (isFull)
+        {
             ActivateRigidbodies();
         }
     }
