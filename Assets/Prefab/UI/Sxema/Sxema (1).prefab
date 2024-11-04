@@ -20455,7 +20455,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5128375626322707507}
   - component: {fileID: 5331995297889883495}
-  - component: {fileID: 3478333916744847715}
   m_Layer: 0
   m_Name: Lines
   m_TagString: Untagged
@@ -20504,34 +20503,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3478333916744847715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5286985825136444027}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6246594ce025f3748ab49295b9081b96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sxemSborCO2Anim: {fileID: 5331995297889883495}
-  cubesAnim: {fileID: 0}
-  sxema: {fileID: 6562608231012695947}
-  sxemaOriginal: {fileID: 5998057089927675728}
-  gazValue:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  manValue:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  pauseText: {fileID: 7858689588509277337}
-  aborberPercents:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &5301342249159568596
 GameObject:
   m_ObjectHideFlags: 0

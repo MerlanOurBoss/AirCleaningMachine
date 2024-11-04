@@ -1176,7 +1176,7 @@ public class LookAroundScript : MonoBehaviour
         GameObject parent = new GameObject("parent");
         parent.transform.SetParent(endObject.transform);
 
-        if (startPos.x < endPos.x)
+        if (Mathf.Abs(startPos.x) < Mathf.Abs(endPos.x))
         {
             Vector3 startNew = startPos;
             startPos = endPos;

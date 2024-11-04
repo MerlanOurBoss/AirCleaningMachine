@@ -2,15 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SxemaElectrofilter : MonoBehaviour
 {
     [SerializeField] private Animator sxemElectroAnim;
     [SerializeField] private GameObject sxema;
     [SerializeField] private GameObject sxemaOriginal;
-
+    [SerializeField] private Material electrofilterMat;
 
     [SerializeField] private TextMeshProUGUI pauseText;
+
+    public GameObject prefab; // Префаб, который будем спавнить
+    public Transform target;  // Целевой объект для спавна
+    public Slider slider;     // Слайдер
+    public bool movePrefabs = false; // Флаг для движения префабов
+    public Transform[] stopPositions; // Массив позиций остановки
+
+    private List<GameObject> spawnedPrefabs = new List<GameObject>();
+    private int previousSliderValue = 0;
+
 
     private bool isOff = false;
 
@@ -21,7 +32,44 @@ public class SxemaElectrofilter : MonoBehaviour
     public void Start()
     {
         pauseText.text = "Pause";
+        slider.onValueChanged.AddListener(OnSliderValueChanged);
     }
+
+    void OnSliderValueChanged(float value)
+    {
+        int newValue = Mathf.FloorToInt(value);
+        if (newValue > previousSliderValue)
+        {
+            SpawnPrefab();
+            previousSliderValue = newValue;
+        }
+    }
+
+    void SpawnPrefab()
+    {
+        RectTransform rectTransform = target.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            float width = rectTransform.rect.width;
+            float height = rectTransform.rect.height;
+
+            // Генерируем случайные координаты по X и Y внутри границ target
+            float randomX = Random.Range(-width / 2, width / 2);
+            float randomY = Random.Range(-height / 2, height / 2);
+
+            // Задаем позицию спавна относительно target
+            Vector3 spawnPosition = target.position + new Vector3(randomX / 1000, randomY / 1000,0);
+            Debug.Log(randomX + randomY);
+            // Спавним префаб на сгенерированной позиции
+            GameObject newPrefab = Instantiate(prefab, spawnPosition, new Quaternion(0,0,0,0), target);
+            RectTransform prefabRectTransform = newPrefab.GetComponent<RectTransform>();
+
+            // Устанавливаем позицию по Z в 0 для UI
+            prefabRectTransform.localPosition = new Vector3(prefabRectTransform.localPosition.x, prefabRectTransform.localPosition.y, 0);
+            spawnedPrefabs.Add(newPrefab);
+        }
+    }
+
     public void OnOffSxema()
     {
         if (!isActivated)
@@ -43,12 +91,36 @@ public class SxemaElectrofilter : MonoBehaviour
 
     private void Update()
     {
-        
-
+        if (movePrefabs)
+        {
+            MovePrefabsToStopPositions();
+        }
         if (isOff)
         {
             sxemElectroAnim.Play("Stop");
             isOff = false;
+        }
+    }
+
+    void MovePrefabsToStopPositions()
+    {
+        for (int i = 0; i < spawnedPrefabs.Count; i++)
+        {
+            GameObject prefab = spawnedPrefabs[i];
+            if (prefab != null)
+            {
+                Transform stopPosition = stopPositions[i % stopPositions.Length];
+
+                // Используем localPosition для UI-объектов
+                RectTransform prefabRectTransform = prefab.GetComponent<RectTransform>();
+                float newX = Mathf.MoveTowards(prefabRectTransform.localPosition.x, stopPosition.localPosition.x, Time.deltaTime * 20f);
+                prefabRectTransform.localPosition = new Vector3(newX, prefabRectTransform.localPosition.y, prefabRectTransform.localPosition.z); ;
+                // Проверка расстояния между текущей позицией и позицией остановки
+                if (Vector3.Distance(prefabRectTransform.localPosition, stopPosition.localPosition) < 0.1f)
+                {
+                    spawnedPrefabs[i] = null; // Остановить движение для достигнутого префаба
+                }
+            }
         }
     }
     public void SxemaStart()
@@ -75,5 +147,29 @@ public class SxemaElectrofilter : MonoBehaviour
     public void SxemasStop()
     {
         sxemElectroAnim.Play("Stop");
+    }
+}
+
+public class PrefabMover : MonoBehaviour
+{
+    private Vector3 targetPosition;
+    private bool moveForward;
+
+    public void SetTargetPosition(Vector3 position, bool shouldMove)
+    {
+        targetPosition = position;
+        moveForward = shouldMove;
+    }
+
+    void Update()
+    {
+        if (moveForward)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * 2f);
+            if (transform.position == targetPosition)
+            {
+                moveForward = false;
+            }
+        }
     }
 }
