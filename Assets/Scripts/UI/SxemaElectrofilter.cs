@@ -17,6 +17,7 @@ public class SxemaElectrofilter : MonoBehaviour
     public Transform target;  // Целевой объект для спавна
     public Slider slider;     // Слайдер
     public bool movePrefabs = false; // Флаг для движения префабов
+    public bool goDown = false;
     public Transform[] stopPositions; // Массив позиций остановки
 
     private List<GameObject> spawnedPrefabs = new List<GameObject>();
@@ -109,16 +110,31 @@ public class SxemaElectrofilter : MonoBehaviour
             GameObject prefab = spawnedPrefabs[i];
             if (prefab != null)
             {
-                Transform stopPosition = stopPositions[i % stopPositions.Length];
-
-                // Используем localPosition для UI-объектов
                 RectTransform prefabRectTransform = prefab.GetComponent<RectTransform>();
-                float newX = Mathf.MoveTowards(prefabRectTransform.localPosition.x, stopPosition.localPosition.x, Time.deltaTime * 20f);
-                prefabRectTransform.localPosition = new Vector3(newX, prefabRectTransform.localPosition.y, prefabRectTransform.localPosition.z); ;
-                // Проверка расстояния между текущей позицией и позицией остановки
-                if (Vector3.Distance(prefabRectTransform.localPosition, stopPosition.localPosition) < 0.1f)
+
+                if (goDown)
                 {
-                    spawnedPrefabs[i] = null; // Остановить движение для достигнутого префаба
+                    // Двигаем префаб вниз по оси Y
+                    float newY = Mathf.MoveTowards(prefabRectTransform.localPosition.y, -Screen.height, Time.deltaTime * 100f); // -Screen.height для перемещения вниз за экран
+                    prefabRectTransform.localPosition = new Vector3(prefabRectTransform.localPosition.x, newY, prefabRectTransform.localPosition.z);
+
+                    // Останавливаем движение, если объект достиг нижней границы экрана
+                    if (prefabRectTransform.localPosition.y <= -Screen.height)
+                    {
+                        spawnedPrefabs[i] = null; // Остановить движение для достигнутого префаба
+                    }
+                }
+                else
+                {
+                    Transform stopPosition = stopPositions[i % stopPositions.Length];
+                    // Используем localPosition для UI-объектов
+                    float newX = Mathf.MoveTowards(prefabRectTransform.localPosition.x, stopPosition.localPosition.x, Time.deltaTime * 100f);
+                    prefabRectTransform.localPosition = new Vector3(newX, prefabRectTransform.localPosition.y, prefabRectTransform.localPosition.z); ;
+                    // Проверка расстояния между текущей позицией и позицией остановки
+                    if (Vector3.Distance(prefabRectTransform.localPosition, stopPosition.localPosition) < 0.1f)
+                    {
+                        spawnedPrefabs[i] = null; // Остановить движение для достигнутого префаба
+                    }
                 }
             }
         }
