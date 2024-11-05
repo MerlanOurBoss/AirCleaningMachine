@@ -12,6 +12,7 @@ public class SxemaElectrofilter : MonoBehaviour
     [SerializeField] private Material electrofilterMat;
 
     [SerializeField] private TextMeshProUGUI pauseText;
+    [SerializeField] private TextMeshProUGUI dustCountText;
 
     public GameObject prefab; // Префаб, который будем спавнить
     public Transform target;  // Целевой объект для спавна
@@ -39,13 +40,50 @@ public class SxemaElectrofilter : MonoBehaviour
     void OnSliderValueChanged(float value)
     {
         int newValue = Mathf.FloorToInt(value);
+        dustCountText.text = newValue.ToString();
+        // Если значение слайдера больше предыдущего, то спавним недостающие префабы
         if (newValue > previousSliderValue)
         {
-            SpawnPrefab();
-            previousSliderValue = newValue;
+            int prefabsToSpawn = newValue - previousSliderValue;
+            for (int i = 0; i < prefabsToSpawn; i++)
+            {
+                SpawnPrefab();
+            }
+            
+        }
+        // Если значение слайдера меньше, то удаляем лишние префабы (опционально)
+        else if (newValue < previousSliderValue)
+        {
+            int prefabsToRemove = previousSliderValue - newValue;
+            for (int i = 0; i < prefabsToRemove; i++)
+            {
+                RemovePrefab();
+            }
+        }
+
+        previousSliderValue = newValue;
+    }
+    private void RemovePrefab()
+    {
+        if (spawnedPrefabs.Count > 0)
+        {
+            // Удаляем последний спавненный префаб
+            GameObject prefabToRemove = spawnedPrefabs[spawnedPrefabs.Count - 1];
+            spawnedPrefabs.RemoveAt(spawnedPrefabs.Count - 1);
+            Destroy(prefabToRemove);
         }
     }
 
+    public void boolOn(bool a)
+    {
+        a = true;
+    }
+
+    public void boolsOff()
+    {
+        movePrefabs = false; // Флаг для движения префабов
+        goDown = false;
+    }
     void SpawnPrefab()
     {
         RectTransform rectTransform = target.GetComponent<RectTransform>();
@@ -60,7 +98,6 @@ public class SxemaElectrofilter : MonoBehaviour
 
             // Задаем позицию спавна относительно target
             Vector3 spawnPosition = target.position + new Vector3(randomX / 1000, randomY / 1000,0);
-            Debug.Log(randomX + randomY);
             // Спавним префаб на сгенерированной позиции
             GameObject newPrefab = Instantiate(prefab, spawnPosition, new Quaternion(0,0,0,0), target);
             RectTransform prefabRectTransform = newPrefab.GetComponent<RectTransform>();
