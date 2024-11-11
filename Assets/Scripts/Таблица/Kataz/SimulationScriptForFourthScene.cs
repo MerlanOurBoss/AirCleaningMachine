@@ -89,15 +89,15 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         _electroAnimDelayPrivate  = _electroAnimDelay;
 
         _myTexts[0].text = "150 °C";
-        _myTexts[1].text = "0.01 мА/см²";
-        _myTexts[2].text = "80 %";
+        //_myTexts[1].text = "0,01 мА/см²";
+        //_myTexts[2].text = "80 %";
         _myTexts[4].text = "Циолит";
         _myTexts[5].text = "Платина";
         _myTexts[6].text = "5 °C";
         _myTexts[7].text = "Вода";
         _myTexts[8].text = "5 °C";
         _myTexts[9].text = "Едкий натрий ";
-        _myTexts[10].text = "5 °C";
+        //_myTexts[10].text = "5 °C";
         _myTexts[11].text = "3 кВ/м";
         _myTexts[12].text = "0,5 м/с";
         _myTexts[13].text = "3 кВ/м";
@@ -118,7 +118,7 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         if (_myTexts[13].text != " " && _myTexts[12].text != " ")
         {
             float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text[.._myTexts[13].text.IndexOf(" ")]) * 2) / float.Parse(_myTexts[12].text[.._myTexts[12].text.IndexOf(" ")]));
-            //Debug.Log(resEle);
+            
             ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
         }
 
