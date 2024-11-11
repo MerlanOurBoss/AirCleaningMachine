@@ -13,10 +13,12 @@ public class SxemaElectrofilter : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI pauseText;
     [SerializeField] private TextMeshProUGUI dustCountText;
+    [SerializeField] private TextMeshProUGUI TensionText;
 
     public GameObject prefab; // Префаб, который будем спавнить
     public Transform target;  // Целевой объект для спавна
     public Slider slider;     // Слайдер
+    public Slider sliderMat;     
     public bool movePrefabs = false; // Флаг для движения префабов
     public bool goDown = false;
     public Transform[] stopPositions; // Массив позиций остановки
@@ -25,6 +27,7 @@ public class SxemaElectrofilter : MonoBehaviour
     private int previousSliderValue = 0;
 
 
+    private int sliderParam = 0;
     private bool isOff = false;
 
     private bool isActivated = false;
@@ -74,15 +77,21 @@ public class SxemaElectrofilter : MonoBehaviour
         }
     }
 
-    public void boolOn(bool a)
+    public void boolOnMove()
     {
-        a = true;
+        movePrefabs = true;
     }
-
+    public void boolOnDown()
+    {
+        goDown = true;
+    }
     public void boolsOff()
     {
         movePrefabs = false; // Флаг для движения префабов
         goDown = false;
+        slider.value = 0;
+        sliderMat.value = 0;
+        sxemElectroAnim.Play("Stop");
     }
     void SpawnPrefab()
     {
@@ -129,6 +138,32 @@ public class SxemaElectrofilter : MonoBehaviour
 
     private void Update()
     {
+        TensionText.text = sliderMat.value.ToString("0");
+        if (sliderMat.value <= 14)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0,102,191,0) * 0f);
+        }
+        else if (sliderMat.value >= 14 && sliderMat.value <= 28)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.01f);
+        }
+        else if (sliderMat.value >= 28 && sliderMat.value <= 42)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.05f);
+        }
+        else if (sliderMat.value >= 42 && sliderMat.value <= 70)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.1f);
+        }
+        else if (sliderMat.value >= 70 && sliderMat.value <= 98)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.5f);
+        }
+        else if (sliderMat.value >= 98 && sliderMat.value <= 100)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 1f);
+        }
+
         if (movePrefabs)
         {
             MovePrefabsToStopPositions();
