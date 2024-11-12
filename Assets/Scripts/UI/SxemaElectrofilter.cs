@@ -26,7 +26,7 @@ public class SxemaElectrofilter : MonoBehaviour
     private List<GameObject> spawnedPrefabs = new List<GameObject>();
     private int previousSliderValue = 0;
 
-
+    private float tensionCount = 0;
     private int sliderParam = 0;
     private bool isOff = false;
 
@@ -38,8 +38,39 @@ public class SxemaElectrofilter : MonoBehaviour
     {
         pauseText.text = "Pause";
         slider.onValueChanged.AddListener(OnSliderValueChanged);
+        sliderMat.onValueChanged.AddListener(OnSliderValueChangedTension);
     }
+    void OnSliderValueChangedTension(float value)
+    {
+        // Update UI text
+        TensionText.text = value.ToString("0");
 
+        // Update material emission color based on slider value ranges
+        if (value <= 14)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0f);
+        }
+        else if (value >= 14 && value <= 28)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.01f);
+        }
+        else if (value >= 28 && value <= 42)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.05f);
+        }
+        else if (value >= 42 && value <= 70)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.1f);
+        }
+        else if (value >= 70 && value <= 98)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.5f);
+        }
+        else if (value >= 98 && value <= 100)
+        {
+            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 1f);
+        }
+    }
     void OnSliderValueChanged(float value)
     {
         int newValue = Mathf.FloorToInt(value);
@@ -138,32 +169,6 @@ public class SxemaElectrofilter : MonoBehaviour
 
     private void Update()
     {
-        TensionText.text = sliderMat.value.ToString("0");
-        if (sliderMat.value <= 14)
-        {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0,102,191,0) * 0f);
-        }
-        else if (sliderMat.value >= 14 && sliderMat.value <= 28)
-        {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.01f);
-        }
-        else if (sliderMat.value >= 28 && sliderMat.value <= 42)
-        {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.05f);
-        }
-        else if (sliderMat.value >= 42 && sliderMat.value <= 70)
-        {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.1f);
-        }
-        else if (sliderMat.value >= 70 && sliderMat.value <= 98)
-        {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.5f);
-        }
-        else if (sliderMat.value >= 98 && sliderMat.value <= 100)
-        {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 1f);
-        }
-
         if (movePrefabs)
         {
             MovePrefabsToStopPositions();
