@@ -341,7 +341,11 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         elec.isEnable = true;
         shelosh.isEnable = true;
         react.isEnable = true;
-        sbor.isEnable = true;   
+        sbor.isEnable = true;
+
+        _startSimulationTemp = true; //надо будет убрать
+
+
         for (int i = 0; i <= 8; i++)
         {
             if (_molecCount[i].text == "")
@@ -359,49 +363,49 @@ public class SimulationScriptForFourthScene: MonoBehaviour
 
 
 
-        if (_myTexts[0].text == "" || _myTexts[1].text == "" || _myTexts[2].text == "")
-        {
-            _componentsText[0].color = Color.red;
-            _startSimulationTemp = false;
-        }
-        else
-        {
-            _componentsText[0].color = Color.black;
-            _startSimulationTemp = true;
-        }
+        //if (_myTexts[0].text == "" || _myTexts[1].text == "" || _myTexts[2].text == "")
+        //{
+        //    _componentsText[0].color = Color.red;
+        //    _startSimulationTemp = false;
+        //}
+        //else
+        //{
+        //    _componentsText[0].color = Color.black;
+        //    _startSimulationTemp = true;
+        //}
 
-        if (_myTexts[3].text == "" || _myTexts[4].text == "" || _myTexts[5].text == "")
-        {
-            _componentsText[1].color = Color.red;
-            _startSimulationTemp = false;
-        }
-        else
-        {
-            _componentsText[1].color = Color.black;
-            _startSimulationTemp = true;
-        }
+        //if (_myTexts[3].text == "" || _myTexts[4].text == "" || _myTexts[5].text == "")
+        //{
+        //    _componentsText[1].color = Color.red;
+        //    _startSimulationTemp = false;
+        //}
+        //else
+        //{
+        //    _componentsText[1].color = Color.black;
+        //    _startSimulationTemp = true;
+        //}
 
-        if (_myTexts[6].text == "" || _myTexts[7].text == "" )
-        {
-            _componentsText[2].color = Color.red;
-            _startSimulationTemp = false;
-        }
-        else
-        {
-            _componentsText[2].color = Color.black;
-            _startSimulationTemp = true;
-        }
+        //if (_myTexts[6].text == "" || _myTexts[7].text == "" )
+        //{
+        //    _componentsText[2].color = Color.red;
+        //    _startSimulationTemp = false;
+        //}
+        //else
+        //{
+        //    _componentsText[2].color = Color.black;
+        //    _startSimulationTemp = true;
+        //}
 
-        if (_myTexts[8].text == "" || _myTexts[9].text == "")
-        {
-            _componentsText[3].color = Color.red;
-            _startSimulationTemp = false;
-        }
-        else
-        {
-            _componentsText[3].color = Color.black;
-            _startSimulationTemp = true;
-        }
+        //if (_myTexts[8].text == "" || _myTexts[9].text == "")
+        //{
+        //    _componentsText[3].color = Color.red;
+        //    _startSimulationTemp = false;
+        //}
+        //else
+        //{
+        //    _componentsText[3].color = Color.black;
+        //    _startSimulationTemp = true;
+        //}
 
         if (_myTexts[10].text != "" || _myTexts[11].text != "")
         {
