@@ -8,7 +8,6 @@ public class DropSpawner : MonoBehaviour
     public GameObject spawnAreaCube;
     public float spawnInterval = 0.001f;
     public float _delay;
-
     public void startCor()
     {
         StartCoroutine(SpawnCoroutine());
@@ -22,7 +21,6 @@ public class DropSpawner : MonoBehaviour
         yield return new WaitForSeconds(_delay);
         while (true)
         {
-            
             Vector3 spawnAreaSize = spawnAreaCube.transform.localScale;
 
             Vector3 spawnPosition = new Vector3(
