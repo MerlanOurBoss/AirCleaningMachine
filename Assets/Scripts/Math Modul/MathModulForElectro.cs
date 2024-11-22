@@ -39,10 +39,10 @@ public class MathModulForElectro : MonoBehaviour
     [System.Obsolete]
     private void Update()
     {
-        mass.text = "Массовый поток газа: " + massPotok.ToString("0.000") + " кг/с";
-        potential.text = "Потенциал: " + electricPotential.ToString("0.000") + " Дж/Кл";
-        field.text = "Электрическое поле: " + electricField.ToString("0.000") + " Н/Кл";
-        acceleration.text = "Ускорение частиц: " + particleAcceleration.ToString("0.000") + " м/с²";
+        mass.text = mass.text + massPotok.ToString("0.000") + " кг/с";
+        potential.text = potential.text + electricPotential.ToString("0.000") + " Дж/Кл";
+        field.text = field.text + electricField.ToString("0.000") + " Н/Кл";
+        acceleration.text = acceleration.text + particleAcceleration.ToString("0.000") + " м/с²";
 
 
         if (_speed.text == "0,5 м/с")
