@@ -13,7 +13,6 @@ public class SxemaCO2 : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI[] gazValue;
     [SerializeField] private TextMeshProUGUI[] manValue;
-    [SerializeField] private TextMeshProUGUI pauseText;
     [SerializeField] private AborberPercent[] aborberPercents;
     private float gaz1 = 0;
     private float gaz2 = 0;
@@ -46,7 +45,6 @@ public class SxemaCO2 : MonoBehaviour
 
     public void Start()
     {
-        pauseText.text = "Pause";
         gazValue[0].text = "0.0";
         gazValue[1].text = "0.0";
         gazValue[2].text = "0.0";
@@ -275,7 +273,6 @@ public class SxemaCO2 : MonoBehaviour
     {
         if (!isPaused)
         {
-            pauseText.text = "Resume";
             sxemSborCO2Anim.speed = 0;
             isPaused = true;
             if (aborberPercents[0].startProcess)
@@ -307,7 +304,6 @@ public class SxemaCO2 : MonoBehaviour
         }
         else
         {
-            pauseText.text = "Pause";
             sxemSborCO2Anim.speed = 1;
             isPaused = false;
 

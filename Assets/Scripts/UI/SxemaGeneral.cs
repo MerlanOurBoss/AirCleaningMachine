@@ -11,7 +11,6 @@ public class SxemaGeneral : MonoBehaviour
     [SerializeField] private GameObject sxema;
     [SerializeField] private GameObject mycamera;
     [SerializeField] private GameObject cameraUI;
-    [SerializeField] private TextMeshProUGUI pauseText;
 
     [SerializeField] private GameObject[] backgrounds;
 
@@ -20,10 +19,6 @@ public class SxemaGeneral : MonoBehaviour
     private bool isActivated = false;
     private bool isPaused = false;
 
-    private void Start()
-    {
-        pauseText.text = "Pause";
-    }
     public void OnOffSxema()
     {
         if (!isActivated)
@@ -72,14 +67,12 @@ public class SxemaGeneral : MonoBehaviour
     {
         if (!isPaused)
         {
-            pauseText.text = "Resume";
             sxemAnim.speed = 0;
             cubesAnim.speed = 0;
             isPaused = true;
         }
         else
         {
-            pauseText.text = "Pause";
             sxemAnim.speed = 1;
             cubesAnim.speed = 1;
             isPaused = false;
