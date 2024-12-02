@@ -91,8 +91,8 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         _myTexts[0].text = "150 °C";
         //_myTexts[1].text = "0,01 мА/см²";
         //_myTexts[2].text = "80 %";
-        _myTexts[4].text = "Циолит";
-        _myTexts[5].text = "Платина";
+        //_myTexts[4].text = "Циолит";
+        //_myTexts[5].text = "Платина";
         _myTexts[6].text = "5 °C";
         //_myTexts[7].text = "Вода";
         //_myTexts[8].text = "5 °C";
@@ -155,11 +155,11 @@ public class SimulationScriptForFourthScene: MonoBehaviour
             ReactEmul.text = "Эффект. реагент. эмуль.: " + (resReact * 100).ToString("0.") + " %";
         }
 
-        if (_myTexts[18].text != " " && _myTexts[19].text != " ")
-        {
-            float resSborCO2 = (10 * float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])) / (1 + (float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])));
-            SborCO2.text = "Эффект. сбор CO2: " + (resSborCO2 * 100).ToString("0.") + " %";
-        }
+        //if (_myTexts[18].text != " " && _myTexts[19].text != " ")
+        //{
+        //    float resSborCO2 = (10 * float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])) / (1 + (float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])));
+        //    SborCO2.text = "Эффект. сбор CO2: " + (resSborCO2 * 100).ToString("0.") + " %";
+        //}
 
 
         //if (_myTexts[21].text == "Включить")

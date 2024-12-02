@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -24,41 +24,41 @@ public class SborCO2 : MonoBehaviour
 
     private void Start()
     {
-        sorbentSbor.text = "Цеолиты";
-        volumeSbor.text = "100 м3/ч";
-        tempAdsorbSbor.text = "40 °C";
-        tempDisorbSbor.text = "200 °C";
-        diametrSbor.text = "0,1 м";
-        fanSpeedSbor.text = "500 об/мин";
+        sorbentSbor.text = "Р¦РµРѕР»РёС‚С‹";
+        volumeSbor.text = "100 РјВі/С‡";
+        tempAdsorbSbor.text = "40 В°C";
+        tempDisorbSbor.text = "200 В°C";
+        diametrSbor.text = "0,1 Рј";
+        fanSpeedSbor.text = "500 РѕР±/РјРёРЅ";
     }
 
     public void ChangeSmoke()
     {
-        if (volumeSbor.text == "100 м3/ч")
+        if (volumeSbor.text == "100 РјВі/С‡")
         {
             newSbor.timingDelay = 150f;
         }
-        else if (volumeSbor.text == "150 м3/ч")
+        else if (volumeSbor.text == "150 РјВі/С‡")
         {
             newSbor.timingDelay = 170f;
         }
-        else if (volumeSbor.text == "200 м3/ч")
+        else if (volumeSbor.text == "200 РјВі/С‡")
         {
             newSbor.timingDelay = 200f;
         }
 
 
-        if (fanSpeedSbor.text == "1000 об/мин")
+        if (fanSpeedSbor.text == "1000 РѕР±/РјРёРЅ")
         {
             fansAnim[0].speed = 3;
             fansAnim[1].speed = 3;
         }
-        else if (fanSpeedSbor.text == "1500 об/мин")
+        else if (fanSpeedSbor.text == "1500 РѕР±/РјРёРЅ")
         {
             fansAnim[0].speed = 5;
             fansAnim[1].speed = 5;
         }
-        else if (fanSpeedSbor.text == "500 об/мин")
+        else if (fanSpeedSbor.text == "500 РѕР±/РјРёРЅ")
         {
             fansAnim[0].speed = 1;
             fansAnim[1].speed = 1;
