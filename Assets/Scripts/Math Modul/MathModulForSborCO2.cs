@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MathModulForSborCO2 : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem[] _smokes;
     [SerializeField] private TMP_InputField _sorbentTypeText;
     [SerializeField] private TMP_InputField _gasVolumeText;
     [SerializeField] private TMP_InputField _adsorptionTempText;
@@ -18,6 +19,11 @@ public class MathModulForSborCO2 : MonoBehaviour
     private float gasVolume;
     private float adsorptionTemp;
     private float desorptionTemp;
+    private bool isProcessed = false;
+    private bool isProcessed1 = false;
+    private bool isProcessed2 = false;
+    private int a = 0;
+    private int b = 0;
 
     private float sorbentCapacity; // моль CO₂/кг
     private float sorbentEfficiency; // Коэффициент эффективности
@@ -28,15 +34,10 @@ public class MathModulForSborCO2 : MonoBehaviour
 
     private void Start()
     {
-        //// Установка начальных значений
-        //_sorbentTypeText.text = "Цеолит";
-        //_gasVolumeText.text = "100 м³/ч";
-        //_adsorptionTempText.text = "40 °C";
-        //_desorptionTempText.text = "150 °C";
-
         UpdateSorbentProperties();
     }
 
+    [System.Obsolete]
     private void Update()
     {
         UpdateSorbentProperties();
@@ -44,6 +45,85 @@ public class MathModulForSborCO2 : MonoBehaviour
         _adsorptionTimeText.text = "Время адсорбции: " + CalculateAdsorptionTime().ToString("0.00") + " ч";
         _capturedCO2Text.text = "Захваченный CO2: " + capturedCO2.ToString("0.00") + " моль";
         _desorbedCO2Text.text = "Десорбированный CO2: " + CalculateDesorption().ToString("0.00") + " моль";
+
+        if (_gasVolumeText.text == "150 м³/ч" && !isProcessed)
+        {
+            a++;
+            foreach (ParticleSystem smoke in _smokes)
+            {
+                smoke.startSpeed = smoke.startSpeed + 0.2f - (0.4f * b);
+
+                ParticleSystem.ColorOverLifetimeModule colorModul = smoke.colorOverLifetime;
+
+                Gradient currentGradient = colorModul.color.gradient;
+
+                Gradient newGradient = new Gradient();
+                newGradient.SetKeys(
+                    currentGradient.colorKeys,
+                    new GradientAlphaKey[] {
+                    new GradientAlphaKey(0.7f, 0.0f), // Начальная альфа
+                    new GradientAlphaKey(0.7f, 1.0f) // Конечная альфа
+                    }
+                );
+                colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
+            }
+            isProcessed = true;
+            isProcessed1 = false;
+            isProcessed2 = false;
+            b = 0;
+        }
+        else if (_gasVolumeText.text == "100 м³/ч" && !isProcessed1)
+        {
+            foreach (ParticleSystem smoke in _smokes)
+            {
+                smoke.startSpeed = smoke.startSpeed - (0.2f * a) - (0.4f * b);
+
+                ParticleSystem.ColorOverLifetimeModule colorModul = smoke.colorOverLifetime;
+
+                Gradient currentGradient = colorModul.color.gradient;
+
+                Gradient newGradient = new Gradient();
+                newGradient.SetKeys(
+                    currentGradient.colorKeys,
+                    new GradientAlphaKey[] {
+                    new GradientAlphaKey(0.3f, 0.0f), // Начальная альфа
+                    new GradientAlphaKey(0.3f, 1.0f) // Конечная альфа
+                    }
+                );
+                colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
+            }
+            isProcessed = false;
+            isProcessed1 = true;
+            isProcessed2 = false;
+            a = 0;
+            b = 0;
+        }
+        else if (_gasVolumeText.text == "200 м³/ч" && !isProcessed2)
+        {
+            b++;
+            foreach (ParticleSystem smoke in _smokes)
+            {
+                smoke.startSpeed = smoke.startSpeed + 0.4f - (0.2f * a);
+
+                ParticleSystem.ColorOverLifetimeModule colorModul = smoke.colorOverLifetime;
+
+                Gradient currentGradient = colorModul.color.gradient;
+
+                Gradient newGradient = new Gradient();
+                newGradient.SetKeys(
+                    currentGradient.colorKeys,
+                    new GradientAlphaKey[] {
+                    new GradientAlphaKey(1.0f, 0.0f), // Начальная альфа
+                    new GradientAlphaKey(1.0f, 1.0f) // Конечная альфа
+                    }
+                );
+                colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
+            }
+            isProcessed = false;
+            isProcessed1 = false;
+            isProcessed2 = true;
+            a = 0;
+        }
     }
 
     private void UpdateSorbentProperties()

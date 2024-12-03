@@ -76,7 +76,7 @@ public class MathModuleForEmul : MonoBehaviour
             }
             Debug.Log("0.7");
         }
-        else if (_gasFlow.text == "1,5 м/с")
+        else if (_gasFlow.text == "12 м³/с")
         {
             foreach (ParticleSystem smoke in _mySmokes)
             {

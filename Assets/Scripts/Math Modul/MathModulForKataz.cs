@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class MathModulForKataz : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem[] _smokes;
     [SerializeField] private TMP_InputField _temperatureText;
     [SerializeField] private TMP_InputField _pressureText;
     [SerializeField] private TMP_InputField _flowRateText;
@@ -15,6 +16,11 @@ public class MathModulForKataz : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gasmassFlow;
     [SerializeField] private TextMeshProUGUI coGaz;
 
+    private bool isProcessed = false;
+    private bool isProcessed1 = false;
+    private bool isProcessed2 = false;
+    private int a = 0;
+    private int b = 0;
     private float velocity;
     private float density;
     private float massFlow;
@@ -32,6 +38,8 @@ public class MathModulForKataz : MonoBehaviour
         _pressureText.text = "101325 Па";
         _flowRateText.text = "1 м³/с";
     }
+
+    [Obsolete]
     private void Update()
     {
         gasVelocity.text = "Скорость газа: " + velocity.ToString("0.000") + " м/с";
@@ -44,7 +52,85 @@ public class MathModulForKataz : MonoBehaviour
         CO_Gaz_Out = (float)(CO_Gaz_In * Math.Pow(Math.E, k_CO * 1 * (1 / velocity)));
         density = (float.Parse(_pressureText.text[.._pressureText.text.IndexOf(" ")].ToString()) * molarMass) / (R * float.Parse(_temperatureText.text[.._temperatureText.text.IndexOf(" ")].ToString()));
         velocity = float.Parse(_flowRateText.text[.._flowRateText.text.IndexOf(" ")].ToString()) / crossSectionArea;
-        Debug.Log("crossSectionArea " + crossSectionArea);
         massFlow = density * velocity * crossSectionArea;
+
+        if (_flowRateText.text == "1,5 м³/с" && !isProcessed)
+        {
+            a++;
+            foreach (ParticleSystem smoke in _smokes)
+            {
+                smoke.startSpeed = smoke.startSpeed + 0.2f - (0.4f * b);
+
+                ParticleSystem.ColorOverLifetimeModule colorModul = smoke.colorOverLifetime;
+
+                Gradient currentGradient = colorModul.color.gradient;
+
+                Gradient newGradient = new Gradient();
+                newGradient.SetKeys(
+                    currentGradient.colorKeys,
+                    new GradientAlphaKey[] {
+                    new GradientAlphaKey(0.7f, 0.0f), // Начальная альфа
+                    new GradientAlphaKey(0.7f, 1.0f) // Конечная альфа
+                    }
+                );
+                colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
+            }
+            isProcessed = true;
+            isProcessed1 = false;
+            isProcessed2 = false;
+            b = 0;
+        }
+        else if (_flowRateText.text == "1 м³/с" && !isProcessed1)
+        {
+            foreach (ParticleSystem smoke in _smokes)
+            {
+                smoke.startSpeed = smoke.startSpeed - (0.2f * a) - (0.4f * b);
+
+                ParticleSystem.ColorOverLifetimeModule colorModul = smoke.colorOverLifetime;
+
+                Gradient currentGradient = colorModul.color.gradient;
+
+                Gradient newGradient = new Gradient();
+                newGradient.SetKeys(
+                    currentGradient.colorKeys,
+                    new GradientAlphaKey[] {
+                    new GradientAlphaKey(0.3f, 0.0f), // Начальная альфа
+                    new GradientAlphaKey(0.3f, 1.0f) // Конечная альфа
+                    }
+                );
+                colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
+            }
+            isProcessed = false;
+            isProcessed1 = true;
+            isProcessed2 = false;
+            a = 0;
+            b = 0;
+        }
+        else if (_flowRateText.text == "2 м³/с" && !isProcessed2)
+        {
+            b++;
+            foreach (ParticleSystem smoke in _smokes)
+            {
+                smoke.startSpeed = smoke.startSpeed + 0.4f - (0.2f * a);
+
+                ParticleSystem.ColorOverLifetimeModule colorModul = smoke.colorOverLifetime;
+
+                Gradient currentGradient = colorModul.color.gradient;
+
+                Gradient newGradient = new Gradient();
+                newGradient.SetKeys(
+                    currentGradient.colorKeys,
+                    new GradientAlphaKey[] {
+                    new GradientAlphaKey(1.0f, 0.0f), // Начальная альфа
+                    new GradientAlphaKey(1.0f, 1.0f) // Конечная альфа
+                    }
+                );
+                colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
+            }
+            isProcessed = false;
+            isProcessed1 = false;
+            isProcessed2 = true;
+            a = 0;
+        }
     }
 }

@@ -105,7 +105,7 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         //_myTexts[14].text = "0,085 м/с";
         //_myTexts[15].text = "1 моль/м";
         _myTexts[16].text = "0,05 м/с";
-        _myTexts[17].text = "1,5 моль/м";
+        //_myTexts[17].text = "1,5 моль/м";
         _myTexts[18].text = "0,5 кПа";
         _myTexts[19].text = "0,2 кПа";
         //_myTexts[21].text = "Включить";
@@ -115,45 +115,45 @@ public class SimulationScriptForFourthScene: MonoBehaviour
 
     private void Update()
     {
-        if (_myTexts[13].text != " " && _myTexts[12].text != " ")
-        {
-            float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text[.._myTexts[13].text.IndexOf(" ")]) * 2) / float.Parse(_myTexts[12].text[.._myTexts[12].text.IndexOf(" ")]));
+        //if (_myTexts[13].text != " " && _myTexts[12].text != " ")
+        //{
+        //    float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text[.._myTexts[13].text.IndexOf(" ")]) * 2) / float.Parse(_myTexts[12].text[.._myTexts[12].text.IndexOf(" ")]));
             
-            ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
-        }
+        //    ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
+        //}
 
-        if (_myTexts[20].text != " ")
-        {
-            float resKataz = 0;
-            if (_myTexts[20].text == "300 °C")
-            {
-                resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 50f)) * 1f);
-                resKataz = 1 / resKataz;
-            }
-            else if (_myTexts[20].text == "400 °C")
-            {
-                resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 150f)) * 1f);
-                resKataz = 1 / resKataz;
-            }
-            else if (_myTexts[20].text == "500 °C")
-            {
-                resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 100f)) * 1f);
-                resKataz = 1 / resKataz;
-            }
-            Katalizator.text = "Эффект. катализатора: " + (resKataz * 100).ToString("0.") + " %";
-        }
+        //if (_myTexts[20].text != " ")
+        //{
+        //    float resKataz = 0;
+        //    if (_myTexts[20].text == "300 °C")
+        //    {
+        //        resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 50f)) * 1f);
+        //        resKataz = 1 / resKataz;
+        //    }
+        //    else if (_myTexts[20].text == "400 °C")
+        //    {
+        //        resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 150f)) * 1f);
+        //        resKataz = 1 / resKataz;
+        //    }
+        //    else if (_myTexts[20].text == "500 °C")
+        //    {
+        //        resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 100f)) * 1f);
+        //        resKataz = 1 / resKataz;
+        //    }
+        //    Katalizator.text = "Эффект. катализатора: " + (resKataz * 100).ToString("0.") + " %";
+        //}
 
-        if (_myTexts[14].text != " " && _myTexts[15].text != " ")
-        {
-            float resWater = float.Parse(_myTexts[14].text[.._myTexts[14].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[15].text[.._myTexts[15].text.IndexOf(" ")]);
-            WaterEmul.text = "Эффект. водяного эмуль.: " + (resWater * 100).ToString("0.") + " %";
-        }
+        //if (_myTexts[14].text != " " && _myTexts[15].text != " ")
+        //{
+        //    float resWater = float.Parse(_myTexts[14].text[.._myTexts[14].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[15].text[.._myTexts[15].text.IndexOf(" ")]);
+        //    WaterEmul.text = "Эффект. водяного эмуль.: " + (resWater * 100).ToString("0.") + " %";
+        //}
 
-        if (_myTexts[16].text != " " && _myTexts[17].text != " ")
-        {
-            float resReact = float.Parse(_myTexts[16].text[.._myTexts[16].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[17].text[.._myTexts[17].text.IndexOf(" ")]);
-            ReactEmul.text = "Эффект. реагент. эмуль.: " + (resReact * 100).ToString("0.") + " %";
-        }
+        //if (_myTexts[16].text != " " && _myTexts[17].text != " ")
+        //{
+        //    float resReact = float.Parse(_myTexts[16].text[.._myTexts[16].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[17].text[.._myTexts[17].text.IndexOf(" ")]);
+        //    ReactEmul.text = "Эффект. реагент. эмуль.: " + (resReact * 100).ToString("0.") + " %";
+        //}
 
         //if (_myTexts[18].text != " " && _myTexts[19].text != " ")
         //{
