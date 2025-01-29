@@ -17,6 +17,7 @@ public class MathModulForElectro : MonoBehaviour
     [SerializeField] private TextMeshProUGUI potential;
     [SerializeField] private TextMeshProUGUI field;
     [SerializeField] private TextMeshProUGUI acceleration;
+    [SerializeField] private Translator translator;
 
     private float massPotok = 0;
     private float electricPotential  = 0;
@@ -39,10 +40,28 @@ public class MathModulForElectro : MonoBehaviour
     [System.Obsolete]
     private void Update()
     {
-        mass.text = "Массовый поток газа: " + massPotok.ToString("0.000") + " кг/с";
-        potential.text = "Потенциал: " + electricPotential.ToString("0.000") + " Дж/Кл";
-        field.text = "Электрическое поле: " + electricField.ToString("0.000") + " Н/Кл";
-        acceleration.text = "Ускорение частиц: " + particleAcceleration.ToString("0.000") + " м/с²";
+        if (translator.currentLanguage == Translator.Language.Russian)
+        {
+            mass.text = "Массовый поток газа: " + massPotok.ToString("0.000") + " кг/с";
+            potential.text = "Потенциал: " + electricPotential.ToString("0.000") + " Дж/Кл";
+            field.text = "Электрическое поле: " + electricField.ToString("0.000") + " Н/Кл";
+            acceleration.text = "Ускорение частиц: " + particleAcceleration.ToString("0.000") + " м/с²";
+        }
+        else if (translator.currentLanguage == Translator.Language.Kazakh)
+        {
+            mass.text = "Газдың массалық ағыны: " + massPotok.ToString("0.000") + " кг/с";
+            potential.text = "Потенциал: " + electricPotential.ToString("0.000") + " Дж/Кл";
+            field.text = "Электр өрісі: " + electricField.ToString("0.000") + " Н/Кл";
+            acceleration.text = "Бөлшектердің үдеуі: " + particleAcceleration.ToString("0.000") + " м/с²";
+        }
+        else
+        {
+            mass.text = "Mass flow of gas: " + massPotok.ToString("0.000") + " kg/s";
+            potential.text = "Potential: " + electricPotential.ToString("0.000") + " J/Kl";
+            field.text = "Electric field: " + electricField.ToString("0.000") + " N/Kl";
+            acceleration.text = "Particle acceleration: " + particleAcceleration.ToString("0.000") + " m/s²";
+        }
+
 
 
         if (_speed.text == "0,5 м/с")

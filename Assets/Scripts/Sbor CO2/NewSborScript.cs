@@ -16,6 +16,7 @@ public class NewSborScript : MonoBehaviour
     [Header("Materials")]
     public Material absent;
     public Material absent2;
+    public Material materialSbor;
     public Color targetColor;
 
     [Header("Gate Configuration")]
@@ -38,6 +39,7 @@ public class NewSborScript : MonoBehaviour
     private bool isDelayActive = false;
 
     public float timingDelay = 150f;
+    private bool isUpdated = false;
 
     void Start()
     {
@@ -118,11 +120,18 @@ public class NewSborScript : MonoBehaviour
             smokeOutCapsulSecond.Stop();
         }
 
-        if (fillingCount >= ((timingDelay/2) - 15) && fillingCount < ((timingDelay / 2) + 5))
+        if (fillingCount >= ((timingDelay / 2) - 15) && fillingCount < ((timingDelay / 2) + 5))
         {
             displayValue = Mathf.Lerp(displayValue, 100f, 2 * Time.deltaTime);
             displayValue2 = Mathf.Lerp(displayValue2, 0f, 2 * Time.deltaTime);
+            if (!isUpdated)
+            {
+                float a = materialSbor.GetFloat("_Filling");
+                materialSbor.SetFloat("_Filling", a + 10f);
+                isUpdated = true;
+            }
         }
+
 
         AbsentOn();
         AbsentOff2();
@@ -155,8 +164,14 @@ public class NewSborScript : MonoBehaviour
         {
             displayValue = Mathf.Lerp(displayValue, 0f, 2 * Time.deltaTime);
             displayValue2 = Mathf.Lerp(displayValue2, 100f, 2 * Time.deltaTime);
+            if (!isUpdated)
+            {
+                float a = materialSbor.GetFloat("_Filling");
+                materialSbor.SetFloat("_Filling", a + 10f);
+                isUpdated = true;
+            }
         }
-
+        
         AbsentOff();
         AbsentOn2();
         ActivateGatesForUnfilling();
@@ -181,6 +196,7 @@ public class NewSborScript : MonoBehaviour
         isFilling = false;
         state = 1;
         fillingCount = 0;
+        isUpdated = false;
         //SetGatesState(new[] { false, true, false, true, true, false, false, true });
     }
 
@@ -189,6 +205,7 @@ public class NewSborScript : MonoBehaviour
         isFilling = true;
         state = 0;
         fillingCount = 0;
+        isUpdated = false;
         //SetGatesState(new[] { true, false, true, false, false, true, true, false });
     }
 
@@ -232,8 +249,8 @@ public class NewSborScript : MonoBehaviour
         isDelayActive = false;
         fillingCount = 0;
         gate.SetActive(true);
-
-        delay = delayUpdate;
+        materialSbor.SetFloat("_Filling", -30f);
+        delay = 80;
 
         smokeOutCapsul.Stop();
         smokeInCapsul.Stop();

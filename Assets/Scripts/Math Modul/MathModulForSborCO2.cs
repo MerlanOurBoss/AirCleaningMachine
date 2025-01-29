@@ -14,6 +14,7 @@ public class MathModulForSborCO2 : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _adsorptionTimeText;
     [SerializeField] private TextMeshProUGUI _capturedCO2Text;
     [SerializeField] private TextMeshProUGUI _desorbedCO2Text;
+    [SerializeField] private Translator translator;
 
     private string sorbentType;
     private float gasVolume;
@@ -42,9 +43,27 @@ public class MathModulForSborCO2 : MonoBehaviour
     {
         UpdateSorbentProperties();
         // Вывод параметров
-        _adsorptionTimeText.text = "Время адсорбции: " + CalculateAdsorptionTime().ToString("0.00") + " ч";
-        _capturedCO2Text.text = "Захваченный CO2: " + capturedCO2.ToString("0.00") + " моль";
-        _desorbedCO2Text.text = "Десорбированный CO2: " + CalculateDesorption().ToString("0.00") + " моль";
+
+
+        if (translator.currentLanguage == Translator.Language.Russian)
+        {
+            _adsorptionTimeText.text = "Время адсорбции: " + CalculateAdsorptionTime().ToString("0.00") + " ч";
+            _capturedCO2Text.text = "Захваченный CO2: " + capturedCO2.ToString("0.00") + " моль";
+            _desorbedCO2Text.text = "Десорбированный CO2: " + CalculateDesorption().ToString("0.00") + " моль";
+        }
+        else if (translator.currentLanguage == Translator.Language.Kazakh)
+        {
+            _adsorptionTimeText.text = "Адсорбция уақыты: " + CalculateAdsorptionTime().ToString("0.00") + " ч";
+            _capturedCO2Text.text = "Ұсталғаң CO2: " + capturedCO2.ToString("0.00") + " моль";
+            _desorbedCO2Text.text = "Десорбцияланған СО2: " + CalculateDesorption().ToString("0.00") + " моль";
+        }
+        else
+        {
+            _adsorptionTimeText.text = "Adsorption time: " + CalculateAdsorptionTime().ToString("0.00") + " h";
+            _capturedCO2Text.text = "Captured CO2: " + capturedCO2.ToString("0.00") + " mol";
+            _desorbedCO2Text.text = "Desorbed CO2: " + CalculateDesorption().ToString("0.00") + " mol";
+        }
+
 
         if (_gasVolumeText.text == "150 м³/ч" && !isProcessed)
         {

@@ -17,6 +17,7 @@ public class MathModuleForEmul : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gasMassFlow;
     [SerializeField] private TextMeshProUGUI waterMassFlow;
     [SerializeField] private TextMeshProUGUI massTransfer;
+    [SerializeField] private Translator translator;
 
     private float _gasSpeed = 0;
     private float _waterSpeed = 0;
@@ -50,11 +51,30 @@ public class MathModuleForEmul : MonoBehaviour
     [System.Obsolete]
     void Update()
     {
-        gasSpeed.text = "Скорость газа: " + _gasSpeed.ToString("0.000") + " м/с";
-        waterSpeed.text = "Скорость воды: " + _waterSpeed.ToString("0.000") + " м/с";
-        gasMassFlow.text = "Массовый поток газа: " + _gasMassFlow.ToString("0.000") + " м³/с";
-        waterMassFlow.text = "Массовый поток жидкости: " + _waterMassFlow.ToString("0.000") + " м³/с";
-        massTransfer.text = "Коэф. массового переноса: " + _massTransfer.ToString("0.0") + " м/с";
+        if (translator.currentLanguage == Translator.Language.Russian)
+        {
+            gasSpeed.text = "Скорость газа: " + _gasSpeed.ToString("0.000") + " м/с";
+            waterSpeed.text = "Скорость воды: " + _waterSpeed.ToString("0.000") + " м/с";
+            gasMassFlow.text = "Массовый поток газа: " + _gasMassFlow.ToString("0.000") + " м³/с";
+            waterMassFlow.text = "Массовый поток жидкости: " + _waterMassFlow.ToString("0.000") + " м³/с";
+            massTransfer.text = "Коэф. массового переноса: " + _massTransfer.ToString("0.0") + " м/с";
+        }
+        else if (translator.currentLanguage == Translator.Language.Kazakh)
+        {
+            gasSpeed.text = "Газ жылдамдығы: " + _gasSpeed.ToString("0.000") + " м/с";
+            waterSpeed.text = "Су жылдамдығы: " + _waterSpeed.ToString("0.000") + " м/с";
+            gasMassFlow.text = "Газ массасы ағыны: " + _gasMassFlow.ToString("0.000") + " м³/с";
+            waterMassFlow.text = "Сұйық масса ағыны: " + _waterMassFlow.ToString("0.000") + " м³/с";
+            massTransfer.text = "Масса тасымалдау коэфф.: " + _massTransfer.ToString("0.0") + " м/с";
+        }
+        else
+        {
+            gasSpeed.text = "Gas Speed: " + _gasSpeed.ToString("0.000") + " m/s";
+            waterSpeed.text = "Water Speed: " + _waterSpeed.ToString("0.000") + " m/s";
+            gasMassFlow.text = "Gas Mass Flow: " + _gasMassFlow.ToString("0.000") + " m³/s";
+            waterMassFlow.text = "Liquid mass flow: " + _waterMassFlow.ToString("0.000") + " m³/s";
+            massTransfer.text = "Mass transfer coefficient: " + _massTransfer.ToString("0.0") + " m/s";
+        }
 
         if (_gasFlow.text == "10 м³/с")
         {
@@ -74,7 +94,7 @@ public class MathModuleForEmul : MonoBehaviour
                 );
                 colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
             }
-            Debug.Log("0.7");
+
         }
         else if (_gasFlow.text == "12 м³/с")
         {
@@ -94,7 +114,7 @@ public class MathModuleForEmul : MonoBehaviour
                 );
                 colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
             }
-            Debug.Log("0.9");
+            
         }
         else
         {
@@ -114,7 +134,7 @@ public class MathModuleForEmul : MonoBehaviour
                 );
                 colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
             }
-            Debug.Log("1");
+ 
         }
 
         if (_fluidType.text == "Вода")

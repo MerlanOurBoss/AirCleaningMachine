@@ -11,7 +11,7 @@ public class Translator : MonoBehaviour
     public TextMeshProUGUI[] allTextComponents;
     public enum Language { Kazakh, English, Russian }
 
-    private Language currentLanguage = Language.Russian;
+    public Language currentLanguage = Language.Russian;
 
     void Start()
     {
@@ -68,6 +68,10 @@ public class Translator : MonoBehaviour
         return originalText switch
         {
             "Остановить" => "Тоқтату",
+            "Сохранить" => "Сақтау",
+            "Трубы" => "Құбырлар",
+            "Установки" => "Орнатулар",
+            "Вспомогательные" => "Көмекші",
             "ОПИСАНИЕ" => "СИПАТТАМАСЫ",
             "ВЫХОД" => "ШЫҒУ",
             "ЦИФРОВОЙ ДВОЙНИК КОМПЛЕКСНОЙ СИСТЕМЫ" => "КҮРДЕЛІ ЖҮЙЕНІҢ ЦИФРЛЫҚ ЕКІЗІ",
@@ -79,8 +83,15 @@ public class Translator : MonoBehaviour
             "Таблица" => "Кесте",
             "Состав газа" => "Газ құрамы",
             "Плотность" => "Тығыздығы",
+            "Температура" => "Температура",
+            "Состав жидкости" => "Сұйықтық құрамы",
             "Скорость" => "Жылдамдық",
-            "Радиус частиц" => "Жылдамдық",
+            "Заряд" => "Заряд",
+            "Радиус частиц " => "Бөлшек радиусы",
+            "Кол. Катал. 1" => "Кол. Катал. 1",
+            "Кол. Катал. 2" => "Кол. Катал. 2",
+            "Давление" => "Қысым",
+            "Скорость потока" => "Ағын жылдамдығы",
             "Расход газа" => "Газды тұтыну",
             "Расход жидкости" => "Сұйықтық ағыны",
             "Тип сорбента" => "Сорбент түрі",
@@ -90,6 +101,7 @@ public class Translator : MonoBehaviour
             "Компонент" => "Құрамдас",
             "Пыль" => "Шаң",
             "Твердые частицы" => "Бөлшекті заттар",
+            "Разрешение" => "РАЗРЕШЕНИЕ",
             "Зола" => "Күл",
             "Сажа" => "Күйе",
             "Массовый поток газа" => "Газ массасы ағыны",
@@ -132,6 +144,11 @@ public class Translator : MonoBehaviour
             "Напряжение" => "Кернеу",
             "Адсорбер 1" => "Адсорбер 1",
             "Адсорбер 2" => "Адсорбер 2",
+            "Объем газа - V, м3/ч" => "Газ көлемі - V, м3/сағ",
+            "Температура адцорбции - T, °C" => "Адсорбция температурасы - T, °C",
+            "Температура дисорбции - T, °C" => "Дисорбция температурасы - T, °C",
+            "Длина гидравли. диаметра - D, м" => "Гидравликалық ұзындық. диаметрі - D, м",
+            "Скороть вентилятора - об/мин" => "Желдеткіш жылдамдығы - айн/мин",
 
 
             _ => originalText 
@@ -143,6 +160,10 @@ public class Translator : MonoBehaviour
         return originalText switch
         {
             "Остановить" => "Stop",
+            "Сохранить" => "Save",
+            "Трубы" => "Pipes",
+            "Установки" => "Units",
+            "Вспомогательные" => "Auxiliary",
             "ВЫХОД" => "EXIT",
             "ЦИФРОВОЙ ДВОЙНИК КОМПЛЕКСНОЙ СИСТЕМЫ" => "DIGITAL TWIN OF THE COMPLEX SYSTEM",
             "Настройка системы" => "System Setup",
@@ -153,8 +174,15 @@ public class Translator : MonoBehaviour
             "Таблица" => "Table",
             "Состав газа" => "Gas Composition",
             "Плотность" => "Density",
+            "Заряд" => "Charge",
             "Скорость" => "Velocity",
+            "Температура" => "Temperature",
+            "Состав жидкости" => "Liquid Comp.",
             "Радиус частиц" => "Particle radius",
+            "Кол. Катал. 1" => "Num Catal. 1",
+            "Кол. Катал. 2" => "Num Catal. 2",
+            "Давление" => "Pressure",
+            "Скорость потока" => "Flow rate",
             "Расход газа" => "Gas flow rate",
             "Расход жидкости" => "Liquid flow rate",
             "Тип сорбента" => "Sorbent type",
@@ -215,6 +243,11 @@ public class Translator : MonoBehaviour
             "Адсорбер 2" => "Adsorber 2",
             "конденсат H2O" => "H2O" + "\n" + "condensate",
             "Гипс" => "Gypsum",
+            "Объем газа - V, м3/ч" => "Gas volume - V, m3/h",
+            "Температура адцорбции - T, °C" => "Adsorption temperature - T, °C",
+            "Температура дисорбции - T, °C" => "Disorption temperature - T, °C",
+            "Длина гидравли. диаметра - D, м" => "Length of hydraulic diameter - D, m",
+            "Скороть вентилятора - об/мин" => "Fan speed - rpm",
             _ => originalText
         };
     }

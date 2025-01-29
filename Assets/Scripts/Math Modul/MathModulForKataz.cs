@@ -16,6 +16,8 @@ public class MathModulForKataz : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gasmassFlow;
     [SerializeField] private TextMeshProUGUI coGaz;
 
+    [SerializeField] private Translator translator;
+
     private bool isProcessed = false;
     private bool isProcessed1 = false;
     private bool isProcessed2 = false;
@@ -42,10 +44,29 @@ public class MathModulForKataz : MonoBehaviour
     [Obsolete]
     private void Update()
     {
-        gasVelocity.text = "Скорость газа: " + velocity.ToString("0.000") + " м/с";
-        gasDensitie.text = "Плотность газа: " + density.ToString("0.000") + " кг/м³";
-        gasmassFlow.text = "Массовый паток: " + massFlow.ToString("0.000") + " кг/с";
-        coGaz.text = "Вых. концентрация CO: " + CO_Gaz_Out.ToString("0.000") + " моль/м³";
+
+
+        if (translator.currentLanguage == Translator.Language.Russian)
+        {
+            gasVelocity.text = "Скорость газа: " + velocity.ToString("0.000") + " м/с";
+            gasDensitie.text = "Плотность газа: " + density.ToString("0.000") + " кг/м³";
+            gasmassFlow.text = "Массовый паток: " + massFlow.ToString("0.000") + " кг/с";
+            coGaz.text = "Вых. концентрация CO: " + CO_Gaz_Out.ToString("0.000") + " моль/м³";
+        }
+        else if (translator.currentLanguage == Translator.Language.Kazakh)
+        {
+            gasVelocity.text = "Газдың жылдамдығы: " + velocity.ToString("0.000") + " м/с";
+            gasDensitie.text = "Газдың тығыздығы: " + density.ToString("0.000") + " кг/м³";
+            gasmassFlow.text = "Масса ағыны: " + massFlow.ToString("0.000") + " кг/с";
+            coGaz.text = "Шығар. СО концентрациясы: " + CO_Gaz_Out.ToString("0.000") + " моль/м³";
+        }
+        else
+        {
+            gasVelocity.text = "Gas velocity: " + velocity.ToString("0.000") + " m/s";
+            gasDensitie.text = "Gas Density: " + density.ToString("0.000") + " kg/m³";
+            gasmassFlow.text = "Mass Flow: " + massFlow.ToString("0.000") + " kg/s";
+            coGaz.text = "CO output concentration: " + CO_Gaz_Out.ToString("0.000") + " mol/m³";
+        }
 
         float crossSectionArea = (float)((float)Pi * Math.Pow(0.5 / 2, 2));
 

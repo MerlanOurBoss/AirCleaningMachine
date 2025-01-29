@@ -89,99 +89,16 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         _electroAnimDelayPrivate  = _electroAnimDelay;
 
         _myTexts[0].text = "150 °C";
-        //_myTexts[1].text = "0,01 мА/см²";
-        //_myTexts[2].text = "80 %";
-        //_myTexts[4].text = "Циолит";
-        //_myTexts[5].text = "Платина";
         _myTexts[6].text = "5 °C";
-        //_myTexts[7].text = "Вода";
-        //_myTexts[8].text = "5 °C";
-        //_myTexts[9].text = "Едкий натрий ";
-        //_myTexts[10].text = "5 °C";
         _myTexts[11].text = "3 кВ/м";
-        //_myTexts[12].text = "0,5 м/с";
-        //_myTexts[13].text = "3 кВ/м";
         _myTexts[20].text = "500 °C";
-        //_myTexts[14].text = "0,085 м/с";
-        //_myTexts[15].text = "1 моль/м";
         _myTexts[16].text = "0,05 м/с";
-        //_myTexts[17].text = "1,5 моль/м";
         _myTexts[18].text = "0,5 кПа";
         _myTexts[19].text = "0,2 кПа";
-        //_myTexts[21].text = "Включить";
-        //_myTexts[22].text = "2";
-        //_myTexts[23].text = "2";
     }
 
     private void Update()
     {
-        //if (_myTexts[13].text != " " && _myTexts[12].text != " ")
-        //{
-        //    float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text[.._myTexts[13].text.IndexOf(" ")]) * 2) / float.Parse(_myTexts[12].text[.._myTexts[12].text.IndexOf(" ")]));
-            
-        //    ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
-        //}
-
-        //if (_myTexts[20].text != " ")
-        //{
-        //    float resKataz = 0;
-        //    if (_myTexts[20].text == "300 °C")
-        //    {
-        //        resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 50f)) * 1f);
-        //        resKataz = 1 / resKataz;
-        //    }
-        //    else if (_myTexts[20].text == "400 °C")
-        //    {
-        //        resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 150f)) * 1f);
-        //        resKataz = 1 / resKataz;
-        //    }
-        //    else if (_myTexts[20].text == "500 °C")
-        //    {
-        //        resKataz = 1 + Mathf.Exp(-0.05f * (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - (float.Parse(_myTexts[20].text[.._myTexts[20].text.IndexOf(" ")]) - 100f)) * 1f);
-        //        resKataz = 1 / resKataz;
-        //    }
-        //    Katalizator.text = "Эффект. катализатора: " + (resKataz * 100).ToString("0.") + " %";
-        //}
-
-        //if (_myTexts[14].text != " " && _myTexts[15].text != " ")
-        //{
-        //    float resWater = float.Parse(_myTexts[14].text[.._myTexts[14].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[15].text[.._myTexts[15].text.IndexOf(" ")]);
-        //    WaterEmul.text = "Эффект. водяного эмуль.: " + (resWater * 100).ToString("0.") + " %";
-        //}
-
-        //if (_myTexts[16].text != " " && _myTexts[17].text != " ")
-        //{
-        //    float resReact = float.Parse(_myTexts[16].text[.._myTexts[16].text.IndexOf(" ")]) * 10 * float.Parse(_myTexts[17].text[.._myTexts[17].text.IndexOf(" ")]);
-        //    ReactEmul.text = "Эффект. реагент. эмуль.: " + (resReact * 100).ToString("0.") + " %";
-        //}
-
-        //if (_myTexts[18].text != " " && _myTexts[19].text != " ")
-        //{
-        //    float resSborCO2 = (10 * float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])) / (1 + (float.Parse(_myTexts[18].text[.._myTexts[18].text.IndexOf(" ")]) * float.Parse(_myTexts[19].text[.._myTexts[19].text.IndexOf(" ")])));
-        //    SborCO2.text = "Эффект. сбор CO2: " + (resSborCO2 * 100).ToString("0.") + " %";
-        //}
-
-
-        //if (_myTexts[21].text == "Включить")
-        //{
-        //    ElectoroObject.SetActive(true);
-        //    NoElectroObject.SetActive(false);
-        //    ElectoroObjectTable.SetActive(true);
-        //    kataz.enabled = true;
-        //    katazOutElectro.enabled = false;
-        //}
-        //else if (_myTexts[21].text == "Отключить")
-        //{
-        //    ElectoroObject.SetActive(false);
-        //    NoElectroObject.SetActive(true);
-        //    ElectoroObjectTable.SetActive(false);
-        //    ElectroFilter.text = "Эффект. электрофильтра: 0%";
-        //    kataz.enabled = false;
-        //    katazOutElectro.enabled = true;
-        //}
-
-        
-
         if (_simulationTime <= 0)
         {
             _startSimulationTemp = false;
@@ -190,7 +107,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         }
         if (_startSimulationTemp && _startSimulationContent)
         {
-            //electro.interactable = false;
             electroInput.interactable = false;
             katazScriptWith1_1.text.interactable = false;
             kataz1.interactable = false;
@@ -200,7 +116,11 @@ public class SimulationScriptForFourthScene: MonoBehaviour
             _simulationText.text = "Идет симуляция";
             waterZeroNasos.enabled = true;
             waterNasos.enabled = true;
-            reactNasos.enabled = true;
+            if (reactNasos != null)
+            {
+                reactNasos.enabled = true;
+            }
+            
             _simulationTime -= 1 * Time.deltaTime;
             _fluidDelayWater -= 1 * Time.deltaTime;
             _fluidDelayReact -= 1 * Time.deltaTime;
@@ -236,20 +156,21 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         }
         else
         {
-            //electro.interactable = true;
             electroInput.interactable = true;
             katazScriptWith1_1.text.interactable = true;
             kataz1.interactable = true;
             katazScriptWith1_2.text.interactable = true;
             kataz2.interactable = true;
-            //canvas.enabled = true;
             waterZeroNasos.enabled = false;
             waterNasos.enabled = false;
-            reactNasos.enabled = false;
+            if (reactNasos != null)
+            {
+                reactNasos.enabled = false;
+            }
+            
             _simulationButton.interactable = true;
             _simulationText.text = "Симулировать";
             _simulationTime = 3400f;
-            //ComponentsCameras.SetActive(false);
             foreach (ParticleSystem smoke in _mySmokes)
             {
                 smoke.Stop();
@@ -297,7 +218,7 @@ public class SimulationScriptForFourthScene: MonoBehaviour
             }
 
             _myCollector.StartColumnProcess();
-            _myCatalizator.StartSimulation();
+            
             foreach (DropSpawner drop in _dropSpawns)
             {
                 drop.startCor();
@@ -342,7 +263,7 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         shelosh.isEnable = true;
         react.isEnable = true;
         sbor.isEnable = true;
-
+        _myCatalizator.StartSimulation();
         _startSimulationTemp = true; //надо будет убрать
 
 
@@ -360,52 +281,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
             }
             
         }
-
-
-
-        //if (_myTexts[0].text == "" || _myTexts[1].text == "" || _myTexts[2].text == "")
-        //{
-        //    _componentsText[0].color = Color.red;
-        //    _startSimulationTemp = false;
-        //}
-        //else
-        //{
-        //    _componentsText[0].color = Color.black;
-        //    _startSimulationTemp = true;
-        //}
-
-        //if (_myTexts[3].text == "" || _myTexts[4].text == "" || _myTexts[5].text == "")
-        //{
-        //    _componentsText[1].color = Color.red;
-        //    _startSimulationTemp = false;
-        //}
-        //else
-        //{
-        //    _componentsText[1].color = Color.black;
-        //    _startSimulationTemp = true;
-        //}
-
-        //if (_myTexts[6].text == "" || _myTexts[7].text == "" )
-        //{
-        //    _componentsText[2].color = Color.red;
-        //    _startSimulationTemp = false;
-        //}
-        //else
-        //{
-        //    _componentsText[2].color = Color.black;
-        //    _startSimulationTemp = true;
-        //}
-
-        //if (_myTexts[8].text == "" || _myTexts[9].text == "")
-        //{
-        //    _componentsText[3].color = Color.red;
-        //    _startSimulationTemp = false;
-        //}
-        //else
-        //{
-        //    _componentsText[3].color = Color.black;
-        //    _startSimulationTemp = true;
-        //}
 
         if (_myTexts[10].text != "" || _myTexts[11].text != "")
         {
@@ -450,9 +325,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         {
             foreach (ParticleSystem smoke in _mySmokes)
             {
-                //smoke.startLifetime = smoke.startLifetime - smoke.startLifetime / 2;
-                //smoke.startSpeed = smoke.startSpeed + 2f;
-                //smoke.startColor = new Color(smoke.startColor.r, smoke.startColor.g, smoke.startColor.b, 0.7f);
                 smoke.emissionRate = smoke.emissionRate - smoke.emissionRate / 1.5f;
             }
             foreach (DropSpawner spawner in _dropSpawns)
@@ -460,12 +332,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
                 spawner.spawnInterval = spawner.spawnInterval * 1.5f;
             }
         }
-
-
-        //float resEle = 1 - Mathf.Exp(-(float.Parse(_myTexts[13].text) * 2) / float.Parse(_myTexts[12].text));
-        //Debug.Log(resEle);
-        //ElectroFilter.text = "Эффект. электрофильтра: " + (resEle * 100).ToString("0.") + " %";
-        //ComponentsCameras.SetActive(true);
     }
 
     public void StopSimulation()
