@@ -19,6 +19,8 @@ public class NewSborScript : MonoBehaviour
     public TextMeshProUGUI display;
     public TextMeshProUGUI display2;
     public TextMeshProUGUI display3;
+    public TextMeshProUGUI display4;
+    public TextMeshProUGUI display5;
 
     [Header("Materials")]
     public Material absent;
@@ -29,6 +31,7 @@ public class NewSborScript : MonoBehaviour
     [Header("Gate Configuration")]
     public GameObject gate;
     public GameObject[] gates;
+    public GameObject[] gazAnalyz;
 
     [Header("Timing")]
     public float delay;
@@ -44,6 +47,8 @@ public class NewSborScript : MonoBehaviour
     private float displayValue = 0f;
     private float displayValue2 = 0f;
     private float displayValue3 = 0f;
+    private float displayValue4 = 0f;
+    private float displayValue5 = 0f;
 
     private bool isFilling = true;
     private bool isProcessActive = false;
@@ -55,11 +60,16 @@ public class NewSborScript : MonoBehaviour
     private bool isFirstFilling = true;
     private int? randomValue = null;
 
+    public float yellowBlinkDuration = 2f; // Время мигания желтой лампочки
+    public float yellowBlinkInterval = 0.3f; // Интервал мигания желтой лампочки
     void Start()
     {
-        InitializeGates();
         absent.color = Color.white;
         absent2.color = Color.white;
+        gazAnalyz[0].SetActive(true);
+        gazAnalyz[1].SetActive(false);
+        gazAnalyz[2].SetActive(true);
+        gazAnalyz[3].SetActive(false);
     }
 
     void Update()
@@ -80,9 +90,59 @@ public class NewSborScript : MonoBehaviour
         }
     }
 
-    private void InitializeGates()
+    public void StartRedSequence(Transform valve)
     {
-        SetGatesState(new[] { false, true, false, true, false, true, false, true, false, true, false , true});
+        GameObject greenLamp = valve.Find("Green Light")?.gameObject;
+        GameObject yellowLamp = valve.Find("Yellow Light")?.gameObject;
+        GameObject redLamp = valve.Find("Red Light")?.gameObject;
+        AudioSource audio = valve.GetComponent<AudioSource>();
+
+        StartCoroutine(RedGateSequence(greenLamp, yellowLamp, redLamp, audio));
+    }
+
+    public void StartGreenSequence(Transform valve)
+    {
+        GameObject greenLamp = valve.Find("Green Light")?.gameObject;
+        GameObject yellowLamp = valve.Find("Yellow Light")?.gameObject;
+        GameObject redLamp = valve.Find("Red Light")?.gameObject;
+        AudioSource audio = valve.GetComponent<AudioSource>();
+
+        StartCoroutine(GreenGateSequence(greenLamp, yellowLamp, redLamp, audio));
+    }
+
+    IEnumerator RedGateSequence(GameObject greenLamp, GameObject yellowLamp, GameObject redLamp, AudioSource audio)
+    {
+         // Выключаем зеленую лампочку
+        yield return StartCoroutine(BlinkYellowLamp(yellowLamp));
+        if (yellowLamp != null) yellowLamp.SetActive(false); // Выключаем желтую лампочку
+        if (audio != null) audio.Play();
+        if (redLamp != null) redLamp.SetActive(true);
+        if (greenLamp != null) greenLamp.SetActive(false);// Включаем красную лампочку
+    }
+
+    IEnumerator GreenGateSequence(GameObject greenLamp, GameObject yellowLamp, GameObject redLamp, AudioSource audio)
+    {
+         // Выключаем красную лампочку
+        yield return StartCoroutine(BlinkYellowLamp(yellowLamp));
+        if (yellowLamp != null) yellowLamp.SetActive(false); // Выключаем желтую лампочку
+        if (audio != null) audio.Play();
+        if (greenLamp != null) greenLamp.SetActive(true);
+        if (redLamp != null) redLamp.SetActive(false); // Включаем зеленую лампочку
+    }
+
+    IEnumerator BlinkYellowLamp(GameObject yellowLamp)
+    {
+        float elapsedTime = 0f;
+        bool isLampOn = false;
+        
+        while (elapsedTime < yellowBlinkDuration)
+        {
+            isLampOn = !isLampOn;
+            if (yellowLamp != null) yellowLamp.SetActive(isLampOn);
+            yield return new WaitForSeconds(yellowBlinkInterval);
+            elapsedTime += yellowBlinkInterval;
+        }
+        yellowLamp.SetActive(false);
     }
 
     private void UpdateDisplay()
@@ -90,6 +150,8 @@ public class NewSborScript : MonoBehaviour
         display.text = displayValue.ToString("0.");
         display2.text = displayValue2.ToString("0.");
         display3.text = displayValue3.ToString("0.");
+        display4.text = displayValue4.ToString("0." + " °C");
+        display5.text = displayValue5.ToString("0." + " °C");
     }
 
     private void HandleDelay()
@@ -101,6 +163,14 @@ public class NewSborScript : MonoBehaviour
             {
                 isProcessActive = true;
                 isDelayActive = false;
+            }
+            else if (delay >= 3 && delay <= 5)
+            {
+                displayValue4 = Mathf.Lerp(displayValue4, 540f, 8 * Time.deltaTime);
+            }
+            else if (delay >= 1 && delay <= 3)
+            {
+                displayValue5 = Mathf.Lerp(displayValue5, 40f, 8 * Time.deltaTime);
             }
         }
     }
@@ -161,8 +231,32 @@ public class NewSborScript : MonoBehaviour
 
     private void PlayFirstFillingEffects()
     {
+        bool isStarted = false;
+
+        if (fillingCount >= 0 && fillingCount <= 2)
+        {
+            StartGreenSequence(gates[0].transform);
+            StartGreenSequence(gates[1].transform);
+        }
+        if (fillingCount >= 15 && fillingCount <= 17)
+        {
+            isStarted = true;
+        }
+        if (isStarted)
+        {
+            smokeInCapsul.Play();
+            AbsentOn();
+        }
+
+        if (fillingCount >= 120 && fillingCount <= 135)
+        {
+            gazAnalyz[3].GetComponentInParent<AudioSource>().Play();
+        }
+
         if (fillingCount >= 135 && fillingCount <= 150)
         {
+            gazAnalyz[2].SetActive(false);
+            gazAnalyz[3].SetActive(true);
             displayValue = Mathf.Lerp(displayValue, 50f, 1 * Time.deltaTime);
         }
 
@@ -175,37 +269,74 @@ public class NewSborScript : MonoBehaviour
 
             if (randomValue == 9)
             {
+                StartRedSequence(gates[6].transform);
+                gazAnalyz[4].SetActive(true);
+                gazAnalyz[5].SetActive(false);
                 displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
-                gates[12].SetActive(false);
-                gates[13].SetActive(true);
                 parInStraightPipe.Play();
+
+                if (fillingCount >= 135 && fillingCount <= 140)
+                {
+                    gazAnalyz[5].GetComponentInParent<AudioSource>().Play();
+                }
+
+                if (fillingCount >= 148 && fillingCount <= 150)
+                {
+                    StartGreenSequence(gates[6].transform);
+                    gazAnalyz[5].SetActive(true);
+                    
+                    gazAnalyz[4].SetActive(false);
+                }
             }
         }
         else
         {
             displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
-            gates[12].SetActive(true);
-            gates[13].SetActive(false);
             randomValue = null; // Сбрасываем число, если не в диапазоне
         }
 
-        smokeInCapsul.Play();
-        AbsentOn();
-        ActivateGatesForFirstFilling();
+
+        if (fillingCount >= 134 && fillingCount <= 136)
+        {
+            StartRedSequence(gates[0].transform);
+            StartRedSequence(gates[1].transform);
+        }
     }
     private void PlayFillingEffects()
     {
+        bool isStarted = false;
+        if (fillingCount >= 0 && fillingCount <= 2)
+        {
+            StartGreenSequence(gates[3].transform);
+            StartGreenSequence(gates[0].transform);
+            StartGreenSequence(gates[1].transform);
+            StartGreenSequence(gates[4].transform);
+        }
         if (fillingCount >= 2 && fillingCount <= 8)
         {
+            gazAnalyz[0].SetActive(true);
+            gazAnalyz[1].SetActive(false);
             displayValue2 = Mathf.Lerp(displayValue2, 0, 4f * Time.deltaTime);
             parInCapsul1.Stop();
             parInCapsul2.Stop();
             parInStraightPipe.Stop();
         }
-        
-        smokeParInCapsul2.Play();
-        smokeOutCapsul.Stop();
-        smokeParInCapsul.Stop();
+        if (fillingCount >= 15 && fillingCount <= 17)
+        {
+            isStarted = true;
+        }
+        if (isStarted)
+        {
+            smokeParInCapsul2.Play();
+            smokeOutCapsul.Stop();
+            smokeParInCapsul.Stop();
+
+            smokeInCapsul.Play();
+            smokeInCapsul2.Stop();
+
+            AbsentOn();
+            AbsentOff2();
+        }
 
         if (fillingCount >= 25 && fillingCount < 27)
         {
@@ -216,9 +347,16 @@ public class NewSborScript : MonoBehaviour
         {
             parInCapsul1.Play();
         }
+        if (fillingCount >= 120 && fillingCount <= 135)
+        {
+            gazAnalyz[3].GetComponentInParent<AudioSource>().Play();
+        }
 
         if (fillingCount >= 135 && fillingCount <= 150)
         {
+            
+            gazAnalyz[2].SetActive(false);
+            gazAnalyz[3].SetActive(true);
             displayValue = Mathf.Lerp(displayValue, 50f, 2f * Time.deltaTime);
 
             if (!isUpdated)
@@ -237,53 +375,78 @@ public class NewSborScript : MonoBehaviour
 
             if (randomValue == 9)
             {
+                StartRedSequence(gates[6].transform);
+                gazAnalyz[4].SetActive(true);
+                gazAnalyz[5].SetActive(false);
                 displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
-                gates[12].SetActive(false);
-                gates[13].SetActive(true);
                 parInStraightPipe.Play();
+
+                if (fillingCount >= 135 && fillingCount <= 140)
+                {
+                    gazAnalyz[5].GetComponentInParent<AudioSource>().Play();
+                }
+
+                if (fillingCount >= 148 && fillingCount <= 150)
+                {
+                    StartGreenSequence(gates[6].transform);
+                    gazAnalyz[5].SetActive(true);
+                    gazAnalyz[4].SetActive(false);
+                }
             }
         }
         else
         {
             displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
-            gates[12].SetActive(true);
-            gates[13].SetActive(false);
+
             randomValue = null; // Сбрасываем число, если не в диапазоне
         }
+        
+        if (fillingCount >= 134 && fillingCount <= 136)
+        {
+            StartRedSequence(gates[3].transform);
+            StartRedSequence(gates[0].transform);
+            StartRedSequence(gates[1].transform);
+            StartRedSequence(gates[4].transform);
 
-
-        smokeInCapsul.Play();
-        smokeInCapsul2.Stop();
-
-        AbsentOn();
-        AbsentOff2();
-        ActivateGatesForFilling();
-    }
-
-    private void ActivateGatesForFirstFilling()
-    {
-        SetGatesState(new[] { true, false, true, false, false, true, false, true, true, false, false, true });
-    }
-
-    private void ActivateGatesForFilling()
-    {
-        SetGatesState(new[] { true, false, true, false, false, true, true, false, true, false, false, true });
+        }
     }
 
     private void PlayUnfillingEffects()
     {
+        bool isStarted = false;
+        if (fillingCount >= 0 && fillingCount <= 2)
+        {
+            StartGreenSequence(gates[1].transform);
+            StartGreenSequence(gates[2].transform);
+            StartGreenSequence(gates[3].transform);
+            StartGreenSequence(gates[5].transform);
+        }
+
         if (fillingCount >= 2 && fillingCount <= 8)
         {
+            gazAnalyz[2].SetActive(true);
+            gazAnalyz[3].SetActive(false);
             displayValue = Mathf.Lerp(displayValue, 0, 4f * Time.deltaTime);
             parInCapsul2.Stop();
             parInCapsul1.Stop();
             parInStraightPipe.Stop();
         }
         gate.SetActive(true);
-        smokeParInCapsul.Play();
-        smokeOutCapsulSecond.Stop();
-        smokeParInCapsul2.Stop();
-
+        if (fillingCount >= 15 && fillingCount <= 17)
+        {
+            isStarted = true;
+        }
+        if (isStarted)
+        {
+            smokeParInCapsul.Play();
+            smokeOutCapsulSecond.Stop();
+            smokeParInCapsul2.Stop();
+            smokeInCapsul2.Play();
+            smokeInCapsul.Stop();
+            AbsentOff();
+            AbsentOn2();
+        }
+            
         if (fillingCount >= 25 && fillingCount < 27)
         {
             smokeOutCapsul.Play();
@@ -293,9 +456,16 @@ public class NewSborScript : MonoBehaviour
         {
             parInCapsul2.Play();
         }
+        if (fillingCount >= 120 && fillingCount <= 135)
+        {
+            gazAnalyz[1].GetComponentInParent<AudioSource>().Play();
+        }
 
         if (fillingCount >= 135 && fillingCount <= 150)
         {
+            gazAnalyz[0].SetActive(false);
+            gazAnalyz[1].SetActive(true);
+            
             displayValue2 = Mathf.Lerp(displayValue2, 50f, 2f * Time.deltaTime);
             
             if (!isUpdated)
@@ -315,30 +485,39 @@ public class NewSborScript : MonoBehaviour
 
             if (randomValue == 9)
             {
+                StartRedSequence(gates[6].transform);
+                gazAnalyz[4].SetActive(true);
+                gazAnalyz[5].SetActive(false);
                 displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
-                gates[12].SetActive(false);
-                gates[13].SetActive(true);
                 parInStraightPipe.Play();
+
+                if (fillingCount >= 135 && fillingCount <= 140)
+                {
+                    gazAnalyz[5].GetComponentInParent<AudioSource>().Play();
+                }
+
+                if (fillingCount >= 148 && fillingCount <= 150)
+                {
+                    StartGreenSequence(gates[6].transform);
+                    gazAnalyz[5].SetActive(true);
+                    gazAnalyz[4].SetActive(false);
+                }
             }
         }
         else
         {
             displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
-            gates[12].SetActive(true);
-            gates[13].SetActive(false);
+
             randomValue = null; // Сбрасываем число, если не в диапазоне
         }
 
-        smokeInCapsul2.Play();
-        smokeInCapsul.Stop();
-        AbsentOff();
-        AbsentOn2();
-        ActivateGatesForUnfilling();
-    }
-
-    private void ActivateGatesForUnfilling()
-    {
-        SetGatesState(new[] { true, false, false, true, true, false, true, false, false, true, true, false });
+        if (fillingCount >= 134 && fillingCount <= 136)
+        {
+            StartRedSequence(gates[1].transform);
+            StartRedSequence(gates[2].transform);
+            StartRedSequence(gates[3].transform);
+            StartRedSequence(gates[5].transform);
+        }
     }
 
     private void TransitionToUnfilling()
@@ -404,7 +583,7 @@ public class NewSborScript : MonoBehaviour
         isDelayActive = false;
         fillingCount = 0;
         gate.SetActive(true);
-        materialSbor.SetFloat("_Filling", -30f);
+        materialSbor.SetFloat("_Filling", -31f);
         delay = 6;
 
         smokeOutCapsul.Stop();
