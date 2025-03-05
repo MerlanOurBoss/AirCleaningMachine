@@ -257,11 +257,11 @@ public class SimulationScriptForFourthScene: MonoBehaviour
             katazScriptWith1_2.SetObjectsState(true);
         }
 
-        water.isEnable = true;
-        water.RecalculateData();
-        elec.isEnable = true;
-        shelosh.isEnable = true;
-        react.isEnable = true;
+        //water.isEnable = true;
+        //water.RecalculateData();
+        //elec.isEnable = true;
+        //shelosh.isEnable = true;
+        //react.isEnable = true;
         sbor.isEnable = true;
         _myCatalizator.StartSimulation();
         _startSimulationTemp = true; //надо будет убрать

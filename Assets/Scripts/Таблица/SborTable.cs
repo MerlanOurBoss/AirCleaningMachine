@@ -70,7 +70,7 @@ public class SborTable : MonoBehaviour
     private float sbor_CH4_exit;
     private float sbor_H2S_exit;
 
-    private float delay = 60f;
+    private float delay = 6f;
 
     public TextMeshProUGUI[] tablesData;
 

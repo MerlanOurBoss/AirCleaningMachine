@@ -4,33 +4,47 @@ using UnityEngine;
 
 public class DotsScript : MonoBehaviour
 {
-    public GameObject prefabToSpawn; 
+    public GameObject prefabToSpawn;
     public Transform spawnArea;
-    public int numberOfPrefabs = 200; 
+    public int numberOfPrefabs = 200;
     public float respawnTime = 10f;
     public Transform parentObject;
 
     private int spawnedCount = 0;
     private bool isFull = false;
+    private bool isPaused = false;
+    private List<GameObject> spawnedPrefabs = new List<GameObject>(); // Список созданных объектов
+
+    private void Update()
+    {
+        Animator anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.speed = isPaused ? 0 : 1;
+        }
+    }
     public void StartDots()
     {
+        isPaused = false;
+        spawnArea.gameObject.SetActive(true); // Включаем точку спавна
         InvokeRepeating("SpawnPrefab", 1f, .1f);
     }
+
     void SpawnPrefab()
     {
-        if (spawnedCount < numberOfPrefabs)
-        {
-            Vector3 spawnPosition = GetRandomSpawnPosition();
-            GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-            spawnedPrefab.transform.parent = parentObject;
-            spawnedPrefab.SetActive(true); 
-            spawnedCount++;
-        }
-        else
+        if (isPaused || spawnedCount >= numberOfPrefabs) return;
+
+        Vector3 spawnPosition = GetRandomSpawnPosition();
+        GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+        spawnedPrefab.transform.parent = parentObject;
+        spawnedPrefab.SetActive(true);
+        spawnedPrefabs.Add(spawnedPrefab);
+        spawnedCount++;
+
+        if (spawnedCount >= numberOfPrefabs)
         {
             CancelInvoke("SpawnPrefab");
             isFull = true;
-            
         }
     }
 
@@ -40,6 +54,20 @@ public class DotsScript : MonoBehaviour
         {
             ActivateRigidbodies();
         }
+    }
+
+    public void PauseSpawning()
+    {
+        isPaused = true;
+        CancelInvoke("SpawnPrefab");
+        spawnArea.gameObject.SetActive(false); // Отключаем точку спавна
+    }
+
+    public void ResumeSpawning()
+    {
+        isPaused = false;
+        spawnArea.gameObject.SetActive(true); // Включаем точку спавна
+        InvokeRepeating("SpawnPrefab", 1f, .1f);
     }
 
     Vector3 GetRandomSpawnPosition()
@@ -53,19 +81,22 @@ public class DotsScript : MonoBehaviour
 
     void ActivateRigidbodies()
     {
-        GameObject[] spawnedPrefabs = GameObject.FindGameObjectsWithTag("Dots"); 
+        // Удаляем уничтоженные объекты из списка перед активацией Rigidbody
+        spawnedPrefabs.RemoveAll(prefab => prefab == null);
 
         foreach (GameObject prefab in spawnedPrefabs)
         {
-            Rigidbody rb = prefab.GetComponent<Rigidbody>();
-            if (rb != null)
+            if (prefab != null) // Проверяем, существует ли объект
             {
-                rb.isKinematic = false; 
+                Rigidbody rb = prefab.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.isKinematic = false;
+                }
             }
         }
 
         spawnedCount = 0;
-        InvokeRepeating("SpawnPrefab", 20f, .1f);
+        InvokeRepeating(nameof(SpawnPrefab), 20f, .1f);
     }
-
 }

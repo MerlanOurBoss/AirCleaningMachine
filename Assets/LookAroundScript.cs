@@ -453,8 +453,13 @@ public class LookAroundScript : MonoBehaviour
             endPos = startNew;
         }
 
-        CreateCurveforSpecial(startPos, endPos, parent);
-        CreatePipeForEnd(startPos, endPos, parent);
+        Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
+        Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+        Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
+
+        CreateCurveforSpecial(startPos, midPointX, parent);
+        CreatePipeForEnd(midPointX, midPointY, parent);
+        CreateCurveforSpecial(midPointY, midPointZ, parent);
     }
 
     void GenerateForCoolingAndKataz(Vector3 startPos, Vector3 endPos)
@@ -1176,13 +1181,13 @@ public class LookAroundScript : MonoBehaviour
         GameObject parent = new GameObject("parent");
         parent.transform.SetParent(endObject.transform);
 
-        if (Mathf.Abs(startPos.x) < Mathf.Abs(endPos.x))
-        {
-            Vector3 startNew = startPos;
-            startPos = endPos;
-            endPos = startNew;
-            Debug.Log("dknaoifubhnsuefg");
-        }
+        //if (Mathf.Abs(startPos.x) < Mathf.Abs(endPos.x))
+        //{
+        //    Vector3 startNew = startPos;
+        //    startPos = endPos;
+        //    endPos = startNew;
+        //    Debug.Log("dknaoifubhnsuefg");
+        //}
 
         if (Mathf.Approximately(endObject.parent.parent.localEulerAngles.y, 180))
         {
@@ -1224,38 +1229,39 @@ public class LookAroundScript : MonoBehaviour
                 Debug.Log("2");
             }
 
-            if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z > endPos.z)
+            if (Mathf.Abs(startPos.x - endPos.x) >= 20 && startPos.x > endPos.x)
             {
-                startPos.y += pipeOffset;
-                endPos.x += pipeOffset;
+                endPos.y += pipeOffset;
+                startPos.z -= pipeOffset;
+                //endPos.x += pipeOffset;
 
-                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
-                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                Vector3 midPointX = new Vector3(startPos.x, startPos.y, endPos.z);
+                Vector3 midPointY = new Vector3(startPos.x, endPos.y, endPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
-                CreateCurveforNotSpecial(startPos, new Vector3(0, -90, 0), parent);
+                //CreateCurveforNotSpecial(startPos, new Vector3(0, -90, 0), parent);
                 CreatePipeWithOffset(startPos, midPointX, parent);
-                CreateCurveforNotSpecial(midPointX, new Vector3(0, 90, 0), parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(-90, 0, -180), parent);
                 CreatePipeWithOffset(midPointX, midPointY, parent);
-                CreateCurveforNotSpecial(midPointY, new Vector3(-180, 0, 0), parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(0, -90, 0), parent);
                 CreatePipeWithOffset(midPointY, endPos, parent);
-                CreateCurveforNotSpecial(endPos, new Vector3(0, 0, -90), parent);
+                CreateCurveforNotSpecial(endPos, new Vector3(0, 90, 0), parent);
                 Debug.Log("dasda");
 
             }
-            else if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z < endPos.z)
+            else if (Mathf.Abs(startPos.x - endPos.x) >= 20 && startPos.x < endPos.x)
             {
                 endPos.y += pipeOffset;
-                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
-                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                Vector3 midPointX = new Vector3(startPos.x, startPos.y, endPos.z);
+                Vector3 midPointY = new Vector3(startPos.x, endPos.y, endPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
                 CreatePipeForStart(startPos, midPointX, parent);
-                CreateCurveforNotSpecial(midPointX, new Vector3(-90, 90, 0), parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(-90, 180, 0), parent);
                 CreatePipeWithOffset(midPointX, midPointY, parent);
-                CreateCurveforNotSpecial(midPointY, new Vector3(0, 0, 0), parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(0, 90, 0), parent);
                 CreatePipeWithOffset(midPointY, endPos, parent);
-                CreateCurveforNotSpecial(endPos, new Vector3(90, 0, 0), parent);
+                CreateCurveforNotSpecial(endPos, new Vector3(90, 0, -90), parent);
 
                 Debug.Log("dasda2");
             }
@@ -1300,38 +1306,39 @@ public class LookAroundScript : MonoBehaviour
                 Debug.Log("2");
             }
 
-            if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z > endPos.z)
+            if (Mathf.Abs(startPos.x - endPos.x) >= 20 && startPos.x > endPos.x)
             {
                 endPos.y += pipeOffset;
-                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
-                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                Vector3 midPointX = new Vector3(startPos.x, startPos.y, endPos.z);
+                Vector3 midPointY = new Vector3(startPos.x, endPos.y, endPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
                 CreatePipeForStart(startPos, midPointX, parent);
-                CreateCurveforNotSpecial(midPointX, new Vector3(-180, -90, 0), parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(-180, -180, 0), parent);
                 CreatePipeWithOffset(midPointX, midPointY, parent);
-                CreateCurveforNotSpecial(midPointY, new Vector3(-180, 0, 180), parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(0, -90, 0), parent);
                 CreatePipeWithOffset(midPointY, endPos, parent);
-                CreateCurveforNotSpecial(endPos, new Vector3(0, 0, 0), parent);
+                CreateCurveforNotSpecial(endPos, new Vector3(0, 90, 0), parent);
                 Debug.Log("dasda3");
 
             }
-            else if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z < endPos.z)
+            else if (Mathf.Abs(startPos.x - endPos.x) >= 20 && startPos.x < endPos.x)
             {
-                startPos.y += pipeOffset;
-                endPos.x += pipeOffset;
+                startPos.z+= pipeOffset;
+                endPos.y += pipeOffset;
 
-                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
-                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                Vector3 midPointX = new Vector3(startPos.x, startPos.y, endPos.z);
+                Vector3 midPointY = new Vector3(startPos.x, endPos.y, endPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
-                CreateCurveforNotSpecial(startPos, new Vector3(0, -90, 0), parent);
-                CreatePipeWithOffset(startPos, midPointX, parent);
-                CreateCurveforNotSpecial(midPointX, new Vector3(0, 90, 0), parent);
+                CreatePipeForStart(startPos, midPointX, parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(-90, 0, 0), parent);
                 CreatePipeWithOffset(midPointX, midPointY, parent);
-                CreateCurveforNotSpecial(midPointY, new Vector3(0, 0, -180), parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(90, 90, 180), parent);
                 CreatePipeWithOffset(midPointY, endPos, parent);
-                CreateCurveforNotSpecial(endPos, new Vector3(-180, 0, -90), parent);
+                CreateCurveforNotSpecial(endPos, new Vector3(180, 90, 180), parent);
+
+                //CreateCurveforNotSpecial(endPos, new Vector3(-180, 0, -90), parent);
                 Debug.Log("dasda");
             }
 
@@ -1355,16 +1362,18 @@ public class LookAroundScript : MonoBehaviour
         {
             if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z > endPos.z)
             {
-                endPos.x -= pipeOffset;
+                endPos.y += pipeOffset;
                 Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
                 Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
                 CreatePipeForStart(startPos, midPointX, parent);
-                CreateCurveforNotSpecial(midPointX, new Vector3(0, -90, -90), parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(0, -90, 0), parent);
+                CreatePipeWithOffset(midPointX, midPointY, parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(-180,0, 0), parent);
                 CreatePipeWithOffset(midPointY, endPos, parent);
-                CreateCurveforNotSpecial(endPos, new Vector3(0, 0, 90), parent);
-
+                CreateCurveforNotSpecial(endPos, new Vector3(0, 0, 0), parent);
+                Debug.Log("1");
             }
             else if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z < endPos.z)
             {
@@ -1377,6 +1386,7 @@ public class LookAroundScript : MonoBehaviour
                 CreateCurveforNotSpecial(midPointX, new Vector3(0, -90, 90), parent);
                 CreatePipeWithOffset(midPointY, endPos, parent);
                 CreateCurveforNotSpecial(endPos, new Vector3(0, 180, -90), parent);
+                Debug.Log("2");
             }
             else
             {
@@ -1387,28 +1397,28 @@ public class LookAroundScript : MonoBehaviour
         {
             if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z > endPos.z)
             {
-                endPos.x -= pipeOffset;
+                endPos.z -= pipeOffset;
                 Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
                 Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
                 CreatePipeForStart(startPos, midPointX, parent);
-                CreateCurveforNotSpecial(midPointX, new Vector3(0, -90, -90), parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(0, -90, 0), parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(-90, 180, 0), parent);
                 CreatePipeWithOffset(midPointY, endPos, parent);
-                CreateCurveforNotSpecial(endPos, new Vector3(0, 0, 90), parent);
-
+                Debug.Log("3");
             }
             else if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z < endPos.z)
             {
-                endPos.x -= pipeOffset;
-                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
-                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                Vector3 midPointX = new Vector3(startPos.x, startPos.y, endPos.z);
+                Vector3 midPointY = new Vector3(startPos.x, endPos.y, endPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
                 CreatePipeForStart(startPos, midPointX, parent);
-                CreateCurveforNotSpecial(midPointX, new Vector3(0, -90, 90), parent);
-                CreatePipeWithOffset(midPointY, endPos, parent);
-                CreateCurveforNotSpecial(endPos, new Vector3(0, 180, -90), parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(0, -180,180), parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(90, -90,0), parent);
+                CreatePipeForEnd(midPointY, endPos, parent);
+                Debug.Log("4");
             }
             else
             {
@@ -1433,29 +1443,36 @@ public class LookAroundScript : MonoBehaviour
         {
             if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z > endPos.z)
             {
-                endPos.x -= pipeOffset;
+                //endPos.x -= pipeOffset;
+                endPos.y += 12;
                 Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
                 Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
                 CreatePipeForStart(startPos, midPointX, parent);
-                CreateCurveforNotSpecial(midPointX, new Vector3(-180, -90, -90), parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(-180, -90, -180), parent);
+                CreatePipeWithOffset(midPointX, midPointY, parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(0, -180, 180), parent);
                 CreatePipeWithOffset(midPointY, endPos, parent);
-                CreateCurveforNotSpecial(endPos, new Vector3(0, 0, 90), parent);
+                CreateCurveforNotSpecial(endPos, new Vector3(0, 0, 0), parent);
                 Debug.Log("dasdasdadsasdawdawdawd1212");
 
             }
             else if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z < endPos.z)
             {
-                endPos.x -= pipeOffset;
+                //endPos.x -= pipeOffset;
+                endPos.y += 12;
                 Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
                 Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
+
                 CreatePipeForStart(startPos, midPointX, parent);
-                CreateCurveforNotSpecial(midPointX, new Vector3(180, -90, 90), parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(180, -90, 180), parent);
+                CreatePipeWithOffset(midPointX, midPointY, parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(270, -180, 180), parent);
                 CreatePipeWithOffset(midPointY, endPos, parent);
-                CreateCurveforNotSpecial(endPos, new Vector3(0, 180, -90), parent);
+                CreateCurveforNotSpecial(endPos, new Vector3(0, 180, 0), parent);
                 Debug.Log("dasdasdadsasdawdawdawd1212");
             }
             else
@@ -1467,15 +1484,18 @@ public class LookAroundScript : MonoBehaviour
         {
             if (Mathf.Abs(startPos.z - endPos.z) >= 20 && startPos.z > endPos.z)
             {
-                startPos.x += pipeOffset;
-                Vector3 midPointX = new Vector3(endPos.x, startPos.y, startPos.z);
-                Vector3 midPointY = new Vector3(endPos.x, endPos.y, startPos.z);
+                startPos.y += pipeOffset;
+                endPos.x -= pipeOffset;
+                Vector3 midPointX = new Vector3(startPos.x, startPos.y, endPos.z);
+                Vector3 midPointY = new Vector3(startPos.x, endPos.y, endPos.z);
                 Vector3 midPointZ = new Vector3(endPos.x, endPos.y, endPos.z);
 
-                CreatePipeForStart(endPos, new Vector3(startPos.x, startPos.y, endPos.z), parent);
-                CreateCurveforNotSpecial(new Vector3(startPos.x, startPos.y, endPos.z), new Vector3(0, 0, -90), parent);
-                CreatePipeWithOffset(new Vector3(startPos.x, startPos.y, endPos.z), startPos, parent);
-                CreateCurveforNotSpecial(startPos, new Vector3(-180, 0, -90), parent);
+                CreateCurveforNotSpecial(startPos, new Vector3(90, 0, 0), parent);
+                CreatePipeWithOffset(startPos, midPointX, parent);
+                CreateCurveforNotSpecial(midPointX, new Vector3(-90, 0, 0), parent);
+                CreatePipeWithOffset(midPointX, midPointY, parent);
+                CreateCurveforNotSpecial(midPointY, new Vector3(90, 90, 0), parent);
+                CreatePipeWithOffset(midPointY, endPos, parent);
                 Debug.Log("dasdasdadsasdawdawdawd1212");
 
             }

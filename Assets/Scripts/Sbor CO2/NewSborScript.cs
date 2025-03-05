@@ -1,17 +1,24 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class NewSborScript : MonoBehaviour
 {
     [Header("Particle Systems")]
-    public ParticleSystem smokeInCapsul;
+    public ParticleSystem smokeParInCapsul;
+    public ParticleSystem smokeParInCapsul2;
     public ParticleSystem smokeOutCapsul;
     public ParticleSystem smokeOutCapsulSecond;
-    public ParticleSystem smokeParInCapsul;
+    public ParticleSystem smokeInCapsul;
+    public ParticleSystem smokeInCapsul2;
+    public ParticleSystem parInCapsul1;
+    public ParticleSystem parInCapsul2;
+    public ParticleSystem parInStraightPipe;
 
     [Header("UI Elements")]
     public TextMeshProUGUI display;
     public TextMeshProUGUI display2;
+    public TextMeshProUGUI display3;
 
     [Header("Materials")]
     public Material absent;
@@ -27,19 +34,26 @@ public class NewSborScript : MonoBehaviour
     public float delay;
     private float delayUpdate;
 
+    [Header("Uroven Animation")]
+    public Animator uroven1;
+    public Animator uroven2;
 
     private float fillingCount = 0;
     private int state = 0;
 
     private float displayValue = 0f;
     private float displayValue2 = 0f;
+    private float displayValue3 = 0f;
 
     private bool isFilling = true;
     private bool isProcessActive = false;
     private bool isDelayActive = false;
+    private bool isPaused = false; // Флаг паузы
 
     public float timingDelay = 150f;
     private bool isUpdated = false;
+    private bool isFirstFilling = true;
+    private int? randomValue = null;
 
     void Start()
     {
@@ -50,21 +64,32 @@ public class NewSborScript : MonoBehaviour
 
     void Update()
     {
+        if (isPaused) return; // Если пауза активна, не выполняем обновления
+
         UpdateDisplay();
         HandleDelay();
-        HandleFillingProcess();
-        HandleUnfillingProcess();
+
+        if (isFirstFilling)
+        {
+            HandleFirstFillingProcess(); // Отдельный метод для первого заполнения
+        }
+        else
+        {
+            HandleFillingProcess();
+            HandleUnfillingProcess();
+        }
     }
 
     private void InitializeGates()
     {
-        SetGatesState(new[] { true, false, false, true, true, false, false, true });
+        SetGatesState(new[] { false, true, false, true, false, true, false, true, false, true, false , true});
     }
 
     private void UpdateDisplay()
     {
         display.text = displayValue.ToString("0.");
         display2.text = displayValue2.ToString("0.");
+        display3.text = displayValue3.ToString("0.");
     }
 
     private void HandleDelay()
@@ -80,13 +105,38 @@ public class NewSborScript : MonoBehaviour
         }
     }
 
+    private void HandleFirstFillingProcess()
+    {
+        if (isProcessActive && state == 0 && isFilling)
+        {
+            fillingCount += 5 * Time.deltaTime;
+            PlayFirstFillingEffects();
+
+            if (fillingCount >= timingDelay)
+            {
+                isFirstFilling = false; // После первой половины переключаемся на обычный процесс
+            }
+        }
+    }
+
     private void HandleFillingProcess()
     {
         if (isProcessActive && state == 0 && isFilling)
         {
             fillingCount += 5 * Time.deltaTime;
-            PlayFillingEffects();
-            UpdateFillingDisplay();
+
+            if (isFirstFilling)
+            {
+                PlayFirstFillingEffects(); // Запускаем первый процесс заполнения
+                if (fillingCount >= timingDelay)
+                {
+                    isFirstFilling = false; // После первой половины переключаемся
+                }
+            }
+            else
+            {
+                PlayFillingEffects();
+            }
 
             if (fillingCount >= timingDelay)
             {
@@ -101,7 +151,6 @@ public class NewSborScript : MonoBehaviour
         {
             fillingCount += 5 * Time.deltaTime;
             PlayUnfillingEffects();
-            UpdateUnfillingDisplay();
 
             if (fillingCount >= timingDelay)
             {
@@ -110,20 +159,68 @@ public class NewSborScript : MonoBehaviour
         }
     }
 
-    private void PlayFillingEffects()
+    private void PlayFirstFillingEffects()
     {
-        if (fillingCount < 1)
+        if (fillingCount >= 135 && fillingCount <= 150)
         {
-            smokeInCapsul.Play();
-            smokeOutCapsul.Play();
-            smokeParInCapsul.Stop();
-            smokeOutCapsulSecond.Stop();
+            displayValue = Mathf.Lerp(displayValue, 50f, 1 * Time.deltaTime);
         }
 
-        if (fillingCount >= ((timingDelay / 2) - 15) && fillingCount < ((timingDelay / 2) + 5))
+        if (fillingCount >= 135 && fillingCount <= 150)
         {
-            displayValue = Mathf.Lerp(displayValue, 100f, 2 * Time.deltaTime);
-            displayValue2 = Mathf.Lerp(displayValue2, 0f, 2 * Time.deltaTime);
+            if (randomValue == null) // Генерируем случайное число только один раз
+            {
+                randomValue = Random.Range(1, 10);
+            }
+
+            if (randomValue == 9)
+            {
+                displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
+                gates[12].SetActive(false);
+                gates[13].SetActive(true);
+                parInStraightPipe.Play();
+            }
+        }
+        else
+        {
+            displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
+            gates[12].SetActive(true);
+            gates[13].SetActive(false);
+            randomValue = null; // Сбрасываем число, если не в диапазоне
+        }
+
+        smokeInCapsul.Play();
+        AbsentOn();
+        ActivateGatesForFirstFilling();
+    }
+    private void PlayFillingEffects()
+    {
+        if (fillingCount >= 2 && fillingCount <= 8)
+        {
+            displayValue2 = Mathf.Lerp(displayValue2, 0, 4f * Time.deltaTime);
+            parInCapsul1.Stop();
+            parInCapsul2.Stop();
+            parInStraightPipe.Stop();
+        }
+        
+        smokeParInCapsul2.Play();
+        smokeOutCapsul.Stop();
+        smokeParInCapsul.Stop();
+
+        if (fillingCount >= 25 && fillingCount < 27)
+        {
+            smokeOutCapsulSecond.Play();
+        }
+
+        if (fillingCount >= 45 && fillingCount < 50)
+        {
+            parInCapsul1.Play();
+        }
+
+        if (fillingCount >= 135 && fillingCount <= 150)
+        {
+            displayValue = Mathf.Lerp(displayValue, 50f, 2f * Time.deltaTime);
+
             if (!isUpdated)
             {
                 float a = materialSbor.GetFloat("_Filling");
@@ -131,39 +228,76 @@ public class NewSborScript : MonoBehaviour
                 isUpdated = true;
             }
         }
+        if (fillingCount >= 135 && fillingCount <= 150)
+        {
+            if (randomValue == null) // Генерируем случайное число только один раз
+            {
+                randomValue = Random.Range(1, 10);
+            }
 
+            if (randomValue == 9)
+            {
+                displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
+                gates[12].SetActive(false);
+                gates[13].SetActive(true);
+                parInStraightPipe.Play();
+            }
+        }
+        else
+        {
+            displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
+            gates[12].SetActive(true);
+            gates[13].SetActive(false);
+            randomValue = null; // Сбрасываем число, если не в диапазоне
+        }
+
+
+        smokeInCapsul.Play();
+        smokeInCapsul2.Stop();
 
         AbsentOn();
         AbsentOff2();
         ActivateGatesForFilling();
     }
 
-    private void ActivateGatesForFilling()
+    private void ActivateGatesForFirstFilling()
     {
-        SetGatesState(new[] { false, true, false, true, true, false, true, false });
+        SetGatesState(new[] { true, false, true, false, false, true, false, true, true, false, false, true });
     }
 
-    private void UpdateFillingDisplay()
+    private void ActivateGatesForFilling()
     {
-        if (fillingCount >= ((timingDelay / 2) - 15) && fillingCount < ((timingDelay / 2) + 5))
-        {
-            displayValue = Mathf.Lerp(displayValue, 100f, 2 * Time.deltaTime);
-            displayValue2 = Mathf.Lerp(displayValue2, 0f, 2 * Time.deltaTime);
-        }
+        SetGatesState(new[] { true, false, true, false, false, true, true, false, true, false, false, true });
     }
 
     private void PlayUnfillingEffects()
     {
+        if (fillingCount >= 2 && fillingCount <= 8)
+        {
+            displayValue = Mathf.Lerp(displayValue, 0, 4f * Time.deltaTime);
+            parInCapsul2.Stop();
+            parInCapsul1.Stop();
+            parInStraightPipe.Stop();
+        }
         gate.SetActive(true);
         smokeParInCapsul.Play();
-        smokeOutCapsulSecond.Play();
-        smokeInCapsul.Stop();
-        smokeOutCapsul.Stop();
+        smokeOutCapsulSecond.Stop();
+        smokeParInCapsul2.Stop();
 
-        if (fillingCount >= ((timingDelay / 2) - 15) && fillingCount < ((timingDelay / 2) + 5))
+        if (fillingCount >= 25 && fillingCount < 27)
         {
-            displayValue = Mathf.Lerp(displayValue, 0f, 2 * Time.deltaTime);
-            displayValue2 = Mathf.Lerp(displayValue2, 100f, 2 * Time.deltaTime);
+            smokeOutCapsul.Play();
+        }
+
+        if (fillingCount >= 45 && fillingCount < 50)
+        {
+            parInCapsul2.Play();
+        }
+
+        if (fillingCount >= 135 && fillingCount <= 150)
+        {
+            displayValue2 = Mathf.Lerp(displayValue2, 50f, 2f * Time.deltaTime);
+            
             if (!isUpdated)
             {
                 float a = materialSbor.GetFloat("_Filling");
@@ -171,7 +305,32 @@ public class NewSborScript : MonoBehaviour
                 isUpdated = true;
             }
         }
-        
+
+        if (fillingCount >= 135 && fillingCount <= 150)
+        {
+            if (randomValue == null) // Генерируем случайное число только один раз
+            {
+                randomValue = Random.Range(1, 10);
+            }
+
+            if (randomValue == 9)
+            {
+                displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
+                gates[12].SetActive(false);
+                gates[13].SetActive(true);
+                parInStraightPipe.Play();
+            }
+        }
+        else
+        {
+            displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
+            gates[12].SetActive(true);
+            gates[13].SetActive(false);
+            randomValue = null; // Сбрасываем число, если не в диапазоне
+        }
+
+        smokeInCapsul2.Play();
+        smokeInCapsul.Stop();
         AbsentOff();
         AbsentOn2();
         ActivateGatesForUnfilling();
@@ -179,16 +338,7 @@ public class NewSborScript : MonoBehaviour
 
     private void ActivateGatesForUnfilling()
     {
-        SetGatesState(new[] { true, false, true, false, false, true, false, true });
-    }
-
-    private void UpdateUnfillingDisplay()
-    {
-        if (fillingCount >= ((timingDelay / 2) - 15) && fillingCount < ((timingDelay / 2) + 5))
-        {
-            displayValue = Mathf.Lerp(displayValue, 0f, 2 * Time.deltaTime);
-            displayValue2 = Mathf.Lerp(displayValue2, 100f, 2 * Time.deltaTime);
-        }
+        SetGatesState(new[] { true, false, false, true, true, false, true, false, false, true, true, false });
     }
 
     private void TransitionToUnfilling()
@@ -197,7 +347,9 @@ public class NewSborScript : MonoBehaviour
         state = 1;
         fillingCount = 0;
         isUpdated = false;
-        //SetGatesState(new[] { false, true, false, true, true, false, false, true });
+
+        smokeInCapsul.Stop();
+        smokeInCapsul2.Stop();
     }
 
     private void TransitionToFilling()
@@ -206,12 +358,11 @@ public class NewSborScript : MonoBehaviour
         state = 0;
         fillingCount = 0;
         isUpdated = false;
-        //SetGatesState(new[] { true, false, true, false, false, true, true, false });
     }
 
     private void SetGatesState(bool[] states)
     {
-        for (int i = 0; i < gates.Length; i++)
+        for (int i = 0; i < gates.Length-2; i++)
         {
             gates[i].SetActive(states[i]);
         }
@@ -219,22 +370,26 @@ public class NewSborScript : MonoBehaviour
 
     public void AbsentOn()
     {
-        absent.color = Color.Lerp(absent.color, targetColor, 1f * Time.fixedDeltaTime);
+        absent.color = Color.Lerp(absent.color, targetColor, .30f * Time.fixedDeltaTime);
+        uroven1.Play("Open");
     }
 
     public void AbsentOff()
     {
         absent.color = Color.Lerp(absent.color, Color.white, .15f * Time.fixedDeltaTime);
+        uroven1.Play("Close");
     }
 
     public void AbsentOn2()
     {
-        absent2.color = Color.Lerp(absent2.color, targetColor, 1f * Time.fixedDeltaTime);
+        absent2.color = Color.Lerp(absent2.color, targetColor, .30f * Time.fixedDeltaTime);
+        uroven2.Play("Open");
     }
 
     public void AbsentOff2()
     {
         absent2.color = Color.Lerp(absent2.color, Color.white, .15f * Time.fixedDeltaTime);
+        uroven2.Play("Close");
     }
 
     public void StartColumnProcess()
@@ -250,14 +405,32 @@ public class NewSborScript : MonoBehaviour
         fillingCount = 0;
         gate.SetActive(true);
         materialSbor.SetFloat("_Filling", -30f);
-        delay = 80;
+        delay = 6;
 
         smokeOutCapsul.Stop();
+        smokeParInCapsul2.Stop();
         smokeInCapsul.Stop();
+        smokeInCapsul2.Stop();
 
-        AbsentOff();
-        AbsentOff2();
+        absent.color = Color.white;
+        absent2.color = Color.white;
         displayValue = 0f;
         displayValue2 = 0f;
+    }
+
+    public void PauseProcess()
+    {
+        isPaused = true;
+    }
+
+    public void ResumeProcess()
+    {
+        StartCoroutine(ResumeAfterDelay());
+    }
+
+    private IEnumerator ResumeAfterDelay()
+    {
+        yield return new WaitForSeconds(5f);
+        isPaused = false;
     }
 }

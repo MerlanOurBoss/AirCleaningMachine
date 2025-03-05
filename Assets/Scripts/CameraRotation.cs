@@ -44,13 +44,21 @@ public class CameraRotation : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(0))
         {
-            float moveX = Input.GetAxis("Mouse X") * sensitivityx * moveSpeed;
-            float moveY = Input.GetAxis("Mouse Y") * sensitivityx * moveSpeed;
+            // Получаем смещение мыши по осям X и Y
+            float moveX = Input.GetAxis("Mouse X") * sensitivityx * moveSpeed * Time.deltaTime;
+            float moveY = Input.GetAxis("Mouse Y") * sensitivityx * moveSpeed * Time.deltaTime;
 
-            Vector3 newPosition = target.position + new Vector3(moveX, moveY, 0);
+            // Движение в мировых координатах (игнорируем вращение объекта)
+            Vector3 movement = (Vector3.right * moveX) + (Vector3.up * moveY);
+
+            // Вычисляем новую позицию объекта
+            Vector3 newPosition = target.position + movement;
+
+            // Ограничиваем новую позицию в пределах заданных границ
             newPosition.x = Mathf.Clamp(newPosition.x, startPosition.x - moveLimits.x, startPosition.x + moveLimits.x);
             newPosition.y = Mathf.Clamp(newPosition.y, startPosition.y - moveLimits.y, startPosition.y + moveLimits.y);
 
+            // Применяем новую позицию к объекту
             target.position = newPosition;
         }
         else if (Input.GetMouseButton(0))

@@ -8,7 +8,7 @@ public class TemperatureCatalizator : MonoBehaviour
     [SerializeField] private TMP_Text[] displays;
     public float delay = 116f;
 
-    private bool isStarting = false;
+    public bool isStarting = false;
     private float displayValue0 = 0;
     private float displayValue1 = 0;
     private float displayValue2 = 0;
