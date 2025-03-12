@@ -55,14 +55,10 @@ public class HiddingMesh : MonoBehaviour
             }
         }
 
-        GameObject[] SborCO2 = GameObject.FindGameObjectsWithTag("Facilities_NewCapsul");
-        foreach (var obj in SborCO2)
+        NewSborScript SborCO2 = target.GetComponent<NewSborScript>();
+        if (SborCO2 != null)
         {
-            NewSborScript spawner = obj.GetComponent<NewSborScript>();
-            if (spawner != null)
-            {
-                spawner.PauseProcess();
-            }
+            SborCO2.PauseProcess();
         }
     }
 
@@ -117,15 +113,11 @@ public class HiddingMesh : MonoBehaviour
                 spawner.ResumeSpawning();
             }
         }
-
-        GameObject[] SborCO2 = GameObject.FindGameObjectsWithTag("Facilities_NewCapsul");
-        foreach (var obj in SborCO2)
+        NewSborScript SborCO2 = target.GetComponent<NewSborScript>();
+        if (SborCO2 != null)
         {
-            NewSborScript spawner = obj.GetComponent<NewSborScript>();
-            if (spawner != null)
-            {
-                spawner.ResumeProcess();
-            }
+            SborCO2.ResumeProcess();
         }
+
     }
 }

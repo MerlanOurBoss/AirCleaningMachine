@@ -338,6 +338,8 @@ public class SimulationScriptForFourthScene: MonoBehaviour
     {
         _startSimulationTemp = false;
         _startSimulationContent = false;
+        _myCatalizator.StopSimulation();
+        _myCollector.StopColumnProcess();
         _fluidDelayZero = _fluidDelayZeroPrivate;
         _fluidDelayWater = _fluidDelayWaterPrivate; //15f
         _fluidDelayReact = _fluidDelayReactPrivate ; //32f

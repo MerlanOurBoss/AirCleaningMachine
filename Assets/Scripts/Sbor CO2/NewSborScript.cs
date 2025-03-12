@@ -41,6 +41,11 @@ public class NewSborScript : MonoBehaviour
     public Animator uroven1;
     public Animator uroven2;
 
+    [Header("Audio")]
+    public AudioClip klapanOpen;
+    public AudioClip klapanClose;
+    public AudioListener audioListener;
+
     private float fillingCount = 0;
     private int state = 0;
 
@@ -64,6 +69,7 @@ public class NewSborScript : MonoBehaviour
     public float yellowBlinkInterval = 0.3f; // Интервал мигания желтой лампочки
     void Start()
     {
+        audioListener.enabled = true;
         absent.color = Color.white;
         absent2.color = Color.white;
         gazAnalyz[0].SetActive(true);
@@ -96,7 +102,7 @@ public class NewSborScript : MonoBehaviour
         GameObject yellowLamp = valve.Find("Yellow Light")?.gameObject;
         GameObject redLamp = valve.Find("Red Light")?.gameObject;
         AudioSource audio = valve.GetComponent<AudioSource>();
-
+        audio.clip = klapanClose;
         StartCoroutine(RedGateSequence(greenLamp, yellowLamp, redLamp, audio));
     }
 
@@ -106,16 +112,19 @@ public class NewSborScript : MonoBehaviour
         GameObject yellowLamp = valve.Find("Yellow Light")?.gameObject;
         GameObject redLamp = valve.Find("Red Light")?.gameObject;
         AudioSource audio = valve.GetComponent<AudioSource>();
-
+        audio.clip = klapanOpen;
         StartCoroutine(GreenGateSequence(greenLamp, yellowLamp, redLamp, audio));
     }
 
     IEnumerator RedGateSequence(GameObject greenLamp, GameObject yellowLamp, GameObject redLamp, AudioSource audio)
     {
+        if (redLamp.activeSelf == true)
+        {
+            yield break;
+        }
          // Выключаем зеленую лампочку
-        yield return StartCoroutine(BlinkYellowLamp(yellowLamp));
+        yield return StartCoroutine(BlinkYellowLamp(yellowLamp, audio));
         if (yellowLamp != null) yellowLamp.SetActive(false); // Выключаем желтую лампочку
-        if (audio != null) audio.Play();
         if (redLamp != null) redLamp.SetActive(true);
         if (greenLamp != null) greenLamp.SetActive(false);// Включаем красную лампочку
     }
@@ -123,18 +132,17 @@ public class NewSborScript : MonoBehaviour
     IEnumerator GreenGateSequence(GameObject greenLamp, GameObject yellowLamp, GameObject redLamp, AudioSource audio)
     {
          // Выключаем красную лампочку
-        yield return StartCoroutine(BlinkYellowLamp(yellowLamp));
+        yield return StartCoroutine(BlinkYellowLamp(yellowLamp, audio));
         if (yellowLamp != null) yellowLamp.SetActive(false); // Выключаем желтую лампочку
-        if (audio != null) audio.Play();
         if (greenLamp != null) greenLamp.SetActive(true);
         if (redLamp != null) redLamp.SetActive(false); // Включаем зеленую лампочку
     }
 
-    IEnumerator BlinkYellowLamp(GameObject yellowLamp)
+    IEnumerator BlinkYellowLamp(GameObject yellowLamp, AudioSource audio)
     {
         float elapsedTime = 0f;
         bool isLampOn = false;
-        
+        audio.Play();
         while (elapsedTime < yellowBlinkDuration)
         {
             isLampOn = !isLampOn;
@@ -232,7 +240,7 @@ public class NewSborScript : MonoBehaviour
     private void PlayFirstFillingEffects()
     {
         bool isStarted = false;
-
+        
         if (fillingCount >= 0 && fillingCount <= 2)
         {
             StartGreenSequence(gates[0].transform);
@@ -245,10 +253,14 @@ public class NewSborScript : MonoBehaviour
         if (isStarted)
         {
             smokeInCapsul.Play();
+
+        }
+        if (fillingCount >= 15 && fillingCount <= 150)
+        {
             AbsentOn();
         }
 
-        if (fillingCount >= 120 && fillingCount <= 135)
+            if (fillingCount >= 120 && fillingCount <= 135)
         {
             gazAnalyz[3].GetComponentInParent<AudioSource>().Play();
         }
@@ -304,6 +316,7 @@ public class NewSborScript : MonoBehaviour
     }
     private void PlayFillingEffects()
     {
+       
         bool isStarted = false;
         if (fillingCount >= 0 && fillingCount <= 2)
         {
@@ -316,6 +329,7 @@ public class NewSborScript : MonoBehaviour
         {
             gazAnalyz[0].SetActive(true);
             gazAnalyz[1].SetActive(false);
+            displayValue = Mathf.Lerp(displayValue, 0, 4f * Time.deltaTime);
             displayValue2 = Mathf.Lerp(displayValue2, 0, 4f * Time.deltaTime);
             parInCapsul1.Stop();
             parInCapsul2.Stop();
@@ -334,13 +348,18 @@ public class NewSborScript : MonoBehaviour
             smokeInCapsul.Play();
             smokeInCapsul2.Stop();
 
+        }
+
+        if (fillingCount >= 15 && fillingCount <= 150)
+        {
             AbsentOn();
             AbsentOff2();
         }
 
-        if (fillingCount >= 25 && fillingCount < 27)
+            if (fillingCount >= 25 && fillingCount < 30)
         {
             smokeOutCapsulSecond.Play();
+            displayValue2 = Mathf.Lerp(displayValue2, 50, 4.2f * Time.deltaTime);
         }
 
         if (fillingCount >= 45 && fillingCount < 50)
@@ -426,6 +445,7 @@ public class NewSborScript : MonoBehaviour
         {
             gazAnalyz[2].SetActive(true);
             gazAnalyz[3].SetActive(false);
+            displayValue2 = Mathf.Lerp(displayValue2, 0, 4f * Time.deltaTime);
             displayValue = Mathf.Lerp(displayValue, 0, 4f * Time.deltaTime);
             parInCapsul2.Stop();
             parInCapsul1.Stop();
@@ -443,13 +463,18 @@ public class NewSborScript : MonoBehaviour
             smokeParInCapsul2.Stop();
             smokeInCapsul2.Play();
             smokeInCapsul.Stop();
+            
+        }
+        if (fillingCount >= 15 && fillingCount <= 150)
+        {
             AbsentOff();
             AbsentOn2();
         }
             
-        if (fillingCount >= 25 && fillingCount < 27)
+        if (fillingCount >= 25 && fillingCount < 30)
         {
             smokeOutCapsul.Play();
+            displayValue = Mathf.Lerp(displayValue, 50, 4.2f * Time.deltaTime);
         }
 
         if (fillingCount >= 45 && fillingCount < 50)
@@ -539,17 +564,9 @@ public class NewSborScript : MonoBehaviour
         isUpdated = false;
     }
 
-    private void SetGatesState(bool[] states)
-    {
-        for (int i = 0; i < gates.Length-2; i++)
-        {
-            gates[i].SetActive(states[i]);
-        }
-    }
-
     public void AbsentOn()
     {
-        absent.color = Color.Lerp(absent.color, targetColor, .30f * Time.fixedDeltaTime);
+        absent.color = Color.Lerp(absent.color, targetColor, .15f * Time.fixedDeltaTime);
         uroven1.Play("Open");
     }
 
@@ -561,7 +578,7 @@ public class NewSborScript : MonoBehaviour
 
     public void AbsentOn2()
     {
-        absent2.color = Color.Lerp(absent2.color, targetColor, .30f * Time.fixedDeltaTime);
+        absent2.color = Color.Lerp(absent2.color, targetColor, .15f * Time.fixedDeltaTime);
         uroven2.Play("Open");
     }
 
@@ -581,20 +598,45 @@ public class NewSborScript : MonoBehaviour
     {
         isProcessActive = false;
         isDelayActive = false;
+        uroven1.Play("Idle");
+        uroven2.Play("Idle");
         fillingCount = 0;
         gate.SetActive(true);
         materialSbor.SetFloat("_Filling", -31f);
         delay = 6;
 
         smokeOutCapsul.Stop();
+        smokeOutCapsulSecond.Stop();
+        smokeParInCapsul.Stop();
         smokeParInCapsul2.Stop();
         smokeInCapsul.Stop();
         smokeInCapsul2.Stop();
+        parInCapsul1.Stop();
+        parInCapsul2.Stop();
+        parInStraightPipe.Stop();
 
         absent.color = Color.white;
         absent2.color = Color.white;
         displayValue = 0f;
         displayValue2 = 0f;
+        displayValue3 = 0f;
+        displayValue4 = 0f;
+        displayValue5 = 0f;
+
+        StartRedSequence(gates[0].transform);
+        StartRedSequence(gates[1].transform);
+        StartRedSequence(gates[2].transform);
+        StartRedSequence(gates[3].transform);
+        StartRedSequence(gates[4].transform);
+        StartRedSequence(gates[5].transform);
+        StartRedSequence(gates[6].transform);
+
+        gazAnalyz[0].SetActive(false);
+        gazAnalyz[1].SetActive(true);
+        gazAnalyz[2].SetActive(false);
+        gazAnalyz[3].SetActive(true);
+        gazAnalyz[4].SetActive(false);
+        gazAnalyz[5].SetActive(true);
     }
 
     public void PauseProcess()
