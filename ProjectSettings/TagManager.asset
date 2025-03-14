@@ -108,8 +108,8 @@ TagManager:
   - Pipe
   - PipeConnection
   - Facilities
-  - 
-  - 
+  - CapsulUpDown
+  - CapsulMiddle
   - 
   - 
   - 

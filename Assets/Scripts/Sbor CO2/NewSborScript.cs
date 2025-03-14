@@ -9,8 +9,12 @@ public class NewSborScript : MonoBehaviour
     public ParticleSystem smokeParInCapsul2;
     public ParticleSystem smokeOutCapsul;
     public ParticleSystem smokeOutCapsulSecond;
+    public ParticleSystem smokeInCapsul0_1;
+    public ParticleSystem smokeInCapsul0_2;
     public ParticleSystem smokeInCapsul;
     public ParticleSystem smokeInCapsul2;
+    public ParticleSystem smokeInCapsul1end;
+    public ParticleSystem smokeInCapsul2end;
     public ParticleSystem parInCapsul1;
     public ParticleSystem parInCapsul2;
     public ParticleSystem parInStraightPipe;
@@ -253,16 +257,17 @@ public class NewSborScript : MonoBehaviour
         if (isStarted)
         {
             smokeInCapsul.Play();
-
+            smokeInCapsul0_1.Play();
         }
         if (fillingCount >= 15 && fillingCount <= 150)
         {
             AbsentOn();
         }
 
-            if (fillingCount >= 120 && fillingCount <= 135)
+        if (fillingCount >= 120 && fillingCount <= 135)
         {
             gazAnalyz[3].GetComponentInParent<AudioSource>().Play();
+            smokeInCapsul1end.Play();
         }
 
         if (fillingCount >= 135 && fillingCount <= 150)
@@ -270,6 +275,7 @@ public class NewSborScript : MonoBehaviour
             gazAnalyz[2].SetActive(false);
             gazAnalyz[3].SetActive(true);
             displayValue = Mathf.Lerp(displayValue, 50f, 1 * Time.deltaTime);
+            
         }
 
         if (fillingCount >= 135 && fillingCount <= 150)
@@ -312,9 +318,10 @@ public class NewSborScript : MonoBehaviour
         {
             StartRedSequence(gates[0].transform);
             StartRedSequence(gates[1].transform);
+            
         }
     }
-    private void PlayFillingEffects()
+    private void PlayFillingEffects() // для 1го капсуля
     {
        
         bool isStarted = false;
@@ -333,7 +340,10 @@ public class NewSborScript : MonoBehaviour
             displayValue2 = Mathf.Lerp(displayValue2, 0, 4f * Time.deltaTime);
             parInCapsul1.Stop();
             parInCapsul2.Stop();
+            smokeInCapsul1end.Stop();
+            smokeInCapsul2end.Stop();
             parInStraightPipe.Stop();
+            smokeInCapsul0_2.Stop();
         }
         if (fillingCount >= 15 && fillingCount <= 17)
         {
@@ -346,6 +356,7 @@ public class NewSborScript : MonoBehaviour
             smokeParInCapsul.Stop();
 
             smokeInCapsul.Play();
+            smokeInCapsul0_1.Play();
             smokeInCapsul2.Stop();
 
         }
@@ -359,6 +370,7 @@ public class NewSborScript : MonoBehaviour
             if (fillingCount >= 25 && fillingCount < 30)
         {
             smokeOutCapsulSecond.Play();
+            smokeInCapsul2end.Play();
             displayValue2 = Mathf.Lerp(displayValue2, 50, 4.2f * Time.deltaTime);
         }
 
@@ -369,6 +381,7 @@ public class NewSborScript : MonoBehaviour
         if (fillingCount >= 120 && fillingCount <= 135)
         {
             gazAnalyz[3].GetComponentInParent<AudioSource>().Play();
+            smokeInCapsul1end.Play();
         }
 
         if (fillingCount >= 135 && fillingCount <= 150)
@@ -377,7 +390,7 @@ public class NewSborScript : MonoBehaviour
             gazAnalyz[2].SetActive(false);
             gazAnalyz[3].SetActive(true);
             displayValue = Mathf.Lerp(displayValue, 50f, 2f * Time.deltaTime);
-
+            
             if (!isUpdated)
             {
                 float a = materialSbor.GetFloat("_Filling");
@@ -430,7 +443,7 @@ public class NewSborScript : MonoBehaviour
         }
     }
 
-    private void PlayUnfillingEffects()
+    private void PlayUnfillingEffects()// для 2го капсуля
     {
         bool isStarted = false;
         if (fillingCount >= 0 && fillingCount <= 2)
@@ -449,7 +462,10 @@ public class NewSborScript : MonoBehaviour
             displayValue = Mathf.Lerp(displayValue, 0, 4f * Time.deltaTime);
             parInCapsul2.Stop();
             parInCapsul1.Stop();
+            smokeInCapsul1end.Stop();
+            smokeInCapsul2end.Stop();
             parInStraightPipe.Stop();
+            smokeInCapsul0_1.Stop();
         }
         gate.SetActive(true);
         if (fillingCount >= 15 && fillingCount <= 17)
@@ -462,6 +478,7 @@ public class NewSborScript : MonoBehaviour
             smokeOutCapsulSecond.Stop();
             smokeParInCapsul2.Stop();
             smokeInCapsul2.Play();
+            smokeInCapsul0_2.Play();
             smokeInCapsul.Stop();
             
         }
@@ -474,6 +491,7 @@ public class NewSborScript : MonoBehaviour
         if (fillingCount >= 25 && fillingCount < 30)
         {
             smokeOutCapsul.Play();
+            smokeInCapsul1end.Play();
             displayValue = Mathf.Lerp(displayValue, 50, 4.2f * Time.deltaTime);
         }
 
@@ -484,6 +502,7 @@ public class NewSborScript : MonoBehaviour
         if (fillingCount >= 120 && fillingCount <= 135)
         {
             gazAnalyz[1].GetComponentInParent<AudioSource>().Play();
+            smokeInCapsul2end.Play();
         }
 
         if (fillingCount >= 135 && fillingCount <= 150)
