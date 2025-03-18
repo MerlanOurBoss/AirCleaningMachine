@@ -17,7 +17,7 @@ public class TutoriolSimulatio : MonoBehaviour
 
     [SerializeField] private Animator _electroFilter;
     [SerializeField] private NewSborScript _myCollector;
-    [SerializeField] private TemperatureCatalizatorTutorial _myCatalizator;
+    [SerializeField] private TemperatureCatalizator _myCatalizator;
 
 
     private bool _startSimulationTemp = false;

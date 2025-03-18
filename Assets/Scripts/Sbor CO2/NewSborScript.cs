@@ -67,7 +67,9 @@ public class NewSborScript : MonoBehaviour
     public float timingDelay = 150f;
     private bool isUpdated = false;
     private bool isFirstFilling = true;
-    private int? randomValue = null;
+    private int? randomValue = null; 
+    private Coroutine currentCoroutine;
+    private Coroutine currentCoroutine2;
 
     public float yellowBlinkDuration = 2f; // ¬рем€ мигани€ желтой лампочки
     public float yellowBlinkInterval = 0.3f; // »нтервал мигани€ желтой лампочки
@@ -80,6 +82,8 @@ public class NewSborScript : MonoBehaviour
         gazAnalyz[1].SetActive(false);
         gazAnalyz[2].SetActive(true);
         gazAnalyz[3].SetActive(false);
+        absent.SetFloat("_secondColorInfluence", 0.5f);
+        absent2.SetFloat("_secondColorInfluence", 0.5f);
     }
 
     void Update()
@@ -155,6 +159,35 @@ public class NewSborScript : MonoBehaviour
             elapsedTime += yellowBlinkInterval;
         }
         yellowLamp.SetActive(false);
+    }
+
+    private IEnumerator ChangeFloatOverTimePlus(float startValue, float endValue, float step, Material targetMaterial)
+    {
+        float currentValue = startValue;
+        targetMaterial.SetFloat("_secondColorInfluence", currentValue);
+
+        while (currentValue < endValue)
+        {
+            currentValue += step;
+            targetMaterial.SetFloat("_secondColorInfluence", currentValue);
+            yield return new WaitForSeconds(1f);
+        }
+
+        targetMaterial.SetFloat("_secondColorInfluence", endValue);
+    }
+    private IEnumerator ChangeFloatOverTimeMinus(float startValue, float endValue, float step, Material targetMaterial)
+    {
+        float currentValue = startValue;
+        targetMaterial.SetFloat("_secondColorInfluence", currentValue);
+
+        while (currentValue > endValue)
+        {
+            currentValue -= step;
+            targetMaterial.SetFloat("_secondColorInfluence", currentValue);
+            yield return new WaitForSeconds(1f);
+        }
+
+        targetMaterial.SetFloat("_secondColorInfluence", endValue);
     }
 
     private void UpdateDisplay()
@@ -256,14 +289,14 @@ public class NewSborScript : MonoBehaviour
         }
         if (isStarted)
         {
-            smokeInCapsul.Play();
+            //smokeInCapsul.Play();
             smokeInCapsul0_1.Play();
         }
-        if (fillingCount >= 15 && fillingCount <= 150)
+        if (fillingCount >= 15 && fillingCount <= 16)
         {
             AbsentOn();
+            
         }
-
         if (fillingCount >= 120 && fillingCount <= 135)
         {
             gazAnalyz[3].GetComponentInParent<AudioSource>().Play();
@@ -277,43 +310,6 @@ public class NewSborScript : MonoBehaviour
             displayValue = Mathf.Lerp(displayValue, 50f, 1 * Time.deltaTime);
             
         }
-
-        if (fillingCount >= 135 && fillingCount <= 150)
-        {
-            if (randomValue == null) // √енерируем случайное число только один раз
-            {
-                randomValue = Random.Range(1, 10);
-            }
-
-            if (randomValue == 9)
-            {
-                StartRedSequence(gates[6].transform);
-                gazAnalyz[4].SetActive(true);
-                gazAnalyz[5].SetActive(false);
-                displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
-                parInStraightPipe.Play();
-
-                if (fillingCount >= 135 && fillingCount <= 140)
-                {
-                    gazAnalyz[5].GetComponentInParent<AudioSource>().Play();
-                }
-
-                if (fillingCount >= 148 && fillingCount <= 150)
-                {
-                    StartGreenSequence(gates[6].transform);
-                    gazAnalyz[5].SetActive(true);
-                    
-                    gazAnalyz[4].SetActive(false);
-                }
-            }
-        }
-        else
-        {
-            displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
-            randomValue = null; // —брасываем число, если не в диапазоне
-        }
-
-
         if (fillingCount >= 134 && fillingCount <= 136)
         {
             StartRedSequence(gates[0].transform);
@@ -348,6 +344,10 @@ public class NewSborScript : MonoBehaviour
         if (fillingCount >= 15 && fillingCount <= 17)
         {
             isStarted = true;
+            gazAnalyz[4].SetActive(false);
+            gazAnalyz[5].SetActive(true);
+            displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
+            StartRedSequence(gates[6].transform);
         }
         if (isStarted)
         {
@@ -355,29 +355,36 @@ public class NewSborScript : MonoBehaviour
             smokeOutCapsul.Stop();
             smokeParInCapsul.Stop();
 
-            smokeInCapsul.Play();
+            //smokeInCapsul.Play();
             smokeInCapsul0_1.Play();
-            smokeInCapsul2.Stop();
+            //smokeInCapsul2.Stop();
 
         }
 
-        if (fillingCount >= 15 && fillingCount <= 150)
+        if (fillingCount >= 15 && fillingCount <= 16)
         {
             AbsentOn();
             AbsentOff2();
         }
 
-            if (fillingCount >= 25 && fillingCount < 30)
+        if (fillingCount >= 25 && fillingCount < 30)
         {
             smokeOutCapsulSecond.Play();
             smokeInCapsul2end.Play();
             displayValue2 = Mathf.Lerp(displayValue2, 50, 4.2f * Time.deltaTime);
         }
-
+        if (fillingCount >= 30 && fillingCount <= 40)
+        {
+            gazAnalyz[4].SetActive(true);
+            gazAnalyz[5].SetActive(false);
+            displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
+            StartGreenSequence(gates[6].transform);
+        }
         if (fillingCount >= 45 && fillingCount < 50)
         {
             parInCapsul1.Play();
         }
+
         if (fillingCount >= 120 && fillingCount <= 135)
         {
             gazAnalyz[3].GetComponentInParent<AudioSource>().Play();
@@ -408,9 +415,9 @@ public class NewSborScript : MonoBehaviour
             if (randomValue == 9)
             {
                 StartRedSequence(gates[6].transform);
-                gazAnalyz[4].SetActive(true);
-                gazAnalyz[5].SetActive(false);
-                displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
+                gazAnalyz[4].SetActive(false);
+                gazAnalyz[5].SetActive(true);
+                displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
                 parInStraightPipe.Play();
 
                 if (fillingCount >= 135 && fillingCount <= 140)
@@ -428,8 +435,6 @@ public class NewSborScript : MonoBehaviour
         }
         else
         {
-            displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
-
             randomValue = null; // —брасываем число, если не в диапазоне
         }
         
@@ -439,7 +444,6 @@ public class NewSborScript : MonoBehaviour
             StartRedSequence(gates[0].transform);
             StartRedSequence(gates[1].transform);
             StartRedSequence(gates[4].transform);
-
         }
     }
 
@@ -471,18 +475,22 @@ public class NewSborScript : MonoBehaviour
         if (fillingCount >= 15 && fillingCount <= 17)
         {
             isStarted = true;
+            gazAnalyz[4].SetActive(false);
+            gazAnalyz[5].SetActive(true);
+            displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
+            StartRedSequence(gates[6].transform);
         }
         if (isStarted)
         {
             smokeParInCapsul.Play();
             smokeOutCapsulSecond.Stop();
             smokeParInCapsul2.Stop();
-            smokeInCapsul2.Play();
+            //smokeInCapsul2.Play();
             smokeInCapsul0_2.Play();
-            smokeInCapsul.Stop();
+            //smokeInCapsul.Stop();
             
         }
-        if (fillingCount >= 15 && fillingCount <= 150)
+        if (fillingCount >= 15 && fillingCount <= 16)
         {
             AbsentOff();
             AbsentOn2();
@@ -494,11 +502,18 @@ public class NewSborScript : MonoBehaviour
             smokeInCapsul1end.Play();
             displayValue = Mathf.Lerp(displayValue, 50, 4.2f * Time.deltaTime);
         }
-
+        if (fillingCount >= 30 && fillingCount <= 40)
+        {
+            gazAnalyz[4].SetActive(true);
+            gazAnalyz[5].SetActive(false);
+            displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
+            StartGreenSequence(gates[6].transform);
+        }
         if (fillingCount >= 45 && fillingCount < 50)
         {
             parInCapsul2.Play();
         }
+
         if (fillingCount >= 120 && fillingCount <= 135)
         {
             gazAnalyz[1].GetComponentInParent<AudioSource>().Play();
@@ -530,9 +545,9 @@ public class NewSborScript : MonoBehaviour
             if (randomValue == 9)
             {
                 StartRedSequence(gates[6].transform);
-                gazAnalyz[4].SetActive(true);
-                gazAnalyz[5].SetActive(false);
-                displayValue3 = Mathf.Lerp(displayValue3, 50f, 30 * Time.deltaTime);
+                gazAnalyz[4].SetActive(false);
+                gazAnalyz[5].SetActive(true);
+                displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
                 parInStraightPipe.Play();
 
                 if (fillingCount >= 135 && fillingCount <= 140)
@@ -550,8 +565,6 @@ public class NewSborScript : MonoBehaviour
         }
         else
         {
-            displayValue3 = Mathf.Lerp(displayValue3, 0f, 30 * Time.deltaTime);
-
             randomValue = null; // —брасываем число, если не в диапазоне
         }
 
@@ -571,8 +584,8 @@ public class NewSborScript : MonoBehaviour
         fillingCount = 0;
         isUpdated = false;
 
-        smokeInCapsul.Stop();
-        smokeInCapsul2.Stop();
+        //smokeInCapsul.Stop();
+        //smokeInCapsul2.Stop();
     }
 
     private void TransitionToFilling()
@@ -585,25 +598,33 @@ public class NewSborScript : MonoBehaviour
 
     public void AbsentOn()
     {
-        absent.color = Color.Lerp(absent.color, targetColor, .15f * Time.fixedDeltaTime);
+        //absent.color = Color.Lerp(absent.color, targetColor, .15f * Time.fixedDeltaTime);
+        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
+        currentCoroutine = StartCoroutine(ChangeFloatOverTimePlus(0.5f, 2f, 0.05f, absent));
         uroven1.Play("Open");
     }
 
     public void AbsentOff()
     {
-        absent.color = Color.Lerp(absent.color, Color.white, .15f * Time.fixedDeltaTime);
+        //absent.color = Color.Lerp(absent.color, Color.white, .15f * Time.fixedDeltaTime);
+        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
+        currentCoroutine = StartCoroutine(ChangeFloatOverTimeMinus(2f, 0.5f, 0.05f, absent));
         uroven1.Play("Close");
     }
 
     public void AbsentOn2()
     {
-        absent2.color = Color.Lerp(absent2.color, targetColor, .15f * Time.fixedDeltaTime);
+        //absent2.color = Color.Lerp(absent2.color, targetColor, .15f * Time.fixedDeltaTime);
+        if (currentCoroutine2 != null) StopCoroutine(currentCoroutine2);
+        currentCoroutine2 = StartCoroutine(ChangeFloatOverTimePlus(0.5f, 2f, 0.05f, absent2));
         uroven2.Play("Open");
     }
 
     public void AbsentOff2()
     {
-        absent2.color = Color.Lerp(absent2.color, Color.white, .15f * Time.fixedDeltaTime);
+        //absent2.color = Color.Lerp(absent2.color, Color.white, .15f * Time.fixedDeltaTime);
+        if (currentCoroutine2 != null) StopCoroutine(currentCoroutine2);
+        currentCoroutine2 = StartCoroutine(ChangeFloatOverTimeMinus(2f, 0.5f, 0.05f, absent2));
         uroven2.Play("Close");
     }
 
@@ -622,14 +643,16 @@ public class NewSborScript : MonoBehaviour
         fillingCount = 0;
         gate.SetActive(true);
         materialSbor.SetFloat("_Filling", -31f);
+        absent.SetFloat("_secondColorInfluence", 0.5f);
+        absent2.SetFloat("_secondColorInfluence", 0.5f);
         delay = 6;
 
         smokeOutCapsul.Stop();
         smokeOutCapsulSecond.Stop();
         smokeParInCapsul.Stop();
         smokeParInCapsul2.Stop();
-        smokeInCapsul.Stop();
-        smokeInCapsul2.Stop();
+        //.Stop();
+        //smokeInCapsul2.Stop();
         parInCapsul1.Stop();
         parInCapsul2.Stop();
         parInStraightPipe.Stop();

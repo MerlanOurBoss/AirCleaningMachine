@@ -545,6 +545,7 @@ GameObject:
   - component: {fileID: 8584256670823830845}
   - component: {fileID: 162660819679938946}
   - component: {fileID: 3136566117569034420}
+  - component: {fileID: 2843621726169888772}
   m_Layer: 0
   m_Name: Red Light
   m_TagString: Untagged
@@ -618,3 +619,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2843621726169888772
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8692481196877818742}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5665763164275481281, guid: 5aa4bb93466d8384d8ec47f886328901, type: 3}
