@@ -7,6 +7,7 @@ public class MathModuleForEmul : MonoBehaviour
 {
     [SerializeField] private ParticleSystem[] _mySmokes;
     [SerializeField] private DropSpawner[] _drops;
+    [SerializeField] private TMP_InputField _temperature;
     [SerializeField] private TMP_InputField _gasFlow;
     [SerializeField] private TMP_InputField _waterFlow;
     [SerializeField] private TMP_InputField _fluidType;
@@ -43,6 +44,7 @@ public class MathModuleForEmul : MonoBehaviour
 
     void Start()
     {
+        _temperature.text = "15 °C";
         _gasFlow.text = "14 м³/с";
         _waterFlow.text = "0,1 м³/с";
         _fluidType.text = fluid;

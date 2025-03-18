@@ -16,7 +16,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
     [SerializeField] private PlayableDirector[] _myFluidsWater;
     [SerializeField] private PlayableDirector[] _myFluidsReact;
 
-    [SerializeField] private TMP_InputField[] _myTexts;
     [SerializeField] private TextMeshProUGUI[] _componentsText;
     [SerializeField] private TextMeshProUGUI[] _molText;
     [SerializeField] private DropSpawner[] _dropSpawns;
@@ -39,7 +38,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
     [SerializeField] private NasosScript reactNasos;
 
     [SerializeField] private Button electro;
-    [SerializeField] private TMP_InputField electroInput;
 
     [SerializeField] private TextMeshProUGUI ElectroFilter;
     [SerializeField] private TextMeshProUGUI Katalizator;
@@ -58,13 +56,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
     [SerializeField] private ReactTable react;
     [SerializeField] private SborTable sbor;
     [SerializeField] private Canvas canvas;
-
-    [SerializeField] private KatalizatorScriptwith1 katazScriptWith1_1;
-    [SerializeField] private Button kataz1;
-    [SerializeField] private KatalizatorScriptwith1 katazScriptWith1_2;
-    [SerializeField] private Button kataz2;
-
-
 
     public bool _startSimulationTemp = false;
     public bool _startSimulationContent = false;
@@ -87,14 +78,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         _fluidDelayWaterPrivate = _fluidDelayWater;
         _fluidDelayReactPrivate = _fluidDelayReact;
         _electroAnimDelayPrivate  = _electroAnimDelay;
-
-        _myTexts[0].text = "150 °C";
-        _myTexts[6].text = "5 °C";
-        _myTexts[11].text = "3 кВ/м";
-        _myTexts[20].text = "500 °C";
-        _myTexts[16].text = "0,05 м/с";
-        _myTexts[18].text = "0,5 кПа";
-        _myTexts[19].text = "0,2 кПа";
     }
 
     private void Update()
@@ -107,11 +90,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         }
         if (_startSimulationTemp && _startSimulationContent)
         {
-            electroInput.interactable = false;
-            katazScriptWith1_1.text.interactable = false;
-            kataz1.interactable = false;
-            katazScriptWith1_2.text.interactable = false;
-            kataz2.interactable = false;
             _simulationButton.interactable = false;
             _simulationText.text = "Идет симуляция";
             waterZeroNasos.enabled = true;
@@ -156,11 +134,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         }
         else
         {
-            electroInput.interactable = true;
-            katazScriptWith1_1.text.interactable = true;
-            kataz1.interactable = true;
-            katazScriptWith1_2.text.interactable = true;
-            kataz2.interactable = true;
             waterZeroNasos.enabled = false;
             waterNasos.enabled = false;
             if (reactNasos != null)
@@ -228,40 +201,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
 
     public void StartSimulation()
     {
-        if (_myTexts[18].text == "Включить")
-        {
-            kataz.isEnable = true;
-            katazOutElectro.isEnable = false;
-        }
-        else if (_myTexts[18].text == "Отключить")
-        {
-            kataz.isEnable = false;
-            katazOutElectro.isEnable = true;
-        }
-
-        if (_myTexts[19].text == "2")
-        {
-            katazScriptWith1_1.SetObjectsState(false);
-        }
-        else if (_myTexts[19].text == "1")
-        {
-            katazScriptWith1_1.SetObjectsState(true);
-        }
-
-        if (_myTexts[20].text == "2")
-        {
-            katazScriptWith1_2.SetObjectsState(false);
-        }
-        else if (_myTexts[20].text == "1")
-        {
-            katazScriptWith1_2.SetObjectsState(true);
-        }
-
-        //water.isEnable = true;
-        //water.RecalculateData();
-        //elec.isEnable = true;
-        //shelosh.isEnable = true;
-        //react.isEnable = true;
         sbor.isEnable = true;
         _myCatalizator.StartSimulation();
         _startSimulationTemp = true; //надо будет убрать
@@ -280,57 +219,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
                 _startSimulationContent = true;
             }
             
-        }
-
-        if (_myTexts[10].text != "" || _myTexts[11].text != "")
-        {
-            if (_myTexts[11].text == "3 кВ/м")
-            {
-                _electroFilter.speed = 0.7f;
-                StartSmokesAndFluids();
-            }
-            else if (_myTexts[11].text == "4 кВ/м")
-            {
-                _electroFilter.speed = 0.8f;
-                StartSmokesAndFluids();
-            }
-            else
-            {
-                _electroFilter.speed = 1f;
-                StartSmokesAndFluids();
-            }
-        }
-
-        if (_myTexts[0].text == "150 °C"  && _myTexts[3].text == "300 °C" 
-            && _myTexts[6].text == "5 °C" && _myTexts[8].text == "5 °C" && _myTexts[10].text == "5 °C")
-        {
-
-        }
-        else if (_myTexts[0].text == "300 °C" && _myTexts[3].text == "400 °C"
-            && _myTexts[6].text == "15 °C" && _myTexts[8].text == "15 °C" && _myTexts[10].text == "15 °C")
-        {
-            foreach (ParticleSystem smoke in _mySmokes)
-            {
-                // Здесь можно задать что будет влиять на дымы
-                //smoke.startColor = new Color(smoke.startColor.r, smoke.startColor.g, smoke.startColor.b, 0.3f);
-                smoke.emissionRate = smoke.emissionRate - smoke.emissionRate / 2;
-            }
-            foreach (DropSpawner spawner in _dropSpawns)
-            {
-                spawner.spawnInterval = spawner.spawnInterval * 2;
-            }
-        }
-        else if (_myTexts[0].text == "400 °C" && _myTexts[3].text == "500 °C"
-            && _myTexts[6].text == "25 °C" && _myTexts[8].text == "25 °C" && _myTexts[10].text == "25 °C")
-        {
-            foreach (ParticleSystem smoke in _mySmokes)
-            {
-                smoke.emissionRate = smoke.emissionRate - smoke.emissionRate / 1.5f;
-            }
-            foreach (DropSpawner spawner in _dropSpawns)
-            {
-                spawner.spawnInterval = spawner.spawnInterval * 1.5f;
-            }
         }
     }
 

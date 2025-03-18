@@ -10,6 +10,8 @@ public class MathModulForKataz : MonoBehaviour
     [SerializeField] private TMP_InputField _temperatureText;
     [SerializeField] private TMP_InputField _pressureText;
     [SerializeField] private TMP_InputField _flowRateText;
+    [SerializeField] private TMP_InputField _katazBlockCount;
+    [SerializeField] private TMP_InputField _katazBlockType;
 
     [SerializeField] private TextMeshProUGUI gasVelocity;
     [SerializeField] private TextMeshProUGUI gasDensitie;
@@ -36,16 +38,17 @@ public class MathModulForKataz : MonoBehaviour
 
     private void Start()
     {
+        _katazBlockCount.text = "4";
+        _katazBlockType.text = "с драгметаллами";
         _temperatureText.text = "25 °C";
         _pressureText.text = "101325 Па";
         _flowRateText.text = "1 м³/с";
+        _katazBlockCount.onValueChanged.AddListener(ChangeBlockNumber);
     }
 
     [Obsolete]
     private void Update()
     {
-
-
         if (translator.currentLanguage == Translator.Language.Russian)
         {
             gasVelocity.text = "Скорость газа: " + velocity.ToString("0.000") + " м/с";
@@ -152,6 +155,15 @@ public class MathModulForKataz : MonoBehaviour
             isProcessed1 = false;
             isProcessed2 = true;
             a = 0;
+        }
+    }
+
+    public void ChangeBlockNumber(string text)
+    {
+        KatazBlockCountManager[] managers = FindObjectsOfType<KatazBlockCountManager>();
+        foreach (KatazBlockCountManager manager in managers)
+        {
+            manager.ChangeBlocks(int.Parse(text));
         }
     }
 }

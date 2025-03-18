@@ -61,13 +61,6 @@ public class SimulationScriptForSecondScene : MonoBehaviour
     [SerializeField] private SborTable sbor;
     [SerializeField] private Canvas canvas;
 
-    [SerializeField] private KatalizatorScriptwith1 katazScriptWith1_1;
-    [SerializeField] private Button kataz1;
-    [SerializeField] private KatalizatorScriptwith1 katazScriptWith1_2;
-    [SerializeField] private Button kataz2;
-
-
-
     public bool _startSimulationTemp = false;
     public bool _startSimulationContent = false;
     private float _simulationTime = 3400f;
@@ -194,10 +187,6 @@ public class SimulationScriptForSecondScene : MonoBehaviour
         {
             //electro.interactable = false;
             electroInput.interactable = false;
-            katazScriptWith1_1.text.interactable = false;
-            kataz1.interactable = false;
-            katazScriptWith1_2.text.interactable = false;
-            kataz2.interactable = false;
             _simulationButton.interactable = false;
             _simulationText.text = "Идет симуляция";
             waterZeroNasos.enabled = true;
@@ -240,10 +229,6 @@ public class SimulationScriptForSecondScene : MonoBehaviour
         {
             //electro.interactable = true;
             electroInput.interactable = true;
-            katazScriptWith1_1.text.interactable = true;
-            kataz1.interactable = true;
-            katazScriptWith1_2.text.interactable = true;
-            kataz2.interactable = true;
             //canvas.enabled = true;
             waterZeroNasos.enabled = false;
             waterNasos.enabled = false;
@@ -320,24 +305,6 @@ public class SimulationScriptForSecondScene : MonoBehaviour
         {
             kataz.isEnable = false;
             katazOutElectro.isEnable = true;
-        }
-
-        if (_myTexts[22].text == "2")
-        {
-            katazScriptWith1_1.SetObjectsState(false);
-        }
-        else if (_myTexts[22].text == "1")
-        {
-            katazScriptWith1_1.SetObjectsState(true);
-        }
-
-        if (_myTexts[23].text == "2")
-        {
-            katazScriptWith1_2.SetObjectsState(false);
-        }
-        else if (_myTexts[23].text == "1")
-        {
-            katazScriptWith1_2.SetObjectsState(true);
         }
 
         elec.isEnable = true;

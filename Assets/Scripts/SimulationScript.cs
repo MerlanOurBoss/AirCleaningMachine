@@ -48,9 +48,7 @@ public class SimulationScript : MonoBehaviour
     [SerializeField] private ReactTable _reactTable;
     [SerializeField] private SborTable _sborTable;
     [SerializeField] private Canvas _canvas;
-    [SerializeField] private KatalizatorScriptwith1 _catalizatorScript1_1;
     [SerializeField] private Button _catalizatorButton1;
-    [SerializeField] private KatalizatorScriptwith1 _catalizatorScript1_2;
     [SerializeField] private Button _catalizatorButton2;
 
     public bool StartSimulationTemp { get; private set; }
