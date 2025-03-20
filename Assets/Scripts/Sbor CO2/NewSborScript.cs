@@ -53,6 +53,10 @@ public class NewSborScript : MonoBehaviour
     private float fillingCount = 0;
     private int state = 0;
 
+    [Header("Uroven gaz")]
+    public Renderer[] objectsWithMaterial; // массив из 3 объектов
+    private int fillCount = 0;
+
     private float displayValue = 0f;
     private float displayValue2 = 0f;
     private float displayValue3 = 0f;
@@ -67,6 +71,7 @@ public class NewSborScript : MonoBehaviour
     public float timingDelay = 150f;
     private bool isUpdated = false;
     private bool isFirstFilling = true;
+    private bool isUroven = false;
     private int? randomValue = null; 
     private Coroutine currentCoroutine;
     private Coroutine currentCoroutine2;
@@ -189,7 +194,32 @@ public class NewSborScript : MonoBehaviour
 
         targetMaterial.SetFloat("_secondColorInfluence", endValue);
     }
+    public void IncreaseFilling()
+    {
+        fillCount = Mathf.Min(fillCount + 1, objectsWithMaterial.Length);
 
+        Material mat1 = objectsWithMaterial[2].material;
+        float currentFilling1 = mat1.GetFloat("_Filling");
+        if (currentFilling1 >= 19)
+        {
+            foreach (Renderer ren in objectsWithMaterial)
+            {
+                Material m = ren.material;
+                m.SetFloat("_Filling", -19);
+            }
+        }
+
+        for (int i = 0; i < fillCount; i++)
+        {
+            // Получаем текущий материал и текущее значение Filling
+            Material mat = objectsWithMaterial[i].material; // Создаётся копия материала, если материал инстанс не установлен заранее
+            float currentFilling = mat.GetFloat("_Filling");
+            float newFilling = currentFilling + 2f;
+
+            // Устанавливаем новое значение
+            mat.SetFloat("_Filling", newFilling);
+        }
+    }
     private void UpdateDisplay()
     {
         display.text = displayValue.ToString("0.");
@@ -319,10 +349,10 @@ public class NewSborScript : MonoBehaviour
     }
     private void PlayFillingEffects() // для 1го капсуля
     {
-       
         bool isStarted = false;
         if (fillingCount >= 0 && fillingCount <= 2)
         {
+            isUroven = false;
             StartGreenSequence(gates[3].transform);
             StartGreenSequence(gates[0].transform);
             StartGreenSequence(gates[1].transform);
@@ -384,7 +414,7 @@ public class NewSborScript : MonoBehaviour
         {
             parInCapsul1.Play();
         }
-
+        
         if (fillingCount >= 120 && fillingCount <= 135)
         {
             gazAnalyz[3].GetComponentInParent<AudioSource>().Play();
@@ -393,7 +423,6 @@ public class NewSborScript : MonoBehaviour
 
         if (fillingCount >= 135 && fillingCount <= 150)
         {
-            
             gazAnalyz[2].SetActive(false);
             gazAnalyz[3].SetActive(true);
             displayValue = Mathf.Lerp(displayValue, 50f, 2f * Time.deltaTime);
@@ -401,7 +430,10 @@ public class NewSborScript : MonoBehaviour
             if (!isUpdated)
             {
                 float a = materialSbor.GetFloat("_Filling");
-                materialSbor.SetFloat("_Filling", a + 10f);
+                if (a < -21)
+                {
+                    materialSbor.SetFloat("_Filling", a + 10f);
+                }
                 isUpdated = true;
             }
         }
@@ -437,7 +469,16 @@ public class NewSborScript : MonoBehaviour
         {
             randomValue = null; // Сбрасываем число, если не в диапазоне
         }
-        
+
+        if (fillingCount >= 145 && fillingCount <= 150)
+        {
+            if (!isUroven)
+            {
+                IncreaseFilling();
+                isUroven = true;
+            }
+        }
+
         if (fillingCount >= 134 && fillingCount <= 136)
         {
             StartRedSequence(gates[3].transform);
@@ -452,6 +493,7 @@ public class NewSborScript : MonoBehaviour
         bool isStarted = false;
         if (fillingCount >= 0 && fillingCount <= 2)
         {
+            isUroven = false;
             StartGreenSequence(gates[1].transform);
             StartGreenSequence(gates[2].transform);
             StartGreenSequence(gates[3].transform);
@@ -513,7 +555,6 @@ public class NewSborScript : MonoBehaviour
         {
             parInCapsul2.Play();
         }
-
         if (fillingCount >= 120 && fillingCount <= 135)
         {
             gazAnalyz[1].GetComponentInParent<AudioSource>().Play();
@@ -530,11 +571,23 @@ public class NewSborScript : MonoBehaviour
             if (!isUpdated)
             {
                 float a = materialSbor.GetFloat("_Filling");
-                materialSbor.SetFloat("_Filling", a + 10f);
+                
+                if (a < -21)
+                {
+                    materialSbor.SetFloat("_Filling", a + 10f);
+                }
                 isUpdated = true;
+                
             }
         }
-
+        if (fillingCount >= 145 && fillingCount <= 150)
+        {
+            if (!isUroven)
+            {
+                IncreaseFilling();
+                isUroven = true;
+            }
+        }
         if (fillingCount >= 135 && fillingCount <= 150)
         {
             if (randomValue == null) // Генерируем случайное число только один раз

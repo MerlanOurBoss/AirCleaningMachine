@@ -126,7 +126,8 @@ public class MathModulForSborCO2 : MonoBehaviour
             newSbor.timingDelay = 150f;
             foreach (ParticleSystem smoke in _smokes)
             {
-                smoke.startSpeed = smoke.startSpeed - (0.2f * a) - (0.4f * b);
+                ParticleSystem.MainModule mainModule = smoke.main;
+                mainModule.startSpeed = mainModule.startSpeed.constant - (0.2f * a) - (0.4f * b);
 
                 ParticleSystem.ColorOverLifetimeModule colorModul = smoke.colorOverLifetime;
 

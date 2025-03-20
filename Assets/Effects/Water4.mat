@@ -26,7 +26,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Filling: 6
+    - _Filling: -19
     m_Colors: []
   m_BuildTextureStacks: []
 --- !u!114 &2684463309881360493
