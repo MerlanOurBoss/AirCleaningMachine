@@ -39,12 +39,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
 
     [SerializeField] private Button electro;
 
-    [SerializeField] private TextMeshProUGUI ElectroFilter;
-    [SerializeField] private TextMeshProUGUI Katalizator;
-    [SerializeField] private TextMeshProUGUI WaterEmul;
-    [SerializeField] private TextMeshProUGUI ReactEmul;
-    [SerializeField] private TextMeshProUGUI SborCO2;
-
     [SerializeField] private GameObject tables;
     [SerializeField] private KatalizatorTable kataz;
 
@@ -204,8 +198,7 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         sbor.isEnable = true;
         _myCatalizator.StartSimulation();
         _startSimulationTemp = true; //надо будет убрать
-
-
+        
         for (int i = 0; i <= 8; i++)
         {
             if (_molecCount[i].text == "")

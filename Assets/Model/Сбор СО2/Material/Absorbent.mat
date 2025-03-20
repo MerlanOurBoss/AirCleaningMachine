@@ -136,7 +136,7 @@ Material:
     - _WorkflowMode: 0
     - _ZWrite: 0
     - _baseColorInfluence: 0
-    - _secondColorInfluence: 0.5
+    - _secondColorInfluence: 0.9500001
     m_Colors:
     - _BaseColor: {r: 0.55646557, g: 0.89627206, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

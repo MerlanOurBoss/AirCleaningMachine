@@ -10,11 +10,19 @@ public class MathModulForSborCO2 : MonoBehaviour
     [SerializeField] private TMP_InputField _gasVolumeText;
     [SerializeField] private TMP_InputField _adsorptionTempText;
     [SerializeField] private TMP_InputField _desorptionTempText;
+    [SerializeField] private TMP_InputField _diametrSborText;
+    [SerializeField] private TMP_InputField _fanSpeedSborText;
 
     [SerializeField] private TextMeshProUGUI _adsorptionTimeText;
     [SerializeField] private TextMeshProUGUI _capturedCO2Text;
     [SerializeField] private TextMeshProUGUI _desorbedCO2Text;
     [SerializeField] private Translator translator;
+
+    [Header("Sbor Script")]
+    public NewSborScript newSbor;
+
+    [Header("Fan Animation")]
+    public Animator[] fansAnim;
 
     private string sorbentType;
     private float gasVolume;
@@ -36,6 +44,12 @@ public class MathModulForSborCO2 : MonoBehaviour
     private void Start()
     {
         UpdateSorbentProperties();
+        _sorbentTypeText.text = "Цеолитовые";
+        _gasVolumeText.text = "100 м³/ч";
+        _adsorptionTempText.text = "40 °C";
+        _desorptionTempText.text = "200 °C";
+        _diametrSborText.text = "0,1 м";
+        _fanSpeedSborText.text = "500 об/мин";
     }
 
     [System.Obsolete]
@@ -44,6 +58,21 @@ public class MathModulForSborCO2 : MonoBehaviour
         UpdateSorbentProperties();
         // Вывод параметров
 
+        if (_fanSpeedSborText.text == "1000 об/мин")
+        {
+            fansAnim[0].speed = 3;
+            fansAnim[1].speed = 3;
+        }
+        else if (_fanSpeedSborText.text == "1500 об/мин")
+        {
+            fansAnim[0].speed = 5;
+            fansAnim[1].speed = 5;
+        }
+        else if (_fanSpeedSborText.text == "500 об/мин")
+        {
+            fansAnim[0].speed = 1;
+            fansAnim[1].speed = 1;
+        }
 
         if (translator.currentLanguage == Translator.Language.Russian)
         {
@@ -68,6 +97,7 @@ public class MathModulForSborCO2 : MonoBehaviour
         if (_gasVolumeText.text == "150 м³/ч" && !isProcessed)
         {
             a++;
+            newSbor.timingDelay = 170f;
             foreach (ParticleSystem smoke in _smokes)
             {
                 smoke.startSpeed = smoke.startSpeed + 0.2f - (0.4f * b);
@@ -93,6 +123,7 @@ public class MathModulForSborCO2 : MonoBehaviour
         }
         else if (_gasVolumeText.text == "100 м³/ч" && !isProcessed1)
         {
+            newSbor.timingDelay = 150f;
             foreach (ParticleSystem smoke in _smokes)
             {
                 smoke.startSpeed = smoke.startSpeed - (0.2f * a) - (0.4f * b);
@@ -120,6 +151,7 @@ public class MathModulForSborCO2 : MonoBehaviour
         else if (_gasVolumeText.text == "200 м³/ч" && !isProcessed2)
         {
             b++;
+            newSbor.timingDelay = 200f;
             foreach (ParticleSystem smoke in _smokes)
             {
                 smoke.startSpeed = smoke.startSpeed + 0.4f - (0.2f * a);
@@ -151,15 +183,15 @@ public class MathModulForSborCO2 : MonoBehaviour
         sorbentType = _sorbentTypeText.text;
         switch (sorbentType.ToLower())
         {
-            case "цеолит":
+            case "Цеолитовые":
                 sorbentCapacity = 2.0f;
                 sorbentEfficiency = 0.9f;
                 break;
-            case "сода":
+            case "Садовые":
                 sorbentCapacity = 1.5f;
                 sorbentEfficiency = 0.85f;
                 break;
-            case "модифицированный сорбент":
+            case "Аминокислотные":
                 sorbentCapacity = 2.5f;
                 sorbentEfficiency = 0.92f;
                 break;
