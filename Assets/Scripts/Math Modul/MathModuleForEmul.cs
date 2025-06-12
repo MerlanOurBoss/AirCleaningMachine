@@ -55,27 +55,42 @@ public class MathModuleForEmul : MonoBehaviour
     {
         if (translator.currentLanguage == Translator.Language.Russian)
         {
-            gasSpeed.text = "Скорость газа: " + _gasSpeed.ToString("0.000") + " м/с";
-            waterSpeed.text = "Скорость воды: " + _waterSpeed.ToString("0.000") + " м/с";
-            gasMassFlow.text = "Массовый поток газа: " + _gasMassFlow.ToString("0.000") + " м³/с";
-            waterMassFlow.text = "Массовый поток жидкости: " + _waterMassFlow.ToString("0.000") + " м³/с";
-            massTransfer.text = "Коэф. массового переноса: " + _massTransfer.ToString("0.0") + " м/с";
+            gasSpeed.text = "Скорость газа: " + "\n" +
+                "		   " + _gasSpeed.ToString("0.000") + " м/с";
+            waterSpeed.text = "Скорость воды: " + "\n" +
+                "		   " + _waterSpeed.ToString("0.000") + " м/с";
+            gasMassFlow.text = "Массовый поток газа: " + "\n" +
+                "		   " + _gasMassFlow.ToString("0.000") + " м³/с";
+            waterMassFlow.text = "Массовый поток жидкости: " + "\n" +
+                "		   " + _waterMassFlow.ToString("0.000") + " м³/с";
+            massTransfer.text = "Коэф. массового переноса: " + "\n" +
+                "		   " + _massTransfer.ToString("0.0") + " м/с";
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
-            gasSpeed.text = "Газ жылдамдығы: " + _gasSpeed.ToString("0.000") + " м/с";
-            waterSpeed.text = "Су жылдамдығы: " + _waterSpeed.ToString("0.000") + " м/с";
-            gasMassFlow.text = "Газ массасы ағыны: " + _gasMassFlow.ToString("0.000") + " м³/с";
-            waterMassFlow.text = "Сұйық масса ағыны: " + _waterMassFlow.ToString("0.000") + " м³/с";
-            massTransfer.text = "Масса тасымалдау коэфф.: " + _massTransfer.ToString("0.0") + " м/с";
+            gasSpeed.text = "Газ жылдамдығы: " + "\n" +
+                "		   " + _gasSpeed.ToString("0.000") + " м/с";
+            waterSpeed.text = "Су жылдамдығы: " + "\n" +
+                "		   " + _waterSpeed.ToString("0.000") + " м/с";
+            gasMassFlow.text = "Газ массасы ағыны: " + "\n" +
+                "		   " + _gasMassFlow.ToString("0.000") + " м³/с";
+            waterMassFlow.text = "Сұйық масса ағыны: " + "\n" +
+                "		   " + _waterMassFlow.ToString("0.000") + " м³/с";
+            massTransfer.text = "Масса тасымалдау коэфф.: " + "\n" +
+                "		   " + _massTransfer.ToString("0.0") + " м/с";
         }
         else
         {
-            gasSpeed.text = "Gas Speed: " + _gasSpeed.ToString("0.000") + " m/s";
-            waterSpeed.text = "Water Speed: " + _waterSpeed.ToString("0.000") + " m/s";
-            gasMassFlow.text = "Gas Mass Flow: " + _gasMassFlow.ToString("0.000") + " m³/s";
-            waterMassFlow.text = "Liquid mass flow: " + _waterMassFlow.ToString("0.000") + " m³/s";
-            massTransfer.text = "Mass transfer coefficient: " + _massTransfer.ToString("0.0") + " m/s";
+            gasSpeed.text = "Gas Speed: " + "\n" +
+                "		   " + _gasSpeed.ToString("0.000") + " m/s";
+            waterSpeed.text = "Water Speed: " + "\n" +
+                "		   " + _waterSpeed.ToString("0.000") + " m/s";
+            gasMassFlow.text = "Gas Mass Flow: " + "\n" +
+                "		   " + _gasMassFlow.ToString("0.000") + " m³/s";
+            waterMassFlow.text = "Liquid mass flow: " + "\n" +
+                "		   " + _waterMassFlow.ToString("0.000") + " m³/s";
+            massTransfer.text = "Mass transfer coefficient: " + "\n" +
+                "		   " + _massTransfer.ToString("0.0") + " m/s";
         }
 
         if (_gasFlow.text == "10 м³/с")

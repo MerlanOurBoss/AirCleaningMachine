@@ -8,6 +8,7 @@ public class MathModulForSborCO2 : MonoBehaviour
     [SerializeField] private ParticleSystem[] _smokes;
     [SerializeField] private TMP_InputField _sorbentTypeText;
     [SerializeField] private TMP_InputField _gasVolumeText;
+    [SerializeField] private TMP_InputField _pressureText;
     [SerializeField] private TMP_InputField _adsorptionTempText;
     [SerializeField] private TMP_InputField _desorptionTempText;
     [SerializeField] private TMP_InputField _diametrSborText;
@@ -35,19 +36,26 @@ public class MathModulForSborCO2 : MonoBehaviour
     private int b = 0;
 
     private float sorbentCapacity; // моль CO₂/кг
-    private float sorbentEfficiency; // Коэффициент эффективности
+    private float sorbentEfficiency; // доля
     private float capturedCO2; // Захваченный CO₂ (моль)
-    private const float CO2Concentration = 0.1f; // Концентрация CO₂ в газе (10%)
-    private const float molarMassCO2 = 44.01f; // Молярная масса CO₂
-    private const float sorbentMass = 10f;
+    private float co2FlowRate; // Скорость потока CO2 (моль/ч)
+    private float totalCapacity; // Общая производительность (моль)
+    private float effectiveFlowRate; // Эффективная скорость потока (моль/ч)
+
+    // Константы по данным из Excel
+    private const float CO2Concentration = 0.008f; // 0.8%
+    private const float molarMassCO2 = 44.0f; // г/моль
+    private const float oneMolarVolume = 0.02241f; // м³/моль
+    private const float sorbentMass = 100f; // кг
 
     private void Start()
     {
         UpdateSorbentProperties();
-        _sorbentTypeText.text = "Цеолитовые";
+        _sorbentTypeText.text = "Аминокислотные";
         _gasVolumeText.text = "100 м³/ч";
-        _adsorptionTempText.text = "40 °C";
-        _desorptionTempText.text = "200 °C";
+        _pressureText.text = "1 атм";
+        _adsorptionTempText.text = "50 °C";
+        _desorptionTempText.text = "150 °C";
         _diametrSborText.text = "0,1 м";
         _fanSpeedSborText.text = "500 об/мин";
     }
@@ -56,44 +64,47 @@ public class MathModulForSborCO2 : MonoBehaviour
     private void Update()
     {
         UpdateSorbentProperties();
-        // Вывод параметров
 
-        if (_fanSpeedSborText.text == "1000 об/мин")
+        // Обновление анимации вентилятора
+        switch (_fanSpeedSborText.text)
         {
-            fansAnim[0].speed = 3;
-            fansAnim[1].speed = 3;
+            case "500 об/мин":
+                fansAnim[0].speed = 1;
+                fansAnim[1].speed = 1;
+                break;
+            case "1000 об/мин":
+                fansAnim[0].speed = 3;
+                fansAnim[1].speed = 3;
+                break;
+            case "1500 об/мин":
+                fansAnim[0].speed = 5;
+                fansAnim[1].speed = 5;
+                break;
         }
-        else if (_fanSpeedSborText.text == "1500 об/мин")
-        {
-            fansAnim[0].speed = 5;
-            fansAnim[1].speed = 5;
-        }
-        else if (_fanSpeedSborText.text == "500 об/мин")
-        {
-            fansAnim[0].speed = 1;
-            fansAnim[1].speed = 1;
-        }
+
+        float adsorptionTime = CalculateAdsorptionTime();
+        float desorbedCO2 = CalculateDesorption();
 
         if (translator.currentLanguage == Translator.Language.Russian)
         {
-            _adsorptionTimeText.text = "Время адсорбции: " + CalculateAdsorptionTime().ToString("0.00") + " ч";
-            _capturedCO2Text.text = "Захваченный CO2: " + capturedCO2.ToString("0.00") + " моль";
-            _desorbedCO2Text.text = "Десорбированный CO2: " + CalculateDesorption().ToString("0.00") + " моль";
+            _adsorptionTimeText.text = $"Время адсорбции:\n           {adsorptionTime:0.00} ч";
+            _capturedCO2Text.text = $"Захваченный CO2:\n           {capturedCO2:0.00} моль";
+            _desorbedCO2Text.text = $"Десорбированный CO2:\n           {desorbedCO2:0.00} моль";
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
-            _adsorptionTimeText.text = "Адсорбция уақыты: " + CalculateAdsorptionTime().ToString("0.00") + " ч";
-            _capturedCO2Text.text = "Ұсталғаң CO2: " + capturedCO2.ToString("0.00") + " моль";
-            _desorbedCO2Text.text = "Десорбцияланған СО2: " + CalculateDesorption().ToString("0.00") + " моль";
+            _adsorptionTimeText.text = $"Адсорбция уақыты:\n           {adsorptionTime:0.00} ч";
+            _capturedCO2Text.text = $"Ұсталғаң CO2:\n           {capturedCO2:0.00} моль";
+            _desorbedCO2Text.text = $"Десорбцияланған СО2:\n           {desorbedCO2:0.00} моль";
         }
         else
         {
-            _adsorptionTimeText.text = "Adsorption time: " + CalculateAdsorptionTime().ToString("0.00") + " h";
-            _capturedCO2Text.text = "Captured CO2: " + capturedCO2.ToString("0.00") + " mol";
-            _desorbedCO2Text.text = "Desorbed CO2: " + CalculateDesorption().ToString("0.00") + " mol";
+            _adsorptionTimeText.text = $"Adsorption time:\n           {adsorptionTime:0.00} h";
+            _capturedCO2Text.text = $"Captured CO2:\n           {capturedCO2:0.00} mol";
+            _desorbedCO2Text.text = $"Desorbed CO2:\n           {desorbedCO2:0.00} mol";
         }
 
-
+        // Дополнительная логика по скорости газа (ваш код — без изменений)
         if (_gasVolumeText.text == "150 м³/ч" && !isProcessed)
         {
             a++;
@@ -126,6 +137,9 @@ public class MathModulForSborCO2 : MonoBehaviour
             newSbor.timingDelay = 150f;
             foreach (ParticleSystem smoke in _smokes)
             {
+                if (smoke == null)
+                    continue;
+
                 ParticleSystem.MainModule mainModule = smoke.main;
                 mainModule.startSpeed = mainModule.startSpeed.constant - (0.2f * a) - (0.4f * b);
 
@@ -180,7 +194,6 @@ public class MathModulForSborCO2 : MonoBehaviour
 
     private void UpdateSorbentProperties()
     {
-        // Определение характеристик сорбента
         sorbentType = _sorbentTypeText.text;
         switch (sorbentType.ToLower())
         {
@@ -188,7 +201,7 @@ public class MathModulForSborCO2 : MonoBehaviour
                 sorbentCapacity = 2.0f;
                 sorbentEfficiency = 0.9f;
                 break;
-            case "Садовые":
+            case "Цирконат лития":
                 sorbentCapacity = 1.5f;
                 sorbentEfficiency = 0.85f;
                 break;
@@ -205,18 +218,16 @@ public class MathModulForSborCO2 : MonoBehaviour
 
     private float CalculateAdsorptionTime()
     {
-        // Расчет времени адсорбции
-        gasVolume = ParseInput(_gasVolumeText.text);
-        float co2FlowRate = gasVolume * CO2Concentration * molarMassCO2 / 22.4f; // Поток CO₂ (моль/ч)
-        float totalCapacity = sorbentMass * sorbentCapacity;
-        float effectiveFlowRate = co2FlowRate * sorbentEfficiency;
+        gasVolume = ParseInput(_gasVolumeText.text); // м³/ч
+        co2FlowRate = gasVolume * CO2Concentration / oneMolarVolume; // моль/ч
+        totalCapacity = sorbentMass * sorbentCapacity;
+        effectiveFlowRate = co2FlowRate * sorbentEfficiency;
         capturedCO2 = Mathf.Min(totalCapacity, effectiveFlowRate);
         return totalCapacity / effectiveFlowRate;
     }
 
     private float CalculateDesorption()
     {
-        // Расчет десорбции
         desorptionTemp = ParseInput(_desorptionTempText.text);
         float desorptionEfficiency = Mathf.Clamp((desorptionTemp - 100f) / 30f, 0f, 1f);
         return capturedCO2 * desorptionEfficiency;
@@ -224,11 +235,8 @@ public class MathModulForSborCO2 : MonoBehaviour
 
     private float ParseInput(string input)
     {
-        // Извлечение числа из текста (до пробела)
         if (float.TryParse(input.Split(' ')[0], out float value))
-        {
             return value;
-        }
         return 0f;
     }
 }
