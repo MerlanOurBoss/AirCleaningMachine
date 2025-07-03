@@ -8004,7 +8004,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 3.3276978, y: -1.5411148, z: -1.607132}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.13038784, y: 0.12423197, z: 0.12515603}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1078796500659473689}
@@ -28833,14 +28833,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6c7cec852ec694e8cd5ae03ac83b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smokeInCapsul: {fileID: 1384649651360627449}
+  smokeParInCapsul: {fileID: 277889558375636668}
+  smokeParInCapsul2: {fileID: 0}
   smokeOutCapsul: {fileID: 6146846626068585137}
   smokeOutCapsulSecond: {fileID: 4708688185194175834}
-  smokeParInCapsul: {fileID: 277889558375636668}
+  smokeInCapsul0_1: {fileID: 0}
+  smokeInCapsul0_2: {fileID: 0}
+  smokeInCapsul: {fileID: 1384649651360627449}
+  smokeInCapsul2: {fileID: 0}
+  smokeInCapsul1end: {fileID: 0}
+  smokeInCapsul2end: {fileID: 0}
+  parInCapsul1: {fileID: 0}
+  parInCapsul2: {fileID: 0}
+  parInStraightPipe: {fileID: 0}
   display: {fileID: 4083782632103174032}
   display2: {fileID: 1663293671482490637}
+  display3: {fileID: 0}
+  display4: {fileID: 0}
+  display5: {fileID: 0}
   absent: {fileID: 2100000, guid: 008cc717221e8c448bb59bb5ab6948e2, type: 2}
   absent2: {fileID: 2100000, guid: deb4e7eaccf17e541a2ef3af4e4b8d0a, type: 2}
+  materialSbor: {fileID: 0}
   targetColor: {r: 0.42745098, g: 0.8745098, b: 1, a: 1}
   gate: {fileID: 1164583050733322981}
   gates:
@@ -28852,8 +28865,17 @@ MonoBehaviour:
   - {fileID: 557474553096153848}
   - {fileID: 8999603383547776594}
   - {fileID: 6588515550906413128}
+  gazAnalyz: []
   delay: 70
+  uroven1: {fileID: 0}
+  uroven2: {fileID: 0}
+  klapanOpen: {fileID: 0}
+  klapanClose: {fileID: 0}
+  audioListener: {fileID: 0}
+  objectsWithMaterial: []
   timingDelay: 150
+  yellowBlinkDuration: 2
+  yellowBlinkInterval: 0.3
 --- !u!114 &6879838668323377351
 MonoBehaviour:
   m_ObjectHideFlags: 0

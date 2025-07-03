@@ -22123,7 +22123,7 @@ GameObject:
   - component: {fileID: 5212491913282427798}
   m_Layer: 9
   m_Name: Collider1
-  m_TagString: ConnectionPoint
+  m_TagString: ConnectionPointOUT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22136,13 +22136,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092192147201126658}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalRotation: {x: 0, y: 0.70710677, z: 0.70710677, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6907077210016159223}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 90}
 --- !u!65 &3747789902180414572
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22162,7 +22162,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.05, y: 40, z: 40}
+  m_Size: {x: 40, y: 40, z: 6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1921448622849914061
 MonoBehaviour:
@@ -28805,7 +28805,7 @@ GameObject:
   - component: {fileID: 3339518957522745366}
   m_Layer: 9
   m_Name: Collider2
-  m_TagString: ConnectionPoint
+  m_TagString: ConnectionPointIN
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28818,13 +28818,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3866949795317859758}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -44.61, y: -77, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2558549869756106207}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!65 &4233154197257093148
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28844,7 +28844,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.05, y: 21, z: 21}
+  m_Size: {x: 21, y: 21, z: 6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4075811414277960473
 MonoBehaviour:

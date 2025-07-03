@@ -5193,7 +5193,7 @@ GameObject:
   - component: {fileID: 2335596706182446721}
   m_Layer: 9
   m_Name: Collider2
-  m_TagString: ConnectionPoint
+  m_TagString: ConnectionPointOUT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5206,13 +5206,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572995750546490119}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -77.69, y: 7.7, z: -1.79}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -77.69, y: 7.699997, z: -1.7899933}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2926220449386106053}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!65 &2465992728024684009
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5232,7 +5232,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 14, z: 14}
+  m_Size: {x: 14, y: 14, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8845544437843066988
 MonoBehaviour:
@@ -16469,7 +16469,7 @@ GameObject:
   - component: {fileID: 7398500314280914576}
   m_Layer: 9
   m_Name: Collider1
-  m_TagString: ConnectionPoint
+  m_TagString: ConnectionPointIN
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16482,13 +16482,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7425089006746011709}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 95.66, y: 8.55, z: -1.06}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 95.66002, y: 8.550003, z: -1.0599976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2926220449386106053}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!65 &5108712134134313631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16508,7 +16508,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 14, z: 14}
+  m_Size: {x: 14, y: 14, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6060998759721170920
 MonoBehaviour:

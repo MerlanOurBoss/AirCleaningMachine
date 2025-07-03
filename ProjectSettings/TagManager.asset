@@ -96,6 +96,8 @@ TagManager:
   - Facilities_Emul_Soda
   - SborCO2
   - DropCreatings
+  - ConnectionPointIN
+  - ConnectionPointOUT
   layers:
   - Default
   - TransparentFX

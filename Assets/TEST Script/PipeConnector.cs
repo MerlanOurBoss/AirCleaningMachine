@@ -15,6 +15,7 @@ public class PipeConnector : MonoBehaviour
     public List<SystemComponent> components = new List<SystemComponent>();
     public PipeGenerator pipeGenerator; // Ссылка на PipeGenerator в сцене
 
+    private HashSet<GameObject> trackedFacilities = new HashSet<GameObject>();
     private void Start()
     {
         if (pipeGenerator == null)
@@ -22,11 +23,57 @@ public class PipeConnector : MonoBehaviour
             Debug.LogError("PipeGenerator is not assigned!");
             return;
         }
-
-        ConnectComponents();
     }
 
-    private void ConnectComponents()
+    private void Update()
+    {
+        bool anyNewFound = false;
+
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.CompareTag("Untagged") || trackedFacilities.Contains(obj))
+                continue;
+
+            if (obj.tag.StartsWith("Facilities_"))
+            {
+                Transform input = FindChildByTag(obj.transform, "ConnectionPointIN");
+                Transform output = FindChildByTag(obj.transform, "ConnectionPointOUT");
+
+                if (input != null || output != null)
+                {
+                    SystemComponent component = new SystemComponent
+                    {
+                        component = obj,
+                        input = input,
+                        output = output
+                    };
+
+                    components.Add(component);
+                    trackedFacilities.Add(obj);
+                    anyNewFound = true;
+                    
+                }
+                else
+                {
+                    Debug.LogWarning($"Missing connection points on {obj.name}");
+                }
+            }
+        }
+    }
+
+    private Transform FindChildByTag(Transform parent, string tag)
+    {
+        foreach (Transform child in parent.GetComponentsInChildren<Transform>(true))
+        {
+            if (child.CompareTag(tag))
+                return child;
+        }
+        return null;
+    }
+
+    public void ConnectComponents()
     {
         for (int i = 0; i < components.Count - 1; i++)
         {
