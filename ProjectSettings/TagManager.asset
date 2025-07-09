@@ -98,6 +98,8 @@ TagManager:
   - DropCreatings
   - ConnectionPointIN
   - ConnectionPointOUT
+  - ConnectionPointCO2IN
+  - ConnectionPointCO2OUT
   layers:
   - Default
   - TransparentFX
