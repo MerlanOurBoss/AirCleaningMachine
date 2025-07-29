@@ -1,6 +1,7 @@
 ﻿using InstantPipes;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PipeConnector : MonoBehaviour
@@ -16,7 +17,7 @@ public class PipeConnector : MonoBehaviour
     public List<SystemComponent> components = new List<SystemComponent>();
     public PipeGenerator pipeGenerator; // Ссылка на PipeGenerator в сцене
     public PipeGenerator pipeGeneratorCO2; // Ссылка на PipeGeneratorCO2 в сцене
-
+    public GameObject pipeMeshStandardPrefab;
     private HashSet<GameObject> trackedFacilities = new HashSet<GameObject>();
     private void Start()
     {
@@ -29,40 +30,42 @@ public class PipeConnector : MonoBehaviour
 
     private void Update()
     {
-        bool anyNewFound = false;
-
-        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-
-        foreach (GameObject obj in allObjects)
+        GameObject sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        if (sborCO2 == null)
         {
-            if (obj.CompareTag("Untagged") || trackedFacilities.Contains(obj))
+            Debug.LogWarning("SborCO2 object not found!");
+            return;
+        }
+
+        foreach (Transform child in sborCO2.transform.GetComponentsInChildren<Transform>())
+        {
+            GameObject obj = child.gameObject;
+
+            if (!obj.tag.StartsWith("Facilities_") || trackedFacilities.Contains(obj))
                 continue;
 
-            if (obj.tag.StartsWith("Facilities_"))
+            Transform input = FindChildByTag(obj.transform, "ConnectionPointIN");
+            Transform output = FindChildByTag(obj.transform, "ConnectionPointOUT");
+
+            if (input != null || output != null)
             {
-                Transform input = FindChildByTag(obj.transform, "ConnectionPointIN");
-                Transform output = FindChildByTag(obj.transform, "ConnectionPointOUT");
 
-                if (input != null || output != null)
+                var comp = new SystemComponent
                 {
-                    SystemComponent component = new SystemComponent
-                    {
-                        component = obj,
-                        input = input,
-                        output = output
-                    };
-
-                    components.Add(component);
-                    trackedFacilities.Add(obj);
-                    anyNewFound = true;
-                    
-                }
-                else
-                {
-                    Debug.LogWarning($"Missing connection points on {obj.name}");
-                }
+                    component = obj,
+                    input = input,
+                    output = output
+                };
+                components.Add(comp);
+                trackedFacilities.Add(obj);
+                bool anyNewFound = true;
+            }
+            else
+            {
+                Debug.LogWarning($"Missing connection points on {obj.name}");
             }
         }
+
     }
 
     private Transform FindChildByTag(Transform parent, string tag)
@@ -78,14 +81,13 @@ public class PipeConnector : MonoBehaviour
     public void ConnectComponents()
     {
         bool hasCO2Facilities = components.Exists(c =>
-                c.component.tag == "Facilities_Kataz" || c.component.tag == "Facilities_NewCapsul");
+                c.component.CompareTag("Facilities_Kataz") || c.component.CompareTag("Facilities_NewCapsul"));
 
         for (int i = 0; i < components.Count - 1; i++)
         {
             SystemComponent fromComp = components[i];
             SystemComponent toComp = components[i + 1];
 
-            // Всегда стандартные соединения
             if (fromComp.output != null && toComp.input != null)
             {
                 CreatePipeConnection(fromComp.output, toComp.input, useCO2: false);
@@ -95,12 +97,11 @@ public class PipeConnector : MonoBehaviour
                 Debug.LogWarning($"Standard connection points missing between {fromComp.component.name} and {toComp.component.name}");
             }
 
-            // Дополнительные CO2 соединения, если есть CO2-объекты
             if (hasCO2Facilities)
             {
                 SystemComponent fromComp2 = components.Find(c => c.component.tag == "Facilities_Kataz");
                 SystemComponent toComp2 = components.Find(c => c.component.tag == "Facilities_NewCapsul");
-                Debug.Log(fromComp2 + " b " + toComp2);
+
                 if (fromComp2 != null && toComp2 != null)
                 {
                     Transform fromCO2 = FindChildByTag(fromComp2.component.transform, "ConnectionPointCO2OUT");
@@ -124,13 +125,22 @@ public class PipeConnector : MonoBehaviour
                     Debug.LogWarning("Один из объектов Facilities_Kataz или Facilities_NewCapsul не найден в списке компонентов.");
                 }
             }
-        }
 
-        pipeGenerator.UpdateMesh();
+            pipeGenerator.UpdateMesh();
+            if (hasCO2Facilities && pipeGeneratorCO2 != null)
+            {
+                pipeGeneratorCO2.UpdateMesh();
+            }
+        }
+        SaveGeneratedMeshToSborCO2(pipeGenerator, "PipeMesh_Standard");
+
         if (hasCO2Facilities && pipeGeneratorCO2 != null)
         {
-            pipeGeneratorCO2.UpdateMesh();
+            SaveGeneratedMeshToSborCO2(pipeGeneratorCO2, "PipeMesh_CO2");
         }
+
+        ClearAllPipes();
+
     }
 
     private void CreatePipeConnection(Transform from, Transform to, bool useCO2)
@@ -154,6 +164,16 @@ public class PipeConnector : MonoBehaviour
         if (!success)
         {
             Debug.LogWarning($"Pipe between {from.name} and {to.name} failed to generate.");
+        }
+    }
+    public void ClearAllPipes()
+    {
+        if (pipeGenerator != null)
+        {
+            pipeGenerator.Clear();
+            pipeGeneratorCO2.Clear();
+            pipeGenerator.UpdateMesh();
+            pipeGeneratorCO2.UpdateMesh();
         }
     }
 
@@ -180,6 +200,39 @@ public class PipeConnector : MonoBehaviour
             components.RemoveAt(i); // работает 100% потому что объект уже удалён
         }
 
+        GameObject sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        DestroyImmediate(sborCO2);
         trackedFacilities.Clear();
+    }
+
+    private void SaveGeneratedMeshToSborCO2(PipeGenerator generator, string name)
+    {
+        GameObject sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        if (sborCO2 == null)
+        {
+            Debug.LogWarning("SborCO2 object not found!");
+            return;
+        }
+
+        Mesh meshCopy = Instantiate(generator.GetComponent<MeshFilter>().sharedMesh);
+
+        GameObject savedMeshObject = Instantiate(pipeMeshStandardPrefab, sborCO2.transform);
+
+        savedMeshObject.transform.localPosition = Vector3.zero;
+        savedMeshObject.transform.localRotation = Quaternion.identity;
+        savedMeshObject.transform.localScale = Vector3.one;
+
+        var mf = savedMeshObject.GetComponent<MeshFilter>();
+        if (mf == null) mf = savedMeshObject.AddComponent<MeshFilter>();
+        mf.sharedMesh = meshCopy;
+
+        var originalMR = generator.GetComponent<MeshRenderer>();
+        var mr = savedMeshObject.GetComponent<MeshRenderer>();
+        if (mr == null) mr = savedMeshObject.AddComponent<MeshRenderer>();
+        mr.sharedMaterials = originalMR.sharedMaterials;
+
+        var mc = savedMeshObject.GetComponent<MeshCollider>();
+        if (mc == null) mc = savedMeshObject.AddComponent<MeshCollider>();
+        mc.sharedMesh = meshCopy;
     }
 }

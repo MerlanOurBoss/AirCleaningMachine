@@ -5355,7 +5355,7 @@ GameObject:
   - component: {fileID: 7611295685338350353}
   m_Layer: 0
   m_Name: Neo Trube (7)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7090,7 +7090,7 @@ GameObject:
   - component: {fileID: 5408360620816177638}
   m_Layer: 0
   m_Name: Neo Trube (5)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24216,7 +24216,7 @@ GameObject:
   - component: {fileID: 1324506637763120704}
   m_Layer: 0
   m_Name: Neo Trube
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52263,7 +52263,7 @@ GameObject:
   - component: {fileID: 6045511514833814149}
   m_Layer: 0
   m_Name: Neo Trube (3)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55825,7 +55825,7 @@ GameObject:
   - component: {fileID: 5284972888194599647}
   m_Layer: 0
   m_Name: Neo Trube (6)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62108,7 +62108,7 @@ GameObject:
   - component: {fileID: 5282681615173584164}
   m_Layer: 0
   m_Name: Neo Trube (4)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68932,7 +68932,7 @@ GameObject:
   - component: {fileID: 8162976632426110299}
   m_Layer: 0
   m_Name: Neo Trube (2)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71871,7 +71871,7 @@ GameObject:
   - component: {fileID: 3409000300577132690}
   m_Layer: 0
   m_Name: Neo Trube (8)
-  m_TagString: Pipe
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

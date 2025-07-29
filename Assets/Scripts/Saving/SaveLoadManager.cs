@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System.IO;
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -9,16 +10,23 @@ public class SaveLoadManager : MonoBehaviour
     public GameObject[] prefabs;
 
     public GameObject sborCO2; // Object Sbor CO2
-    
+
     public GameObject buttonPrefab; // Prefab for the button
     public Transform buttonContainer; // Parent for the buttons
 
     public Camera cam;
+    public PipeConnector pipe;
+
     private GameObject CameraUI;
 
     private Dictionary<Button, int> buttonToSceneDataMap = new Dictionary<Button, int>();
     private Dictionary<int, List<GameObject>> sceneObjects = new Dictionary<int, List<GameObject>>();
 
+    private void Awake()
+    {
+        if (sborCO2 == null)
+            sborCO2 = GameObject.FindWithTag("SborCO2");
+    }
 
     private void Update()
     {
@@ -26,7 +34,24 @@ public class SaveLoadManager : MonoBehaviour
     }
     private void Start()
     {
-        CameraUI = gameObject.transform.parent.parent.gameObject;
+        int idx = ConstructionSelector.SelectedIndex;
+        if (idx >= 0)
+        {
+            Load(idx);
+            Debug.Log(idx);
+            // сбросим, чтобы при возврате в меню не было артефактов
+            ConstructionSelector.SelectedIndex = -1;
+        }
+        else
+        {
+            Debug.LogWarning("Не задан SelectedIndex — нечего загружать.");
+        }
+
+        
+        if (gameObject.transform.parent != null)
+        {
+            CameraUI = gameObject.transform.parent.parent.gameObject;
+        }
         // Create a button for each SceneData that contains saved data
         for (int i = 0; i < sceneDatas.Length; i++)
         {
@@ -42,52 +67,6 @@ public class SaveLoadManager : MonoBehaviour
         List<ObjectData> dataList = new List<ObjectData>();
 
         List<GameObject> objectsToDelete = new List<GameObject>();
-
-        foreach (GameObject pipeObject in GameObject.FindGameObjectsWithTag("Pipe"))
-        {
-            if (pipeObject.activeInHierarchy)
-            {
-                string cleanName = pipeObject.name;
-                if (cleanName.EndsWith("(Clone)"))
-                {
-                    cleanName = cleanName.Substring(0, cleanName.Length - "(Clone)".Length);
-                }
-
-                ObjectData data = new ObjectData
-                {
-                    objectName = cleanName,
-                    position = pipeObject.transform.position,
-                    rotation = pipeObject.transform.rotation,
-                    scale = pipeObject.transform.localScale
-                };
-                dataList.Add(data);
-
-                objectsToDelete.Add(pipeObject);
-            }
-        }
-
-        foreach (GameObject pipeObject in GameObject.FindGameObjectsWithTag("Pipe_T"))
-        {
-            if (pipeObject.activeInHierarchy)
-            {
-                string cleanName = pipeObject.name;
-                if (cleanName.EndsWith("(Clone)"))
-                {
-                    cleanName = cleanName.Substring(0, cleanName.Length - "(Clone)".Length);
-                }
-
-                ObjectData data = new ObjectData
-                {
-                    objectName = cleanName,
-                    position = pipeObject.transform.position,
-                    rotation = pipeObject.transform.rotation,
-                    scale = pipeObject.transform.localScale
-                };
-                dataList.Add(data);
-
-                objectsToDelete.Add(pipeObject);
-            }
-        }
 
         foreach (GameObject pipeObject in GameObject.FindGameObjectsWithTag("Klapon"))
         {
@@ -122,7 +101,7 @@ public class SaveLoadManager : MonoBehaviour
                     cleanName = cleanName.Substring(0, cleanName.Length - "(Clone)".Length);
                 }
 
-                ObjectData data = new ObjectData
+                ObjectData data = new()
                 {
                     objectName = cleanName,
                     position = child.transform.position,
@@ -175,7 +154,6 @@ public class SaveLoadManager : MonoBehaviour
             {
                 Debug.Log($"Loading data from SceneData at index {sceneIndex}.");
 
-                // Ensure the list of instantiated objects is available
                 if (!sceneObjects.ContainsKey(sceneIndex))
                 {
                     sceneObjects[sceneIndex] = new List<GameObject>();
@@ -190,7 +168,7 @@ public class SaveLoadManager : MonoBehaviour
                         GameObject obj = Instantiate(prefab, data.position, data.rotation);
                         if (obj.tag == "Pipe")
                         {
-                            
+
                         }
                         else if (obj.tag == "Klapon")
                         {
@@ -217,15 +195,23 @@ public class SaveLoadManager : MonoBehaviour
                     }
                 }
             }
+
             else
             {
                 Debug.LogWarning($"SceneData at index {sceneIndex} is empty or null.");
             }
+
+            Invoke(nameof(ConnectPipe), 0.5f);
         }
         else
         {
             Debug.LogError($"SceneIndex {sceneIndex} is out of bounds for SceneDatas array.");
         }
+    }
+
+    void ConnectPipe()
+    {
+        pipe.ConnectComponents();
     }
 
     private SceneData FindAvailableSceneData()
@@ -242,24 +228,28 @@ public class SaveLoadManager : MonoBehaviour
 
     private void CreateLoadButton(int sceneIndex)
     {
-        GameObject buttonInstance = Instantiate(buttonPrefab, buttonContainer);
+        if (buttonContainer != null)
+        {
+            GameObject buttonInstance = Instantiate(buttonPrefab, buttonContainer);
 
-        Button button = buttonInstance.GetComponent<Button>();
-        TextMeshProUGUI buttonText = buttonInstance.GetComponentInChildren<TextMeshProUGUI>();
+            Button button = buttonInstance.GetComponent<Button>();
+            TextMeshProUGUI buttonText = buttonInstance.GetComponentInChildren<TextMeshProUGUI>();
 
-        // Set the text of the main button
-        buttonText.text = $"{sceneIndex + 1}";
+            // Set the text of the main button
+            buttonText.text = $"{sceneIndex + 1}";
 
-        // Map button to SceneData index
-        buttonToSceneDataMap[button] = sceneIndex;
+            // Map button to SceneData index
+            buttonToSceneDataMap[button] = sceneIndex;
 
-        // Add a listener to load all objects from the SceneData at this index
-        button.onClick.AddListener(() => Load(sceneIndex));
+            // Add a listener to load all objects from the SceneData at this index
+            button.onClick.AddListener(() => Load(sceneIndex));
 
-        // Create and configure the child button
-        CreateChildButton(buttonInstance, sceneIndex);
+            // Create and configure the child button
+            CreateChildButton(buttonInstance, sceneIndex);
 
-        Debug.Log($"Created load button for SceneData at index {sceneIndex}.");
+            Debug.Log($"Created load button for SceneData at index {sceneIndex}.");
+        }
+
     }
 
     private void CreateChildButton(GameObject parentButton, int sceneIndex)
@@ -277,28 +267,34 @@ public class SaveLoadManager : MonoBehaviour
 
     private void ScreenShotTake(int index)
     {
-        CameraUI.SetActive(false);
-        cam.rect = new Rect(0, 0, 1, 1);
-        RenderTexture screenTexture = new RenderTexture(Screen.width * 3, Screen.height * 3, 24);
-        cam.targetTexture = screenTexture;
-        RenderTexture.active = screenTexture;
-        cam.Render();
+        if (cam != null)
+        {
+            CameraUI.SetActive(false);
+            cam.rect = new Rect(0, 0, 1, 1);
+            RenderTexture screenTexture = new RenderTexture(Screen.width * 3, Screen.height * 3, 24);
+            cam.targetTexture = screenTexture;
+            RenderTexture.active = screenTexture;
+            cam.Render();
 
-        Texture2D renderedTexture = new Texture2D(Screen.width * 3, Screen.height * 3); 
-        renderedTexture.ReadPixels(new Rect(0, 0, Screen.width * 3, Screen.height * 3), 0, 0);
-        renderedTexture.Apply();
-        RenderTexture.active = null;
+            Texture2D renderedTexture = new Texture2D(Screen.width * 3, Screen.height * 3);
+            renderedTexture.ReadPixels(new Rect(0, 0, Screen.width * 3, Screen.height * 3), 0, 0);
+            renderedTexture.Apply();
+            RenderTexture.active = null;
 
-        byte[] byteArray = renderedTexture.EncodeToPNG();
+            byte[] byteArray = renderedTexture.EncodeToPNG();
 
-        string filePath = Application.dataPath + "/SavedObjects/Images/cameracapture_" + index + ".png";
-        System.IO.File.WriteAllBytes(filePath, byteArray);
+            string dir = Path.Combine(Application.dataPath, "SavedObjects", "Images");
+            Directory.CreateDirectory(dir);
+            string filePath = Path.Combine(dir, $"cameracapture_{index}.png");
+            File.WriteAllBytes(filePath, byteArray);
 
-        cam.rect = new Rect(0.22f, 0.051f, 0.753f, 0.883f);
-        cam.targetTexture = null;
-        CameraUI.SetActive(true);
+            cam.rect = new Rect(0.22f, 0.051f, 0.753f, 0.883f);
+            cam.targetTexture = null;
+            CameraUI.SetActive(true);
 
-        sceneDatas[index].screenshotPath = filePath;
+            sceneDatas[index].screenshotPath = filePath;
+        }
+        
     }
     private void ClearSceneData(int sceneIndex)
     {
