@@ -39,7 +39,7 @@ public class SaveLoadManager : MonoBehaviour
         {
             Load(idx);
             Debug.Log(idx);
-            // сбросим, чтобы при возврате в меню не было артефактов
+
             ConstructionSelector.SelectedIndex = -1;
         }
         else
@@ -47,7 +47,7 @@ public class SaveLoadManager : MonoBehaviour
             Debug.LogWarning("Не задан SelectedIndex — нечего загружать.");
         }
 
-        
+
         if (gameObject.transform.parent != null)
         {
             CameraUI = gameObject.transform.parent.parent.gameObject;
@@ -251,7 +251,6 @@ public class SaveLoadManager : MonoBehaviour
         }
 
     }
-
     private void CreateChildButton(GameObject parentButton, int sceneIndex)
     {
         // Assuming the child button is a child of the parent button
@@ -264,7 +263,6 @@ public class SaveLoadManager : MonoBehaviour
             Destroy(parentButton); // Destroy the parent button
         });
     }
-
     private void ScreenShotTake(int index)
     {
         if (cam != null)
