@@ -170,8 +170,8 @@ public class PipeConnector : MonoBehaviour
     {
         if (pipeGenerator != null)
         {
-            pipeGenerator.Clear();
-            pipeGeneratorCO2.Clear();
+            //pipeGenerator.Clear();
+            //pipeGeneratorCO2.Clear();
             pipeGenerator.UpdateMesh();
             pipeGeneratorCO2.UpdateMesh();
         }
@@ -181,7 +181,7 @@ public class PipeConnector : MonoBehaviour
     {
         if (pipeGenerator != null)
         {
-            pipeGenerator.Clear();
+            //pipeGenerator.Clear();
             pipeGenerator.UpdateMesh();
         }
 

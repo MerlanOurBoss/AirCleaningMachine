@@ -18,6 +18,7 @@ public class MathModuleForEmul : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gasMassFlow;
     [SerializeField] private TextMeshProUGUI waterMassFlow;
     [SerializeField] private TextMeshProUGUI massTransfer;
+    [SerializeField] private TextMeshProUGUI gasСonsumption;
     [SerializeField] private Translator translator;
 
     private float _gasSpeed = 0;
@@ -26,6 +27,7 @@ public class MathModuleForEmul : MonoBehaviour
     private float _waterMassFlow = 0;
     private float _reynoldsNumber = 0;
     private float _massTransfer = 0;
+    private float _gasСonsumption = 0;
 
     private readonly float deametr = 2f;
 
@@ -40,6 +42,8 @@ public class MathModuleForEmul : MonoBehaviour
     private readonly float waterDynamicViscosity = 0.001f;
     private readonly float causticSodaDynamicViscosity = 0.0012f;
     private readonly float sodaDynamicViscosity = 0.0013f;
+
+    private readonly float сonsumption = 34f;
 
 
     void Start()
@@ -65,6 +69,8 @@ public class MathModuleForEmul : MonoBehaviour
                 "		   " + _waterMassFlow.ToString("0.000") + " м³/с";
             massTransfer.text = "Коэф. массового переноса: " + "\n" +
                 "		   " + _massTransfer.ToString("0.0") + " м/с";
+            gasСonsumption.text = "Расход жидкости: " + "\n" +
+                "		   " + _gasСonsumption.ToString() + " м³/с";
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
@@ -78,6 +84,8 @@ public class MathModuleForEmul : MonoBehaviour
                 "		   " + _waterMassFlow.ToString("0.000") + " м³/с";
             massTransfer.text = "Масса тасымалдау коэфф.: " + "\n" +
                 "		   " + _massTransfer.ToString("0.0") + " м/с";
+            gasСonsumption.text = "Сұйықтықты тұтыну: " + "\n" +
+                "		   " + _gasСonsumption.ToString() + " м³/с";
         }
         else
         {
@@ -91,6 +99,8 @@ public class MathModuleForEmul : MonoBehaviour
                 "		   " + _waterMassFlow.ToString("0.000") + " m³/s";
             massTransfer.text = "Mass transfer coefficient: " + "\n" +
                 "		   " + _massTransfer.ToString("0.0") + " m/s";
+            gasСonsumption.text = "Gas Сonsumption: " + "\n" +
+                "		   " + _gasСonsumption.ToString() + " м³/с";
         }
 
         if (_gasFlow.text == "10 м³/с")
@@ -174,6 +184,8 @@ public class MathModuleForEmul : MonoBehaviour
         _gasMassFlow = (_gasSpeed * 3.14159f * Mathf.Pow(deametr, 2)) / 4;
 
         _waterMassFlow = (_waterSpeed * 3.14159f * Mathf.Pow(deametr, 2)) / 4;
+
+        _gasСonsumption = (0.22f * сonsumption) / 1000; 
 
         _massTransfer = empiricalConstantsA * Mathf.Pow((_reynoldsNumber / deametrDroplet), empiricalConstantsB);
     }

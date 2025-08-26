@@ -55,7 +55,7 @@ public class MathModulForKataz : MonoBehaviour
                 "		   " + velocity.ToString("0.000") + " м/с";
             gasDensitie.text = "Плотность газа: " + "\n" +
                 "		   " + density.ToString("0.000") + " кг/м³";
-            gasmassFlow.text = "Массовый паток: " + "\n" +
+            gasmassFlow.text = "Массовый расход газа:: " + "\n" +
                 "		   " + massFlow.ToString("0.000") + " кг/с";
             coGaz.text = "Вых. концентрация CO: " + "\n" +
                 "		   " + CO_Gaz_Out.ToString("0.000") + " моль/м³";
@@ -66,7 +66,7 @@ public class MathModulForKataz : MonoBehaviour
                 "		   " + velocity.ToString("0.000") + " м/с";
             gasDensitie.text = "Газдың тығыздығы: " + "\n" +
                 "		   " + density.ToString("0.000") + " кг/м³";
-            gasmassFlow.text = "Масса ағыны: " + "\n" +
+            gasmassFlow.text = "Газдың массалық шығыны: " + "\n" +
                 "		   " + massFlow.ToString("0.000") + " кг/с";
             coGaz.text = "Шығар. СО концентрациясы: " + "\n" +
                 "		   " + CO_Gaz_Out.ToString("0.000") + " моль/м³";
@@ -77,7 +77,7 @@ public class MathModulForKataz : MonoBehaviour
                 "		   " + velocity.ToString("0.000") + " m/s";
             gasDensitie.text = "Gas Density: " + "\n" +
                 "		   " + density.ToString("0.000") + " kg/m³";
-            gasmassFlow.text = "Mass Flow: " + "\n" +
+            gasmassFlow.text = "Mass gas consumption: " + "\n" +
                 "		   " + massFlow.ToString("0.000") + " kg/s";
             coGaz.text = "CO output concentration: " + "\n" +
                 "		   " + CO_Gaz_Out.ToString("0.000") + " mol/m³";

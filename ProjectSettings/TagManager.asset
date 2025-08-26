@@ -102,6 +102,7 @@ TagManager:
   - ConnectionPointCO2OUT
   - Trubes
   - TrubesCO2
+  - Collec
   layers:
   - Default
   - TransparentFX
