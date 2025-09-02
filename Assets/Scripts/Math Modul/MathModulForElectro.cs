@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class MathModuleForElectro : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class MathModuleForElectro : MonoBehaviour
     [SerializeField] private TMP_InputField _speedInput;
     [SerializeField] private TMP_InputField _radiusInput;
     [SerializeField] private TMP_InputField _chargeInput;
+    [SerializeField] private TMP_InputField _gasFlow;
 
     [Header("Visual Effects")]
     [SerializeField] private Animator _electroFilterAnimator;
@@ -20,6 +23,7 @@ public class MathModuleForElectro : MonoBehaviour
     [Header("Output Text Fields")]
     [SerializeField] private TextMeshProUGUI _potentialText;
     [SerializeField] private TextMeshProUGUI _fieldText;
+    [SerializeField] private TextMeshProUGUI _sizeText;
 
     [Header("Other Components")]
     [SerializeField] private Translator _translator;
@@ -32,6 +36,13 @@ public class MathModuleForElectro : MonoBehaviour
     private const float GRAVITY = 9.8f;
     private const float ELECTRIC_CONSTANT = 8.85f;
     private const float VISCOSITY = 1.8f;
+
+    //Габариты
+    private double length = 0;
+    private double height = 0;
+    private double width = 0;
+
+    private float area = 0;
 
     private void Start()
     {
@@ -70,6 +81,16 @@ public class MathModuleForElectro : MonoBehaviour
         // Electric calculations
         _electricPotential = -density / -ELECTRIC_CONSTANT;
         _electricField = -1 * _electricPotential;
+
+        string inputGasFlow = _gasFlow.text;
+        string numberGasFlow = inputGasFlow.Split(' ')[0];
+        double valueGasFlow = double.Parse(numberGasFlow);
+
+        double area = (Math.Log(1 / (1 - 0.7)) / 0.1 / 3600) * valueGasFlow;
+
+        height = Math.Ceiling(Math.Sqrt(area / 6.0));
+        length = Math.Ceiling(area / 4.0f / height);
+        width = Math.Ceiling(valueGasFlow / 3600.0 / 1.2 / height);
     }
 
     private float ParseInputValue(string inputText)
@@ -86,14 +107,23 @@ public class MathModuleForElectro : MonoBehaviour
             case Translator.Language.Russian:
                 _potentialText.text = $"Потенциал: \n\t\t{_electricPotential:0.000} Дж/Кл";
                 _fieldText.text = $"Электрическое поле: \n\t\t{_electricField:0.000} Н/Кл";
+                _sizeText.text = $"Длина ЭФ: {length:0.0} м \n" +
+                                    $"Ширина ЭФ: {width:0.0} м \n" +
+                                        $"Высота ЭФ: {height:0.0} м";
                 break;
             case Translator.Language.Kazakh:
                 _potentialText.text = $"Потенциал: {_electricPotential:0.000} Дж/Кл";
                 _fieldText.text = $"Электр өрісі: {_electricField:0.000} Н/Кл";
+                _sizeText.text = $"ЭФ Ұзындығы: {length:0.0} м \n" +
+                                    $"ЭФ Ені: {width:0.0} м \n" +
+                                        $"ЭФ Биіктігі: {height:0.0} м";
                 break;
             default:
                 _potentialText.text = $"Potential: {_electricPotential:0.000} J/Kl";
                 _fieldText.text = $"Electric field: {_electricField:0.000} N/Kl";
+                _sizeText.text = $"EF Length: {length:0.0} m \n" +
+                                    $"EF Width: {width:0.0} m \n" +
+                                        $"EF Height: {height:0.0} m";
                 break;
         }
     }

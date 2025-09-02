@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class MathModulForSborCO2 : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class MathModulForSborCO2 : MonoBehaviour
     [SerializeField] private TMP_InputField _desorptionTempText;
     [SerializeField] private TMP_InputField _diametrSborText;
     [SerializeField] private TMP_InputField _fanSpeedSborText;
+    [SerializeField] private TMP_InputField _gasFlowMain;
 
     [SerializeField] private TextMeshProUGUI _adsorptionTimeText;
     [SerializeField] private TextMeshProUGUI _capturedCO2Text;
@@ -20,6 +23,7 @@ public class MathModulForSborCO2 : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _massCO2;
     [SerializeField] private TextMeshProUGUI _totalCapacity;
     [SerializeField] private TextMeshProUGUI _co2FlowRate;
+    [SerializeField] private TextMeshProUGUI _sizeText;
     [SerializeField] private Translator translator;
 
     [Header("Sbor Script")]
@@ -52,6 +56,9 @@ public class MathModulForSborCO2 : MonoBehaviour
     private const float molarMassCO2 = 44f; // г/моль
     private const float oneMolarVolume = 22.41f; // м³/моль
 
+    //Габариты
+    private double length = 0;
+    private double height = 0;
 
     private void Start()
     {
@@ -97,6 +104,8 @@ public class MathModulForSborCO2 : MonoBehaviour
             _totalCapacity.text = $"Общая производительность:\n           {totalCapacity:0.00} кмоль";
             _massCO2.text = $"Масса CO2:\n           {massCO2:0.00} кг";
             _effectiveFlowRate.text = $"Эффективная скорость потока:\n           {effectiveFlowRate} моль/ч";
+            _sizeText.text = $"Длина аппарата: {length:0.0} м \n" +
+                                $"Высота аппарата: {height:0.0} м";
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
@@ -106,6 +115,8 @@ public class MathModulForSborCO2 : MonoBehaviour
             _totalCapacity.text = $"Жалпы өнімділік:\n           {totalCapacity:0.00} кмоль";
             _massCO2.text = $"CO2 Салмағы:\n           {massCO2:0.00} кг";
             _effectiveFlowRate.text = $"Тиімді ағын жылдамдығы:\n           {effectiveFlowRate} моль/cағ";
+            _sizeText.text = $"Құрылғының ұзындығы: {length:0.0} м \n" +
+                    $"Құрылғының биіктігі: {height:0.0} м";
         }
         else
         {
@@ -115,6 +126,8 @@ public class MathModulForSborCO2 : MonoBehaviour
             _totalCapacity.text = $"Overall performance:\n           {totalCapacity:0.00} kmol";
             _massCO2.text = $"CO2 Mass:\n           {massCO2:0.00} кг";
             _effectiveFlowRate.text = $"Effective flow rate:\n           {effectiveFlowRate} mol/h";
+            _sizeText.text = $"Length of device: {length:0.0} m \n" +
+                    $"Height of device: {height:0.0} m";
         }
 
         // Дополнительная логика по скорости газа (ваш код — без изменений)
@@ -239,7 +252,18 @@ public class MathModulForSborCO2 : MonoBehaviour
         capturedCO2 = massCO2 / 44;
         effectiveFlowRate = co2FlowRate * sorbentEfficiency;
 
-        Debug.Log(sorbentEfficiency);
+        string inputGasFlow = _gasFlowMain.text;
+        string numberGasFlow = inputGasFlow.Split(' ')[0];
+        double valueGasFlow = double.Parse(numberGasFlow);
+
+        length = Math.Ceiling(
+                    Math.Sqrt((4.0 * (valueGasFlow / 2.0)) / Math.PI / 3600.0 / 0.5)
+                    );
+
+        height = Math.Ceiling(
+                    sorbentMass / (1.0 - 0.37) / 670.0 / (valueGasFlow / 3600.0 / 0.5) + 1.5 * 2.0
+                    );
+
         return totalCapacity / capturedCO2;
     }
 

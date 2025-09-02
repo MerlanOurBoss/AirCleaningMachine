@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class MathModuleForEmul : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class MathModuleForEmul : MonoBehaviour
     [SerializeField] private TMP_InputField _gasFlow;
     [SerializeField] private TMP_InputField _waterFlow;
     [SerializeField] private TMP_InputField _fluidType;
+    [SerializeField] private TMP_InputField _gasFlowMain;
     [SerializeField] private string fluid;
 
     [SerializeField] private TextMeshProUGUI gasSpeed;
@@ -19,7 +22,8 @@ public class MathModuleForEmul : MonoBehaviour
     [SerializeField] private TextMeshProUGUI waterMassFlow;
     [SerializeField] private TextMeshProUGUI massTransfer;
     [SerializeField] private TextMeshProUGUI gasСonsumption;
-    [SerializeField] private Translator translator;
+    [SerializeField] private Translator translator; 
+    [SerializeField] private TextMeshProUGUI sizeText;
 
     private float _gasSpeed = 0;
     private float _waterSpeed = 0;
@@ -28,8 +32,6 @@ public class MathModuleForEmul : MonoBehaviour
     private float _reynoldsNumber = 0;
     private float _massTransfer = 0;
     private float _gasСonsumption = 0;
-
-    private readonly float deametr = 2f;
 
     private readonly float empiricalConstantsA = 0.5f;
     private readonly float empiricalConstantsB = 0.8f;
@@ -44,6 +46,10 @@ public class MathModuleForEmul : MonoBehaviour
     private readonly float sodaDynamicViscosity = 0.0013f;
 
     private readonly float сonsumption = 34f;
+
+    //Габариты
+    private float deametr = 0;
+    private double height = 0;
 
 
     void Start()
@@ -71,6 +77,8 @@ public class MathModuleForEmul : MonoBehaviour
                 "		   " + _massTransfer.ToString("0.0") + " м/с";
             gasСonsumption.text = "Расход жидкости: " + "\n" +
                 "		   " + _gasСonsumption.ToString() + " м³/с";
+            sizeText.text = $"Диаметр аппарата: {deametr:0.0} м \n" +
+                        $"Высота аппарата: {height:0.0} м";
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
@@ -86,6 +94,8 @@ public class MathModuleForEmul : MonoBehaviour
                 "		   " + _massTransfer.ToString("0.0") + " м/с";
             gasСonsumption.text = "Сұйықтықты тұтыну: " + "\n" +
                 "		   " + _gasСonsumption.ToString() + " м³/с";
+            sizeText.text = $"Құрылғының диаметрі: {deametr:0.0} м \n" +
+                                $"Құрылғының биіктігі: {height:0.0} м";
         }
         else
         {
@@ -101,6 +111,8 @@ public class MathModuleForEmul : MonoBehaviour
                 "		   " + _massTransfer.ToString("0.0") + " m/s";
             gasСonsumption.text = "Gas Сonsumption: " + "\n" +
                 "		   " + _gasСonsumption.ToString() + " м³/с";
+            sizeText.text = $"Diameter of device: {deametr:0.0} m \n" +
+                                $"Height of device: {height:0.0} m";
         }
 
         if (_gasFlow.text == "10 м³/с")
@@ -188,5 +200,14 @@ public class MathModuleForEmul : MonoBehaviour
         _gasСonsumption = (0.22f * сonsumption) / 1000; 
 
         _massTransfer = empiricalConstantsA * Mathf.Pow((_reynoldsNumber / deametrDroplet), empiricalConstantsB);
+
+        string inputGasFlow = _gasFlowMain.text;
+        string numberGasFlow = inputGasFlow.Split(' ')[0];
+        double valueGasFlow = double.Parse(numberGasFlow);
+
+        deametr = (float)Math.Ceiling(
+            Math.Sqrt((4.0 * valueGasFlow) / Math.PI / 3600.0 / 2.9)
+        );
+        height = Math.Ceiling(((0.8 + 18 * 0.15 + 0.35 * deametr + 0.6) / 5.0) * 10.0) / 10.0 * 5.0;
     }
 }
