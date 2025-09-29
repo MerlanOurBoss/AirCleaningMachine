@@ -51,6 +51,10 @@ public class MathModuleForEmul : MonoBehaviour
     private float deametr = 0;
     private double height = 0;
 
+    //Расходники
+    private double electro;
+    private double waterConsumables;
+    private double dryReagentConsumption;
 
     void Start()
     {
@@ -78,7 +82,8 @@ public class MathModuleForEmul : MonoBehaviour
             gasСonsumption.text = "Расход жидкости: " + "\n" +
                 "		   " + _gasСonsumption.ToString() + " м³/с";
             sizeText.text = $"Диаметр аппарата: {deametr:0.0} м \n" +
-                        $"Высота аппарата: {height:0.0} м";
+                        $"Высота аппарата: {height:0.0} м \n" +
+                         $"Расходники ЭФ: {electro + waterConsumables + dryReagentConsumption: 0.0} тг"; ;
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
@@ -209,5 +214,9 @@ public class MathModuleForEmul : MonoBehaviour
             Math.Sqrt((4.0 * valueGasFlow) / Math.PI / 3600.0 / 2.9)
         );
         height = Math.Ceiling(((0.8 + 18 * 0.15 + 0.35 * deametr + 0.6) / 5.0) * 10.0) / 10.0 * 5.0;
+
+        electro = 0.12 * (_gasСonsumption * 3600);
+        waterConsumables = 0.005 * (valueGasFlow * 1000) * 24;
+        dryReagentConsumption = (10 / 100.0) * (1100 / 1000.0) * (valueGasFlow / 1000.0) / 0.95 * ((fluid == "Едкий натрий" || fluid == "Сода") ? 1 : 1)/ 1000.0 * 24;
     }
 }

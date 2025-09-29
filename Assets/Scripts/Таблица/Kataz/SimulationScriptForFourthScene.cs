@@ -85,7 +85,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
         if (_startSimulationTemp && _startSimulationContent)
         {
             _simulationButton.interactable = false;
-            _simulationText.text = "Идет симуляция";
             waterZeroNasos.enabled = true;
             waterNasos.enabled = true;
             if (reactNasos != null)
@@ -136,7 +135,6 @@ public class SimulationScriptForFourthScene: MonoBehaviour
             }
             
             _simulationButton.interactable = true;
-            _simulationText.text = "Симулировать";
             _simulationTime = 3400f;
             foreach (ParticleSystem smoke in _mySmokes)
             {

@@ -60,6 +60,10 @@ public class MathModulForSborCO2 : MonoBehaviour
     private double length = 0;
     private double height = 0;
 
+    //Расходники
+    private double electro;
+    private double sorbentConsumables;
+    private double parDesorbentConsumption;
     private void Start()
     {
         UpdateSorbentProperties();
@@ -96,6 +100,11 @@ public class MathModulForSborCO2 : MonoBehaviour
         float adsorptionTime = CalculateAdsorptionTime();
         float desorbedCO2 = CalculateDesorption();
 
+        electro = (sorbentMass * (desorptionTemp - adsorptionTemp) * (1.1 + 0.86) + sorbentMass * 0.962 * 75) / 0.8 * 1.05 / 3600 * 1.05;
+        sorbentConsumables = sorbentMass / 1000 * (1 + 0.015 * 365) / 365;
+        parDesorbentConsumption = (sorbentMass * 1.1 * (desorptionTemp - adsorptionTemp) + massCO2 * 0.868 * (desorptionTemp - adsorptionTemp) + 129 * massCO2 / 0.044) * 1.1 / (2100 + 4.184 * (170 - desorptionTemp)) / 1000;
+
+        Debug.Log((electro * 38.85) + " " + (sorbentConsumables * 535 * 193) + " " + (parDesorbentConsumption * 71.56));
         if (translator.currentLanguage == Translator.Language.Russian)
         {
             _adsorptionTimeText.text = $"Время адсорбции:\n           {adsorptionTime:0.00} ч";
@@ -105,7 +114,8 @@ public class MathModulForSborCO2 : MonoBehaviour
             _massCO2.text = $"Масса CO2:\n           {massCO2:0.00} кг";
             _effectiveFlowRate.text = $"Эффективная скорость потока:\n           {effectiveFlowRate} моль/ч";
             _sizeText.text = $"Длина аппарата: {length:0.0} м \n" +
-                                $"Высота аппарата: {height:0.0} м";
+                                $"Высота аппарата: {height:0.0} м \n " +
+                                         $"Расходники ЭФ: {(electro * 38.85) + (sorbentConsumables * 535 * 193) + (parDesorbentConsumption* 71.56): 0.0} тг";
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
@@ -247,6 +257,7 @@ public class MathModulForSborCO2 : MonoBehaviour
         massCO2 = 44 * CO2Concentration / 100 * 122500 / 22.5f * 0.7f;
         sorbentMass = massCO2 / (sorbentCapacity * 1.2f);
         gasVolume = ParseInput(_gasVolumeText.text); // м³/ч
+        adsorptionTemp = ParseInput(_adsorptionTempText.text);
         co2FlowRate = (122500 * CO2Concentration/ 100) / oneMolarVolume; // моль/ч
         totalCapacity = sorbentMass * sorbentCapacity/4000;
         capturedCO2 = massCO2 / 44;
@@ -256,6 +267,7 @@ public class MathModulForSborCO2 : MonoBehaviour
         string numberGasFlow = inputGasFlow.Split(' ')[0];
         double valueGasFlow = double.Parse(numberGasFlow);
 
+        
         length = Math.Ceiling(
                     Math.Sqrt((4.0 * (valueGasFlow / 2.0)) / Math.PI / 3600.0 / 0.5)
                     );

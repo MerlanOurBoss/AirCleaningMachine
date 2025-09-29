@@ -12,29 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb24e01e0f337f3449f33fd4896d4e89, type: 3}
   m_Name: SceneData
   m_EditorClassIdentifier: 
-  objectsData:
-  - objectName: Oven
-    position: {x: 506.8461, y: 44.649994, z: 224.32727}
-    rotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-    scale: {x: 1, y: 1, z: 1}
-  - objectName: ElectroFilter
-    position: {x: 296.23166, y: 92.649994, z: 229.97897}
-    rotation: {x: -0, y: -0, z: -0, w: 1}
-    scale: {x: 1, y: 1, z: 1}
-  - objectName: Emul
-    position: {x: 56.41606, y: 153.65, z: 228.48096}
-    rotation: {x: -0, y: 1, z: -0, w: 0}
-    scale: {x: 1, y: 1, z: 1}
-  - objectName: New Katalizator
-    position: {x: -19.707733, y: 47.649994, z: 18.603943}
-    rotation: {x: -0, y: -0, z: -0, w: -1}
-    scale: {x: 1, y: 1, z: 1}
-  - objectName: PipeMesh_Standard
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: -0, y: -0, z: -0, w: 1}
-    scale: {x: 1, y: 1, z: 1}
-  - objectName: PipeMesh_Standard
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: -0, y: -0, z: -0, w: 1}
-    scale: {x: 1, y: 1, z: 1}
-  screenshotPath: D:/Project/AirCleaningMachine/Assets\SavedObjects\Images\cameracapture_0.png
+  objectsData: []
+  screenshotPath: 

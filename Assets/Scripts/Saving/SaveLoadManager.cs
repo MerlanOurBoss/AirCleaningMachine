@@ -22,6 +22,14 @@ public class SaveLoadManager : MonoBehaviour
     private Dictionary<Button, int> buttonToSceneDataMap = new Dictionary<Button, int>();
     private Dictionary<int, List<GameObject>> sceneObjects = new Dictionary<int, List<GameObject>>();
 
+    // Добавляем класс-обертку для сериализации
+    [System.Serializable]
+    private class SceneDataWrapper
+    {
+        public ObjectData[] objectsData;
+        public string screenshotPath;
+    }
+
     private void Awake()
     {
         if (sborCO2 == null)
@@ -32,14 +40,17 @@ public class SaveLoadManager : MonoBehaviour
     {
         sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
     }
+
     private void Start()
     {
+        // Загружаем все сохраненные данные при старте
+        LoadAllSavedData();
+
         int idx = ConstructionSelector.SelectedIndex;
         if (idx >= 0)
         {
             Load(idx);
             Debug.Log(idx);
-
             ConstructionSelector.SelectedIndex = -1;
         }
         else
@@ -47,17 +58,94 @@ public class SaveLoadManager : MonoBehaviour
             Debug.LogWarning("Не задан SelectedIndex — нечего загружать.");
         }
 
-
         if (gameObject.transform.parent != null)
         {
             CameraUI = gameObject.transform.parent.parent.gameObject;
         }
-        // Create a button for each SceneData that contains saved data
+
+        // Создаем кнопки для всех сохраненных сцен
+        CreateLoadButtonsForSavedData();
+    }
+
+    // Метод для загрузки всех сохраненных данных
+    private void LoadAllSavedData()
+    {
+        for (int i = 0; i < sceneDatas.Length; i++)
+        {
+            LoadSceneDataFromFile(i);
+        }
+    }
+
+    // Метод для создания кнопок на основе сохраненных данных
+    private void CreateLoadButtonsForSavedData()
+    {
         for (int i = 0; i < sceneDatas.Length; i++)
         {
             if (sceneDatas[i].objectsData != null && sceneDatas[i].objectsData.Length > 0)
             {
-                CreateLoadButton(i); // Create a button for this SceneData
+                CreateLoadButton(i);
+            }
+        }
+    }
+
+    // Получаем путь для сохранения файла (работает в билде)
+    private string GetSaveFilePath(int sceneIndex)
+    {
+        string directory = Path.Combine(Application.persistentDataPath, "SavedConstructions");
+        Directory.CreateDirectory(directory); // Создаем папку если не существует
+        return Path.Combine(directory, $"construction_{sceneIndex}.json");
+    }
+
+    // Сохраняем SceneData в файл
+    private void SaveSceneDataToFile(int sceneIndex)
+    {
+        if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)
+        {
+            SceneData sceneData = sceneDatas[sceneIndex];
+
+            SceneDataWrapper wrapper = new SceneDataWrapper
+            {
+                objectsData = sceneData.objectsData,
+                screenshotPath = sceneData.screenshotPath
+            };
+
+            string json = JsonUtility.ToJson(wrapper, true);
+            string filePath = GetSaveFilePath(sceneIndex);
+
+            try
+            {
+                File.WriteAllText(filePath, json);
+                Debug.Log($"Data saved to file: {filePath}");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error saving file: {e.Message}");
+            }
+        }
+    }
+
+    // Загружаем SceneData из файла
+    private void LoadSceneDataFromFile(int sceneIndex)
+    {
+        string filePath = GetSaveFilePath(sceneIndex);
+
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                string json = File.ReadAllText(filePath);
+                SceneDataWrapper wrapper = JsonUtility.FromJson<SceneDataWrapper>(json);
+
+                if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)
+                {
+                    sceneDatas[sceneIndex].objectsData = wrapper.objectsData;
+                    sceneDatas[sceneIndex].screenshotPath = wrapper.screenshotPath;
+                    Debug.Log($"Data loaded from file: {filePath}");
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error loading file: {e.Message}");
             }
         }
     }
@@ -65,7 +153,6 @@ public class SaveLoadManager : MonoBehaviour
     public void Save()
     {
         List<ObjectData> dataList = new List<ObjectData>();
-
         List<GameObject> objectsToDelete = new List<GameObject>();
 
         foreach (GameObject pipeObject in GameObject.FindGameObjectsWithTag("Klapon"))
@@ -121,12 +208,14 @@ public class SaveLoadManager : MonoBehaviour
             currentSceneData.objectsData = dataList.ToArray();
             Debug.Log("Data saved to SceneData.");
 
-            // Create a button for the newly saved SceneData
             int index = System.Array.IndexOf(sceneDatas, currentSceneData);
             ScreenShotTake(index);
+
             if (index != -1)
             {
                 CreateLoadButton(index);
+                // СОХРАНЯЕМ В ФАЙЛ - это ключевое изменение!
+                SaveSceneDataToFile(index);
             }
             else
             {
@@ -146,6 +235,9 @@ public class SaveLoadManager : MonoBehaviour
 
     public void Load(int sceneIndex)
     {
+        // ПЕРЕД загрузкой убеждаемся, что данные актуальны из файла
+        LoadSceneDataFromFile(sceneIndex);
+
         if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)
         {
             SceneData sceneData = sceneDatas[sceneIndex];
@@ -168,7 +260,7 @@ public class SaveLoadManager : MonoBehaviour
                         GameObject obj = Instantiate(prefab, data.position, data.rotation);
                         if (obj.tag == "Pipe")
                         {
-
+                            // Логика для Pipe
                         }
                         else if (obj.tag == "Klapon")
                         {
@@ -185,8 +277,8 @@ public class SaveLoadManager : MonoBehaviour
                             obj.GetComponent<BoxCollider>().enabled = false;
                         }
                         obj.transform.localScale = data.scale;
-                        obj.transform.parent = sborCO2.transform; // Set parent to Sbor CO2
-                        sceneObjects[sceneIndex].Add(obj); // Track the instantiated object
+                        obj.transform.parent = sborCO2.transform;
+                        sceneObjects[sceneIndex].Add(obj);
                         Debug.Log($"Instantiated {prefab.name} at position {data.position}.");
                     }
                     else
@@ -195,7 +287,6 @@ public class SaveLoadManager : MonoBehaviour
                     }
                 }
             }
-
             else
             {
                 Debug.LogWarning($"SceneData at index {sceneIndex} is empty or null.");
@@ -220,10 +311,10 @@ public class SaveLoadManager : MonoBehaviour
         {
             if (data.objectsData == null || data.objectsData.Length == 0)
             {
-                return data; // Return the first empty SceneData
+                return data;
             }
         }
-        return null; // All SceneData instances are filled
+        return null;
     }
 
     private void CreateLoadButton(int sceneIndex)
@@ -235,34 +326,25 @@ public class SaveLoadManager : MonoBehaviour
             Button button = buttonInstance.GetComponent<Button>();
             TextMeshProUGUI buttonText = buttonInstance.GetComponentInChildren<TextMeshProUGUI>();
 
-            // Set the text of the main button
             buttonText.text = $"{sceneIndex + 1}";
-
-            // Map button to SceneData index
             buttonToSceneDataMap[button] = sceneIndex;
-
-            // Add a listener to load all objects from the SceneData at this index
             button.onClick.AddListener(() => Load(sceneIndex));
 
-            // Create and configure the child button
             CreateChildButton(buttonInstance, sceneIndex);
-
             Debug.Log($"Created load button for SceneData at index {sceneIndex}.");
         }
-
     }
+
     private void CreateChildButton(GameObject parentButton, int sceneIndex)
     {
-        // Assuming the child button is a child of the parent button
         Button childButton = parentButton.transform.Find("ChildButton").GetComponent<Button>();
-
-        // Add listener to the child button
         childButton.onClick.AddListener(() =>
         {
             ClearSceneData(sceneIndex);
-            Destroy(parentButton); // Destroy the parent button
+            Destroy(parentButton);
         });
     }
+
     private void ScreenShotTake(int index)
     {
         if (cam != null)
@@ -281,7 +363,8 @@ public class SaveLoadManager : MonoBehaviour
 
             byte[] byteArray = renderedTexture.EncodeToPNG();
 
-            string dir = Path.Combine(Application.dataPath, "SavedObjects", "Images");
+            // Используем persistentDataPath для скриншотов тоже
+            string dir = Path.Combine(Application.persistentDataPath, "SavedConstructions", "Images");
             Directory.CreateDirectory(dir);
             string filePath = Path.Combine(dir, $"cameracapture_{index}.png");
             File.WriteAllBytes(filePath, byteArray);
@@ -291,9 +374,12 @@ public class SaveLoadManager : MonoBehaviour
             CameraUI.SetActive(true);
 
             sceneDatas[index].screenshotPath = filePath;
+
+            // Сохраняем изменения пути скриншота
+            SaveSceneDataToFile(index);
         }
-        
     }
+
     private void ClearSceneData(int sceneIndex)
     {
         if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)
@@ -301,10 +387,18 @@ public class SaveLoadManager : MonoBehaviour
             SceneData sceneData = sceneDatas[sceneIndex];
             if (sceneData != null)
             {
-                // Clear the saved data
+                // Очищаем данные
                 sceneData.objectsData = null;
+                sceneData.screenshotPath = null;
 
-                // Destroy all instantiated objects for this SceneData
+                // Удаляем файл сохранения
+                string filePath = GetSaveFilePath(sceneIndex);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+
+                // Удаляем объекты
                 if (sceneObjects.ContainsKey(sceneIndex))
                 {
                     foreach (GameObject obj in sceneObjects[sceneIndex])
@@ -314,7 +408,7 @@ public class SaveLoadManager : MonoBehaviour
                             Destroy(obj);
                         }
                     }
-                    sceneObjects.Remove(sceneIndex); // Remove the tracking entry
+                    sceneObjects.Remove(sceneIndex);
                 }
 
                 Debug.Log($"Cleared SceneData and destroyed objects at index {sceneIndex}.");

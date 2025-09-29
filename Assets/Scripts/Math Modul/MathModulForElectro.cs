@@ -16,6 +16,8 @@ public class MathModuleForElectro : MonoBehaviour
     [SerializeField] private TMP_InputField _radiusInput;
     [SerializeField] private TMP_InputField _chargeInput;
     [SerializeField] private TMP_InputField _gasFlow;
+    [SerializeField] private TextMeshProUGUI _temperature;
+    [SerializeField] private TextMeshProUGUI _solidParticle;
 
     [Header("Visual Effects")]
     [SerializeField] private Animator _electroFilterAnimator;
@@ -31,6 +33,7 @@ public class MathModuleForElectro : MonoBehaviour
     // Physical properties
     private float _electricPotential = 0;
     private float _electricField = 0;
+    private double _specificPower = 0;
 
     // Constants
     private const float GRAVITY = 9.8f;
@@ -42,7 +45,13 @@ public class MathModuleForElectro : MonoBehaviour
     private double height = 0;
     private double width = 0;
 
-    private float area = 0;
+    private double area = 0;
+
+    //Расходники
+    private double electro;
+    private double consumables;
+    private double ashFormation;
+
 
     private void Start()
     {
@@ -82,15 +91,32 @@ public class MathModuleForElectro : MonoBehaviour
         _electricPotential = -density / -ELECTRIC_CONSTANT;
         _electricField = -1 * _electricPotential;
 
+
+        string inputTemperature = _temperature.text;
+        string numberTemperature = inputTemperature.Split(' ')[0];
+        double valueTemperature  = double.Parse(numberTemperature);
+
+        string inputSolidParticle = _solidParticle.text;
+        string numberSolidParticle = inputSolidParticle.Split(' ')[0];
+        double valueSolidParticle = double.Parse(numberSolidParticle);
+
+
+        _specificPower = 35.7 * Math.Exp(0.015 * (((valueTemperature + (valueTemperature - 0.5 * length * 4)) / 2.0) - 150.0)) * Math.Log(1.0 / (1.0 - 0.7));
+
         string inputGasFlow = _gasFlow.text;
         string numberGasFlow = inputGasFlow.Split(' ')[0];
         double valueGasFlow = double.Parse(numberGasFlow);
 
-        double area = (Math.Log(1 / (1 - 0.7)) / 0.1 / 3600) * valueGasFlow;
+        area = (Math.Log(1 / (1 - 0.7)) / 0.1 / 3600) * valueGasFlow;
 
         height = Math.Ceiling(Math.Sqrt(area / 6.0));
         length = Math.Ceiling(area / 4.0f / height);
         width = Math.Ceiling(valueGasFlow / 3600.0 / 1.2 / height);
+
+        double countElectro = (valueGasFlow * _specificPower) / 1000000;
+        electro = countElectro * 38.85 * 24;
+        consumables = 0.7058 * valueGasFlow / 365;
+        ashFormation = valueGasFlow * (valueSolidParticle - (1 - valueSolidParticle)) / 1000000000 * 24;
     }
 
     private float ParseInputValue(string inputText)
@@ -109,7 +135,8 @@ public class MathModuleForElectro : MonoBehaviour
                 _fieldText.text = $"Электрическое поле: \n\t\t{_electricField:0.000} Н/Кл";
                 _sizeText.text = $"Длина ЭФ: {length:0.0} м \n" +
                                     $"Ширина ЭФ: {width:0.0} м \n" +
-                                        $"Высота ЭФ: {height:0.0} м";
+                                        $"Высота ЭФ: {height:0.0} м \n" +
+                                         $"Расходники ЭФ: {electro + consumables: 0.0} тг";
                 break;
             case Translator.Language.Kazakh:
                 _potentialText.text = $"Потенциал: {_electricPotential:0.000} Дж/Кл";

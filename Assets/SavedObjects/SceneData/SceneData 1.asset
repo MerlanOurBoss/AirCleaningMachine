@@ -12,21 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb24e01e0f337f3449f33fd4896d4e89, type: 3}
   m_Name: SceneData 1
   m_EditorClassIdentifier: 
-  objectsData:
-  - objectName: Oven
-    position: {x: 483.82437, y: 44.649994, z: 53.686707}
-    rotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-    scale: {x: 1, y: 1, z: 1}
-  - objectName: ElectroFilter
-    position: {x: 273.48956, y: 92.649994, z: 204.01413}
-    rotation: {x: -0, y: -0, z: -0, w: -1}
-    scale: {x: 1, y: 1, z: 1}
-  - objectName: Emul
-    position: {x: -46.726196, y: 153.65, z: 73.29364}
-    rotation: {x: -0, y: 1, z: -0, w: 0}
-    scale: {x: 1, y: 1, z: 1}
-  - objectName: PipeMesh_Standard
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: -0, y: -0, z: -0, w: 1}
-    scale: {x: 1, y: 1, z: 1}
-  screenshotPath: D:/Project/AirCleaningMachine/Assets\SavedObjects\Images\cameracapture_1.png
+  objectsData: []
+  screenshotPath: 

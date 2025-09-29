@@ -1,0 +1,61 @@
+﻿OriginalName;Kazakh;English;Russian
+СИМУЛЯЦИЯ;;SIMULATION;СИМУЛЯЦИЯ
+Печка;;Furnace;Печка
+Электрофильтр;;Electrostatic Precipitator;Электрофильтр
+Катализатор;;Catalyst;Катализатор
+Водяной Эмульгатор;;Water Scrubber;Водяной Эмульгатор
+Реагентный Эмульгатор;;Reagent Scrubber;Реагентный Эмульгатор
+Сбор CO2;;CO2 Collection;Сбор CO2
+Таблица;;Table;Таблица
+Стартовые значения;;Initial Values;Стартовые значения
+Компонент;;Component;Компонент
+Температура;;Temperature;Температура
+Пыль;;Dust;Пыль
+Твердые частицы;;Solid Particles;Твердые частицы
+Зола;;Ash;Зола
+Вход;;Inlet;Вход
+Сажа;;Soot;Сажа
+Пыль;;Dust;Пыль
+КОНСТРУКТОР;;CONSTRUCTOR;КОНСТРУКТОР
+ОПИСАНИЕ;;DESCRIPTION;ОПИСАНИЕ
+Разрешение;;Resolution;Разрешение
+ВЫХОД;;Exit;ВЫХОД
+ЦИФРОВОЙ ДВОЙНИК КОМПЛЕКСНОЙ СИСТЕМЫ;;DIGITAL TWIN OF AN INTEGRATED SYSTEM;ЦИФРОВОЙ ДВОЙНИК КОМПЛЕКСНОЙ СИСТЕМЫ
+Котел;;Boiler;Котел
+Электрические фильтры;;Electric Filters;Электрические фильтры
+Предварительная термическая подготовка;;Preliminary Thermal Treatment;Предварительная термическая подготовка
+Блок Каталитической очистки;;Catalytic Purification Unit;Блок Каталитической очистки
+Система охлаждения;;Cooling System;Система охлаждения
+1-я ступень;;Stage 1;1-я ступень
+2-я ступень;;Stage 2;2-я ступень
+3-я ступень;;Stage 3;3-я ступень
+Выход;;Outlet;Выход
+Регенерация реагента;;Reagent Regeneration;Регенерация реагента
+Зола;;Ash;Зола
+Производство с применением золы;;Production Using Ash;Производство с применением золы
+Гипс;;Gypsum;Гипс
+Удобрение;;Fertilizer;Удобрение
+Отгрузка товарной углекислоты;;Shipment of Commercial CO2;Отгрузка товарной углекислоты
+Удаление сажи и ТЦ;;Removal of Soot and Solid Particles;Удаление сажи и ТЦ
+Удаление СО;;CO Removal;Удаление СО
+Удаление остатков сажи и ТЦ;;Removal of Residual Soot and Solids;Удаление остатков сажи и ТЦ
+Удаляется SO, NO2;;SO, NO2 Removal;Удаляется SO, NO2
+Очистной комплекс;;Purification Complex;Очистной комплекс
+Дымовые газы;;Flue Gases;Дымовые газы
+Пульт управления;;Control Panel;Пульт управления
+Адсорбер 1;;Adsorber 1;Адсорбер 1
+Адсорбер 2;;Adsorber 2;Адсорбер 2
+Горячий газ;;Hot Gas;Горячий газ
+Компрессор КД;;Low-Pressure Compressor;Компрессор КД
+Компрессор ВД;;High-Pressure Compressor;Компрессор ВД
+конденсат H2O;;H2O Condensate;конденсат H2O
+Запуск;;Start;Запуск
+Стоп;;Stop;Стоп
+Пауза;;Pause;Пауза
+Назад;;Back;Назад
+Настройка системы;;System Settings;Настройка системы
+Частицы;;Particles;Частицы
+Напряжение;;Voltage;Напряжение
+Остановить;;Stop;Остановить
+Расход газа;;Gas consumption;Расход газа
+Симулировать;;Simulate;Симулировать

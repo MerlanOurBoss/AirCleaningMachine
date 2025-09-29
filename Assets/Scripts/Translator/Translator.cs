@@ -1,295 +1,222 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 
 public class Translator : MonoBehaviour
 {
+    [Header("Data")]
+    [Tooltip("CSV (UTF-8) with header: OriginalName,Kazakh,English,Russian")]
+    public TextAsset translationsCsv;
+
+    [Header("UI")]
     public TMP_FontAsset newFont;
     public TextMeshProUGUI[] allTextComponents;
-    public enum Language { Kazakh, English, Russian }
 
-    public Language currentLanguage = Language.Russian;
+    public enum Language { Kazakh, English, Russian }
+    [SerializeField] public Language currentLanguage = Language.Russian;
+
+    private readonly Dictionary<string, Dictionary<Language, string>> map =
+        new Dictionary<string, Dictionary<Language, string>>(StringComparer.Ordinal);
+
+    private readonly Dictionary<TextMeshProUGUI, string> originalKeys =
+        new Dictionary<TextMeshProUGUI, string>();
+
+    void Awake()
+    {
+        // Автопоиск, если список пуст
+        if (allTextComponents == null || allTextComponents.Length == 0)
+        {
+#if UNITY_2023_1_OR_NEWER
+            allTextComponents = GameObject.FindObjectsByType<TextMeshProUGUI>(FindObjectsSortMode.None);
+#else
+            allTextComponents = GameObject.FindObjectsOfType<TextMeshProUGUI>(true);
+#endif
+        }
+
+        if (translationsCsv == null)
+        {
+            Debug.LogError("[Translator] CSV not assigned.");
+            return;
+        }
+        LoadCsv(translationsCsv);
+        CacheOriginalKeys();
+        ApplyFontIfAssigned();
+    }
 
     void Start()
     {
-        foreach (var textComponent in allTextComponents)
-        {
-            if (textComponent.name != "KazakhText" && textComponent.name != "EnglishText")
-            {
-                CreateLanguageTexts(textComponent);
-            }
-        }
-
         SetLanguage(currentLanguage);
     }
 
-    private void CreateLanguageTexts(TextMeshProUGUI originalText)
+    private void ApplyFontIfAssigned()
     {
-        string baseText = originalText.text;
-
-        GameObject kazakhTextObject = new GameObject("KazakhText");
-        kazakhTextObject.transform.SetParent(originalText.transform, false);
-        TextMeshProUGUI kazakhText = kazakhTextObject.AddComponent<TextMeshProUGUI>();
-        CopyTextProperties(originalText, kazakhText);
-        kazakhText.text = TranslateToKazakh(baseText);
-        kazakhText.enabled = false;
-
-        GameObject englishTextObject = new GameObject("EnglishText");
-        englishTextObject.transform.SetParent(originalText.transform, false);
-        TextMeshProUGUI englishText = englishTextObject.AddComponent<TextMeshProUGUI>();
-        CopyTextProperties(originalText, englishText);
-        englishText.text = TranslateToEnglish(baseText);
-        englishText.enabled = false;
+        if (newFont == null) return;
+        foreach (var tmp in allTextComponents)
+            if (tmp != null) tmp.font = newFont;
     }
 
-    private void CopyTextProperties(TextMeshProUGUI source, TextMeshProUGUI target)
+    private void CacheOriginalKeys()
     {
-        target.font = newFont;
-        target.fontSize = source.fontSize;
-        target.color = source.color;
-        target.alignment = source.alignment;
-        target.rectTransform.anchoredPosition = source.rectTransform.anchoredPosition;
-        target.rectTransform.sizeDelta = source.rectTransform.sizeDelta;
-        target.rectTransform.anchorMin = source.rectTransform.anchorMin;
-        target.rectTransform.anchorMax = source.rectTransform.anchorMax;
-        target.rectTransform.pivot = source.rectTransform.pivot;
-
-        //// Копирование масштаба, поворота и позиции
-        //target.rectTransform.localScale = source.rectTransform.localScale;
-        //target.rectTransform.localRotation = source.rectTransform.localRotation;
-        target.rectTransform.localPosition = new Vector3(0f,0f,0f);
-    }
-
-    private string TranslateToKazakh(string originalText)
-    {
-        return originalText switch
+        originalKeys.Clear();
+        foreach (var tmp in allTextComponents)
         {
-            "Остановить" => "Тоқтату",
-            "Сохранить" => "Сақтау",
-            "Трубы" => "Құбырлар",
-            "Установки" => "Орнатулар",
-            "Вспомогательные" => "Көмекші",
-            "ОПИСАНИЕ" => "СИПАТТАМАСЫ",
-            "ВЫХОД" => "ШЫҒУ",
-            "ЦИФРОВОЙ ДВОЙНИК КОМПЛЕКСНОЙ СИСТЕМЫ" => "КҮРДЕЛІ ЖҮЙЕНІҢ ЦИФРЛЫҚ ЕКІЗІ",
-            "Настройка системы" => "Жүйені орнату",
-            "Печка" => "Пеш",
-            "Водяной Эмульгатор" => "Су эмульгаторы",
-            "Реагентный Эмульгатор" => "Реагент эмульгаторы",
-            "Сбор CO2" => "CO2 жинау",
-            "Таблица" => "Кесте",
-            "Состав газа" => "Газ құрамы",
-            "Плотность" => "Тығыздығы",
-            "Температура" => "Температура",
-            "Состав жидкости" => "Сұйықтық құрамы",
-            "Скорость" => "Жылдамдық",
-            "Заряд" => "Заряд",
-            "Радиус частиц " => "Бөлшек радиусы",
-            "Кол. Катал. 1" => "Кол. Катал. 1",
-            "Кол. Катал. 2" => "Кол. Катал. 2",
-            "Давление" => "Қысым",
-            "Скорость потока" => "Ағын жылдамдығы",
-            "Расход газа" => "Газды тұтыну",
-            "Расход жидкости" => "Сұйықтық ағыны",
-            "Тип сорбента" => "Сорбент түрі",
-            "Объем газа" => "Газ көлемі",
-            "Длина гидравли. диаметра" => "Гидр. диаметрдің ұзындығы",
-            "Скороть вентилятора" => "Желдеткіш жылдамдығы",
-            "Компонент" => "Құрамдас",
-            "Пыль" => "Шаң",
-            "Твердые частицы" => "Бөлшекті заттар",
-            "Разрешение" => "РАЗРЕШЕНИЕ",
-            "Зола" => "Күл",
-            "Сажа" => "Күйе",
-            "Массовый поток газа" => "Газ массасы ағыны",
-            "Электрическое поле" => "Электр өрісі",
-            "Ускорение частиц" => "Бөлшектердің үдеуі",
-            "Скорость газа" => "Газ жылдамдығы",
-            "Скорость воды" => "Су жылдамдығы",
-            "Массовый поток жидкости" => "Судың массалық ағыны",
-            "Коэф. массового переноса" => "Масса алмасу коэффициенті",
-
-            "Система охлаждения" => "Салқындату жүйесі",
-            "Котел" => "Котел",
-            "Электрические фильтры" => "Электрлік" + "\n" + "сүзгілер",
-            "Предварительная термическая подготовка" => "Алдын ала " + "\n" + "термиялық" + "\n" + "дайындық",
-            "Блок Каталитической очистки" => "Каталитикалық " + "\n" + "тазарту" + "\n" + "қондырғысы",
-            "1-я ступень" => "1-ші-кезең",
-            "2-я ступень" => "2-ші кезең",
-            "3-я ступень" => "3-ші кезең",
-            "Выход" => "Шығу",
-            "Производство с применением золы" => "Күлді қолдану" + "\n" + "арқылы өндіру",
-            "Удобрение" => "Тыңайтқыш",
-            "Отгрузка товарной углекислоты" => "Коммерциялық көмірқышқыл" + "\n" + " газын жөнелту",
-            "Удаление сажи и ТЦ" => "Күйе мен ТК жою",
-            "Удаление СО" => "CO-ны жою",
-            "Удаление остатков сажи и ТЦ" => "Күйе мен ТК қалдықтарын жою",
-            "Удаляется SO, NO2" => "SO, NO2 жояды",
-            "Сбор СО2" => "CO2 жинау",
-            "Очистной комплекс" => "Тазалау кешені",
-            "Регенерация реагента" => "Реагент" + "\n" + "регенерациясы",
-            "Дымовые газы" => "Түтін газдары",
-            "Пульт управления" => "Басқару тақтасы",
-            "Горячий газ" => "Ыстық газ",
-            "Компрессор КД" => "КД" + "\n" + "компрессоры",
-            "Компрессор ВД" => "ВД" + "\n" + "компрессоры",
-            "Запуск" => "Қосу",
-            "Стоп" => "Стоп",
-            "Пауза" => "Кідірту",
-            "Назад" => "Артқа",
-            "Частицы" => "Бөлшектер",
-            "Напряжение" => "Кернеу",
-            "Адсорбер 1" => "Адсорбер 1",
-            "Адсорбер 2" => "Адсорбер 2",
-            "Объем газа - V, м3/ч" => "Газ көлемі - V, м3/сағ",
-            "Температура адцорбции - T, °C" => "Адсорбция температурасы - T, °C",
-            "Температура дисорбции - T, °C" => "Дисорбция температурасы - T, °C",
-            "Длина гидравли. диаметра - D, м" => "Гидравликалық ұзындық. диаметрі - D, м",
-            "Скороть вентилятора - об/мин" => "Желдеткіш жылдамдығы - айн/мин",
-
-
-            _ => originalText 
-        };
-    }
-
-    private string TranslateToEnglish(string originalText)
-    {
-        return originalText switch
-        {
-            "Остановить" => "Stop",
-            "Сохранить" => "Save",
-            "Трубы" => "Pipes",
-            "Установки" => "Units",
-            "Вспомогательные" => "Auxiliary",
-            "ВЫХОД" => "EXIT",
-            "ЦИФРОВОЙ ДВОЙНИК КОМПЛЕКСНОЙ СИСТЕМЫ" => "DIGITAL TWIN OF THE COMPLEX SYSTEM",
-            "Настройка системы" => "System Setup",
-            "Печка" => "Stove",
-            "Водяной Эмульгатор" => "Water Emulsifier",
-            "Реагентный Эмульгатор" => "Reagent Emulsifier",
-            "Сбор CO2" => "CO2 Collection",
-            "Таблица" => "Table",
-            "Состав газа" => "Gas Composition",
-            "Плотность" => "Density",
-            "Заряд" => "Charge",
-            "Скорость" => "Velocity",
-            "Температура" => "Temperature",
-            "Состав жидкости" => "Liquid Comp.",
-            "Радиус частиц" => "Particle radius",
-            "Кол. Катал. 1" => "Num Catal. 1",
-            "Кол. Катал. 2" => "Num Catal. 2",
-            "Давление" => "Pressure",
-            "Скорость потока" => "Flow rate",
-            "Расход газа" => "Gas flow rate",
-            "Расход жидкости" => "Liquid flow rate",
-            "Тип сорбента" => "Sorbent type",
-            "Объем газа" => "Gas volume",
-            "Длина гидравли. диаметра" => "hydraulic lenght diameter",
-            "Скороть вентилятора" => "Fan speed",
-            "Компонент" => "Component",
-            "Пыль" => "Dust",
-            "Твердые частицы" => "Particulate matter",
-            "Зола" => "Ash",
-            "Сажа" => "Soot",
-            "Массовый поток газа" => "Gas mass flow",
-            "Электрическое поле" => "Electric Field",
-            "Ускорение частиц" => "Particle acceleration",
-            "Скорость газа" => "Gas velocity",
-            "Скорость воды" => "Water velocity",
-            "Массовый поток жидкости" => "Mass flow of liquid",
-            "Коэф. массового переноса" => "Mass transfer coefficient",
-            "Электрофильтр" => "Electrofilter",
-            "СИМУЛЯЦИЯ" => "SIMULATION",
-            "КОНСТРУКТОР" => "CONSTRUCTOR",
-            "Разрешение" => "RESOLUTION",
-            "Катализатор" => "Catalyst",
-            "ОПИСАНИЕ" => "DESCRIPTION",
-            "Симулировать" => "Simulate",
-
-            "Система охлаждения" => "Cooling system",
-            "Котел" => "Boiler",
-            "Электрические фильтры" => "Electrical" + "\n" + "filters",
-            "Предварительная термическая подготовка" => "Thermal" + "\n" + "pre-treatment",
-            "Блок Каталитической очистки" => "Catalytic" + "\n" + "cleaning unit",
-            "1-я ступень" => "1st step",
-            "2-я ступень" => "2nd step",
-            "3-я ступень" => "3rd step",
-            "Выход" => "Output",
-            "Производство с применением золы" => "Ash production",
-            "Удобрение" => "Fertiliser",
-            "Отгрузка товарной углекислоты" => "Shipment of commercial" + "\n" + "carbon dioxide",
-            "Удаление сажи и ТЦ" => "Soot and TC removal",
-            "Удаление СО" => "CO removal",
-            "Удаление остатков сажи и ТЦ" => "Removal of soot and TC residues",
-            "Удаляется SO, NO2" => "SO, NO2 removal",
-            "Сбор СО2" => "CO2 collection",
-            "Очистной комплекс" => "Treatment plant",
-            "Регенерация реагента" => "Reagent" + "\n" + "regeneration",
-            "Дымовые газы" => "Flue gases",
-            "Пульт управления" => "Control panel",
-            "Горячий газ" => "Hot gas",
-            "Компрессор КД" => "KD" + "\n" + "Compressor ",
-            "Компрессор ВД" => "VD" + "\n" + "Compressor ",
-            "Запуск" => "Start",
-            "Стоп" => "Stop",
-            "Пауза" => "Pause",
-            "Назад" => "Back",
-            "Частицы" => "Particles",
-            "Напряжение" => "Tension",
-            "Адсорбер 1" => "Adsorber 1",
-            "Адсорбер 2" => "Adsorber 2",
-            "конденсат H2O" => "H2O" + "\n" + "condensate",
-            "Гипс" => "Gypsum",
-            "Объем газа - V, м3/ч" => "Gas volume - V, m3/h",
-            "Температура адцорбции - T, °C" => "Adsorption temperature - T, °C",
-            "Температура дисорбции - T, °C" => "Disorption temperature - T, °C",
-            "Длина гидравли. диаметра - D, м" => "Length of hydraulic diameter - D, m",
-            "Скороть вентилятора - об/мин" => "Fan speed - rpm",
-            _ => originalText
-        };
-    }
-
-    public void SetLanguage(Language language)
-    {
-        currentLanguage = language;
-
-        foreach (var textComponent in allTextComponents)
-        {
-            foreach (Transform child in textComponent.transform)
-            {
-                TextMeshProUGUI childText = child.GetComponent<TextMeshProUGUI>();
-                if (childText != null)
-                {
-                    if (child.name == "KazakhText")
-                        childText.enabled = (language == Language.Kazakh);
-                    else if (child.name == "EnglishText")
-                        childText.enabled = (language == Language.English);
-                }
-            }
-            textComponent.enabled = (language == Language.Russian);
-            //if (textComponent.transform.childCount > 0)
-            //{
-            //    textComponent.enabled = (language == Language.Russian);
-            //}
-
+            if (tmp == null) continue;
+            originalKeys[tmp] = (tmp.text ?? string.Empty).Trim();
         }
     }
 
-    public void SetRussianLanguage()
+    public void ReloadFromCsv(TextAsset csv = null)
     {
-        SetLanguage(Language.Russian);
+        if (csv != null) translationsCsv = csv;
+        map.Clear();
+        LoadCsv(translationsCsv);
+        SetLanguage(currentLanguage);
     }
 
-    public void SetKazakhLanguage()
+    public void SetRussianLanguage() => SetLanguage(Language.Russian);
+    public void SetKazakhLanguage() => SetLanguage(Language.Kazakh);
+    public void SetEnglishLanguage() => SetLanguage(Language.English);
+
+    public void SetLanguage(Language language)
     {
-        SetLanguage(Language.Kazakh);
+        foreach (var tmp in allTextComponents)
+        {
+            if (tmp == null) continue;
+            if (!originalKeys.TryGetValue(tmp, out var key))
+                key = (tmp.text ?? string.Empty).Trim();
+
+            if (TryGetTranslation(key, language, out var translated))
+                tmp.text = translated;
+            else
+                Debug.LogWarning($"[Translator] No translation for key '{key}' → {language}");
+        }
+        currentLanguage = language;
     }
 
-    public void SetEnglishLanguage()
+    private bool TryGetTranslation(string originalName, Language lang, out string value)
     {
-        SetLanguage(Language.English);
+        value = null;
+        if (string.IsNullOrEmpty(originalName)) return false;
+        if (!map.TryGetValue(originalName, out var row)) return false;
+        if (!row.TryGetValue(lang, out value) || string.IsNullOrWhiteSpace(value))
+        {
+            value = null;
+            return false;
+        }
+        return true;
+    }
+
+    // ===== CSV LOADER =====
+
+    private void LoadCsv(TextAsset csvAsset)
+    {
+        using var reader = new StringReader(csvAsset.text);
+
+        // читаем «сырую» первую строку (заголовок) и определяем разделитель
+        string headerRaw = reader.ReadLine();
+        if (headerRaw == null)
+        {
+            Debug.LogError("[Translator] CSV is empty.");
+            return;
+        }
+
+        char delimiter = DetectDelimiter(headerRaw);
+        var header = ParseCsvLine(headerRaw, delimiter);
+
+        int colOriginal = IndexOf(header, "OriginalName");
+        int colKz = IndexOf(header, "Kazakh");
+        int colEn = IndexOf(header, "English");
+        int colRu = IndexOf(header, "Russian");
+
+        if (colOriginal < 0)
+        {
+            Debug.LogError("[Translator] CSV must contain 'OriginalName' header.");
+            return;
+        }
+
+        int rows = 0;
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            var row = ParseCsvLine(line, delimiter);
+            if (row.Count == 0) continue;
+
+            string original = GetCell(row, colOriginal);
+            if (string.IsNullOrWhiteSpace(original)) continue;
+
+            var dict = new Dictionary<Language, string>
+            {
+                { Language.Kazakh,  GetCell(row, colKz) },
+                { Language.English, GetCell(row, colEn) },
+                { Language.Russian, GetCell(row, colRu) }
+            };
+
+            map[original] = dict;
+            rows++;
+        }
+
+        Debug.Log($"[Translator] Loaded {rows} row(s) from CSV. Delimiter='{delimiter}'");
+    }
+
+    private static char DetectDelimiter(string s)
+    {
+        // Простое и надёжное правило для Excel: ; в русской локали, иначе , или таб
+        if (s.Contains(";")) return ';';
+        if (s.Contains("\t")) return '\t';
+        return ','; // по умолчанию
+    }
+
+    private static List<string> ParseCsvLine(string line, char delimiter)
+    {
+        var result = new List<string>();
+        if (line == null) return result;
+
+        var sb = new StringBuilder();
+        bool inQuotes = false;
+
+        for (int i = 0; i < line.Length; i++)
+        {
+            char c = line[i];
+
+            if (inQuotes)
+            {
+                if (c == '"')
+                {
+                    bool isDouble = (i + 1 < line.Length && line[i + 1] == '"');
+                    if (isDouble) { sb.Append('"'); i++; }
+                    else inQuotes = false;
+                }
+                else sb.Append(c);
+            }
+            else
+            {
+                if (c == delimiter)
+                {
+                    result.Add(sb.ToString());
+                    sb.Length = 0;
+                }
+                else if (c == '"') inQuotes = true;
+                else sb.Append(c);
+            }
+        }
+        result.Add(sb.ToString());
+        return result;
+    }
+
+    private static int IndexOf(List<string> header, string name)
+    {
+        for (int i = 0; i < header.Count; i++)
+            if (string.Equals(header[i], name, StringComparison.OrdinalIgnoreCase))
+                return i;
+        return -1;
+    }
+
+    private static string GetCell(List<string> row, int idx)
+    {
+        if (idx < 0 || idx >= row.Count) return string.Empty;
+        return row[idx]?.Trim() ?? string.Empty;
     }
 }

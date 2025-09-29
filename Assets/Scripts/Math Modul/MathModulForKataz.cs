@@ -14,12 +14,16 @@ public class MathModulForKataz : MonoBehaviour
     [SerializeField] private TMP_InputField _katazBlockCount;
     [SerializeField] private TMP_InputField _katazBlockType;
     [SerializeField] private TMP_InputField _gasFlowMain;
+    [SerializeField] private TMP_InputField _gasSource;
+    [SerializeField] private TextMeshProUGUI _temperatureBeforeReact;
+    [SerializeField] private TextMeshProUGUI _temperatureAfterKataz;
 
     [SerializeField] private TextMeshProUGUI gasVelocity;
     [SerializeField] private TextMeshProUGUI gasDensitie;
     [SerializeField] private TextMeshProUGUI gasmassFlow;
     [SerializeField] private TextMeshProUGUI coGaz;
     [SerializeField] private TextMeshProUGUI _sizeText;
+
     [SerializeField] private Translator translator;
 
     private bool isProcessed = false;
@@ -41,6 +45,14 @@ public class MathModulForKataz : MonoBehaviour
     const double Pi = Math.PI;
     const float molarMass = 0.029f;
 
+    //Расходники
+    private double electro;
+    private double electroAdditional;
+    private double consumption;
+    private double catalyzator;
+    private double waterConsumables;
+    private double reagentConsumables;
+
     private void Start()
     {
         _katazBlockCount.text = "4";
@@ -48,6 +60,7 @@ public class MathModulForKataz : MonoBehaviour
         _temperatureText.text = "25 °C";
         _pressureText.text = "101325 Па";
         _flowRateText.text = "1 м³/с";
+        _gasSource.text = "Угольный";
         _katazBlockCount.onValueChanged.AddListener(ChangeBlockNumber);
     }
 
@@ -64,7 +77,8 @@ public class MathModulForKataz : MonoBehaviour
                 "		   " + massFlow.ToString("0.000") + " кг/с";
             coGaz.text = "Вых. концентрация CO: " + "\n" +
                 "		   " + CO_Gaz_Out.ToString("0.000") + " моль/м³";
-            _sizeText.text = $"Диаметр блока: {deametr:0.0} м \n";
+            _sizeText.text = $"Диаметр блока: {deametr:0.0} м \n" +
+                                $"Расходники ЭФ: {((electro + electroAdditional) * 38.85 * 24) + (waterConsumables * 59.84) + (reagentConsumables * 71.56) + (catalyzator) + (consumption): 0.0} тг";
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
@@ -105,6 +119,41 @@ public class MathModulForKataz : MonoBehaviour
         deametr = (float)Math.Ceiling(
                         Math.Sqrt((4.0 * valueGasFlow) / Math.PI / 3600.0 / 2.9)
                         );
+
+        double _tempBefore = double.Parse(_temperatureBeforeReact.text);
+        double _tempAfter = double.Parse(_temperatureAfterKataz.text);
+        double _catalyzBlock = double.Parse(_katazBlockCount.text);
+
+        electro = (1.06 * (_tempAfter - _tempBefore) * 29.68 / 22.4) * valueGasFlow / 3600;
+
+        if (_gasSource.text == "Угольный")
+        {
+            consumption = (0.429 * valueGasFlow) / 0.85 * 1000;
+        }
+        else if (_gasSource.text == "Газ")
+        {
+            consumption = 0.429 * valueGasFlow / (3400 - 1600) * 1000 * 24 * 71.56;
+        }
+        else
+        {
+            consumption = 0;
+        }
+
+        catalyzator = 28.4 * (deametr * deametr) * _catalyzBlock * 2;
+
+        waterConsumables = 0.4 * 450 / 1000 * 24 / 34 * (valueGasFlow / 3600);
+        reagentConsumables = 135 * 24 / 1000 / 34 * (valueGasFlow / 3600);
+
+        electroAdditional = Mathf.Ceil((float)(0.12f * (450f / 1000f) / 5f / 34f * (valueGasFlow / 3600) * 10f)) / 10f * 5f;
+
+        if (_katazBlockType.text == "с драгметаллами")
+        {
+            catalyzator = catalyzator * 25076 / 365;
+        }
+        else if (_katazBlockType.text == "без драгметаллов")
+        {
+            catalyzator = (catalyzator * 25076 + catalyzator * 0.2 * 4200) / 365;
+        }
 
         if (_flowRateText.text == "1,5 м³/с" && !isProcessed)
         {
