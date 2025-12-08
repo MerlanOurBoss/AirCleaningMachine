@@ -7,14 +7,14 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class MathModulForSborCO2 : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem[] _smokes;
+    public ParticleSystem[] _smokes;
     [SerializeField] private TMP_InputField _sorbentTypeText;
     [SerializeField] private TMP_InputField _gasVolumeText;
     [SerializeField] private TMP_InputField _adsorptionTempText;
     [SerializeField] private TMP_InputField _desorptionTempText;
     [SerializeField] private TMP_InputField _diametrSborText;
     [SerializeField] private TMP_InputField _fanSpeedSborText;
-    [SerializeField] private TMP_InputField _gasFlowMain;
+    public TMP_InputField _gasFlowMain;
 
     [SerializeField] private TextMeshProUGUI _adsorptionTimeText;
     [SerializeField] private TextMeshProUGUI _capturedCO2Text;
@@ -45,8 +45,8 @@ public class MathModulForSborCO2 : MonoBehaviour
     private float massCO2;
     private float sorbentCapacity; // моль CO₂/кг
     private float sorbentEfficiency; // доля
-    private float capturedCO2; // Захваченный CO₂ (моль)
-    private float co2FlowRate; // Скорость потока CO2 (моль/ч)
+    public float capturedCO2; // Захваченный CO₂ (моль)
+    public float co2FlowRate; // Скорость потока CO2 (моль/ч)
     private float totalCapacity; // Общая производительность (моль)
     private float effectiveFlowRate; // Эффективная скорость потока (моль/ч)
     private float sorbentMass; // кг
@@ -64,6 +64,17 @@ public class MathModulForSborCO2 : MonoBehaviour
     private double electro;
     private double sorbentConsumables;
     private double parDesorbentConsumption;
+    
+    private static int globalCounterSbor = 0;
+    public int instanceID;
+    
+    private void Awake()
+    {
+        globalCounterSbor++;
+        instanceID = globalCounterSbor;
+
+        Debug.Log($"[SborCO2] Назначен instanceID = {instanceID} для {gameObject.name}");
+    }
     private void Start()
     {
         UpdateSorbentProperties();
@@ -73,6 +84,9 @@ public class MathModulForSborCO2 : MonoBehaviour
         _desorptionTempText.text = "150 °C";
         _diametrSborText.text = "0,1 м";
         _fanSpeedSborText.text = "500 об/мин";
+        
+        var translate = GameObject.FindGameObjectWithTag("Translator");
+        translator =  translate.GetComponent<Translator>();
     }
 
     [System.Obsolete]
@@ -101,10 +115,9 @@ public class MathModulForSborCO2 : MonoBehaviour
         float desorbedCO2 = CalculateDesorption();
 
         electro = (sorbentMass * (desorptionTemp - adsorptionTemp) * (1.1 + 0.86) + sorbentMass * 0.962 * 75) / 0.8 * 1.05 / 3600 * 1.05;
-        sorbentConsumables = sorbentMass / 1000 * (1 + 0.015 * 365) / 365;
-        parDesorbentConsumption = (sorbentMass * 1.1 * (desorptionTemp - adsorptionTemp) + massCO2 * 0.868 * (desorptionTemp - adsorptionTemp) + 129 * massCO2 / 0.044) * 1.1 / (2100 + 4.184 * (170 - desorptionTemp)) / 1000;
+        sorbentConsumables = sorbentMass / 1000 * (1 + 0.015 * 365) / 365 / 24 * 1000;
+        parDesorbentConsumption = (sorbentMass * 1.1 * (desorptionTemp - adsorptionTemp) + massCO2 * 0.868 * (desorptionTemp - adsorptionTemp) + 129 * massCO2 / 0.044) * 1.1 / (2100 + 4.184 * (170 - desorptionTemp)) / 24;
 
-        Debug.Log((electro * 38.85) + " " + (sorbentConsumables * 535 * 193) + " " + (parDesorbentConsumption * 71.56));
         if (translator.currentLanguage == Translator.Language.Russian)
         {
             _adsorptionTimeText.text = $"Время адсорбции:\n           {adsorptionTime:0.00} ч";
@@ -115,7 +128,7 @@ public class MathModulForSborCO2 : MonoBehaviour
             _effectiveFlowRate.text = $"Эффективная скорость потока:\n           {effectiveFlowRate} моль/ч";
             _sizeText.text = $"Длина аппарата: {length:0.0} м \n" +
                                 $"Высота аппарата: {height:0.0} м \n " +
-                                         $"Расходники ЭФ: {(electro * 38.85) + (sorbentConsumables * 535 * 193) + (parDesorbentConsumption* 71.56): 0.0} тг";
+                                         $"Расходники: {(electro * 38.85) + (sorbentConsumables * 535 * 193) + (parDesorbentConsumption* 71.56/1000): 0.0} тг";
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
@@ -126,7 +139,8 @@ public class MathModulForSborCO2 : MonoBehaviour
             _massCO2.text = $"CO2 Салмағы:\n           {massCO2:0.00} кг";
             _effectiveFlowRate.text = $"Тиімді ағын жылдамдығы:\n           {effectiveFlowRate} моль/cағ";
             _sizeText.text = $"Құрылғының ұзындығы: {length:0.0} м \n" +
-                    $"Құрылғының биіктігі: {height:0.0} м";
+                    $"Құрылғының биіктігі: {height:0.0} м"+
+                        $"Шығын материалдар: {(electro * 38.85) + (sorbentConsumables * 535 * 193) + (parDesorbentConsumption* 71.56/1000): 0.0} тг";
         }
         else
         {
@@ -137,7 +151,8 @@ public class MathModulForSborCO2 : MonoBehaviour
             _massCO2.text = $"CO2 Mass:\n           {massCO2:0.00} кг";
             _effectiveFlowRate.text = $"Effective flow rate:\n           {effectiveFlowRate} mol/h";
             _sizeText.text = $"Length of device: {length:0.0} m \n" +
-                    $"Height of device: {height:0.0} m";
+                    $"Height of device: {height:0.0} m" +
+                        $"Consumables: {(electro * 38.85) + (sorbentConsumables * 535 * 193) + (parDesorbentConsumption* 71.56/1000): 0.0} tg";
         }
 
         // Дополнительная логика по скорости газа (ваш код — без изменений)

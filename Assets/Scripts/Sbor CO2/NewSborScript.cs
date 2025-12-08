@@ -54,7 +54,7 @@ public class NewSborScript : MonoBehaviour
     private int state = 0;
 
     [Header("Uroven gaz")]
-    public Renderer[] objectsWithMaterial; // массив из 3 объектов
+    public Renderer[] objectsWithMaterial;
     private int fillCount = 0;
 
     private float displayValue = 0f;
@@ -66,7 +66,7 @@ public class NewSborScript : MonoBehaviour
     private bool isFilling = true;
     private bool isProcessActive = false;
     private bool isDelayActive = false;
-    private bool isPaused = false; // Флаг паузы
+    private bool isPaused = false;
 
     public float timingDelay = 150f;
     private bool isUpdated = false;
@@ -76,10 +76,13 @@ public class NewSborScript : MonoBehaviour
     private Coroutine currentCoroutine;
     private Coroutine currentCoroutine2;
 
-    public float yellowBlinkDuration = 2f; // Время мигания желтой лампочки
-    public float yellowBlinkInterval = 0.3f; // Интервал мигания желтой лампочки
+    public float yellowBlinkDuration = 2f;
+    public float yellowBlinkInterval = 0.3f;
     void Start()
     {
+        var _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        audioListener =  _mainCamera.GetComponent<AudioListener>();
+        
         audioListener.enabled = true;
         absent.color = Color.white;
         absent2.color = Color.white;
@@ -89,18 +92,20 @@ public class NewSborScript : MonoBehaviour
         gazAnalyz[3].SetActive(false);
         absent.SetFloat("_secondColorInfluence", 0.5f);
         absent2.SetFloat("_secondColorInfluence", 0.5f);
+        
+        
     }
 
     void Update()
     {
-        if (isPaused) return; // Если пауза активна, не выполняем обновления
+        if (isPaused) return;
 
         UpdateDisplay();
         HandleDelay();
 
         if (isFirstFilling)
         {
-            HandleFirstFillingProcess(); // Отдельный метод для первого заполнения
+            HandleFirstFillingProcess();
         }
         else
         {
@@ -135,20 +140,18 @@ public class NewSborScript : MonoBehaviour
         {
             yield break;
         }
-         // Выключаем зеленую лампочку
         yield return StartCoroutine(BlinkYellowLamp(yellowLamp, audio));
-        if (yellowLamp != null) yellowLamp.SetActive(false); // Выключаем желтую лампочку
+        if (yellowLamp != null) yellowLamp.SetActive(false);
         if (redLamp != null) redLamp.SetActive(true);
-        if (greenLamp != null) greenLamp.SetActive(false);// Включаем красную лампочку
+        if (greenLamp != null) greenLamp.SetActive(false);
     }
 
     IEnumerator GreenGateSequence(GameObject greenLamp, GameObject yellowLamp, GameObject redLamp, AudioSource audio)
     {
-         // Выключаем красную лампочку
         yield return StartCoroutine(BlinkYellowLamp(yellowLamp, audio));
-        if (yellowLamp != null) yellowLamp.SetActive(false); // Выключаем желтую лампочку
+        if (yellowLamp != null) yellowLamp.SetActive(false);
         if (greenLamp != null) greenLamp.SetActive(true);
-        if (redLamp != null) redLamp.SetActive(false); // Включаем зеленую лампочку
+        if (redLamp != null) redLamp.SetActive(false);
     }
 
     IEnumerator BlinkYellowLamp(GameObject yellowLamp, AudioSource audio)
@@ -211,12 +214,11 @@ public class NewSborScript : MonoBehaviour
 
         for (int i = 0; i < fillCount; i++)
         {
-            // Получаем текущий материал и текущее значение Filling
-            Material mat = objectsWithMaterial[i].material; // Создаётся копия материала, если материал инстанс не установлен заранее
+            Material mat = objectsWithMaterial[i].material;
             float currentFilling = mat.GetFloat("_Filling");
             float newFilling = currentFilling + 2f;
 
-            // Устанавливаем новое значение
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             mat.SetFloat("_Filling", newFilling);
         }
     }
@@ -225,8 +227,8 @@ public class NewSborScript : MonoBehaviour
         display.text = displayValue.ToString("0.");
         display2.text = displayValue2.ToString("0.");
         display3.text = displayValue3.ToString("0.");
-        display4.text = displayValue4.ToString("0." + " °C");
-        display5.text = displayValue5.ToString("0." + " °C");
+        display4.text = displayValue4.ToString("0." + " пїЅC");
+        display5.text = displayValue5.ToString("0." + " пїЅC");
     }
 
     private void HandleDelay()
@@ -259,7 +261,7 @@ public class NewSborScript : MonoBehaviour
 
             if (fillingCount >= timingDelay)
             {
-                isFirstFilling = false; // После первой половины переключаемся на обычный процесс
+                isFirstFilling = false; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             }
         }
     }
@@ -272,10 +274,10 @@ public class NewSborScript : MonoBehaviour
 
             if (isFirstFilling)
             {
-                PlayFirstFillingEffects(); // Запускаем первый процесс заполнения
+                PlayFirstFillingEffects(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 if (fillingCount >= timingDelay)
                 {
-                    isFirstFilling = false; // После первой половины переключаемся
+                    isFirstFilling = false; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 }
             }
             else
@@ -347,7 +349,7 @@ public class NewSborScript : MonoBehaviour
             
         }
     }
-    private void PlayFillingEffects() // для 1го капсуля
+    private void PlayFillingEffects() // пїЅпїЅпїЅ 1пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         bool isStarted = false;
         if (fillingCount >= 0 && fillingCount <= 2)
@@ -439,7 +441,7 @@ public class NewSborScript : MonoBehaviour
         }
         if (fillingCount >= 135 && fillingCount <= 150)
         {
-            if (randomValue == null) // Генерируем случайное число только один раз
+            if (randomValue == null) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
             {
                 randomValue = Random.Range(1, 10);
             }
@@ -467,7 +469,7 @@ public class NewSborScript : MonoBehaviour
         }
         else
         {
-            randomValue = null; // Сбрасываем число, если не в диапазоне
+            randomValue = null; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
 
         if (fillingCount >= 145 && fillingCount <= 150)
@@ -488,7 +490,7 @@ public class NewSborScript : MonoBehaviour
         }
     }
 
-    private void PlayUnfillingEffects()// для 2го капсуля
+    private void PlayUnfillingEffects()// пїЅпїЅпїЅ 2пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         bool isStarted = false;
         if (fillingCount >= 0 && fillingCount <= 2)
@@ -590,7 +592,7 @@ public class NewSborScript : MonoBehaviour
         }
         if (fillingCount >= 135 && fillingCount <= 150)
         {
-            if (randomValue == null) // Генерируем случайное число только один раз
+            if (randomValue == null) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
             {
                 randomValue = Random.Range(1, 10);
             }
@@ -618,7 +620,7 @@ public class NewSborScript : MonoBehaviour
         }
         else
         {
-            randomValue = null; // Сбрасываем число, если не в диапазоне
+            randomValue = null; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
 
         if (fillingCount >= 134 && fillingCount <= 136)

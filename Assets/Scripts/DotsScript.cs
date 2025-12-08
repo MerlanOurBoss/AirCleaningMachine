@@ -6,14 +6,18 @@ public class DotsScript : MonoBehaviour
 {
     public GameObject prefabToSpawn;
     public Transform spawnArea;
+    public BoxCollider spawnCollider;
     public int numberOfPrefabs = 200;
     public float respawnTime = 10f;
     public Transform parentObject;
-
+    
+    [Header("Spawn area (Р»РѕРєР°Р»СЊРЅС‹Рµ СЂР°Р·РјРµСЂС‹)")]
+    public Vector3 spawnBoxSize = new Vector3(1f, 1f, 1f);
+    
     private int spawnedCount = 0;
     private bool isFull = false;
     private bool isPaused = false;
-    private List<GameObject> spawnedPrefabs = new List<GameObject>(); // Список созданных объектов
+    private List<GameObject> spawnedPrefabs = new List<GameObject>(); 
 
     private void Update()
     {
@@ -26,8 +30,8 @@ public class DotsScript : MonoBehaviour
     public void StartDots()
     {
         isPaused = false;
-        spawnArea.gameObject.SetActive(true); // Включаем точку спавна
-        InvokeRepeating("SpawnPrefab", 1f, .1f);
+        spawnArea.gameObject.SetActive(true);
+        InvokeRepeating("SpawnPrefab", 1f, .05f);
     }
 
     void SpawnPrefab()
@@ -60,33 +64,51 @@ public class DotsScript : MonoBehaviour
     {
         isPaused = true;
         CancelInvoke("SpawnPrefab");
-        spawnArea.gameObject.SetActive(false); // Отключаем точку спавна
+        spawnArea.gameObject.SetActive(false); 
     }
 
     public void ResumeSpawning()
     {
         isPaused = false;
-        spawnArea.gameObject.SetActive(true); // Включаем точку спавна
-        InvokeRepeating("SpawnPrefab", 1f, .1f);
+        spawnArea.gameObject.SetActive(true);
+        InvokeRepeating("SpawnPrefab", 1f, .05f);
     }
 
     Vector3 GetRandomSpawnPosition()
     {
-        float x = Random.Range(spawnArea.position.x - spawnArea.localScale.x / 2f, spawnArea.position.x + spawnArea.localScale.x / 2f);
-        float y = Random.Range(spawnArea.position.y - spawnArea.localScale.y / 2f, spawnArea.position.y + spawnArea.localScale.y / 2f);
-        float z = Random.Range(spawnArea.position.z - spawnArea.localScale.z / 2f, spawnArea.position.z + spawnArea.localScale.z / 2f);
+        if (spawnCollider == null)
+        {
+            // fallback РЅР° РІР°СЂРёР°РЅС‚ 1, РµСЃР»Рё РєРѕР»Р»Р°Р№РґРµСЂР° РЅРµС‚
+            Vector3 half = spawnArea.localScale * 0.5f;
+            Vector3 localRandomPosFallback = new Vector3(
+                Random.Range(-half.x, half.x),
+                Random.Range(-half.y, half.y),
+                Random.Range(-half.z, half.z)
+            );
+            return spawnArea.TransformPoint(localRandomPosFallback);
+        }
 
-        return new Vector3(x, y, z);
+        // С†РµРЅС‚СЂ Рё СЂР°Р·РјРµСЂ РёР· РєРѕР»Р»Р°Р№РґРµСЂР° (РѕРЅРё СѓР¶Рµ РІ Р»РѕРєР°Р»СЊРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚Р°С…)
+        Vector3 center = spawnCollider.center;
+        Vector3 size = spawnCollider.size;
+        Vector3 halfSize = size * 0.5f;
+
+        Vector3 localRandomPos = new Vector3(
+            Random.Range(center.x - halfSize.x, center.x + halfSize.x),
+            Random.Range(center.y - halfSize.y, center.y + halfSize.y),
+            Random.Range(center.z - halfSize.z, center.z + halfSize.z)
+        );
+
+        return spawnArea.TransformPoint(localRandomPos);
     }
 
     void ActivateRigidbodies()
     {
-        // Удаляем уничтоженные объекты из списка перед активацией Rigidbody
         spawnedPrefabs.RemoveAll(prefab => prefab == null);
 
         foreach (GameObject prefab in spawnedPrefabs)
         {
-            if (prefab != null) // Проверяем, существует ли объект
+            if (prefab != null)
             {
                 Rigidbody rb = prefab.GetComponent<Rigidbody>();
                 if (rb != null)

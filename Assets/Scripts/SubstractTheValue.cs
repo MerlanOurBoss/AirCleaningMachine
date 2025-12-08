@@ -20,7 +20,7 @@ public class SubstractTheValue : MonoBehaviour
     [SerializeField] private TMP_InputField _gasFlowMain;
     [SerializeField] private TMP_Text notificationText;
     [SerializeField] private GameObject notificationPanel;
-
+    [SerializeField] private GameObject mainParent;
 
     [SerializeField] private float threshold = 200000f;  // порог
     [SerializeField] private float autoHideSeconds = 7f; // время показа
@@ -68,6 +68,31 @@ public class SubstractTheValue : MonoBehaviour
 
     private void Update()
     {
+        if (_gasFlowMain.text == "100000 м³/ч")
+        {
+            mainParent.transform.localScale = new Vector3(1, 1, 1); 
+        }
+        else if (_gasFlowMain.text == "150000 м³/ч - ТЭЦ Павлодар")
+        {
+            mainParent.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f); 
+        }
+        else if (_gasFlowMain.text == "200000 м³/ч")
+        {
+            mainParent.transform.localScale = new Vector3(1.15f, 1.15f, 1.15f); 
+        }
+        else if (_gasFlowMain.text == "250000 м³/ч - ТЭЦ Алматы")
+        {
+            mainParent.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f); 
+        }
+        else if (_gasFlowMain.text == "400000 м³/ч")
+        {
+            mainParent.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f); 
+        }
+        else if (_gasFlowMain.text == "500000 м³/ч")
+        {
+            mainParent.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f); 
+        }
+        
         if (!TryParseGasFlow(_gasFlowMain?.text, out var flow))
             return;
 

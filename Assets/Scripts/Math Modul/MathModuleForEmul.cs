@@ -7,14 +7,13 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class MathModuleForEmul : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem[] _mySmokes;
-    [SerializeField] private DropSpawner[] _drops;
+    public ParticleSystem[] _mySmokes;
     [SerializeField] private TMP_InputField _temperature;
     [SerializeField] private TMP_InputField _gasFlow;
     [SerializeField] private TMP_InputField _waterFlow;
-    [SerializeField] private TMP_InputField _fluidType;
-    [SerializeField] private TMP_InputField _gasFlowMain;
-    [SerializeField] private string fluid;
+    public TMP_InputField _fluidType;
+    public TMP_InputField _gasFlowMain;
+    public string fluid;
 
     [SerializeField] private TextMeshProUGUI gasSpeed;
     [SerializeField] private TextMeshProUGUI waterSpeed;
@@ -31,7 +30,8 @@ public class MathModuleForEmul : MonoBehaviour
     private float _waterMassFlow = 0;
     private float _reynoldsNumber = 0;
     private float _massTransfer = 0;
-    private float _gasСonsumption = 0;
+    public float _gasСonsumption = 0;
+    public float сonsumption = 0;
 
     private readonly float empiricalConstantsA = 0.5f;
     private readonly float empiricalConstantsB = 0.8f;
@@ -44,9 +44,7 @@ public class MathModuleForEmul : MonoBehaviour
     private readonly float waterDynamicViscosity = 0.001f;
     private readonly float causticSodaDynamicViscosity = 0.0012f;
     private readonly float sodaDynamicViscosity = 0.0013f;
-
-    private readonly float сonsumption = 34f;
-
+    
     //Габариты
     private float deametr = 0;
     private double height = 0;
@@ -54,14 +52,29 @@ public class MathModuleForEmul : MonoBehaviour
     //Расходники
     private double electro;
     private double waterConsumables;
+    private double dryReagentConsumptionCount;
     private double dryReagentConsumption;
+    private double otherConsumables;
+    
+    private static int globalCounter = 0;
+    public int instanceID;
+    
+    private void Awake()
+    {
+        globalCounter++;
+        instanceID = globalCounter;
 
+        Debug.Log($"[Emul] Назначен instanceID = {instanceID} для {gameObject.name}");
+    }
     void Start()
     {
         _temperature.text = "15 °C";
         _gasFlow.text = "14 м³/с";
         _waterFlow.text = "0,1 м³/с";
         _fluidType.text = fluid;
+        
+        var translate = GameObject.FindGameObjectWithTag("Translator");
+        translator =  translate.GetComponent<Translator>();
     }
 
     [System.Obsolete]
@@ -83,7 +96,7 @@ public class MathModuleForEmul : MonoBehaviour
                 "		   " + _gasСonsumption.ToString() + " м³/с";
             sizeText.text = $"Диаметр аппарата: {deametr:0.0} м \n" +
                         $"Высота аппарата: {height:0.0} м \n" +
-                         $"Расходники ЭФ: {electro + waterConsumables + dryReagentConsumption: 0.0} тг"; ;
+                         $"Расходники: {(electro * 38.85)+ (waterConsumables * 59.84) + dryReagentConsumption + otherConsumables: 0.0} тг"; ;
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
@@ -100,7 +113,8 @@ public class MathModuleForEmul : MonoBehaviour
             gasСonsumption.text = "Сұйықтықты тұтыну: " + "\n" +
                 "		   " + _gasСonsumption.ToString() + " м³/с";
             sizeText.text = $"Құрылғының диаметрі: {deametr:0.0} м \n" +
-                                $"Құрылғының биіктігі: {height:0.0} м";
+                                $"Құрылғының биіктігі: {height:0.0} м \n" +
+                                    $"Шығын материалдар: {(electro * 38.85) + (waterConsumables * 59.84) + dryReagentConsumption + otherConsumables: 0.0} тг"; ;
         }
         else
         {
@@ -117,7 +131,8 @@ public class MathModuleForEmul : MonoBehaviour
             gasСonsumption.text = "Gas Сonsumption: " + "\n" +
                 "		   " + _gasСonsumption.ToString() + " м³/с";
             sizeText.text = $"Diameter of device: {deametr:0.0} m \n" +
-                                $"Height of device: {height:0.0} m";
+                                $"Height of device: {height:0.0} m \n" +
+                                    $"Consumables: {(electro * 38.85) + (waterConsumables * 59.84) + dryReagentConsumption + otherConsumables: 0.0} tg";
         }
 
         if (_gasFlow.text == "10 м³/с")
@@ -201,14 +216,15 @@ public class MathModuleForEmul : MonoBehaviour
         _gasMassFlow = (_gasSpeed * 3.14159f * Mathf.Pow(deametr, 2)) / 4;
 
         _waterMassFlow = (_waterSpeed * 3.14159f * Mathf.Pow(deametr, 2)) / 4;
-
-        _gasСonsumption = (0.22f * сonsumption) / 1000; 
-
+        
         _massTransfer = empiricalConstantsA * Mathf.Pow((_reynoldsNumber / deametrDroplet), empiricalConstantsB);
 
         string inputGasFlow = _gasFlowMain.text;
         string numberGasFlow = inputGasFlow.Split(' ')[0];
         double valueGasFlow = double.Parse(numberGasFlow);
+        
+        сonsumption = (float)valueGasFlow / 3600;
+        _gasСonsumption = (0.22f * сonsumption) / 1000; 
 
         deametr = (float)Math.Ceiling(
             Math.Sqrt((4.0 * valueGasFlow) / Math.PI / 3600.0 / 2.9)
@@ -216,7 +232,26 @@ public class MathModuleForEmul : MonoBehaviour
         height = Math.Ceiling(((0.8 + 18 * 0.15 + 0.35 * deametr + 0.6) / 5.0) * 10.0) / 10.0 * 5.0;
 
         electro = 0.12 * (_gasСonsumption * 3600);
-        waterConsumables = 0.005 * (valueGasFlow * 1000) * 24;
-        dryReagentConsumption = (10 / 100.0) * (1100 / 1000.0) * (valueGasFlow / 1000.0) / 0.95 * ((fluid == "Едкий натрий" || fluid == "Сода") ? 1 : 1)/ 1000.0 * 24;
+        waterConsumables = 0.005 * (valueGasFlow * 1000);
+        dryReagentConsumptionCount = (10 / 100.0) * (1100 / 1000.0) * (valueGasFlow / 1000.0) / 0.95 * ((fluid == "Едкий натрий" || fluid == "Сода") ? 1 : 1)/ 1000;
+
+        float fluidCon = 1;
+
+        if (fluid == "Едкий натрий")
+        {
+            fluidCon = 200000;
+        }
+        else if (fluid == "Сода")
+        {
+            fluidCon = 125000;
+        }
+        else
+        {
+            fluidCon = 1;
+        }
+        
+        dryReagentConsumption = dryReagentConsumptionCount * fluidCon;
+
+        otherConsumables = (8090 + 0.036 * valueGasFlow) / 365 / 24;
     }
 }

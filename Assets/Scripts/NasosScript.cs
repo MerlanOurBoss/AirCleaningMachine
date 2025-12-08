@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,8 +20,14 @@ public class NasosScript : MonoBehaviour
     public GameObject water;
     private int count = 1;
     public int countWater = 1;
+    public ChamgingEmul chamgingEmul;
     private bool isEnableNasos = false;
     private bool isEnableWater = false;
+
+    private void Start()
+    {
+        countWater = chamgingEmul.countWater;
+    }
 
     private void Update()
     {
@@ -34,10 +41,20 @@ public class NasosScript : MonoBehaviour
             }
             foreach (PlayableDirector item in fliudDirector)
             {
-                int a = item.playableGraph.GetRootPlayableCount();
-                for (int i = 0; i < a; i++)
+                if (item == null) 
+                    continue;
+
+                if (!item.playableGraph.IsValid())
+                    continue;
+
+                var graph = item.playableGraph;
+
+                int rootCount = graph.GetRootPlayableCount();
+                for (int i = 0; i < rootCount; i++)
                 {
-                    item.playableGraph.GetRootPlayable(i).SetSpeed(1f);
+                    var root = graph.GetRootPlayable(i);
+                    if (root.IsValid())
+                        root.SetSpeed(1f);
                 }
             }
         }
@@ -50,10 +67,20 @@ public class NasosScript : MonoBehaviour
             }
             foreach (PlayableDirector item in fliudDirector)
             {
-                int a = item.playableGraph.GetRootPlayableCount();
-                for (int i = 0; i < a; i++)
+                if (item == null) 
+                    continue;
+
+                if (!item.playableGraph.IsValid())
+                    continue;
+
+                var graph = item.playableGraph;
+
+                int rootCount = graph.GetRootPlayableCount();
+                for (int i = 0; i < rootCount; i++)
                 {
-                    item.playableGraph.GetRootPlayable(i).SetSpeed(1.5f);
+                    var root = graph.GetRootPlayable(i);
+                    if (root.IsValid())
+                        root.SetSpeed(1.5f);
                 }
             }
         }
@@ -65,10 +92,20 @@ public class NasosScript : MonoBehaviour
             }
             foreach (PlayableDirector item in fliudDirector)
             {
-                int a = item.playableGraph.GetRootPlayableCount();
-                for (int i = 0; i < a; i++)
+                if (item == null) 
+                    continue;
+
+                if (!item.playableGraph.IsValid())
+                    continue;
+
+                var graph = item.playableGraph;
+
+                int rootCount = graph.GetRootPlayableCount();
+                for (int i = 0; i < rootCount; i++)
                 {
-                    item.playableGraph.GetRootPlayable(i).SetSpeed(1.7f);
+                    var root = graph.GetRootPlayable(i);
+                    if (root.IsValid())
+                        root.SetSpeed(1.7f);
                 }
             }
         }

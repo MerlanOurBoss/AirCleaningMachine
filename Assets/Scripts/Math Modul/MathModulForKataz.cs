@@ -7,17 +7,15 @@ using UnityEngine.UIElements;
 
 public class MathModulForKataz : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem[] _smokes;
+    public ParticleSystem[] _smokes;
     [SerializeField] private TMP_InputField _temperatureText;
     [SerializeField] private TMP_InputField _pressureText;
     [SerializeField] private TMP_InputField _flowRateText;
-    [SerializeField] private TMP_InputField _katazBlockCount;
-    [SerializeField] private TMP_InputField _katazBlockType;
-    [SerializeField] private TMP_InputField _gasFlowMain;
+    public TMP_InputField _katazBlockCount;
+    public TMP_InputField _katazBlockType;
+    public TMP_InputField _gasFlowMain;
     [SerializeField] private TMP_InputField _gasSource;
-    [SerializeField] private TextMeshProUGUI _temperatureBeforeReact;
-    [SerializeField] private TextMeshProUGUI _temperatureAfterKataz;
-
+    public double valueGasFlow = 0;
     [SerializeField] private TextMeshProUGUI gasVelocity;
     [SerializeField] private TextMeshProUGUI gasDensitie;
     [SerializeField] private TextMeshProUGUI gasmassFlow;
@@ -25,6 +23,9 @@ public class MathModulForKataz : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _sizeText;
 
     [SerializeField] private Translator translator;
+
+    public double _tempBefore;
+    public double _tempAfter;
 
     private bool isProcessed = false;
     private bool isProcessed1 = false;
@@ -52,7 +53,17 @@ public class MathModulForKataz : MonoBehaviour
     private double catalyzator;
     private double waterConsumables;
     private double reagentConsumables;
+    
+    private static int globalCounterKataz = 0;
+    public int instanceID;
+    
+    private void Awake()
+    {
+        globalCounterKataz++;
+        instanceID = globalCounterKataz;
 
+        Debug.Log($"[Kataz] Назначен instanceID = {instanceID} для {gameObject.name}");
+    }
     private void Start()
     {
         _katazBlockCount.text = "4";
@@ -62,6 +73,9 @@ public class MathModulForKataz : MonoBehaviour
         _flowRateText.text = "1 м³/с";
         _gasSource.text = "Угольный";
         _katazBlockCount.onValueChanged.AddListener(ChangeBlockNumber);
+        
+        var translate = GameObject.FindGameObjectWithTag("Translator");
+        translator =  translate.GetComponent<Translator>();
     }
 
     [Obsolete]
@@ -78,7 +92,7 @@ public class MathModulForKataz : MonoBehaviour
             coGaz.text = "Вых. концентрация CO: " + "\n" +
                 "		   " + CO_Gaz_Out.ToString("0.000") + " моль/м³";
             _sizeText.text = $"Диаметр блока: {deametr:0.0} м \n" +
-                                $"Расходники ЭФ: {((electro + electroAdditional) * 38.85 * 24) + (waterConsumables * 59.84) + (reagentConsumables * 71.56) + (catalyzator) + (consumption): 0.0} тг";
+                                $"Расходники: {((electro + electroAdditional) * 38.85) + (waterConsumables * 59.84) + (reagentConsumables * 71.56) + (catalyzator) + (consumption): 0.0} тг";
         }
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
@@ -90,7 +104,8 @@ public class MathModulForKataz : MonoBehaviour
                 "		   " + massFlow.ToString("0.000") + " кг/с";
             coGaz.text = "Шығар. СО концентрациясы: " + "\n" +
                 "		   " + CO_Gaz_Out.ToString("0.000") + " моль/м³";
-            _sizeText.text = $"Блок диаметрі: {deametr:0.0} м \n";
+            _sizeText.text = $"Блок диаметрі: {deametr:0.0} м \n"+
+                             $"Шығын материалдар: {((electro + electroAdditional) * 38.85) + (waterConsumables * 59.84) + (reagentConsumables * 71.56) + (catalyzator) + (consumption): 0.0} тг";
         }
         else
         {
@@ -102,7 +117,8 @@ public class MathModulForKataz : MonoBehaviour
                 "		   " + massFlow.ToString("0.000") + " kg/s";
             coGaz.text = "CO output concentration: " + "\n" +
                 "		   " + CO_Gaz_Out.ToString("0.000") + " mol/m³";
-            _sizeText.text = $"Block diameter: {deametr:0.0} m \n";
+            _sizeText.text = $"Block diameter: {deametr:0.0} m \n"+
+                             $"Consumables: {((electro + electroAdditional) * 38.85) + (waterConsumables * 59.84) + (reagentConsumables * 71.56) + (catalyzator) + (consumption): 0.0} тг";
         }
 
         float crossSectionArea = (float)((float)Pi * Math.Pow(0.5 / 2, 2));
@@ -114,14 +130,12 @@ public class MathModulForKataz : MonoBehaviour
 
         string inputGasFlow = _gasFlowMain.text;
         string numberGasFlow = inputGasFlow.Split(' ')[0];
-        double valueGasFlow = double.Parse(numberGasFlow);
+        valueGasFlow = double.Parse(numberGasFlow);
 
         deametr = (float)Math.Ceiling(
                         Math.Sqrt((4.0 * valueGasFlow) / Math.PI / 3600.0 / 2.9)
                         );
-
-        double _tempBefore = double.Parse(_temperatureBeforeReact.text);
-        double _tempAfter = double.Parse(_temperatureAfterKataz.text);
+        
         double _catalyzBlock = double.Parse(_katazBlockCount.text);
 
         electro = (1.06 * (_tempAfter - _tempBefore) * 29.68 / 22.4) * valueGasFlow / 3600;
@@ -139,20 +153,20 @@ public class MathModulForKataz : MonoBehaviour
             consumption = 0;
         }
 
-        catalyzator = 28.4 * (deametr * deametr) * _catalyzBlock * 2;
+        catalyzator = 28.4 * (deametr * deametr) * _catalyzBlock;
 
-        waterConsumables = 0.4 * 450 / 1000 * 24 / 34 * (valueGasFlow / 3600);
-        reagentConsumables = 135 * 24 / 1000 / 34 * (valueGasFlow / 3600);
+        waterConsumables = 0.4 * 450 / 1000 / 34 * (valueGasFlow / 3600);
+        reagentConsumables = 135 / 1000 / 34 * (valueGasFlow / 3600);
 
         electroAdditional = Mathf.Ceil((float)(0.12f * (450f / 1000f) / 5f / 34f * (valueGasFlow / 3600) * 10f)) / 10f * 5f;
 
         if (_katazBlockType.text == "с драгметаллами")
         {
-            catalyzator = catalyzator * 25076 / 365;
+            catalyzator = catalyzator * 25076 * 2 / 365 / 24;
         }
         else if (_katazBlockType.text == "без драгметаллов")
         {
-            catalyzator = (catalyzator * 25076 + catalyzator * 0.2 * 4200) / 365;
+            catalyzator = (catalyzator * 25076 + catalyzator * 0.2 * 4200) / 365 / 24;
         }
 
         if (_flowRateText.text == "1,5 м³/с" && !isProcessed)

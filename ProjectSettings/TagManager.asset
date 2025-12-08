@@ -103,6 +103,10 @@ TagManager:
   - Trubes
   - TrubesCO2
   - Collec
+  - Translator
+  - GasFlow
+  - PartsOfCamera
+  - ComponentsCamera
   layers:
   - Default
   - TransparentFX

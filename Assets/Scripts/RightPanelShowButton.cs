@@ -8,13 +8,9 @@ public class RightPanelShowButton : MonoBehaviour
     [SerializeField] private Animator _anim;
     [SerializeField] private Button _button;
     [SerializeField] private Image _image;
-    [SerializeField] private Button[] _typesB;
 
     public Sprite rightSprite;
     public Sprite leftSprite;
-
-    public Color selectedColor = Color.green;
-    public Color normalColor = Color.white;
 
     private bool isOpened = false;
 
@@ -30,20 +26,7 @@ public class RightPanelShowButton : MonoBehaviour
         {
             _button.onClick.AddListener(TogglePanel);
         }
-        else
-        {
-            Debug.Log("Button не назначена");
-        }
 
-        foreach (Button btn in _typesB)
-        {
-            btn.onClick.AddListener(() => OnTypeButtonClicked(btn));
-        }
-
-        if (_typesB.Length > 0)
-        {
-            OnTypeButtonClicked(_typesB[0]);
-        }
     }
     private void TogglePanel()
     {
@@ -59,31 +42,5 @@ public class RightPanelShowButton : MonoBehaviour
         }
 
         isOpened = !isOpened;
-    }
-
-    private void OnTypeButtonClicked(Button clickedButton)
-    {
-        foreach (Button btn in _typesB)
-        {
-            Image img = btn.GetComponent<Image>();
-            Transform detail = btn.transform.Find("Подробно");
-
-            if (btn == clickedButton)
-            {
-                if (img != null)
-                    img.color = selectedColor;
-
-                if (detail != null)
-                    detail.gameObject.SetActive(true);
-            }
-            else
-            {
-                if (img != null)
-                    img.color = normalColor;
-
-                if (detail != null)
-                    detail.gameObject.SetActive(false);
-            }
-        }
     }
 }

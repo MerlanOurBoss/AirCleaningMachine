@@ -8,19 +8,20 @@ using static UnityEngine.Rendering.DebugUI;
 public class MathModuleForElectro : MonoBehaviour
 {
     [Header("Particle Systems")]
-    [SerializeField] private ParticleSystem[] _smokeParticles;
+    public ParticleSystem[] _smokeParticles;
 
     [Header("Input Fields")]
     [SerializeField] private TMP_InputField _densityInput;
     [SerializeField] private TMP_InputField _speedInput;
     [SerializeField] private TMP_InputField _radiusInput;
     [SerializeField] private TMP_InputField _chargeInput;
-    [SerializeField] private TMP_InputField _gasFlow;
-    [SerializeField] private TextMeshProUGUI _temperature;
-    [SerializeField] private TextMeshProUGUI _solidParticle;
+    
+    public TMP_InputField _gasFlow;
+    public TextMeshProUGUI _temperature;
+    public TextMeshProUGUI _solidParticle;
 
     [Header("Visual Effects")]
-    [SerializeField] private Animator _electroFilterAnimator;
+    public Animator _electroFilterAnimator;
 
     [Header("Output Text Fields")]
     [SerializeField] private TextMeshProUGUI _potentialText;
@@ -41,7 +42,7 @@ public class MathModuleForElectro : MonoBehaviour
     private const float VISCOSITY = 1.8f;
 
     //Габариты
-    private double length = 0;
+    public double length = 0;
     private double height = 0;
     private double width = 0;
 
@@ -52,17 +53,23 @@ public class MathModuleForElectro : MonoBehaviour
     private double consumables;
     private double ashFormation;
 
+    private static int globalCounterElectro = 0;
+    public int instanceID;
 
+    private void Awake()
+    {
+        globalCounterElectro++;
+        instanceID = globalCounterElectro;
+
+        Debug.Log($"[Electro] Назначен instanceID = {instanceID} для {gameObject.name}");
+
+    }
     private void Start()
     {
         InitializeInputs();
-        var col = GameObject.FindGameObjectWithTag("Collec");
 
-        _electroFilterAnimator = col.GetComponent<Animator>();
-        if (_electroFilterAnimator != null)
-        {
-            Debug.LogError("Can not find electrofilter animator on scene");
-        }
+        var translate = GameObject.FindGameObjectWithTag("Translator");
+        _translator =  translate.GetComponent<Translator>();
     }
 
     private void InitializeInputs()
@@ -82,41 +89,40 @@ public class MathModuleForElectro : MonoBehaviour
 
     private void CalculatePhysics()
     {
-        float density = ParseInputValue(_densityInput.text);
-        float speed = ParseInputValue(_speedInput.text);
-        float radius = ParseInputValue(_radiusInput.text);
-        float charge = ParseInputValue(_chargeInput.text);
+        var density = ParseInputValue(_densityInput.text);
+        var speed = ParseInputValue(_speedInput.text);
+        var radius = ParseInputValue(_radiusInput.text);
+        var charge = ParseInputValue(_chargeInput.text);
 
         // Electric calculations
         _electricPotential = -density / -ELECTRIC_CONSTANT;
         _electricField = -1 * _electricPotential;
 
 
-        string inputTemperature = _temperature.text;
-        string numberTemperature = inputTemperature.Split(' ')[0];
-        double valueTemperature  = double.Parse(numberTemperature);
+        var inputTemperature = _temperature.text;
+        var numberTemperature = inputTemperature.Split(' ')[0];
+        var valueTemperature  = double.Parse(numberTemperature);
 
-        string inputSolidParticle = _solidParticle.text;
-        string numberSolidParticle = inputSolidParticle.Split(' ')[0];
-        double valueSolidParticle = double.Parse(numberSolidParticle);
+        var inputSolidParticle = _solidParticle.text;
+        var numberSolidParticle = inputSolidParticle.Split(' ')[0];
+        var valueSolidParticle = double.Parse(numberSolidParticle);
 
 
         _specificPower = 35.7 * Math.Exp(0.015 * (((valueTemperature + (valueTemperature - 0.5 * length * 4)) / 2.0) - 150.0)) * Math.Log(1.0 / (1.0 - 0.7));
 
-        string inputGasFlow = _gasFlow.text;
-        string numberGasFlow = inputGasFlow.Split(' ')[0];
-        double valueGasFlow = double.Parse(numberGasFlow);
-
+        var inputGasFlow = _gasFlow.text;
+        var numberGasFlow = inputGasFlow.Split(' ')[0];
+        var valueGasFlow = double.Parse(numberGasFlow);
         area = (Math.Log(1 / (1 - 0.7)) / 0.1 / 3600) * valueGasFlow;
 
         height = Math.Ceiling(Math.Sqrt(area / 6.0));
         length = Math.Ceiling(area / 4.0f / height);
         width = Math.Ceiling(valueGasFlow / 3600.0 / 1.2 / height);
 
-        double countElectro = (valueGasFlow * _specificPower) / 1000000;
-        electro = countElectro * 38.85 * 24;
-        consumables = 0.7058 * valueGasFlow / 365;
-        ashFormation = valueGasFlow * (valueSolidParticle - (1 - valueSolidParticle)) / 1000000000 * 24;
+        var countElectro = (valueGasFlow * _specificPower) / 1000000;
+        electro = countElectro * 38.85;
+        consumables = 0.7058 * valueGasFlow / 365/24;
+        ashFormation = valueGasFlow * (valueSolidParticle - (1 - valueSolidParticle)) / 1000000000;
     }
 
     private float ParseInputValue(string inputText)
@@ -133,24 +139,26 @@ public class MathModuleForElectro : MonoBehaviour
             case Translator.Language.Russian:
                 _potentialText.text = $"Потенциал: \n\t\t{_electricPotential:0.000} Дж/Кл";
                 _fieldText.text = $"Электрическое поле: \n\t\t{_electricField:0.000} Н/Кл";
-                _sizeText.text = $"Длина ЭФ: {length:0.0} м \n" +
-                                    $"Ширина ЭФ: {width:0.0} м \n" +
-                                        $"Высота ЭФ: {height:0.0} м \n" +
-                                         $"Расходники ЭФ: {electro + consumables: 0.0} тг";
+                _sizeText.text = $"Длина: {length:0.0} м \n" +
+                                    $"Ширина: {width:0.0} м \n" +
+                                        $"Высота: {height:0.0} м \n" +
+                                         $"Расходники: {electro + consumables: 0.0} тг";
                 break;
             case Translator.Language.Kazakh:
                 _potentialText.text = $"Потенциал: {_electricPotential:0.000} Дж/Кл";
                 _fieldText.text = $"Электр өрісі: {_electricField:0.000} Н/Кл";
-                _sizeText.text = $"ЭФ Ұзындығы: {length:0.0} м \n" +
-                                    $"ЭФ Ені: {width:0.0} м \n" +
-                                        $"ЭФ Биіктігі: {height:0.0} м";
+                _sizeText.text = $"Ұзындығы: {length:0.0} м \n" +
+                                    $"Ені: {width:0.0} м \n" +
+                                        $"Биіктігі: {height:0.0} м \n" +
+                                         $"Шығын материалдар: {electro + consumables: 0.0} тг"; ;
                 break;
             default:
                 _potentialText.text = $"Potential: {_electricPotential:0.000} J/Kl";
                 _fieldText.text = $"Electric field: {_electricField:0.000} N/Kl";
-                _sizeText.text = $"EF Length: {length:0.0} m \n" +
-                                    $"EF Width: {width:0.0} m \n" +
-                                        $"EF Height: {height:0.0} m";
+                _sizeText.text = $"Length: {length:0.0} m \n" +
+                                    $"Width: {width:0.0} m \n" +
+                                        $"Height: {height:0.0} m \n" +
+                                         $"Consumables: {electro + consumables: 0.0} tg"; ;
                 break;
         }
     }
@@ -197,4 +205,5 @@ public class MathModuleForElectro : MonoBehaviour
             colorModule.color = new ParticleSystem.MinMaxGradient(newGradient);
         }
     }
+
 }

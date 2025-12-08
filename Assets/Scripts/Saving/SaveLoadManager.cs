@@ -6,13 +6,13 @@ using System.IO;
 
 public class SaveLoadManager : MonoBehaviour
 {
-    public SceneData[] sceneDatas; // Array to hold multiple SceneData instances
+    public SceneData[] sceneDatas;
     public GameObject[] prefabs;
 
-    public GameObject sborCO2; // Object Sbor CO2
+    public GameObject sborCO2;
 
-    public GameObject buttonPrefab; // Prefab for the button
-    public Transform buttonContainer; // Parent for the buttons
+    public GameObject buttonPrefab;
+    public Transform buttonContainer;
 
     public Camera cam;
     public PipeConnector pipe;
@@ -21,8 +21,7 @@ public class SaveLoadManager : MonoBehaviour
 
     private Dictionary<Button, int> buttonToSceneDataMap = new Dictionary<Button, int>();
     private Dictionary<int, List<GameObject>> sceneObjects = new Dictionary<int, List<GameObject>>();
-
-    // Добавляем класс-обертку для сериализации
+    
     [System.Serializable]
     private class SceneDataWrapper
     {
@@ -43,7 +42,6 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Start()
     {
-        // Загружаем все сохраненные данные при старте
         LoadAllSavedData();
 
         int idx = ConstructionSelector.SelectedIndex;
@@ -55,7 +53,7 @@ public class SaveLoadManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Не задан SelectedIndex — нечего загружать.");
+            Debug.LogWarning("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ SelectedIndex пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
         }
 
         if (gameObject.transform.parent != null)
@@ -63,11 +61,9 @@ public class SaveLoadManager : MonoBehaviour
             CameraUI = gameObject.transform.parent.parent.gameObject;
         }
 
-        // Создаем кнопки для всех сохраненных сцен
         CreateLoadButtonsForSavedData();
     }
 
-    // Метод для загрузки всех сохраненных данных
     private void LoadAllSavedData()
     {
         for (int i = 0; i < sceneDatas.Length; i++)
@@ -76,7 +72,6 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
-    // Метод для создания кнопок на основе сохраненных данных
     private void CreateLoadButtonsForSavedData()
     {
         for (int i = 0; i < sceneDatas.Length; i++)
@@ -88,15 +83,13 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
-    // Получаем путь для сохранения файла (работает в билде)
     private string GetSaveFilePath(int sceneIndex)
     {
         string directory = Path.Combine(Application.persistentDataPath, "SavedConstructions");
-        Directory.CreateDirectory(directory); // Создаем папку если не существует
+        Directory.CreateDirectory(directory);
         return Path.Combine(directory, $"construction_{sceneIndex}.json");
     }
 
-    // Сохраняем SceneData в файл
     private void SaveSceneDataToFile(int sceneIndex)
     {
         if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)
@@ -124,7 +117,6 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
-    // Загружаем SceneData из файла
     private void LoadSceneDataFromFile(int sceneIndex)
     {
         string filePath = GetSaveFilePath(sceneIndex);
@@ -193,7 +185,8 @@ public class SaveLoadManager : MonoBehaviour
                     objectName = cleanName,
                     position = child.transform.position,
                     rotation = child.transform.rotation,
-                    scale = child.transform.localScale
+                    scale = child.transform.localScale,
+                    tag = child.transform.tag
                 };
                 dataList.Add(data);
 
@@ -214,7 +207,6 @@ public class SaveLoadManager : MonoBehaviour
             if (index != -1)
             {
                 CreateLoadButton(index);
-                // СОХРАНЯЕМ В ФАЙЛ - это ключевое изменение!
                 SaveSceneDataToFile(index);
             }
             else
@@ -235,7 +227,6 @@ public class SaveLoadManager : MonoBehaviour
 
     public void Load(int sceneIndex)
     {
-        // ПЕРЕД загрузкой убеждаемся, что данные актуальны из файла
         LoadSceneDataFromFile(sceneIndex);
 
         if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)
@@ -260,7 +251,6 @@ public class SaveLoadManager : MonoBehaviour
                         GameObject obj = Instantiate(prefab, data.position, data.rotation);
                         if (obj.tag == "Pipe")
                         {
-                            // Логика для Pipe
                         }
                         else if (obj.tag == "Klapon")
                         {
@@ -363,7 +353,6 @@ public class SaveLoadManager : MonoBehaviour
 
             byte[] byteArray = renderedTexture.EncodeToPNG();
 
-            // Используем persistentDataPath для скриншотов тоже
             string dir = Path.Combine(Application.persistentDataPath, "SavedConstructions", "Images");
             Directory.CreateDirectory(dir);
             string filePath = Path.Combine(dir, $"cameracapture_{index}.png");
@@ -375,7 +364,6 @@ public class SaveLoadManager : MonoBehaviour
 
             sceneDatas[index].screenshotPath = filePath;
 
-            // Сохраняем изменения пути скриншота
             SaveSceneDataToFile(index);
         }
     }
@@ -387,18 +375,28 @@ public class SaveLoadManager : MonoBehaviour
             SceneData sceneData = sceneDatas[sceneIndex];
             if (sceneData != null)
             {
-                // Очищаем данные
+                if (!string.IsNullOrEmpty(sceneData.screenshotPath))
+                {
+                    if (File.Exists(sceneData.screenshotPath))
+                    {
+                        File.Delete(sceneData.screenshotPath);
+                        Debug.Log($"Screenshot deleted: {sceneData.screenshotPath}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Screenshot file not found: {sceneData.screenshotPath}");
+                    }
+                }
+                
                 sceneData.objectsData = null;
                 sceneData.screenshotPath = null;
 
-                // Удаляем файл сохранения
                 string filePath = GetSaveFilePath(sceneIndex);
                 if (File.Exists(filePath))
                 {
                     File.Delete(filePath);
                 }
 
-                // Удаляем объекты
                 if (sceneObjects.ContainsKey(sceneIndex))
                 {
                     foreach (GameObject obj in sceneObjects[sceneIndex])
