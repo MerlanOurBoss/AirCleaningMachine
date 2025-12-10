@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
@@ -28,10 +30,11 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
     private float updateInterval = 5f;
     private ChamgingEmul emulType;
     [SerializeField] private MathModuleForEmul _emul;
+    [SerializeField] private TextMeshProUGUI _fluidTest;
     
     private static int globalCounter = 0;
     public int instanceID;
-
+    private bool isStart = false;
     private void Start()
     {
         globalCounter++;
@@ -85,6 +88,9 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
         {
             _emul.fluid = "Сода";
         }
+        
+        GameObject testText = GameObject.FindGameObjectWithTag("TestText");
+        _fluidTest = testText.GetComponent<TextMeshProUGUI>();
     }
 
     
@@ -96,7 +102,87 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
             yield return new WaitForSeconds(updateInterval);
         }
     }
-    
+
+    private void Update()
+    {
+        if (_isPlaying)
+        {
+            if (_emulFluid != null)
+            {
+                foreach (PlayableDirector fluid in _emulFluid)
+                {
+                    if (fluid)
+                    {
+                        fluid.Play();
+                        DiagnoseTimeline(fluid);
+                    }
+
+                }
+            }
+        }
+        else
+        {
+            if (_emulFluid != null)
+            {
+                foreach (PlayableDirector fluid in _emulFluid)
+                {
+                    if (fluid)
+                        fluid.Stop();
+                }
+            }
+        }
+    }
+    public void DiagnoseTimeline(PlayableDirector dir)
+    {
+        Debug.Log("===== DIAGNOSTICS FOR PLAYABLE DIRECTOR =====");
+
+        if (dir == null)
+        {
+            Debug.LogError("❌ PlayableDirector = NULL");
+            return;
+        }
+
+        Debug.Log("Object: " + dir.gameObject.name);
+
+        // 1. Проверка сцены
+        Debug.Log("Scene: '" + dir.gameObject.scene.name + "'");
+        if (dir.gameObject.scene.name == null || dir.gameObject.scene.name == "")
+            Debug.LogWarning("⚠ Объект находится в prefab scene (НЕ в активной сцене!)");
+        if (dir.gameObject.scene != SceneManager.GetActiveScene())
+            Debug.LogWarning("⚠ Объект НЕ в активной сцене. Это может ломать Timeline.");
+
+        // 2. Проверка playableAsset
+        if (dir.playableAsset == null)
+            Debug.LogError("❌ Timeline asset (playableAsset) = NULL — в BUILD asset НЕ сохранился.");
+
+        // 3. Проверка графа
+        Debug.Log("Root Playables: " + dir.playableGraph.GetRootPlayableCount());
+        if (!dir.playableGraph.IsValid())
+            Debug.LogWarning("⚠ PlayableGraph = INVALID. RebuildGraph() требуется.");
+
+        // 4. Проверка активен ли объект
+        if (!dir.gameObject.activeInHierarchy)
+            Debug.LogWarning("⚠ Объект не активен. Timeline не будет играть.");
+
+        // 5. Проверка bindings (очень важно, если Timeline использует AnimationTrack)
+        var timeline = dir.playableAsset as TimelineAsset;
+        if (timeline != null)
+        {
+            foreach (var track in timeline.GetOutputTracks())
+            {
+                var binding = dir.GetGenericBinding(track);
+
+                if (binding == null)
+                    Debug.LogWarning("⚠ TRACK '" + track.name + "' потерял binding! (частая причина в динамически загруженных префабах)");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("⚠ TimelineAsset не является TimelineAsset (null или другой тип?).");
+        }
+
+        Debug.Log("===== END OF DIAGNOSTICS =====");
+    }
     // ReSharper disable Unity.PerformanceAnalysis
     private void UpdateCalculatedParameters()
     {
@@ -206,15 +292,6 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
             }
         }
 
-        if (_emulFluid != null)
-        {
-            foreach (PlayableDirector fluid in _emulFluid)
-            {
-                if (fluid != null)
-                    fluid.Play();
-            }
-        }
-
         _isPlaying = true;
     }
     
@@ -234,15 +311,6 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
             foreach (DropSpawner spawner in dropSpawners)
             {
                 spawner.stopCor();
-            }
-        }
-        
-        if (_emulFluid != null)
-        {
-            foreach (PlayableDirector fluid in _emulFluid)
-            {
-                if (fluid != null)
-                    fluid.Stop();
             }
         }
 

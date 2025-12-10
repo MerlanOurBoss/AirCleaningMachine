@@ -12073,6 +12073,7 @@ MonoBehaviour:
   enterButton: {fileID: 7667350339011788036}
   switchButton: {fileID: 8861656741924344658}
   _emul: {fileID: 0}
+  _fluidTest: {fileID: 0}
   instanceID: 0
 --- !u!1 &898945447355845936
 GameObject:

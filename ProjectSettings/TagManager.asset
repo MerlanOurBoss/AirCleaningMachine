@@ -107,6 +107,7 @@ TagManager:
   - GasFlow
   - PartsOfCamera
   - ComponentsCamera
+  - TestText
   layers:
   - Default
   - TransparentFX
