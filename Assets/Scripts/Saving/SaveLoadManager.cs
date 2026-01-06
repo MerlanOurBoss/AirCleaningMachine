@@ -353,16 +353,17 @@ public class SaveLoadManager : MonoBehaviour
 
             byte[] byteArray = renderedTexture.EncodeToPNG();
 
-            string dir = Path.Combine(Application.persistentDataPath, "SavedConstructions", "Images");
-            Directory.CreateDirectory(dir);
-            string filePath = Path.Combine(dir, $"cameracapture_{index}.png");
-            File.WriteAllBytes(filePath, byteArray);
+            string relativePath = Path.Combine("SavedConstructions", "Images", $"cameracapture_{index}.png");
+            string fullPath = Path.Combine(Application.persistentDataPath, relativePath);
 
+            File.WriteAllBytes(fullPath, byteArray);
+            sceneDatas[index].screenshotPath = relativePath;
+            
             cam.rect = new Rect(0.22f, 0.051f, 0.753f, 0.883f);
             cam.targetTexture = null;
             CameraUI.SetActive(true);
 
-            sceneDatas[index].screenshotPath = filePath;
+            sceneDatas[index].screenshotPath = fullPath;
 
             SaveSceneDataToFile(index);
         }
@@ -391,10 +392,10 @@ public class SaveLoadManager : MonoBehaviour
                 sceneData.objectsData = null;
                 sceneData.screenshotPath = null;
 
-                string filePath = GetSaveFilePath(sceneIndex);
-                if (File.Exists(filePath))
+                string fullPath = Path.Combine(Application.persistentDataPath, sceneData.screenshotPath);
+                if (File.Exists(fullPath))
                 {
-                    File.Delete(filePath);
+                    File.Delete(fullPath);
                 }
 
                 if (sceneObjects.ContainsKey(sceneIndex))

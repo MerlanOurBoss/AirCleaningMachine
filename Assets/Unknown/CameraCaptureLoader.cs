@@ -3,47 +3,59 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;  // убрать, если не используете UI
+using UnityEngine.UI;  // пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UI
 
 public class CameraCaptureLoader : MonoBehaviour
 {
-    [Header("Префаб для отображения картинки")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public GameObject picturePrefab;
 
-    [Header("Папка относительно DataPath (будет DataPath/SavedObjects/Images)")]
+    [Header("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ DataPath (пїЅпїЅпїЅпїЅпїЅ DataPath/SavedObjects/Images)")]
     public string imagesSubfolder = "SavedObjects/Images";
 
-    [Header("Начальная позиция и смещение между префабами")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public Vector3 startPosition = Vector3.zero;
     public Vector3 offset = new Vector3(2f, 0f, 0f);
 
-    [Tooltip("Имя сцены, где лежит SaveLoadManager")]
+    [Tooltip("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ SaveLoadManager")]
     public string constructionSceneName = "New 3";
 
     void Start()
     {
         LoadAndPlaceImages();
     }
+    private string GetScreenshotFilePath(int sceneIndex)
+    {
+        string directory = Path.Combine(
+            Application.persistentDataPath,
+            "SavedConstructions",
+            "Images"
+        );
+
+        Directory.CreateDirectory(directory);
+
+        return Path.Combine(directory, $"cameracapture_{sceneIndex}.png");
+    }
 
     void LoadAndPlaceImages()
     {
-        // Путь к папке с картинками
-        string folderPath = Path.Combine(Application.dataPath, imagesSubfolder);
+        // пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        string folderPath = Path.GetDirectoryName(GetScreenshotFilePath(0));
         if (!Directory.Exists(folderPath))
         {
-            Debug.LogError($"[CameraCaptureLoader] Папка не найдена: {folderPath}");
+            Debug.LogError($"[CameraCaptureLoader] пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {folderPath}");
             return;
         }
 
-        // Берём все файлы cameracapture_*.png
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ cameracapture_*.png
         string[] files = Directory.GetFiles(folderPath, "cameracapture_*.png");
         if (files.Length == 0)
         {
-            Debug.LogWarning($"[CameraCaptureLoader] Нет файлов cameracapture_*.png в {folderPath}");
+            Debug.LogWarning($"[CameraCaptureLoader] пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ cameracapture_*.png пїЅ {folderPath}");
             return;
         }
 
-        // Сортируем по номеру из имени
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         var sorted = files.OrderBy(path =>
         {
             var name = Path.GetFileName(path);
@@ -51,7 +63,7 @@ public class CameraCaptureLoader : MonoBehaviour
             return m.Success ? int.Parse(m.Groups[1].Value) : 0;
         }).ToArray();
 
-        // Инстанцируем и назначаем текстуры
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         for (int i = 0; i < sorted.Length; i++)
         {
             string file = sorted[i];
@@ -62,11 +74,11 @@ public class CameraCaptureLoader : MonoBehaviour
             Texture2D tex = new Texture2D(2, 2);
             if (!tex.LoadImage(data))
             {
-                Debug.LogWarning($"[CameraCaptureLoader] Не удалось загрузить изображение {file}");
+                Debug.LogWarning($"[CameraCaptureLoader] пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {file}");
                 continue;
             }
 
-            // Создаём префаб
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             GameObject go = Instantiate(picturePrefab, transform);
             go.transform.localPosition = startPosition + offset * i;
 
@@ -81,7 +93,7 @@ public class CameraCaptureLoader : MonoBehaviour
                 
             }
 
-            // Пытаемся найти RawImage (UI)
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ RawImage (UI)
             var raw = go.GetComponent<RawImage>();
             if (raw != null)
             {
@@ -89,7 +101,7 @@ public class CameraCaptureLoader : MonoBehaviour
                 continue;
             }
 
-            //Или SpriteRenderer(мир)
+            //пїЅпїЅпїЅ SpriteRenderer(пїЅпїЅпїЅ)
             var sr = go.GetComponent<SpriteRenderer>();
             if (sr != null)
             {
@@ -97,7 +109,7 @@ public class CameraCaptureLoader : MonoBehaviour
                 sr.sprite = Sprite.Create(tex, r, new Vector2(0.5f, 0.5f));
                 
             }
-            Debug.LogWarning($"[CameraCaptureLoader] На префабе нет ни RawImage, ни SpriteRenderer.");
+            Debug.LogWarning($"[CameraCaptureLoader] пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ RawImage, пїЅпїЅ SpriteRenderer.");
         }
     }
 }
