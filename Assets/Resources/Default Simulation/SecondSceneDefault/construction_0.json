@@ -1,0 +1,165 @@
+{
+    "objectsData": [
+        {
+            "objectName": "Oven",
+            "position": {
+                "x": 473.8372802734375,
+                "y": 44.649993896484378,
+                "z": 133.77752685546876
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": -0.7071068286895752,
+                "z": 0.0,
+                "w": 0.7071068286895752
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "tag": "Facilities_Oven"
+        },
+        {
+            "objectName": "ElectroFilter",
+            "position": {
+                "x": 241.07125854492188,
+                "y": 92.64999389648438,
+                "z": 157.5614013671875
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": -1.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "tag": "Facilities_Electro"
+        },
+        {
+            "objectName": "Emul",
+            "position": {
+                "x": 44.353759765625,
+                "y": 153.64999389648438,
+                "z": 180.7281494140625
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "tag": "Facilities_Emul"
+        },
+        {
+            "objectName": "Emul",
+            "position": {
+                "x": -120.79568481445313,
+                "y": 153.64999389648438,
+                "z": 183.137939453125
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "tag": "Facilities_Emul"
+        },
+        {
+            "objectName": "New Katalizator",
+            "position": {
+                "x": -162.94873046875,
+                "y": 47.649993896484378,
+                "z": -72.4632568359375
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": -1.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "tag": "Facilities_Kataz"
+        },
+        {
+            "objectName": "New Sbor",
+            "position": {
+                "x": 500.78216552734377,
+                "y": 182.64999389648438,
+                "z": -308.2952880859375
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "tag": "Facilities_NewCapsul"
+        },
+        {
+            "objectName": "PipeMesh_Standard",
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "tag": "Pipe"
+        },
+        {
+            "objectName": "PipeMesh_Standard",
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "tag": "Pipe"
+        }
+    ],
+    "screenshotPath": "C:/Users/y.assankhan/AppData/LocalLow/DefaultCompany/GasCleaning\\SavedConstructions\\Images\\cameracapture_1.png"
+}

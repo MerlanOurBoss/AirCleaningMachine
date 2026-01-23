@@ -184,8 +184,8 @@ public class MathModulForKataz : MonoBehaviour
                 newGradient.SetKeys(
                     currentGradient.colorKeys,
                     new GradientAlphaKey[] {
-                    new GradientAlphaKey(0.7f, 0.0f), // Начальная альфа
-                    new GradientAlphaKey(0.7f, 1.0f) // Конечная альфа
+                    new GradientAlphaKey(0.7f, 0.0f),
+                    new GradientAlphaKey(0.7f, 1.0f) 
                     }
                 );
                 colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
@@ -209,8 +209,8 @@ public class MathModulForKataz : MonoBehaviour
                 newGradient.SetKeys(
                     currentGradient.colorKeys,
                     new GradientAlphaKey[] {
-                    new GradientAlphaKey(0.3f, 0.0f), // Начальная альфа
-                    new GradientAlphaKey(0.3f, 1.0f) // Конечная альфа
+                    new GradientAlphaKey(0.3f, 0.0f),
+                    new GradientAlphaKey(0.3f, 1.0f)
                     }
                 );
                 colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
@@ -236,8 +236,8 @@ public class MathModulForKataz : MonoBehaviour
                 newGradient.SetKeys(
                     currentGradient.colorKeys,
                     new GradientAlphaKey[] {
-                    new GradientAlphaKey(1.0f, 0.0f), // Начальная альфа
-                    new GradientAlphaKey(1.0f, 1.0f) // Конечная альфа
+                    new GradientAlphaKey(1.0f, 0.0f), 
+                    new GradientAlphaKey(1.0f, 1.0f) 
                     }
                 );
                 colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);

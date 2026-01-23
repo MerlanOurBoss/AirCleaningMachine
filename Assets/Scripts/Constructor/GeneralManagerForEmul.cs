@@ -144,16 +144,14 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
 
         Debug.Log("Object: " + dir.gameObject.name);
 
-        // 1. Проверка сцены
         Debug.Log("Scene: '" + dir.gameObject.scene.name + "'");
         if (dir.gameObject.scene.name == null || dir.gameObject.scene.name == "")
             Debug.LogWarning("⚠ Объект находится в prefab scene (НЕ в активной сцене!)");
         if (dir.gameObject.scene != SceneManager.GetActiveScene())
             Debug.LogWarning("⚠ Объект НЕ в активной сцене. Это может ломать Timeline.");
 
-        // 2. Проверка playableAsset
         if (dir.playableAsset == null)
-            Debug.LogError("❌ Timeline asset (playableAsset) = NULL — в BUILD asset НЕ сохранился.");
+            Debug.LogError(" Timeline asset (playableAsset) = NULL — в BUILD asset НЕ сохранился.");
 
         // 3. Проверка графа
         Debug.Log("Root Playables: " + dir.playableGraph.GetRootPlayableCount());
@@ -319,7 +317,6 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
         
     private void OnDisable()
     {
-        // Сбрасываем счётчик только если сцена выгружается
         globalCounter = 0;
     }
 }

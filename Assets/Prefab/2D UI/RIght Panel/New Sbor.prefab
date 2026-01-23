@@ -1194,7 +1194,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0422\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u0430 \u0430\u0434\u0446\u043E\u0440\u0431\u0446\u0438\u0438
+  m_text: "\u0422\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u0430 \u0430\u0434\u0441\u043E\u0440\u0431\u0446\u0438\u0438
     - T, \xB0C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8094ed3b5f723034a9155c4d0333f15f, type: 2}
@@ -9960,6 +9960,9 @@ MonoBehaviour:
   translator: {fileID: 0}
   newSbor: {fileID: 0}
   fansAnim: []
+  capturedCO2: 0
+  co2FlowRate: 0
+  instanceID: 0
 --- !u!1 &6599586879126472980
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,165 @@
+{
+  "objectsData": [
+    {
+      "objectName": "Oven",
+      "position": {
+        "x": 486.0533752441406,
+        "y": 44.649993896484378,
+        "z": 183.01620483398438
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": -0.7071068286895752,
+        "z": 0.0,
+        "w": 0.7071068286895752
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "tag": "Facilities_Oven"
+    },
+    {
+      "objectName": "ElectroFilter",
+      "position": {
+        "x": 300.97576904296877,
+        "y": 92.64999389648438,
+        "z": 225.63888549804688
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "tag": "Facilities_Electro"
+    },
+    {
+      "objectName": "Emul",
+      "position": {
+        "x": 100.9976577758789,
+        "y": 153.64999389648438,
+        "z": 234.15045166015626
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 0.0,
+        "w": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "tag": "Facilities_Emul"
+    },
+    {
+      "objectName": "Emul",
+      "position": {
+        "x": -51.652069091796878,
+        "y": 153.64999389648438,
+        "z": 235.00588989257813
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 0.0,
+        "w": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "tag": "Facilities_Emul_Reagent"
+    },
+    {
+      "objectName": "New Katalizator",
+      "position": {
+        "x": -90.99118041992188,
+        "y": 47.649993896484378,
+        "z": 39.99658203125
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "tag": "Facilities_Kataz"
+    },
+    {
+      "objectName": "New Sbor",
+      "position": {
+        "x": 452.61090087890627,
+        "y": 182.64999389648438,
+        "z": -126.37896728515625
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 0.0,
+        "w": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "tag": "Facilities_NewCapsul"
+    },
+    {
+      "objectName": "PipeMesh_Standard",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "tag": "Pipe"
+    },
+    {
+      "objectName": "PipeMesh_Standard",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "tag": "Pipe"
+    }
+  ],
+  "screenshotPath": "C:/Users/y.assankhan/AppData/LocalLow/DefaultCompany/GasCleaning\\SavedConstructions\\Images\\cameracapture_0.png"
+}

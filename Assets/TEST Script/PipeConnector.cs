@@ -15,8 +15,8 @@ public class PipeConnector : MonoBehaviour
     }
 
     public List<SystemComponent> components = new List<SystemComponent>();
-    public PipeGenerator pipeGenerator; // Ссылка на PipeGenerator в сцене
-    public PipeGenerator pipeGeneratorCO2; // Ссылка на PipeGeneratorCO2 в сцене
+    public PipeGenerator pipeGenerator;
+    public PipeGenerator pipeGeneratorCO2;
     public GameObject pipeMeshStandardPrefab;
     private HashSet<GameObject> trackedFacilities = new HashSet<GameObject>();
     private void Start()
@@ -192,12 +192,12 @@ public class PipeConnector : MonoBehaviour
             if (comp.component != null)
             {
                 if (Application.isPlaying)
-                    DestroyImmediate(comp.component); // гарантированное немедленное удаление
+                    DestroyImmediate(comp.component);
                 else
                     DestroyImmediate(comp.component);
             }
 
-            components.RemoveAt(i); // работает 100% потому что объект уже удалён
+            components.RemoveAt(i);
         }
 
         GameObject sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");

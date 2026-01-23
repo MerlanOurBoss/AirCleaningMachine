@@ -143,7 +143,6 @@ public class GeneralManagerForElectroFilter : GeneralManagerBase, IParameterModu
     
     private void OnDisable()
     {
-        // Сбрасываем счётчик только если сцена выгружается
         globalCounterElectro = 0;
     }
 }

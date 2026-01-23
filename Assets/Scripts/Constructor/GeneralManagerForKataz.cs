@@ -234,7 +234,6 @@ public class GeneralManagerForKataz : GeneralManagerBase, IParameterModule
     
     private void OnDisable()
     {
-        // Сбрасываем счётчик только если сцена выгружается
         globalCounterKataz = 0;
     }
 }

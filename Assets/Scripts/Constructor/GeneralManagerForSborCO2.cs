@@ -79,7 +79,6 @@ public class GeneralManagerForSborCO2 : GeneralManagerBase, IParameterModule
         }
     }
     
-    // ReSharper disable Unity.PerformanceAnalysis
     private void UpdateCalculatedParameters()
     {
         foreach (var row in rows)
@@ -150,7 +149,6 @@ public class GeneralManagerForSborCO2 : GeneralManagerBase, IParameterModule
     
     private void OnDisable()
     {
-        // Сбрасываем счётчик только если сцена выгружается
         globalCounterSbor = 0;
     }
 }

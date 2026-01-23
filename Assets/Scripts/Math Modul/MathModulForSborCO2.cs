@@ -43,18 +43,17 @@ public class MathModulForSborCO2 : MonoBehaviour
     private int b = 0;
 
     private float massCO2;
-    private float sorbentCapacity; // моль CO₂/кг
-    private float sorbentEfficiency; // доля
-    public float capturedCO2; // Захваченный CO₂ (моль)
-    public float co2FlowRate; // Скорость потока CO2 (моль/ч)
-    private float totalCapacity; // Общая производительность (моль)
-    private float effectiveFlowRate; // Эффективная скорость потока (моль/ч)
-    private float sorbentMass; // кг
-
-    // Константы по данным из Excel
-    private const float CO2Concentration = 9f; // 0.8%
-    private const float molarMassCO2 = 44f; // г/моль
-    private const float oneMolarVolume = 22.41f; // м³/моль
+    private float sorbentCapacity; 
+    private float sorbentEfficiency; 
+    public float capturedCO2; 
+    public float co2FlowRate; 
+    private float totalCapacity; 
+    private float effectiveFlowRate; 
+    private float sorbentMass; 
+    
+    private const float CO2Concentration = 9f; 
+    private const float molarMassCO2 = 44f; 
+    private const float oneMolarVolume = 22.41f;
 
     //Габариты
     private double length = 0;
@@ -94,7 +93,6 @@ public class MathModulForSborCO2 : MonoBehaviour
     {
         UpdateSorbentProperties();
 
-        // Обновление анимации вентилятора
         switch (_fanSpeedSborText.text)
         {
             case "500 об/мин":
@@ -155,7 +153,6 @@ public class MathModulForSborCO2 : MonoBehaviour
                         $"Consumables: {(electro * 38.85) + (sorbentConsumables * 535 * 193) + (parDesorbentConsumption* 71.56/1000): 0.0} tg";
         }
 
-        // Дополнительная логика по скорости газа (ваш код — без изменений)
         if (_gasVolumeText.text == "150 м³/ч" && !isProcessed)
         {
             a++;
@@ -172,8 +169,8 @@ public class MathModulForSborCO2 : MonoBehaviour
                 newGradient.SetKeys(
                     currentGradient.colorKeys,
                     new GradientAlphaKey[] {
-                    new GradientAlphaKey(0.7f, 0.0f), // Начальная альфа
-                    new GradientAlphaKey(0.7f, 1.0f) // Конечная альфа
+                    new GradientAlphaKey(0.7f, 0.0f), 
+                    new GradientAlphaKey(0.7f, 1.0f) 
                     }
                 );
                 colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
@@ -202,8 +199,8 @@ public class MathModulForSborCO2 : MonoBehaviour
                 newGradient.SetKeys(
                     currentGradient.colorKeys,
                     new GradientAlphaKey[] {
-                    new GradientAlphaKey(0.3f, 0.0f), // Начальная альфа
-                    new GradientAlphaKey(0.3f, 1.0f) // Конечная альфа
+                    new GradientAlphaKey(0.3f, 0.0f), 
+                    new GradientAlphaKey(0.3f, 1.0f) 
                     }
                 );
                 colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
@@ -230,8 +227,8 @@ public class MathModulForSborCO2 : MonoBehaviour
                 newGradient.SetKeys(
                     currentGradient.colorKeys,
                     new GradientAlphaKey[] {
-                    new GradientAlphaKey(1.0f, 0.0f), // Начальная альфа
-                    new GradientAlphaKey(1.0f, 1.0f) // Конечная альфа
+                    new GradientAlphaKey(1.0f, 0.0f), 
+                    new GradientAlphaKey(1.0f, 1.0f) 
                     }
                 );
                 colorModul.color = new ParticleSystem.MinMaxGradient(newGradient);
@@ -271,9 +268,9 @@ public class MathModulForSborCO2 : MonoBehaviour
     {
         massCO2 = 44 * CO2Concentration / 100 * 122500 / 22.5f * 0.7f;
         sorbentMass = massCO2 / (sorbentCapacity * 1.2f);
-        gasVolume = ParseInput(_gasVolumeText.text); // м³/ч
+        gasVolume = ParseInput(_gasVolumeText.text); 
         adsorptionTemp = ParseInput(_adsorptionTempText.text);
-        co2FlowRate = (122500 * CO2Concentration/ 100) / oneMolarVolume; // моль/ч
+        co2FlowRate = (122500 * CO2Concentration/ 100) / oneMolarVolume; 
         totalCapacity = sorbentMass * sorbentCapacity/4000;
         capturedCO2 = massCO2 / 44;
         effectiveFlowRate = co2FlowRate * sorbentEfficiency;

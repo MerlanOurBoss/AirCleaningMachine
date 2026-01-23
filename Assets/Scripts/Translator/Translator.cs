@@ -24,9 +24,8 @@ public class Translator : MonoBehaviour
     private readonly Dictionary<TextMeshProUGUI, string> originalKeys =
         new Dictionary<TextMeshProUGUI, string>();
 
-    void Awake()
+    void Start()
     {
-        // Автопоиск, если список пуст
         if (allTextComponents == null || allTextComponents.Length == 0)
         {
 #if UNITY_2023_1_OR_NEWER
@@ -44,10 +43,6 @@ public class Translator : MonoBehaviour
         LoadCsv(translationsCsv);
         CacheOriginalKeys();
         ApplyFontIfAssigned();
-    }
-
-    void Start()
-    {
         SetLanguage(currentLanguage);
     }
 
@@ -115,7 +110,6 @@ public class Translator : MonoBehaviour
     {
         using var reader = new StringReader(csvAsset.text);
 
-        // читаем «сырую» первую строку (заголовок) и определяем разделитель
         string headerRaw = reader.ReadLine();
         if (headerRaw == null)
         {
@@ -163,10 +157,9 @@ public class Translator : MonoBehaviour
 
     private static char DetectDelimiter(string s)
     {
-        // Простое и надёжное правило для Excel: ; в русской локали, иначе , или таб
         if (s.Contains(";")) return ';';
         if (s.Contains("\t")) return '\t';
-        return ','; // по умолчанию
+        return ',';
     }
 
     private static List<string> ParseCsvLine(string line, char delimiter)
