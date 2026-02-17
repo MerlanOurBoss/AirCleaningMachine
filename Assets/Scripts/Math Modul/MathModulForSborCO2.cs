@@ -17,6 +17,7 @@ public class MathModulForSborCO2 : MonoBehaviour
     public TMP_InputField _gasFlowMain;
 
     [SerializeField] private TextMeshProUGUI _adsorptionTimeText;
+    [SerializeField] private TextMeshProUGUI _desorptionTimeText;
     [SerializeField] private TextMeshProUGUI _capturedCO2Text;
     [SerializeField] private TextMeshProUGUI _desorbedCO2Text;
     [SerializeField] private TextMeshProUGUI _effectiveFlowRate;
@@ -50,7 +51,8 @@ public class MathModulForSborCO2 : MonoBehaviour
     private float totalCapacity; 
     private float effectiveFlowRate; 
     private float sorbentMass; 
-    
+    private float desorptionTime = 0;
+
     private const float CO2Concentration = 9f; 
     private const float molarMassCO2 = 44f; 
     private const float oneMolarVolume = 22.41f;
@@ -119,6 +121,7 @@ public class MathModulForSborCO2 : MonoBehaviour
         if (translator.currentLanguage == Translator.Language.Russian)
         {
             _adsorptionTimeText.text = $"Время адсорбции:\n           {adsorptionTime:0.00} ч";
+            _desorptionTimeText.text = $"Время десорбции:\n           {desorptionTime:0.00} ч";
             _capturedCO2Text.text = $"Захваченный CO2:\n           {capturedCO2:0.00} моль";
             _co2FlowRate.text = $"Скорость потока CO2:\n           {co2FlowRate} кмоль/ч";
             _totalCapacity.text = $"Общая производительность:\n           {totalCapacity:0.00} кмоль";
@@ -246,19 +249,19 @@ public class MathModulForSborCO2 : MonoBehaviour
         switch (sorbentType.ToLower())
         {
             case "цеолитовые":
-                sorbentCapacity = 0.962f;
+                sorbentCapacity = 0.7f;
                 sorbentEfficiency = 0.9f;
                 break;
             case "цирконат лития":
-                sorbentCapacity = 0.962f;
+                sorbentCapacity = 1f;
                 sorbentEfficiency = 0.85f;
                 break;
             case "аминокислотные":
-                sorbentCapacity = 0.962f;
+                sorbentCapacity = 0.92f;
                 sorbentEfficiency = 0.92f;
                 break;
             default:
-                sorbentCapacity = 0.962f;
+                sorbentCapacity = 0.8f;
                 sorbentEfficiency = 0.8f;
                 break;
         }
@@ -266,20 +269,19 @@ public class MathModulForSborCO2 : MonoBehaviour
 
     private float CalculateAdsorptionTime()
     {
-        massCO2 = 44 * CO2Concentration / 100 * 122500 / 22.5f * 0.7f;
-        sorbentMass = massCO2 / (sorbentCapacity * 1.2f);
-        gasVolume = ParseInput(_gasVolumeText.text); 
-        adsorptionTemp = ParseInput(_adsorptionTempText.text);
-        co2FlowRate = (122500 * CO2Concentration/ 100) / oneMolarVolume; 
-        totalCapacity = sorbentMass * sorbentCapacity/4000;
-        capturedCO2 = massCO2 / 44;
-        effectiveFlowRate = co2FlowRate * sorbentEfficiency;
-
         string inputGasFlow = _gasFlowMain.text;
         string numberGasFlow = inputGasFlow.Split(' ')[0];
         double valueGasFlow = double.Parse(numberGasFlow);
 
-        
+        massCO2 = 44 * (CO2Concentration / 100) * ((float)valueGasFlow / 22.4f) * 0.7f;
+        sorbentMass = (massCO2 / sorbentCapacity) * 1.2f;
+        gasVolume = ParseInput(_gasVolumeText.text);
+        adsorptionTemp = ParseInput(_adsorptionTempText.text);
+        co2FlowRate = ((float)valueGasFlow * CO2Concentration / 100) / oneMolarVolume;
+        totalCapacity = sorbentMass * (sorbentCapacity / 1000) * 4;
+        capturedCO2 = massCO2 / 44;
+        effectiveFlowRate = co2FlowRate * sorbentEfficiency;
+
         length = Math.Ceiling(
                     Math.Sqrt((4.0 * (valueGasFlow / 2.0)) / Math.PI / 3600.0 / 0.5)
                     );
@@ -288,14 +290,16 @@ public class MathModulForSborCO2 : MonoBehaviour
                     sorbentMass / (1.0 - 0.37) / 670.0 / (valueGasFlow / 3600.0 / 0.5) + 1.5 * 2.0
                     );
 
-        return totalCapacity / capturedCO2;
+        return capturedCO2 / totalCapacity;
     }
 
     private float CalculateDesorption()
     {
         desorptionTemp = ParseInput(_desorptionTempText.text);
         float desorptionEfficiency = Mathf.Clamp((desorptionTemp - 100f) / 30f, 0f, 1f);
-        return capturedCO2 * desorptionEfficiency;
+        float desorbedCO2 = capturedCO2 * desorptionEfficiency;
+        desorptionTime = capturedCO2 / Mathf.Max(desorbedCO2, 0.001f);
+        return desorbedCO2;
     }
 
     private float ParseInput(string input)
