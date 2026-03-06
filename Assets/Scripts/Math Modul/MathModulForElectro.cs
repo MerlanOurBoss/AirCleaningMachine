@@ -66,20 +66,43 @@ public class MathModuleForElectro : MonoBehaviour
     }
     private void Start()
     {
-        InitializeInputs();
+        var translateObj = GameObject.FindGameObjectWithTag("Translator");
+        _translator = translateObj.GetComponent<Translator>();
 
-        var translate = GameObject.FindGameObjectWithTag("Translator");
-        _translator =  translate.GetComponent<Translator>();
+        if (_translator != null)
+        {
+            _translator.OnLanguageChanged += OnLanguageChanged;
+
+            OnLanguageChanged(_translator.currentLanguage);
+        }
     }
 
-    private void InitializeInputs()
+    private void OnLanguageChanged(Translator.Language lang)
     {
-        _densityInput.text = "0,1 мА/см²";
-        _speedInput.text = "2 м/с";
-        _radiusInput.text = "0,5 мм";
-        _chargeInput.text = "3 Кл";
-    }
+        switch (lang)
+        {
+            case Translator.Language.Russian:
+                _densityInput.text = "0,1 мА/см²";
+                _speedInput.text   = "2 м/с";
+                _radiusInput.text  = "0,5 мм";
+                _chargeInput.text  = "3 Кл";
+                break;
 
+            case Translator.Language.Kazakh:
+                _densityInput.text = "0,1 мА/см²";
+                _speedInput.text   = "2 м/с";
+                _radiusInput.text  = "0,5 мм";
+                _chargeInput.text  = "3 Кл";
+                break;
+
+            case Translator.Language.English:
+                _densityInput.text = "0.1 mA/cm²";
+                _speedInput.text   = "2 m/s";
+                _radiusInput.text  = "0.5 mm";
+                _chargeInput.text  = "3 C";
+                break;
+        }
+    }
     private void Update()
     {
         CalculatePhysics();

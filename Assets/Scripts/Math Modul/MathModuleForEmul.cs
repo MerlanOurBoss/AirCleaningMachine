@@ -21,9 +21,11 @@ public class MathModuleForEmul : MonoBehaviour
     [SerializeField] private TextMeshProUGUI waterMassFlow;
     [SerializeField] private TextMeshProUGUI massTransfer;
     [SerializeField] private TextMeshProUGUI gasСonsumption;
-    [SerializeField] private Translator translator; 
     [SerializeField] private TextMeshProUGUI sizeText;
-
+    
+    [Header("Other Components")]
+    [SerializeField] private Translator _translator;
+    
     private float _gasSpeed = 0;
     private float _waterSpeed = 0;
     private float _gasMassFlow = 0;
@@ -68,19 +70,94 @@ public class MathModuleForEmul : MonoBehaviour
     }
     void Start()
     {
-        _temperature.text = "15 °C";
-        _gasFlow.text = "14 м³/с";
-        _waterFlow.text = "0,1 м³/с";
-        _fluidType.text = fluid;
-        
-        var translate = GameObject.FindGameObjectWithTag("Translator");
-        translator =  translate.GetComponent<Translator>();
+        var translateObj = GameObject.FindGameObjectWithTag("Translator");
+        _translator = translateObj.GetComponent<Translator>();
+
+        if (_translator != null)
+        {
+            _translator.OnLanguageChanged += OnLanguageChanged;
+
+            OnLanguageChanged(_translator.currentLanguage);
+        }
     }
 
+    private void OnLanguageChanged(Translator.Language lang)
+    {
+        switch (lang)
+        {
+            case Translator.Language.Russian:
+                _temperature.text = "15 °C";
+                _gasFlow.text = "14 м³/с";
+                _waterFlow.text = "0,1 м³/с";
+                _fluidType.text = fluid;
+                if (_fluidType.text == "Water" || _fluidType.text == "Су" || _fluidType.text == "Вода")
+                {
+                    _fluidType.text = "Вода";
+                    fluid = "Вода";
+                }
+                else if (_fluidType.text == "Caustic soda" || _fluidType.text == "Каустикалық сода" || _fluidType.text == "Едкий натрий")
+                {
+                    _fluidType.text = "Едкий натрий";
+                    fluid = "Едкий натрий";
+                }
+                else if (_fluidType.text == "Soda" || _fluidType.text == "Сода")
+                {
+                    _fluidType.text = "Сода";
+                    fluid = "Сода";
+                }
+                break;
+
+            case Translator.Language.Kazakh:
+                _temperature.text = "15 °C";
+                _gasFlow.text = "14 м³/с";
+                _waterFlow.text = "0,1 м³/с";
+                _fluidType.text = fluid;
+                if (_fluidType.text == "Water" || _fluidType.text == "Су" || _fluidType.text == "Вода")
+                {
+                    _fluidType.text = "Су";
+                    fluid = "Су";
+                }
+                else if (_fluidType.text == "Caustic soda" || _fluidType.text == "Каустикалық сода" || _fluidType.text == "Едкий натрий")
+                {
+                    _fluidType.text = "Каустикалық сода";
+                    fluid = "Каустикалық сода";
+                }
+                else if (_fluidType.text == "Soda" || _fluidType.text == "Сода")
+                {
+                    _fluidType.text = "Сода";
+                    fluid = "Сода";
+                }
+                break;
+
+            case Translator.Language.English:
+                _temperature.text = "15 °C";
+                _gasFlow.text = "14 m³/s";
+                _waterFlow.text = "0,1 m³/s";
+                _fluidType.text = fluid;
+                if (_fluidType.text == "Water" || _fluidType.text == "Су" || _fluidType.text == "Вода")
+                {
+                    _fluidType.text = "Water";
+                    fluid = "Water";
+                }
+                else if (_fluidType.text == "Caustic soda" || _fluidType.text == "Каустикалық сода" || _fluidType.text == "Едкий натрий")
+                {
+                    _fluidType.text = "Caustic soda";
+                    fluid = "Caustic soda";
+                }
+                else if (_fluidType.text == "Soda" || _fluidType.text == "Сода")
+                {
+                    _fluidType.text = "Soda";
+                    fluid = "Soda";
+                }
+                break;
+        }
+    }
+    
     [System.Obsolete]
     void Update()
     {
-        if (translator.currentLanguage == Translator.Language.Russian)
+        fluid = _fluidType.text;
+        if (_translator.currentLanguage == Translator.Language.Russian)
         {
             gasSpeed.text = "Скорость газа: " + "\n" +
                 "		   " + _gasSpeed.ToString("0.000") + " м/с";
@@ -93,12 +170,12 @@ public class MathModuleForEmul : MonoBehaviour
             massTransfer.text = "Коэф. массового переноса: " + "\n" +
                 "		   " + _massTransfer.ToString("0.0") + " м/с";
             gasСonsumption.text = "Расход жидкости: " + "\n" +
-                "		   " + _gasСonsumption.ToString() + " м³/с";
+                "		   " + _gasСonsumption.ToString("0.000") + " м³/с";
             sizeText.text = $"Диаметр аппарата: {deametr:0.0} м \n" +
                         $"Высота аппарата: {height:0.0} м \n" +
                          $"Расходники: {(electro * 38.85)+ (waterConsumables * 59.84) + dryReagentConsumption + otherConsumables: 0.0} тг"; ;
         }
-        else if (translator.currentLanguage == Translator.Language.Kazakh)
+        else if (_translator.currentLanguage == Translator.Language.Kazakh)
         {
             gasSpeed.text = "Газ жылдамдығы: " + "\n" +
                 "		   " + _gasSpeed.ToString("0.000") + " м/с";
@@ -111,7 +188,7 @@ public class MathModuleForEmul : MonoBehaviour
             massTransfer.text = "Масса тасымалдау коэфф.: " + "\n" +
                 "		   " + _massTransfer.ToString("0.0") + " м/с";
             gasСonsumption.text = "Сұйықтықты тұтыну: " + "\n" +
-                "		   " + _gasСonsumption.ToString() + " м³/с";
+                "		   " + _gasСonsumption.ToString("0.000") + " м³/с";
             sizeText.text = $"Құрылғының диаметрі: {deametr:0.0} м \n" +
                                 $"Құрылғының биіктігі: {height:0.0} м \n" +
                                     $"Шығын материалдар: {(electro * 38.85) + (waterConsumables * 59.84) + dryReagentConsumption + otherConsumables: 0.0} тг"; ;
@@ -129,7 +206,7 @@ public class MathModuleForEmul : MonoBehaviour
             massTransfer.text = "Mass transfer coefficient: " + "\n" +
                 "		   " + _massTransfer.ToString("0.0") + " m/s";
             gasСonsumption.text = "Gas Сonsumption: " + "\n" +
-                "		   " + _gasСonsumption.ToString() + " м³/с";
+                "		   " + _gasСonsumption.ToString("0.000") + " м³/с";
             sizeText.text = $"Diameter of device: {deametr:0.0} m \n" +
                                 $"Height of device: {height:0.0} m \n" +
                                     $"Consumables: {(electro * 38.85) + (waterConsumables * 59.84) + dryReagentConsumption + otherConsumables: 0.0} tg";
@@ -196,11 +273,11 @@ public class MathModuleForEmul : MonoBehaviour
  
         }
 
-        if (_fluidType.text == "Вода")
+        if (_fluidType.text == "Вода" || _fluidType.text == "Water" || _fluidType.text == "Су")
         {
             _reynoldsNumber = (waterDensity * _waterSpeed * deametrDroplet) / waterDynamicViscosity;
         }
-        else if (_fluidType.text == "Едкий натрий")
+        else if (_fluidType.text == "Едкий натрий" || _fluidType.text == "Caustic soda" || _fluidType.text == "Каустикалық сода")
         {
             _reynoldsNumber = (causticSodaDensity * _waterSpeed * deametrDroplet) / causticSodaDynamicViscosity;
         }
@@ -237,11 +314,11 @@ public class MathModuleForEmul : MonoBehaviour
 
         float fluidCon = 1;
 
-        if (fluid == "Едкий натрий")
+        if (fluid == "Едкий натрий" || fluid == "Каустикалық сода" || fluid == "Caustic soda")
         {
             fluidCon = 200000;
         }
-        else if (fluid == "Сода")
+        else if (fluid == "Сода" || fluid == "Сода" || fluid == "Soda")
         {
             fluidCon = 125000;
         }

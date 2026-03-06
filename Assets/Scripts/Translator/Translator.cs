@@ -24,8 +24,25 @@ public class Translator : MonoBehaviour
     private readonly Dictionary<TextMeshProUGUI, string> originalKeys =
         new Dictionary<TextMeshProUGUI, string>();
 
+    public Action<Language> OnLanguageChanged;
+    
     void Start()
     {
+        LoadAllTextMeshProUGUI();
+        
+        if (translationsCsv == null)
+        {
+            Debug.LogError("[Translator] CSV not assigned.");
+            return;
+        }
+        LoadCsv(translationsCsv);
+
+    }
+
+    public void LoadAllTextMeshProUGUI()
+    {
+        allTextComponents = null;
+        
         if (allTextComponents == null || allTextComponents.Length == 0)
         {
 #if UNITY_2023_1_OR_NEWER
@@ -34,13 +51,6 @@ public class Translator : MonoBehaviour
             allTextComponents = GameObject.FindObjectsOfType<TextMeshProUGUI>(true);
 #endif
         }
-
-        if (translationsCsv == null)
-        {
-            Debug.LogError("[Translator] CSV not assigned.");
-            return;
-        }
-        LoadCsv(translationsCsv);
         CacheOriginalKeys();
         ApplyFontIfAssigned();
         SetLanguage(currentLanguage);
@@ -55,11 +65,12 @@ public class Translator : MonoBehaviour
 
     private void CacheOriginalKeys()
     {
-        originalKeys.Clear();
         foreach (var tmp in allTextComponents)
         {
             if (tmp == null) continue;
-            originalKeys[tmp] = (tmp.text ?? string.Empty).Trim();
+
+            if (!originalKeys.ContainsKey(tmp))
+                originalKeys[tmp] = (tmp.text ?? string.Empty).Trim();
         }
     }
 
@@ -81,7 +92,7 @@ public class Translator : MonoBehaviour
         {
             if (tmp == null) continue;
             if (!originalKeys.TryGetValue(tmp, out var key))
-                key = (tmp.text ?? string.Empty).Trim();
+                continue;
 
             if (TryGetTranslation(key, language, out var translated))
                 tmp.text = translated;
@@ -89,6 +100,7 @@ public class Translator : MonoBehaviour
                 Debug.LogWarning($"[Translator] No translation for key '{key}' → {language}");
         }
         currentLanguage = language;
+        OnLanguageChanged?.Invoke(language);
     }
 
     private bool TryGetTranslation(string originalName, Language lang, out string value)

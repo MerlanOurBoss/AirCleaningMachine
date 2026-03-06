@@ -15,9 +15,14 @@ public class SearchableDropDown : MonoBehaviour
     [SerializeField] private Button blockerButton;
     [SerializeField] private GameObject buttonsPrefab = null;
     [SerializeField] private int maxScrollRectSize = 180;
-    [SerializeField] private List<string> avlOptions = new List<string>();
+    
+    [Header("Options by Language")]
+    [SerializeField] private List<string> avlOptionsRussian = new List<string>();
+    [SerializeField] private List<string> avlOptionsKazakh = new List<string>();
+    [SerializeField] private List<string> avlOptionsEnglish = new List<string>();
 
-
+    private List<string> currentOptions = new List<string>();
+    
     private Button ddButton = null;
     private TMP_InputField inputField = null;
     private ScrollRect scrollRect = null;
@@ -28,10 +33,21 @@ public class SearchableDropDown : MonoBehaviour
 
     public delegate void OnValueChangedDel(string val);
     public OnValueChangedDel OnValueChangedEvt;
-
+    private Translator translator;
+    
     void Start()
     {
         Init();
+
+        translator = FindObjectOfType<Translator>();
+
+        if (translator != null)
+        {
+            translator.OnLanguageChanged += SetLanguage;
+
+            // ВАЖНО: синхронизация с текущим языком
+            SetLanguage(translator.currentLanguage);
+        }
     }
 
     private void Init()
@@ -51,9 +67,6 @@ public class SearchableDropDown : MonoBehaviour
         scrollRect.onValueChanged.AddListener(OnScrollRectvalueChange);
         inputField.onValueChanged.AddListener(OnInputvalueChange);
         inputField.onEndEdit.AddListener(OnEndEditing);
-
-        AddItemToScrollRect(avlOptions);
-
     }
     public string GetValue()
     {
@@ -65,7 +78,39 @@ public class SearchableDropDown : MonoBehaviour
         inputField.text = string.Empty;
         
     }
+    public void SetLanguage(Translator.Language language)
+    {
+        Debug.Log("Dropdown language: " + language);
 
+        switch (language)
+        {
+            case Translator.Language.Russian:
+                currentOptions = avlOptionsRussian;
+                break;
+            case Translator.Language.Kazakh:
+                currentOptions = avlOptionsKazakh;
+                break;
+            case Translator.Language.English:
+                currentOptions = avlOptionsEnglish;
+                break;
+        }
+
+        Debug.Log("Options count: " + currentOptions.Count);
+
+        RebuildDropdown();
+    }
+    
+    private void RebuildDropdown()
+    {
+        foreach (Transform child in content)
+            Destroy(child.gameObject);
+
+        initializedButtons.Clear();
+
+        AddItemToScrollRect(currentOptions);
+        
+    }
+    
     public void AddItemToScrollRect(List<string> options)
     {
         foreach (var option in options)
@@ -89,7 +134,7 @@ public class SearchableDropDown : MonoBehaviour
     IEnumerator CheckIfValidInput(string arg)
     {
         yield return new WaitForSeconds(1);
-        if (!avlOptions.Contains(arg))
+        if (!currentOptions.Contains(arg))
         {
 
             inputField.text = String.Empty;
@@ -110,7 +155,7 @@ public class SearchableDropDown : MonoBehaviour
 
     private void OnInputvalueChange(string arg0)
     {
-        if (!avlOptions.Contains(arg0))
+        if (!currentOptions.Contains(arg0))
         {
             FilterDropdown(arg0);
         }

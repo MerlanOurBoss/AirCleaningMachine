@@ -21,8 +21,9 @@ public class MathModulForKataz : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gasmassFlow;
     [SerializeField] private TextMeshProUGUI coGaz;
     [SerializeField] private TextMeshProUGUI _sizeText;
-
-    [SerializeField] private Translator translator;
+    
+    [Header("Other Components")]
+    [SerializeField] private Translator _translator;
 
     public double _tempBefore;
     public double _tempAfter;
@@ -66,22 +67,57 @@ public class MathModulForKataz : MonoBehaviour
     }
     private void Start()
     {
-        _katazBlockCount.text = "4";
-        _katazBlockType.text = "с драгметаллами";
-        _temperatureText.text = "25 °C";
-        _pressureText.text = "101325 Па";
-        _flowRateText.text = "1 м³/с";
-        _gasSource.text = "Угольный";
-        _katazBlockCount.onValueChanged.AddListener(ChangeBlockNumber);
-        
-        var translate = GameObject.FindGameObjectWithTag("Translator");
-        translator =  translate.GetComponent<Translator>();
+        var translateObj = GameObject.FindGameObjectWithTag("Translator");
+        _translator = translateObj.GetComponent<Translator>();
+
+        if (_translator != null)
+        {
+            _translator.OnLanguageChanged += OnLanguageChanged;
+
+            OnLanguageChanged(_translator.currentLanguage);
+        }
     }
 
+    private void OnLanguageChanged(Translator.Language lang)
+    {
+        switch (lang)
+        {
+            case Translator.Language.Russian:
+                _katazBlockCount.text = "4";
+                _katazBlockType.text = "с драгметаллами";
+                _temperatureText.text = "25 °C";
+                _pressureText.text = "101325 Па";
+                _flowRateText.text = "1 м³/с";
+                _gasSource.text = "Угольный";
+                _katazBlockCount.onValueChanged.AddListener(ChangeBlockNumber);
+                break;
+
+            case Translator.Language.Kazakh:
+                _katazBlockCount.text = "4";
+                _katazBlockType.text = "с драгметаллами";
+                _temperatureText.text = "25 °C";
+                _pressureText.text = "101325 Па";
+                _flowRateText.text = "1 м³/с";
+                _gasSource.text = "Көміртек";
+                _katazBlockCount.onValueChanged.AddListener(ChangeBlockNumber);
+                break;
+
+            case Translator.Language.English:
+                _katazBlockCount.text = "4";
+                _katazBlockType.text = "with precious metals";
+                _temperatureText.text = "25 °C";
+                _pressureText.text = "101325 Pa";
+                _flowRateText.text = "1 m³/s";
+                _gasSource.text = "Coal";
+                _katazBlockCount.onValueChanged.AddListener(ChangeBlockNumber);
+                break;
+        }
+    }
+    
     [Obsolete]
     private void Update()
     {
-        if (translator.currentLanguage == Translator.Language.Russian)
+        if (_translator.currentLanguage == Translator.Language.Russian)
         {
             gasVelocity.text = "Скорость газа: " + "\n" +
                 "		   " + velocity.ToString("0.000") + " м/с";
@@ -94,7 +130,7 @@ public class MathModulForKataz : MonoBehaviour
             _sizeText.text = $"Диаметр блока: {deametr:0.0} м \n" +
                                 $"Расходники: {((electro + electroAdditional) * 38.85) + (waterConsumables * 59.84) + (reagentConsumables * 71.56) + (catalyzator) + (consumption): 0.0} тг";
         }
-        else if (translator.currentLanguage == Translator.Language.Kazakh)
+        else if (_translator.currentLanguage == Translator.Language.Kazakh)
         {
             gasVelocity.text = "Газдың жылдамдығы: " + "\n" +
                 "		   " + velocity.ToString("0.000") + " м/с";

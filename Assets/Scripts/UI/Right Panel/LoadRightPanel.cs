@@ -9,6 +9,7 @@ public class LoadRightPanel : MonoBehaviour
     [SerializeField] private GameObject parentComponent;
 
     [SerializeField] private GameObject rootToComponent;
+    [SerializeField] private Translator _translator;
     
     [Header("Main Gas Flow")]
     [SerializeField] private TMP_InputField _gasFlow;
@@ -25,7 +26,7 @@ public class LoadRightPanel : MonoBehaviour
     private List<GameObject> spawnedPrefabs = new List<GameObject>();
     private Button currentlySelectedButton;
     private GameObject currentlySelectedPrefab;
-
+    
     private Dictionary<GameObject, Vector3> originalDetailsPositions = new Dictionary<GameObject, Vector3>();
     private void Start()
     {
@@ -99,7 +100,7 @@ public class LoadRightPanel : MonoBehaviour
                 }
             }
         }
-
+        _translator.LoadAllTextMeshProUGUI();
         StartCoroutine(ActivateFirstItemDelayed());
     }
 

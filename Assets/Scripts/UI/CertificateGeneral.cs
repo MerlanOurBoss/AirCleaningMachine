@@ -14,15 +14,29 @@ public class CertificateGeneral : MonoBehaviour
     {
         if (!isActivated)
         {
-            mycamera.SetActive(false);
-            cameraUI.SetActive(false);
+            if (mycamera != null)
+            {
+                mycamera.SetActive(false);
+            }
+
+            if (cameraUI != null)
+            {
+                cameraUI.SetActive(false);
+            }
             certificate.SetActive(true);
             isActivated = true;
         }
         else
         {
-            mycamera.SetActive(true);
-            cameraUI.SetActive(true);
+            if (mycamera != null)
+            {
+                mycamera.SetActive(true);
+            }
+
+            if (cameraUI != null)
+            {
+                cameraUI.SetActive(true);
+            }
             certificate.SetActive(false);
             isActivated = false;
         }

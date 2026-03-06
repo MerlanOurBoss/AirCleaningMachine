@@ -77,12 +77,10 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
         if (emulType.countWater == 1)
         {
             _emul.fluid = "Вода";
-            Debug.Log("water");
         }
         else if (emulType.countWater == 2)
         {
             _emul.fluid = "Едкий натрий";
-            Debug.Log("no water");
         }
         else
         {
@@ -134,35 +132,24 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
     }
     public void DiagnoseTimeline(PlayableDirector dir)
     {
-        Debug.Log("===== DIAGNOSTICS FOR PLAYABLE DIRECTOR =====");
-
         if (dir == null)
         {
-            Debug.LogError("❌ PlayableDirector = NULL");
             return;
         }
-
-        Debug.Log("Object: " + dir.gameObject.name);
-
-        Debug.Log("Scene: '" + dir.gameObject.scene.name + "'");
         if (dir.gameObject.scene.name == null || dir.gameObject.scene.name == "")
-            Debug.LogWarning("⚠ Объект находится в prefab scene (НЕ в активной сцене!)");
+            Debug.LogWarning("Объект находится в prefab scene (НЕ в активной сцене!)");
         if (dir.gameObject.scene != SceneManager.GetActiveScene())
-            Debug.LogWarning("⚠ Объект НЕ в активной сцене. Это может ломать Timeline.");
+            Debug.LogWarning("Объект НЕ в активной сцене. Это может ломать Timeline.");
 
         if (dir.playableAsset == null)
             Debug.LogError(" Timeline asset (playableAsset) = NULL — в BUILD asset НЕ сохранился.");
-
-        // 3. Проверка графа
-        Debug.Log("Root Playables: " + dir.playableGraph.GetRootPlayableCount());
+        
         if (!dir.playableGraph.IsValid())
-            Debug.LogWarning("⚠ PlayableGraph = INVALID. RebuildGraph() требуется.");
-
-        // 4. Проверка активен ли объект
+            Debug.LogWarning("PlayableGraph = INVALID. RebuildGraph() требуется.");
+        
         if (!dir.gameObject.activeInHierarchy)
-            Debug.LogWarning("⚠ Объект не активен. Timeline не будет играть.");
-
-        // 5. Проверка bindings (очень важно, если Timeline использует AnimationTrack)
+            Debug.LogWarning("Объект не активен. Timeline не будет играть.");
+        
         var timeline = dir.playableAsset as TimelineAsset;
         if (timeline != null)
         {
@@ -171,17 +158,14 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
                 var binding = dir.GetGenericBinding(track);
 
                 if (binding == null)
-                    Debug.LogWarning("⚠ TRACK '" + track.name + "' потерял binding! (частая причина в динамически загруженных префабах)");
+                    Debug.LogWarning("TRACK '" + track.name + "' потерял binding! (частая причина в динамически загруженных префабах)");
             }
         }
         else
         {
-            Debug.LogWarning("⚠ TimelineAsset не является TimelineAsset (null или другой тип?).");
+            Debug.LogWarning("TimelineAsset не является TimelineAsset (null или другой тип?).");
         }
-
-        Debug.Log("===== END OF DIAGNOSTICS =====");
     }
-    // ReSharper disable Unity.PerformanceAnalysis
     private void UpdateCalculatedParameters()
     {
         foreach (var row in rows)
@@ -200,7 +184,6 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
                 float newTemperature = originalValue - (140000 *(_emul._gasСonsumption/_emul.сonsumption)); 
                 float roundedTemp = Mathf.Ceil(newTemperature);
                 
-                Debug.Log(roundedTemp);
                 row.valueTextOut.text = roundedTemp.ToString();
             }
             

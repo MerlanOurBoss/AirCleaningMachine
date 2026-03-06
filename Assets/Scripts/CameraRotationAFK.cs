@@ -9,7 +9,7 @@ public class CameraRotationAFK : MonoBehaviour
 
     void Update()
     {
-        if (!cam.isMoving)
+        if (!cam.isMouseMoving)
         {
             time -= Time.deltaTime;
             if (time < 0)
