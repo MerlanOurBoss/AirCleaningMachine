@@ -170,8 +170,8 @@ public class PipeConnector : MonoBehaviour
     {
         if (pipeGenerator != null)
         {
-            //pipeGenerator.Clear();
-            //pipeGeneratorCO2.Clear();
+            pipeGenerator.Clear();
+            pipeGeneratorCO2.Clear();
             pipeGenerator.UpdateMesh();
             pipeGeneratorCO2.UpdateMesh();
         }
@@ -215,7 +215,8 @@ public class PipeConnector : MonoBehaviour
         }
 
         Mesh meshCopy = Instantiate(generator.GetComponent<MeshFilter>().sharedMesh);
-
+        meshCopy.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32; 
+        
         GameObject savedMeshObject = Instantiate(pipeMeshStandardPrefab, sborCO2.transform);
 
         savedMeshObject.transform.localPosition = Vector3.zero;

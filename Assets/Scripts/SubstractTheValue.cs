@@ -25,13 +25,27 @@ public class SubstractTheValue : MonoBehaviour
     [SerializeField] private float threshold = 200000f;  // порог
     [SerializeField] private float autoHideSeconds = 7f; // время показа
 
+    [Header("Other Components")]
+    [SerializeField] private Translator _translator;
+    
     private Coroutine hideCoroutine;
     private double lastParsedFlow = double.NaN; // предыдущее распознанное значение
     private bool notificationVisible = false;
 
     private void Start()
     {
+        var translateObj = GameObject.FindGameObjectWithTag("Translator");
+        _translator = translateObj.GetComponent<Translator>();
+
+        if (_translator != null)
+        {
+            _translator.OnLanguageChanged += OnLanguageChanged;
+
+            OnLanguageChanged(_translator.currentLanguage);
+        }
+        
         _gasFlowMain.text = "100000 м³/ч";
+                
         previousValues = new int[_inputFields.Length];
 
         for (int i = 0; i < _inputFields.Length; i++)
@@ -66,29 +80,116 @@ public class SubstractTheValue : MonoBehaviour
         UpdateTotalText();
     }
 
+    private void OnLanguageChanged(Translator.Language lang)
+    {
+        switch (lang)
+        {
+            case Translator.Language.Russian:
+                if (_gasFlowMain.text == "100000 м³/ч" || _gasFlowMain.text == "100000 м³/сағ" || _gasFlowMain.text == "100000 m³/h")
+                {
+                    _gasFlowMain.text = "100000 м³/ч";
+                } 
+                else if (_gasFlowMain.text == "150000 м³/ч - ТЭЦ Павлодар" || _gasFlowMain.text == "150000 м³/сағ - ЖЭС Павлодар" || _gasFlowMain.text == "150000 m³/h - CHP Pavlodar")
+                {
+                    _gasFlowMain.text = "150000 м³/ч - ТЭЦ Павлодар";
+                }
+                else if (_gasFlowMain.text == "200000 м³/ч" || _gasFlowMain.text == "200000 м³/сағ" || _gasFlowMain.text == "200000 m³/h")
+                {
+                    _gasFlowMain.text = "200000 м³/ч"; 
+                }
+                else if (_gasFlowMain.text == "250000 м³/ч - ТЭЦ Алматы" || _gasFlowMain.text == "250000 м³/сағ - ЖЭС Алматы" || _gasFlowMain.text == "250000 m³/h - CHP Almaty")
+                {
+                    _gasFlowMain.text = "250000 м³/ч - ТЭЦ Алматы"; 
+                }
+                else if (_gasFlowMain.text == "400000 м³/ч" || _gasFlowMain.text == "400000 м³/сағ" || _gasFlowMain.text == "400000 m³/h")
+                {
+                    _gasFlowMain.text = "400000 м³/ч"; 
+                }
+                else if (_gasFlowMain.text == "500000 м³/ч" || _gasFlowMain.text == "500000 м³/сағ" || _gasFlowMain.text == "500000 m³/h")
+                {
+                    _gasFlowMain.text = "500000 м³/ч";
+                }
+                break;
+
+            case Translator.Language.Kazakh:
+                if (_gasFlowMain.text == "100000 м³/ч" || _gasFlowMain.text == "100000 м³/сағ" || _gasFlowMain.text == "100000 m³/h")
+                {
+                    _gasFlowMain.text = "100000 м³/сағ";
+                } 
+                else if (_gasFlowMain.text == "150000 м³/ч - ТЭЦ Павлодар" || _gasFlowMain.text == "150000 м³/сағ - ЖЭС Павлодар" || _gasFlowMain.text == "150000 m³/h - CHP Pavlodar")
+                {
+                    _gasFlowMain.text = "150000 м³/сағ - ЖЭС Павлодар";
+                }
+                else if (_gasFlowMain.text == "200000 м³/ч" || _gasFlowMain.text == "200000 м³/сағ" || _gasFlowMain.text == "200000 m³/h")
+                {
+                    _gasFlowMain.text = "200000 м³/сағ"; 
+                }
+                else if (_gasFlowMain.text == "250000 м³/ч - ТЭЦ Алматы" || _gasFlowMain.text == "250000 м³/сағ - ЖЭС Алматы" || _gasFlowMain.text == "250000 m³/h - CHP Almaty")
+                {
+                    _gasFlowMain.text = "250000 м³/сағ - ЖЭС Алматы"; 
+                }
+                else if (_gasFlowMain.text == "400000 м³/ч" || _gasFlowMain.text == "400000 м³/сағ" || _gasFlowMain.text == "400000 m³/h")
+                {
+                    _gasFlowMain.text = "400000 м³/сағ"; 
+                }
+                else if (_gasFlowMain.text == "500000 м³/ч" || _gasFlowMain.text == "500000 м³/сағ" || _gasFlowMain.text == "500000 m³/h")
+                {
+                    _gasFlowMain.text = "500000 м³/сағ";
+                }
+                break;
+
+            case Translator.Language.English:
+                if (_gasFlowMain.text == "100000 м³/ч" || _gasFlowMain.text == "100000 м³/сағ" || _gasFlowMain.text == "100000 m³/h")
+                {
+                    _gasFlowMain.text = "100000 m³/h";
+                } 
+                else if (_gasFlowMain.text == "150000 м³/ч - ТЭЦ Павлодар" || _gasFlowMain.text == "150000 м³/сағ - ЖЭС Павлодар" || _gasFlowMain.text == "150000 m³/h - CHP Pavlodar")
+                {
+                    _gasFlowMain.text = "150000 m³/h - CHP Pavlodar";
+                }
+                else if (_gasFlowMain.text == "200000 м³/ч" || _gasFlowMain.text == "200000 м³/сағ" || _gasFlowMain.text == "200000 m³/h")
+                {
+                    _gasFlowMain.text = "200000 m³/h"; 
+                }
+                else if (_gasFlowMain.text == "250000 м³/ч - ТЭЦ Алматы" || _gasFlowMain.text == "250000 м³/сағ - ЖЭС Алматы" || _gasFlowMain.text == "250000 m³/h - CHP Almaty")
+                {
+                    _gasFlowMain.text = "250000 m³/h - CHP Almaty"; 
+                }
+                else if (_gasFlowMain.text == "400000 м³/ч" || _gasFlowMain.text == "400000 м³/сағ" || _gasFlowMain.text == "400000 m³/h")
+                {
+                    _gasFlowMain.text = "400000 m³/h"; 
+                }
+                else if (_gasFlowMain.text == "500000 м³/ч" || _gasFlowMain.text == "500000 м³/сағ" || _gasFlowMain.text == "500000 m³/h")
+                {
+                    _gasFlowMain.text = "500000 m³/h";
+                }
+                break;
+        }
+    }
+    
     private void Update()
     {
-        if (_gasFlowMain.text == "100000 м³/ч")
+        if (_gasFlowMain.text == "100000 м³/ч " || _gasFlowMain.text == "100000 м³/сағ" || _gasFlowMain.text == "100000 m³/h")
         {
             mainParent.transform.localScale = new Vector3(1, 1, 1); 
         }
-        else if (_gasFlowMain.text == "150000 м³/ч - ТЭЦ Павлодар")
+        else if (_gasFlowMain.text == "150000 м³/ч - ТЭЦ Павлодар" || _gasFlowMain.text == "150000 м³/сағ - ЖЭС Павлодар" || _gasFlowMain.text == "150000 m³/h - CHP Pavlodar")
         {
             mainParent.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f); 
         }
-        else if (_gasFlowMain.text == "200000 м³/ч")
+        else if (_gasFlowMain.text == "200000 м³/ч" || _gasFlowMain.text == "200000 м³/сағ" || _gasFlowMain.text == "200000 m³/h")
         {
             mainParent.transform.localScale = new Vector3(1.15f, 1.15f, 1.15f); 
         }
-        else if (_gasFlowMain.text == "250000 м³/ч - ТЭЦ Алматы")
+        else if (_gasFlowMain.text == "250000 м³/ч - ТЭЦ Алматы" || _gasFlowMain.text == "250000 м³/сағ - ЖЭС Алматы" || _gasFlowMain.text == "250000 m³/h - CHP Almaty")
         {
             mainParent.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f); 
         }
-        else if (_gasFlowMain.text == "400000 м³/ч")
+        else if (_gasFlowMain.text == "400000 м³/ч" || _gasFlowMain.text == "400000 м³/сағ" || _gasFlowMain.text == "400000 m³/h")
         {
             mainParent.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f); 
         }
-        else if (_gasFlowMain.text == "500000 м³/ч")
+        else if (_gasFlowMain.text == "500000 м³/ч" || _gasFlowMain.text == "500000 м³/сағ" || _gasFlowMain.text == "500000 m³/h")
         {
             mainParent.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f); 
         }

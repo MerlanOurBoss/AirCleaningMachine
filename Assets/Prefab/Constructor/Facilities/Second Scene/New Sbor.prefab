@@ -83570,23 +83570,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e697b134b8b4e4bbf77c9210e2d0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 5128461069444697467}
-  myCamera: {fileID: 7566412257704818431}
-  offset: {x: 0, y: 0, z: 0}
-  sensitivity: 3
-  limit: 80
-  zoom: 1
-  zoomMax: 300
-  zoomMin: 10
-  str: 
-  isEnabled: 0
-  x: 0.224
-  y: 0.5
-  w: 0.25
-  h: 0.43
-  sensitivityx: 0.1
-  moveLimits: {x: 300, y: 300, z: 300}
-  isMoving: 0
+  cam: {fileID: 0}
+  orbitTarget: {fileID: 0}
+  mouseSensitivity: 3
+  verticalLimit: 85
+  orbitZoomSpeed: 5
+  orbitMinDistance: 2
+  orbitMaxDistance: 100
+  moveSpeed: 10
+  fastMoveMultiplier: 3
+  isMouseMoving: 0
 --- !u!114 &8611977573851600056
 MonoBehaviour:
   m_ObjectHideFlags: 0
