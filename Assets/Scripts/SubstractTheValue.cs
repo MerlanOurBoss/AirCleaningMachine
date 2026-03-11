@@ -28,13 +28,17 @@ public class SubstractTheValue : MonoBehaviour
 
     [Header("Other Components")]
     [SerializeField] private Translator _translator;
+    [SerializeField] private ParticleSystem[] AllParticleSystem;
     
     private Coroutine hideCoroutine;
     private double lastParsedFlow = double.NaN; // предыдущее распознанное значение
     private bool notificationVisible = false;
-
+    private float lastAppliedParticleScale = -1f;
+    
     private void Start()
     {
+        AllParticleSystem = FindObjectsOfType<ParticleSystem>();
+        
         var translateObj = GameObject.FindGameObjectWithTag("Translator");
         _translator = translateObj.GetComponent<Translator>();
 
@@ -178,27 +182,33 @@ public class SubstractTheValue : MonoBehaviour
         else if (_gasFlowMain.text == "150000 м³/ч - ТЭЦ Павлодар" || _gasFlowMain.text == "150000 м³/сағ - ЖЭС Павлодар" || _gasFlowMain.text == "150000 m³/h - CHP Pavlodar")
         {
             mainParent.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+            changeParticleSystems(1.3f);
             Planes.SetActive(false);
         }
         else if (_gasFlowMain.text == "200000 м³/ч" || _gasFlowMain.text == "200000 м³/сағ" || _gasFlowMain.text == "200000 m³/h")
         {
-            mainParent.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f); 
+            mainParent.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            changeParticleSystems(1.5f);
             Planes.SetActive(false);
         }
         else if (_gasFlowMain.text == "250000 м³/ч - ТЭЦ Алматы" || _gasFlowMain.text == "250000 м³/сағ - ЖЭС Алматы" || _gasFlowMain.text == "250000 m³/h - CHP Almaty")
         {
-            mainParent.transform.localScale = new Vector3(1.8f, 1.8f, 1.8f); 
+            mainParent.transform.localScale = new Vector3(1.8f, 1.8f, 1.8f);
+            changeParticleSystems(1.8f);
             Planes.SetActive(false);
         }
         else if (_gasFlowMain.text == "400000 м³/ч" || _gasFlowMain.text == "400000 м³/сағ" || _gasFlowMain.text == "400000 m³/h")
         {
-            mainParent.transform.localScale = new Vector3(2f, 2f, 2f); 
+            mainParent.transform.localScale = new Vector3(2f, 2f, 2f);
+            changeParticleSystems(2f);
             Planes.SetActive(false);
         }
         else if (_gasFlowMain.text == "500000 м³/ч" || _gasFlowMain.text == "500000 м³/сағ" || _gasFlowMain.text == "500000 m³/h")
         {
             mainParent.transform.localScale = new Vector3(2.3f, 2.3f, 2.3f); 
+            changeParticleSystems(2.3f);
             Planes.SetActive(false);
+            return;
         }
         
         if (!TryParseGasFlow(_gasFlowMain?.text, out var flow))
@@ -225,7 +235,24 @@ public class SubstractTheValue : MonoBehaviour
             _inputFields[i].onValueChanged.AddListener((newValue) => OnInputFieldValueChanged(index, newValue));
         }
     }
-    
+    private void changeParticleSystems(float x)
+    {
+        if (Mathf.Approximately(lastAppliedParticleScale, x) || AllParticleSystem == null) return;
+
+        foreach (ParticleSystem ps in AllParticleSystem)
+        {
+            if (ps == null) continue;
+
+            Vector3 currentScale = ps.transform.localScale;
+            ps.transform.localScale = new Vector3(
+                currentScale.x * x,
+                currentScale.y * x,
+                currentScale.z * x
+            );
+        }
+
+        lastAppliedParticleScale = x;
+    }
     private void ShowNotification(double flow)
     {
         notificationPanel.SetActive(true);
