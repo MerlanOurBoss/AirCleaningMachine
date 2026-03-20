@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CameraRotation: MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class CameraRotation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [Header("References")]
-    public Transform cam; 
+    public Transform cam;
     public Transform orbitTarget;
 
     [Header("Sensitivity & Limits")]
@@ -20,11 +20,12 @@ public class CameraRotation: MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public float moveSpeed = 10f;
     public float fastMoveMultiplier = 3f;
     public bool isMouseMoving = false;
-    
+
     private float rotX;
     private float rotY;
     private float orbitDistance;
     private bool isPointerDown = false;
+    private bool wasMovingLastFrame = false;
 
     void Start()
     {
@@ -32,7 +33,7 @@ public class CameraRotation: MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         if (orbitTarget != null)
             orbitDistance = Vector3.Distance(cam.position, orbitTarget.position);
-        
+
         Vector3 angles = cam.eulerAngles;
         rotX = angles.y;
         rotY = angles.x;
@@ -47,42 +48,44 @@ public class CameraRotation: MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         bool isMoving = HasMovementInput();
 
+        if (isMoving && !wasMovingLastFrame && orbitTarget != null)
+        {
+            orbitTarget.position = cam.position + cam.forward * orbitDistance;
+        }
+
         if (Input.GetMouseButton(0))
         {
             isMouseMoving = true;
+
             if (isMoving)
-            {
-                // ЛКМ + Кнопки: Вращение вокруг себя (Look Around)
                 RotateFree();
-            }
             else
-            {
-                // Только ЛКМ: Вращение вокруг орбиты
                 OrbitRotate();
-            }
         }
-        
+
         if (isMoving)
         {
             FreeMove();
         }
 
         HandleZoom();
+
+        wasMovingLastFrame = isMoving;
     }
 
     bool HasMovementInput()
     {
-        return Input.GetAxisRaw("Horizontal") != 0 || 
-               Input.GetAxisRaw("Vertical") != 0 || 
-               Input.GetKey(KeyCode.E) || 
+        return Input.GetAxisRaw("Horizontal") != 0 ||
+               Input.GetAxisRaw("Vertical") != 0 ||
+               Input.GetKey(KeyCode.E) ||
                Input.GetKey(KeyCode.Q);
     }
 
-   public void GetMouseOff()
+    public void GetMouseOff()
     {
         isMouseMoving = false;
     }
-    // Вращение вокруг собственной оси (режим Look Around)
+
     void RotateFree()
     {
         rotX += Input.GetAxis("Mouse X") * mouseSensitivity;
@@ -90,15 +93,8 @@ public class CameraRotation: MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         rotY = Mathf.Clamp(rotY, -verticalLimit, verticalLimit);
 
         cam.rotation = Quaternion.Euler(rotY, rotX, 0);
-
-        // Чтобы после вращения "вокруг себя" точка орбиты оказалась спереди
-        if (orbitTarget != null)
-        {
-            orbitTarget.position = cam.position + cam.forward * orbitDistance;
-        }
     }
 
-    // Вращение вокруг целевого объекта (режим Orbit)
     void OrbitRotate()
     {
         if (orbitTarget == null) return;
@@ -124,13 +120,7 @@ public class CameraRotation: MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (Input.GetKey(KeyCode.E)) dir += cam.up;
         if (Input.GetKey(KeyCode.Q)) dir -= cam.up;
 
-        cam.position += dir * (currentSpeed * Time.deltaTime);
-
-        // Двигаем точку орбиты за камерой
-        if (orbitTarget != null)
-        {
-            orbitTarget.position = cam.position + cam.forward * orbitDistance;
-        }
+        cam.position += dir.normalized * (currentSpeed * Time.deltaTime);
     }
 
     void HandleZoom()
@@ -141,7 +131,6 @@ public class CameraRotation: MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         orbitDistance -= scroll * orbitZoomSpeed;
         orbitDistance = Mathf.Clamp(orbitDistance, orbitMinDistance, orbitMaxDistance);
 
-        // Обновляем позицию при зуме, если мы в режиме орбиты
         if (orbitTarget != null && !HasMovementInput())
         {
             Quaternion rotation = Quaternion.Euler(rotY, rotX, 0);

@@ -319,10 +319,10 @@
             sorbentMass = (massCO2 / sorbentCapacity) * 1.2f;
             gasVolume = ParseInput(_gasVolumeText.text);
             adsorptionTemp = ParseInput(_adsorptionTempText.text);
-            co2FlowRate = ((float)valueGasFlow * CO2Concentration / 100) / oneMolarVolume;
+            co2FlowRate = ((float)valueGasFlow * CO2Concentration / 100) * sorbentCapacity / oneMolarVolume;
             totalCapacity = sorbentMass * (sorbentCapacity / 1000) * 4;
-            capturedCO2 = massCO2 / 44;
-            effectiveFlowRate = co2FlowRate * sorbentEfficiency;
+            capturedCO2 = massCO2 * sorbentCapacity / 44;
+            effectiveFlowRate = co2FlowRate * sorbentEfficiency/ sorbentCapacity;
     
             length = Math.Ceiling(
                         Math.Sqrt((4.0 * (valueGasFlow / 2.0)) / Math.PI / 3600.0 / 0.5)
