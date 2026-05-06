@@ -223,6 +223,8 @@ public class SaveLoadManager : MonoBehaviour
         {
             Destroy(obj);
         }
+
+        pipe.ClearAllPipesAndFacilities();
     }
 
     public void Load(int sceneIndex)
@@ -368,7 +370,7 @@ public class SaveLoadManager : MonoBehaviour
             SaveSceneDataToFile(index);
         }
     }
-
+    
     private void ClearSceneData(int sceneIndex)
     {
         if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)
@@ -376,36 +378,42 @@ public class SaveLoadManager : MonoBehaviour
             SceneData sceneData = sceneDatas[sceneIndex];
             if (sceneData != null)
             {
-                if (!string.IsNullOrEmpty(sceneData.screenshotPath))
+                // Сохраняем путь ДО обнуления
+                string screenshotPath = sceneData.screenshotPath;
+
+                // Удаляем скриншот
+                if (!string.IsNullOrEmpty(screenshotPath))
                 {
-                    if (File.Exists(sceneData.screenshotPath))
+                    if (File.Exists(screenshotPath))
                     {
-                        File.Delete(sceneData.screenshotPath);
-                        Debug.Log($"Screenshot deleted: {sceneData.screenshotPath}");
+                        File.Delete(screenshotPath);
+                        Debug.Log($"Screenshot deleted: {screenshotPath}");
                     }
                     else
                     {
-                        Debug.LogWarning($"Screenshot file not found: {sceneData.screenshotPath}");
+                        Debug.LogWarning($"Screenshot file not found: {screenshotPath}");
                     }
                 }
-                
+
+                // Удаляем JSON-файл сохранения
+                string saveFilePath = GetSaveFilePath(sceneIndex);
+                if (File.Exists(saveFilePath))
+                {
+                    File.Delete(saveFilePath);
+                    Debug.Log($"Save file deleted: {saveFilePath}");
+                }
+
+                // Теперь обнуляем данные
                 sceneData.objectsData = null;
                 sceneData.screenshotPath = null;
 
-                string fullPath = Path.Combine(Application.persistentDataPath, sceneData.screenshotPath);
-                if (File.Exists(fullPath))
-                {
-                    File.Delete(fullPath);
-                }
-
+                // Уничтожаем объекты сцены
                 if (sceneObjects.ContainsKey(sceneIndex))
                 {
                     foreach (GameObject obj in sceneObjects[sceneIndex])
                     {
                         if (obj != null)
-                        {
                             Destroy(obj);
-                        }
                     }
                     sceneObjects.Remove(sceneIndex);
                 }

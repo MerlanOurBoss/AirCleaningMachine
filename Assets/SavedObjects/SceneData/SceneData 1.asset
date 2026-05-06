@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb24e01e0f337f3449f33fd4896d4e89, type: 3}
   m_Name: SceneData 1
   m_EditorClassIdentifier: 
-  objectsData: []
-  screenshotPath: 
+  objectsData:
+  - objectName: 
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 0, y: 0, z: 0}
+    tag: 
+  screenshotPath: C:/Users/y.assankhan/AppData/LocalLow/DefaultCompany/GasCleaning\SavedConstructions\Images\cameracapture_1.png

@@ -7,42 +7,67 @@ using UnityEngine;
 public class LoadDefaultSimulation : MonoBehaviour
 {
     [Header("Default simulation assets")]
-    public TextAsset defaultSimulationText;
-    public Texture2D defaultSimulationTexture;
+    public TextAsset[] defaultSimulationTexts;
+    public Texture2D[] defaultSimulationTextures;
 
     private void Awake()
     {
-        SaveDefaultSimulationJson();
-        SaveDefaultSimulationScreenshot();
+        SaveDefaultSimulationJsons();
+        SaveDefaultSimulationScreenshots();
     }
-    private void SaveDefaultSimulationJson()
+
+    private void SaveDefaultSimulationJsons()
     {
-        string path = GetSaveFilePath();
-        File.WriteAllText(path, defaultSimulationText.text);
+        foreach (TextAsset textAsset in defaultSimulationTexts)
+        {
+            if (textAsset == null) continue;
 
+            string path = GetSaveFilePath(textAsset.name);
+
+            if (File.Exists(path))
+            {
+                Debug.Log($"[LoadDefaultSimulation] Save file already exists, skipping: {path}");
+                continue;
+            }
+
+            File.WriteAllText(path, textAsset.text);
+            Debug.Log($"[LoadDefaultSimulation] Default simulation saved to: {path}");
+        }
     }
 
-    private void SaveDefaultSimulationScreenshot()
+    private void SaveDefaultSimulationScreenshots()
     {
-        string path = GetScreenshotFilePath();
+        foreach (Texture2D texture in defaultSimulationTextures)
+        {
+            if (texture == null) continue;
 
-        byte[] pngBytes = defaultSimulationTexture.EncodeToPNG();
-        File.WriteAllBytes(path, pngBytes);
+            string path = GetScreenshotFilePath(texture.name);
+
+            if (File.Exists(path))
+            {
+                Debug.Log($"[LoadDefaultSimulation] Screenshot already exists, skipping: {path}");
+                continue;
+            }
+
+            byte[] pngBytes = texture.EncodeToPNG();
+            File.WriteAllBytes(path, pngBytes);
+            Debug.Log($"[LoadDefaultSimulation] Default screenshot saved to: {path}");
+        }
     }
 
-    private string GetSaveFilePath()
+    private string GetSaveFilePath(string fileName)
     {
         string directory = Path.Combine(
             Application.persistentDataPath,
             "SavedConstructions"
         );
-        
+
         Directory.CreateDirectory(directory);
-        
-        return Path.Combine(directory, defaultSimulationText.name + ".json");
+
+        return Path.Combine(directory, fileName + ".json");
     }
-    
-    private string GetScreenshotFilePath()
+
+    private string GetScreenshotFilePath(string fileName)
     {
         string directory = Path.Combine(
             Application.persistentDataPath,
@@ -52,6 +77,6 @@ public class LoadDefaultSimulation : MonoBehaviour
 
         Directory.CreateDirectory(directory);
 
-        return Path.Combine(directory, defaultSimulationTexture.name + ".png");
+        return Path.Combine(directory, fileName + ".png");
     }
 }

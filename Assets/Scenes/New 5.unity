@@ -6832,6 +6832,171 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 163546055}
   m_Mesh: {fileID: 4579454407841743219, guid: 1ad41126f51b62049a298d69e4b8a6bd, type: 3}
+--- !u!43 &164084342
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Pipes
+  serializedVersion: 11
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 0
+  m_KeepIndices: 0
+  m_IndexFormat: 1
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_CookingOptions: 30
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &171392550
 GameObject:
   m_ObjectHideFlags: 0
@@ -7139,12 +7304,9 @@ MonoBehaviour:
   blockerButton: {fileID: 272225898}
   buttonsPrefab: {fileID: 952634727}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10%
-  - 20%
-  - 30%
-  - 40%
-  - 50%
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &178560083
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19187,11 +19349,9 @@ MonoBehaviour:
   blockerButton: {fileID: 1338543149}
   buttonsPrefab: {fileID: 1637056143}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10
-  - 20
-  - 30
-  - 40
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &503716655
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19389,171 +19549,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!43 &511824329
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Pipes
-  serializedVersion: 11
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 0
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 0
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 0
-  m_KeepIndices: 0
-  m_IndexFormat: 1
-  m_IndexBuffer: 
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 0
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 0
-    _typelessdata: 
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_MeshUsageFlags: 0
-  m_CookingOptions: 30
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &512078658
 GameObject:
   m_ObjectHideFlags: 0
@@ -23403,11 +23398,9 @@ MonoBehaviour:
   blockerButton: {fileID: 152041873}
   buttonsPrefab: {fileID: 160574907}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10
-  - 20
-  - 30
-  - 40
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &610211474
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28779,6 +28772,7 @@ MonoBehaviour:
   moveSpeed: 200
   fastMoveMultiplier: 3
   isMouseMoving: 0
+  minWorldY: -1
 --- !u!114 &729364112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31116,7 +31110,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774841695}
-  m_Mesh: {fileID: 511824329}
+  m_Mesh: {fileID: 164084342}
 --- !u!4 &774841700
 Transform:
   m_ObjectHideFlags: 0
@@ -31612,11 +31606,9 @@ MonoBehaviour:
   blockerButton: {fileID: 1799244195}
   buttonsPrefab: {fileID: 1677766509}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10
-  - 20
-  - 30
-  - 40
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &789455986
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32507,7 +32499,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 7
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -35775,11 +35767,9 @@ MonoBehaviour:
   blockerButton: {fileID: 1658564239}
   buttonsPrefab: {fileID: 900135551}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10
-  - 20
-  - 30
-  - 40
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &895546915
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -38846,13 +38836,9 @@ MonoBehaviour:
   blockerButton: {fileID: 345723492}
   buttonsPrefab: {fileID: 1094173048}
   maxScrollRectSize: 224
-  avlOptions:
-  - "100000 \u043C\xB3/\u0447"
-  - "150000 \u043C\xB3/\u0447 - \u0422\u042D\u0426 \u041F\u0430\u0432\u043B\u043E\u0434\u0430\u0440"
-  - "200000 \u043C\xB3/\u0447"
-  - "250000 \u043C\xB3/\u0447 - \u0422\u042D\u0426 \u0410\u043B\u043C\u0430\u0442\u044B"
-  - "400000 \u043C\xB3/\u0447"
-  - "500000 \u043C\xB3/\u0447"
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &991249881
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -40590,11 +40576,9 @@ MonoBehaviour:
   blockerButton: {fileID: 947555493}
   buttonsPrefab: {fileID: 306361646}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10
-  - 20
-  - 30
-  - 40
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &1046576119
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -41520,6 +41504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentComponent: {fileID: 607588709}
   rootToComponent: {fileID: 1064848692}
+  _translator: {fileID: 0}
   _gasFlow: {fileID: 695173840}
   _temperatureElectro: {fileID: 1688593111}
   _solidParticleElectro: {fileID: 798529235}
@@ -42857,11 +42842,9 @@ MonoBehaviour:
   blockerButton: {fileID: 1910408667}
   buttonsPrefab: {fileID: 2016361818}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10
-  - 20
-  - 30
-  - 40
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &1116600402
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48698,11 +48681,9 @@ MonoBehaviour:
   blockerButton: {fileID: 1686092886}
   buttonsPrefab: {fileID: 654615964}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10
-  - 20
-  - 30
-  - 40
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &1281854592
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -58108,12 +58089,15 @@ MonoBehaviour:
   - {fileID: 728733872}
   - {fileID: 432150363}
   _maxValue: {fileID: 9095500}
+  Planes: {fileID: 0}
   _gasFlowMain: {fileID: 695173840}
   notificationText: {fileID: 1334340153}
   notificationPanel: {fileID: 1466411830}
   mainParent: {fileID: 607588709}
   threshold: 200000
   autoHideSeconds: 7
+  _translator: {fileID: 0}
+  AllParticleSystem: []
 --- !u!1 &1539472005
 GameObject:
   m_ObjectHideFlags: 0
@@ -65766,7 +65750,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691747139}
-  m_Mesh: {fileID: 1904578146}
+  m_Mesh: {fileID: 1805249828}
 --- !u!114 &1691747144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65784,6 +65768,7 @@ MonoBehaviour:
   pipeGeneratorCO2: {fileID: 774841696}
   pipeMeshStandardPrefab: {fileID: 1103472802350677724, guid: c8b7814beebc2b742a12205cb6a9e00a,
     type: 3}
+  sborCO2: {fileID: 0}
 --- !u!4 &1691747145
 Transform:
   m_ObjectHideFlags: 0
@@ -70508,6 +70493,171 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1802577555}
   m_Mesh: {fileID: -6624290273818030158, guid: 1bc7462c84468e147ac7898269efbbb3, type: 3}
+--- !u!43 &1805249828
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Pipes
+  serializedVersion: 11
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 0
+  m_KeepIndices: 0
+  m_IndexFormat: 1
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_MeshUsageFlags: 0
+  m_CookingOptions: 30
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1806043218
 GameObject:
   m_ObjectHideFlags: 0
@@ -74477,171 +74627,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904008841}
   m_Mesh: {fileID: 6866276890011060929, guid: 1bc7462c84468e147ac7898269efbbb3, type: 3}
---- !u!43 &1904578146
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Pipes
-  serializedVersion: 11
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 0
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 0
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 0
-  m_KeepIndices: 0
-  m_IndexFormat: 1
-  m_IndexBuffer: 
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 0
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 0
-    _typelessdata: 
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_MeshUsageFlags: 0
-  m_CookingOptions: 30
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1907380633
 GameObject:
   m_ObjectHideFlags: 0
@@ -77385,7 +77370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 455.00006, y: 0}
+  m_AnchoredPosition: {x: 455.0001, y: 0}
   m_SizeDelta: {x: 450, y: 1266}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1972872326
@@ -80619,7 +80604,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 9
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -80719,11 +80704,9 @@ MonoBehaviour:
   blockerButton: {fileID: 578756893}
   buttonsPrefab: {fileID: 1633626661}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10
-  - 20
-  - 30
-  - 40
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &2068976912
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -82921,11 +82904,9 @@ MonoBehaviour:
   blockerButton: {fileID: 1635862010}
   buttonsPrefab: {fileID: 915325642}
   maxScrollRectSize: 224
-  avlOptions:
-  - 10
-  - 20
-  - 30
-  - 40
+  avlOptionsRussian: []
+  avlOptionsKazakh: []
+  avlOptionsEnglish: []
 --- !u!222 &2141463582
 CanvasRenderer:
   m_ObjectHideFlags: 0

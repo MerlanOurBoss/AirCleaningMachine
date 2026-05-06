@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PipeConnector : MonoBehaviour
 {
@@ -215,10 +216,19 @@ public class PipeConnector : MonoBehaviour
         }
 
         Mesh meshCopy = Instantiate(generator.GetComponent<MeshFilter>().sharedMesh);
-        meshCopy.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32; 
+        meshCopy.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+        GameObject savedMeshObject = null;
+        Scene activeScene = SceneManager.GetActiveScene();
         
-        GameObject savedMeshObject = Instantiate(pipeMeshStandardPrefab, sborCO2.transform);
-
+        if (activeScene.name == "CHP")
+        {
+            savedMeshObject = Instantiate(pipeMeshStandardPrefab);
+        }
+        else
+        {
+            savedMeshObject = Instantiate(pipeMeshStandardPrefab, sborCO2.transform);
+        }
+        
         savedMeshObject.transform.localPosition = Vector3.zero;
         savedMeshObject.transform.localRotation = Quaternion.identity;
         savedMeshObject.transform.localScale = Vector3.one;
