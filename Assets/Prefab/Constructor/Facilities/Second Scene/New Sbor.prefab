@@ -44933,8 +44933,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 6593832140964836644}
-          m_TargetAssemblyTypeName: CameraRotation, Assembly-CSharp
+        - m_Target: {fileID: 8516385034991017823}
+          m_TargetAssemblyTypeName: ComponentCameraRotation, Assembly-CSharp
           m_MethodName: CameraMoving
           m_Mode: 1
           m_Arguments:
@@ -44949,8 +44949,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 6593832140964836644}
-          m_TargetAssemblyTypeName: CameraRotation, Assembly-CSharp
+        - m_Target: {fileID: 8516385034991017823}
+          m_TargetAssemblyTypeName: ComponentCameraRotation, Assembly-CSharp
           m_MethodName: onScroll
           m_Mode: 1
           m_Arguments:
@@ -83400,8 +83400,8 @@ GameObject:
   - component: {fileID: 7803289351313086048}
   - component: {fileID: 7566412257704818431}
   - component: {fileID: 2777286597983144981}
-  - component: {fileID: 6593832140964836644}
   - component: {fileID: 8611977573851600056}
+  - component: {fileID: 8516385034991017823}
   m_Layer: 0
   m_Name: SborCamera
   m_TagString: ComponentsCamera
@@ -83519,29 +83519,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!114 &6593832140964836644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8361678181853152319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6e697b134b8b4e4bbf77c9210e2d0e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  orbitTarget: {fileID: 0}
-  mouseSensitivity: 3
-  verticalLimit: 85
-  orbitZoomSpeed: 5
-  orbitMinDistance: 2
-  orbitMaxDistance: 100
-  moveSpeed: 10
-  fastMoveMultiplier: 3
-  isMouseMoving: 0
-  minWorldY: -1
 --- !u!114 &8611977573851600056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83558,6 +83535,31 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!114 &8516385034991017823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8361678181853152319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7e6c22c1e1d144882db4512fc7f110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 5128461069444697467}
+  myCamera: {fileID: 7566412257704818431}
+  offset: {x: 0, y: 0, z: 0}
+  sensitivity: 3
+  limit: 80
+  zoom: 10
+  zoomMax: 650
+  zoomMin: 450
+  str: 
+  isEnabled: 0
+  sensitivityx: 0.1
+  moveLimits: {x: 1000, y: 1000, z: 1000}
+  isMoving: 0
 --- !u!1 &8395104087062972596
 GameObject:
   m_ObjectHideFlags: 0

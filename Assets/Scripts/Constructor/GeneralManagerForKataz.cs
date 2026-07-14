@@ -53,6 +53,7 @@ public class GeneralManagerForKataz : GeneralManagerBase, IParameterModule
 
         if (_cameraSequenceController != null)
         {
+            _cameraSequenceController.OnRevealStateChanged += HandleRevealState;
             if (exitButton != null)
                 exitButton.onClick.AddListener(_cameraSequenceController.RestoreWallFromReveal);
 
@@ -64,6 +65,14 @@ public class GeneralManagerForKataz : GeneralManagerBase, IParameterModule
         }
         updateRoutine = StartCoroutine(UpdateValuesRoutine());
     }
+    private void HandleRevealState(bool revealed)
+    {
+        if (enterButton != null)
+            enterButton.gameObject.SetActive(!revealed);
+
+        if (exitButton != null)
+            exitButton.gameObject.SetActive(revealed);
+    }   
     private IEnumerator UpdateValuesRoutine()
     {
         while (true)

@@ -55,7 +55,9 @@ public class GeneralManagerForElectroFilter : GeneralManagerBase, IParameterModu
 
         if (_cameraSequenceController != null)
         {
+            _cameraSequenceController.OnRevealStateChanged += HandleRevealState;
             if (exitButton != null)
+                Debug.Log("aksjdbaljkbdlak");
                 exitButton.onClick.AddListener(_cameraSequenceController.RestoreWallFromReveal);
 
             if (switchButton != null)
@@ -66,7 +68,14 @@ public class GeneralManagerForElectroFilter : GeneralManagerBase, IParameterModu
         }
         updateRoutine = StartCoroutine(UpdateValuesRoutine());
     }
+    private void HandleRevealState(bool revealed)
+    {
+        if (enterButton != null)
+            enterButton.gameObject.SetActive(!revealed);
 
+        if (exitButton != null)
+            exitButton.gameObject.SetActive(revealed);
+    }
     private IEnumerator UpdateValuesRoutine()
     {
         while (true)
@@ -144,5 +153,10 @@ public class GeneralManagerForElectroFilter : GeneralManagerBase, IParameterModu
     private void OnDisable()
     {
         globalCounterElectro = 0;
+    }
+    private void OnDestroy()
+    {
+        if (_cameraSequenceController != null)
+            _cameraSequenceController.OnRevealStateChanged -= HandleRevealState;
     }
 }

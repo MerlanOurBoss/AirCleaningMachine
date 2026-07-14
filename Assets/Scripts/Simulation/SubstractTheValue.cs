@@ -29,7 +29,7 @@ public class SubstractTheValue : MonoBehaviour
     [Header("Other Components")]
     [SerializeField] private Translator _translator;
     [SerializeField] private ParticleSystem[] AllParticleSystem;
-    
+    private Dictionary<ParticleSystem, Vector3> originalParticleScales = new Dictionary<ParticleSystem, Vector3>();
     private Coroutine hideCoroutine;
     private double lastParsedFlow = double.NaN; // предыдущее распознанное значение
     private bool notificationVisible = false;
@@ -174,10 +174,11 @@ public class SubstractTheValue : MonoBehaviour
     
     private void Update()
     {
-        if (_gasFlowMain.text == "100000 м³/ч " || _gasFlowMain.text == "100000 м³/сағ" || _gasFlowMain.text == "100000 m³/h")
+        if (_gasFlowMain.text == "100000 м³/ч" || _gasFlowMain.text == "100000 м³/сағ" || _gasFlowMain.text == "100000 m³/h")
         {
-            mainParent.transform.localScale = new Vector3(1, 1, 1);
-            Planes.SetActive(true);
+            mainParent.transform.localScale = new Vector3(1f, 1f, 1f);
+            changeParticleSystems(1f);
+            //Planes.SetActive(true);
         }
         else if (_gasFlowMain.text == "150000 м³/ч - ТЭЦ Павлодар" || _gasFlowMain.text == "150000 м³/сағ - ЖЭС Павлодар" || _gasFlowMain.text == "150000 m³/h - CHP Pavlodar")
         {
@@ -188,7 +189,7 @@ public class SubstractTheValue : MonoBehaviour
         else if (_gasFlowMain.text == "200000 м³/ч" || _gasFlowMain.text == "200000 м³/сағ" || _gasFlowMain.text == "200000 m³/h")
         {
             mainParent.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
-            changeParticleSystems(2.5f);
+            changeParticleSystems(2.2f);
             Planes.SetActive(false);
         }
         else if (_gasFlowMain.text == "250000 м³/ч - ТЭЦ Алматы" || _gasFlowMain.text == "250000 м³/сағ - ЖЭС Алматы" || _gasFlowMain.text == "250000 m³/h - CHP Almaty")
@@ -243,11 +244,18 @@ public class SubstractTheValue : MonoBehaviour
         {
             if (ps == null) continue;
 
-            Vector3 currentScale = ps.transform.localScale;
+            // Запоминаем исходный масштаб при первом обращении
+            if (!originalParticleScales.ContainsKey(ps))
+            {
+                originalParticleScales[ps] = ps.transform.localScale;
+            }
+
+            Vector3 baseScale = originalParticleScales[ps];
+
             ps.transform.localScale = new Vector3(
-                currentScale.x * x,
-                currentScale.y * x,
-                currentScale.z * x
+                baseScale.x * x,
+                baseScale.y * x,
+                baseScale.z * x
             );
         }
 

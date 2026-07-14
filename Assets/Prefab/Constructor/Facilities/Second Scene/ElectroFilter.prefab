@@ -19452,8 +19452,8 @@ GameObject:
   - component: {fileID: 7757850037475204869}
   - component: {fileID: 909918498098905248}
   - component: {fileID: 3885345291394676922}
-  - component: {fileID: 759399813788161258}
   - component: {fileID: 500666852446504085}
+  - component: {fileID: 3585803523366987812}
   m_Layer: 0
   m_Name: ElectrofilterCamera
   m_TagString: ComponentsCamera
@@ -19571,29 +19571,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!114 &759399813788161258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6059605554929049617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6e697b134b8b4e4bbf77c9210e2d0e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  orbitTarget: {fileID: 0}
-  mouseSensitivity: 3
-  verticalLimit: 85
-  orbitZoomSpeed: 5
-  orbitMinDistance: 2
-  orbitMaxDistance: 100
-  moveSpeed: 10
-  fastMoveMultiplier: 3
-  isMouseMoving: 0
-  minWorldY: -1
 --- !u!114 &500666852446504085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19610,6 +19587,31 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!114 &3585803523366987812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059605554929049617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7e6c22c1e1d144882db4512fc7f110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 3197313357836315320}
+  myCamera: {fileID: 909918498098905248}
+  offset: {x: 0, y: 0, z: 0}
+  sensitivity: 3
+  limit: 80
+  zoom: 10
+  zoomMax: 300
+  zoomMin: 150
+  str: 
+  isEnabled: 0
+  sensitivityx: 0.1
+  moveLimits: {x: 1000, y: 1000, z: 1000}
+  isMoving: 0
 --- !u!1 &6174708327993429102
 GameObject:
   m_ObjectHideFlags: 0
@@ -22055,8 +22057,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 759399813788161258}
-          m_TargetAssemblyTypeName: CameraRotation, Assembly-CSharp
+        - m_Target: {fileID: 3585803523366987812}
+          m_TargetAssemblyTypeName: ComponentCameraRotation, Assembly-CSharp
           m_MethodName: CameraMoving
           m_Mode: 1
           m_Arguments:
@@ -22071,8 +22073,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 759399813788161258}
-          m_TargetAssemblyTypeName: CameraRotation, Assembly-CSharp
+        - m_Target: {fileID: 3585803523366987812}
+          m_TargetAssemblyTypeName: ComponentCameraRotation, Assembly-CSharp
           m_MethodName: onScroll
           m_Mode: 1
           m_Arguments:

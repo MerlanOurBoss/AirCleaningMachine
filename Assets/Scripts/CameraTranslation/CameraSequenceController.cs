@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CameraSequenceController : MonoBehaviour
 {
     [Header("Cameras")]
-    [SerializeField] private Camera overviewCamera;            // общая камера (её выключаем в режиме стены)
+    [SerializeField] private Camera overviewCamera;
     [SerializeField] private GameObject overviewCameraUI;
     
-    [SerializeField] private List<Camera> componentCameras;    // камеры компонентов в нужной очередности
+    [SerializeField] private List<Camera> componentCameras;
     [SerializeField] private string componentsTag = "ComponentsCamera";
     
     
@@ -28,45 +29,65 @@ public class CameraSequenceController : MonoBehaviour
     [SerializeField] private bool enableReveal = true;
     [SerializeField] private float revealDuration = 0.35f;
     [SerializeField] private AnimationCurve revealCurve = AnimationCurve.EaseInOut(0,0,1,1);
-    [SerializeField] private float defaultFOV = 60f;           // стартовый FOV для плиток
-    [SerializeField] private float revealFOV = 45f;            // FOV при раскрытии (если хочется лёгкий зум)
+    [SerializeField] private float defaultFOV = 60f;
+    [SerializeField] private float revealFOV = 45f; 
 
     [Header("Input")]
-    [SerializeField] private bool clickToReveal = true;        // клик по плитке = фулл-скрин
-    [SerializeField] private bool clickOnEmptyToRestore = true;// клик мимо плиток = вернуть стену
+    [SerializeField] private bool clickToReveal = true; 
+    [SerializeField] private bool clickOnEmptyToRestore = true;
     [SerializeField] private float clickCooldown = 0.12f;
 
     private enum Mode { Overview, Wall, Revealed }
     private Mode mode = Mode.Overview;
-
-    // запоминаем исходные rect'ы для возврата
+    public System.Action<bool> OnRevealStateChanged;
     private readonly Dictionary<Camera, Rect> baseRects = new Dictionary<Camera, Rect>();
     private float _lastClickTime;
     private Coroutine _animRoutine;
     private Camera _revealedCam;
 
-    // ===================== ПУБЛИЧНЫЕ МЕТОДЫ ДЛЯ UI =====================
     [ContextMenu("Refresh Cameras From Tag")]
     public void RefreshCamerasFromTag()
     {
         var found = GameObject.FindGameObjectsWithTag(componentsTag);
+        var seenNames = new HashSet<string>();
+        int emulgatorCount = 0;
+        const int emulgatorLimit = 2;
+
         componentCameras = new List<Camera>(found.Length);
+
         foreach (var go in found)
         {
             var cam = go.GetComponent<Camera>();
-            if (cam != null) componentCameras.Add(cam);
-        }
+            if (cam == null) continue;
 
-        // при желании — стабильный порядок (по имени)
+            if (cam.name == "EmulgatorCamera")
+            {
+                if (emulgatorCount >= emulgatorLimit)
+                {
+                    cam.gameObject.transform.parent.gameObject.SetActive(false);
+                    continue;
+                }
+                
+                emulgatorCount++;
+                componentCameras.Add(cam);
+                continue;
+            }
+
+            if (!seenNames.Add(cam.name))
+            {
+                cam.gameObject.transform.parent.gameObject.SetActive(false);
+                continue;
+            }
+            componentCameras.Add(cam);
+        }
+        
         componentCameras.Sort((a, b) => string.Compare(a.name, b.name, System.StringComparison.Ordinal));
     }
     public void ShowWall()
     {
-        // выключить обзор
         if (overviewCamera) overviewCamera.gameObject.SetActive(false);
         if (overviewCameraUI) overviewCameraUI.gameObject.SetActive(false);
         
-        // включить все компонентные и разложить
         foreach (var cam in componentCameras)
         {
             if (!cam) continue;
@@ -96,12 +117,10 @@ public class CameraSequenceController : MonoBehaviour
         _revealedCam = null;
         StopAnim();
     }
-
-    // ========================== ЖИЗНЕННЫЙ ЦИКЛ ==========================
+    
 
     private void Awake()
     {
-        // стартуем в обзоре: компонентные выключены
         foreach (var cam in componentCameras)
             if (cam) cam.gameObject.SetActive(false);
 
@@ -109,10 +128,8 @@ public class CameraSequenceController : MonoBehaviour
     }
     private void Start()
     {
-        // собрали камеры по тегу
         RefreshCamerasFromTag();
 
-        // стартуем в обзоре: компонентные выключены
         foreach (var cam in componentCameras)
             if (cam != null) cam.gameObject.SetActive(false);
 
@@ -124,12 +141,11 @@ public class CameraSequenceController : MonoBehaviour
         if (!clickToReveal) return;
         if (Time.unscaledTime - _lastClickTime < clickCooldown) return;
         if (!Input.GetMouseButtonDown(0)) return;
-        if (EventSystem.current && EventSystem.current.IsPointerOverGameObject()) return;
-
+        //if (EventSystem.current && EventSystem.current.IsPointerOverGameObject()) return;
+        
         _lastClickTime = Time.unscaledTime;
 
         Vector2 mp = Input.mousePosition;
-        // Определим, какая камера под курсором по её pixelRect
         Camera hitCam = null;
         foreach (var cam in componentCameras)
         {
@@ -142,16 +158,19 @@ public class CameraSequenceController : MonoBehaviour
             if (hitCam != null && enableReveal)
                 Reveal(hitCam);
             else if (clickOnEmptyToRestore)
-                ShowOverview(); // клик вне плиток = назад к обзору (опционально)
+                ShowOverview();
         }
         else if (mode == Mode.Revealed)
         {
-            // Любой клик (в том числе по этой же камере) — вернуть стену
+            if (hitCam != null)
+            {
+                if (hitCam == _revealedCam)
+                    return;
+            }
+
             RestoreWallFromReveal();
         }
     }
-
-    // ============================ ЛЕЙАУТ ============================
 
     private void LayoutGrid()
     {
@@ -164,13 +183,11 @@ public class CameraSequenceController : MonoBehaviour
         int cols = columns > 0 ? columns : Mathf.CeilToInt(Mathf.Sqrt(n));
         int rows = Mathf.CeilToInt((float)n / cols);
 
-        // Работаем ВНУТРИ gridArea
         float areaX = gridArea.x;
-        float areaY = gridArea.y;          // нижняя граница (Rect.y — от низа)
+        float areaY = gridArea.y;
         float areaW = gridArea.width;
         float areaH = gridArea.height;
 
-        // размеры ячейки с учётом межплиточного отступа (gutter)
         float cellW = (areaW - gutter * (cols - 1)) / cols;
         float cellH = (areaH - gutter * (rows - 1)) / rows;
 
@@ -179,10 +196,9 @@ public class CameraSequenceController : MonoBehaviour
         {
             if (!cam) continue;
 
-            int r = i / cols;            // 0..rows-1 (сверху вниз)
-            int c = i % cols;            // 0..cols-1 (слева направо)
+            int r = i / cols;
+            int c = i % cols;
 
-            // y считаем от НИЗА экрана: верхняя строка — это (rows-1-r)
             float x = areaX + c * (cellW + gutter);
             float y = areaY + (rows - 1 - r) * (cellH + gutter);
 
@@ -193,28 +209,22 @@ public class CameraSequenceController : MonoBehaviour
             i++;
         }
     }
-
-    // ============================ РАСКРЫТИЕ ============================
-
     public void Reveal(Camera cam)
     {
         if (!enableReveal || cam == null) return;
+        
+        OnRevealStateChanged?.Invoke(true); 
         _revealedCam = cam;
         mode = Mode.Revealed;
-
-        // Все камеры остаются включены, но мы анимируем rect выбранной до фулл-скрина, остальные — сворачиваем.
         StopAnim();
         _animRoutine = StartCoroutine(Co_Reveal(cam));
     }
 
     private IEnumerator Co_Reveal(Camera cam)
     {
-        // исходные прямоугольники
         Dictionary<Camera, Rect> startRects = new Dictionary<Camera, Rect>();
         foreach (var kv in baseRects) startRects[kv.Key] = kv.Key.rect;
 
-        // мини-превью для прочих камер — компактная лента внутри НИЖНЕГО края gridArea
-        // (можно настроить по вкусу)
         float thumbW = gridArea.width * 0.18f;
         float thumbH = gridArea.height * 0.18f;
         Rect thumbRect = new Rect(
@@ -237,14 +247,12 @@ public class CameraSequenceController : MonoBehaviour
 
                 if (c == cam)
                 {
-                    // раскрываем на всю gridArea
                     var to = gridArea;
                     c.rect = LerpRect(from, to, k);
                     c.fieldOfView = Mathf.Lerp(defaultFOV, revealFOV, k);
                 }
-                else
+                else if (c != cam)
                 {
-                    // сворачиваем в мини-превью в пределах gridArea (внизу слева)
                     c.rect = LerpRect(from, thumbRect, k);
                     c.fieldOfView = Mathf.Lerp(defaultFOV, defaultFOV, k);
                 }
@@ -256,13 +264,13 @@ public class CameraSequenceController : MonoBehaviour
     public void RestoreWallFromReveal()
     {
         if (mode != Mode.Revealed) return;
+        OnRevealStateChanged?.Invoke(false); 
         StopAnim();
         _animRoutine = StartCoroutine(Co_RestoreWall());
     }
 
     private IEnumerator Co_RestoreWall()
     {
-        // стартуем из текущих rect'ов к baseRects
         Dictionary<Camera, Rect> start = new Dictionary<Camera, Rect>();
         foreach (var kv in baseRects) start[kv.Key] = kv.Key.rect;
 
@@ -284,7 +292,6 @@ public class CameraSequenceController : MonoBehaviour
             yield return null;
         }
 
-        // фиксация значений
         foreach (var kv in baseRects)
         {
             kv.Key.rect = kv.Value;
@@ -295,8 +302,6 @@ public class CameraSequenceController : MonoBehaviour
         mode = Mode.Wall;
         StopAnim();
     }
-
-    // ============================ УТИЛИТЫ ============================
 
     private Rect LerpRect(Rect a, Rect b, float t)
     {

@@ -61,6 +61,7 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
 
         if (_cameraSequenceController != null)
         {
+            _cameraSequenceController.OnRevealStateChanged += HandleRevealState;
             if (exitButton != null)
                 exitButton.onClick.AddListener(_cameraSequenceController.RestoreWallFromReveal);
 
@@ -91,7 +92,14 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
         _fluidTest = testText.GetComponent<TextMeshProUGUI>();
     }
 
-    
+    private void HandleRevealState(bool revealed)
+    {
+        if (enterButton != null)
+            enterButton.gameObject.SetActive(!revealed);
+
+        if (exitButton != null)
+            exitButton.gameObject.SetActive(revealed);
+    }
     private IEnumerator UpdateValuesRoutine()
     {
         while (true)

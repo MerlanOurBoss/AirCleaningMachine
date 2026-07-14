@@ -32,8 +32,8 @@ public class LoadRightPanel : MonoBehaviour
     {
         if (parentComponent == null || rootToComponent == null || prefabs == null)
         {
-
-            return;
+            parentComponent = GameObject.FindGameObjectWithTag("SborCO2");
+            
         }
 
         SpawnPrefabs();
@@ -53,6 +53,7 @@ public class LoadRightPanel : MonoBehaviour
 
         foreach (Transform child in parentComponent.transform)
         {
+            Debug.Log("lkonlkjnlknl;");
             string childName = child.gameObject.name;
 
             if (childName.Contains("(Clone)"))
@@ -62,6 +63,7 @@ public class LoadRightPanel : MonoBehaviour
 
             if (prefabDictionary.TryGetValue(childName, out GameObject matchingPrefab))
             {
+                Debug.Log("asdasdasdasd");
                 GameObject spawnedObject = Instantiate(matchingPrefab, rootToComponent.transform);
                 spawnedPrefabs.Add(spawnedObject);
 

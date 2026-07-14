@@ -31,7 +31,16 @@ public class PipeConnector : MonoBehaviour
 
     private void Update()
     {
-        GameObject sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        GameObject sborCO2 = null;
+        if (transform.tag == "SborCO2")
+        {
+            sborCO2 = transform.gameObject;
+        }
+        else
+        {
+            sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        }
+        
         if (sborCO2 == null)
         {
             Debug.LogWarning("SborCO2 object not found!");
