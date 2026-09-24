@@ -14,6 +14,9 @@ public class SxemaGeneral : MonoBehaviour
 
     [SerializeField] private GameObject[] backgrounds;
 
+    [Header("UIManager")]
+    [SerializeField] private UIManager uiManager;
+    
     private bool isOff = false;
 
     private bool isActivated = false;
@@ -26,6 +29,7 @@ public class SxemaGeneral : MonoBehaviour
             sxema.SetActive(true);
             mycamera.SetActive(false);
             cameraUI.SetActive(false);
+            uiManager.DisableAllUI();
             isActivated = true;
             backgrounds[1].SetActive(true);
             backgrounds[0].SetActive(false);
@@ -36,6 +40,7 @@ public class SxemaGeneral : MonoBehaviour
             sxema.SetActive(false);
             mycamera.SetActive(true);
             cameraUI.SetActive(true);
+            uiManager.EnableAllUI();
             isActivated = false;
             backgrounds[0].SetActive(true);
             backgrounds[1].SetActive(false);

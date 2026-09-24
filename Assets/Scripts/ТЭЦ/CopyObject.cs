@@ -8,7 +8,8 @@ public class CopyObject : MonoBehaviour
     public GameObject prefab;       // Перетащите префаб в инспекторе
     public int count = 5;           // Количество копий
     public float spacing = 1900f;      // Расстояние между копиями по Z
-
+    
+    [SerializeField] private UIManager uimanager;
     void Start()
     {
         if (prefab == null)
@@ -26,6 +27,7 @@ public class CopyObject : MonoBehaviour
             );
 
             GameObject sbor = Instantiate(prefab, spawnPosition, Quaternion.identity);
+            uimanager.RegisterUI(sbor);
             PipeConnector pipe = sbor.GetComponent<PipeConnector>();
             
             StartCoroutine(ConnectAfterDelay(pipe));
