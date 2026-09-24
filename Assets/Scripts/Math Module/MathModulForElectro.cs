@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using Math_Module;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
-public class MathModuleForElectro : MonoBehaviour
+/// <summary>
+/// Формулы физики не менялись — только перенос из "каждый кадр безусловно"
+/// в "пересчёт по изменению" (см. MathModuleBase) и правки, отмеченные ниже.
+/// </summary>
+public class MathModuleForElectro : MathModuleBase
 {
     [Header("Particle Systems")]
     public ParticleSystem[] _smokeParticles;
@@ -15,7 +17,7 @@ public class MathModuleForElectro : MonoBehaviour
     [SerializeField] private TMP_InputField _speedInput;
     [SerializeField] private TMP_InputField _radiusInput;
     [SerializeField] private TMP_InputField _chargeInput;
-    
+
     public TMP_InputField _gasFlow;
     public TextMeshProUGUI _temperature;
     public TextMeshProUGUI _solidParticle;
@@ -28,82 +30,51 @@ public class MathModuleForElectro : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _fieldText;
     [SerializeField] private TextMeshProUGUI _sizeText;
 
-    [Header("Other Components")]
-    [SerializeField] private Translator _translator;
-
     // Physical properties
     private float _electricPotential = 0;
     private float _electricField = 0;
     private double _specificPower = 0;
 
     // Constants
-    private const float GRAVITY = 9.8f;
     private const float ELECTRIC_CONSTANT = 8.85f;
-    private const float VISCOSITY = 1.8f;
 
-    //Габариты
+    // Габариты
     public double length = 0;
     private double height = 0;
     private double width = 0;
-
     private double area = 0;
 
-    //Расходники
+    // Расходники
     private double electro;
     private double consumables;
     private double ashFormation;
 
-    private static int globalCounterElectro = 0;
-    public int instanceID;
+    protected override string BuildDirtySnapshot() =>
+        $"{_densityInput.text}|{_speedInput.text}|{_radiusInput.text}|{_chargeInput.text}|" +
+        $"{_temperature.text}|{_solidParticle.text}|{_gasFlow.text}";
 
-    private void Awake()
-    {
-        globalCounterElectro++;
-        instanceID = globalCounterElectro;
-
-        Debug.Log($"[Electro] Назначен instanceID = {instanceID} для {gameObject.name}");
-
-    }
-    private void Start()
-    {
-        var translateObj = GameObject.FindGameObjectWithTag("Translator");
-        _translator = translateObj.GetComponent<Translator>();
-
-        if (_translator != null)
-        {
-            _translator.OnLanguageChanged += OnLanguageChanged;
-
-            OnLanguageChanged(_translator.currentLanguage);
-        }
-    }
-
-    private void OnLanguageChanged(Translator.Language lang)
+    protected override void OnLanguageChanged(Translator.Language lang)
     {
         switch (lang)
         {
             case Translator.Language.Russian:
-                _densityInput.text = "0,1 мА/см²";
-                _speedInput.text   = "2 м/с";
-                _radiusInput.text  = "0,5 мм";
-                _chargeInput.text  = "3 Кл";
-                break;
-
             case Translator.Language.Kazakh:
                 _densityInput.text = "0,1 мА/см²";
-                _speedInput.text   = "2 м/с";
-                _radiusInput.text  = "0,5 мм";
-                _chargeInput.text  = "3 Кл";
+                _speedInput.text = "2 м/с";
+                _radiusInput.text = "0,5 мм";
+                _chargeInput.text = "3 Кл";
                 break;
 
             case Translator.Language.English:
                 _densityInput.text = "0.1 mA/cm²";
-                _speedInput.text   = "2 m/s";
-                _radiusInput.text  = "0.5 mm";
-                _chargeInput.text  = "3 C";
+                _speedInput.text = "2 m/s";
+                _radiusInput.text = "0.5 mm";
+                _chargeInput.text = "3 C";
                 break;
         }
     }
-    private void Update()
+
+    protected override void Recalculate()
     {
         CalculatePhysics();
         UpdateUI();
@@ -113,29 +84,16 @@ public class MathModuleForElectro : MonoBehaviour
     private void CalculatePhysics()
     {
         var density = ParseInputValue(_densityInput.text);
-        var speed = ParseInputValue(_speedInput.text);
-        var radius = ParseInputValue(_radiusInput.text);
-        var charge = ParseInputValue(_chargeInput.text);
 
-        // Electric calculations
         _electricPotential = -density / -ELECTRIC_CONSTANT;
         _electricField = -1 * _electricPotential;
 
-
-        var inputTemperature = _temperature.text;
-        var numberTemperature = inputTemperature.Split(' ')[0];
-        var valueTemperature  = double.Parse(numberTemperature);
-
-        var inputSolidParticle = _solidParticle.text;
-        var numberSolidParticle = inputSolidParticle.Split(' ')[0];
-        var valueSolidParticle = double.Parse(numberSolidParticle);
-
+        var valueTemperature = ParseLeadingNumber(_temperature.text);
+        var valueSolidParticle = ParseLeadingNumber(_solidParticle.text);
 
         _specificPower = 35.7 * Math.Exp(0.015 * (((valueTemperature + (valueTemperature - 0.5 * length * 4)) / 2.0) - 150.0)) * Math.Log(1.0 / (1.0 - 0.7));
 
-        var inputGasFlow = _gasFlow.text;
-        var numberGasFlow = inputGasFlow.Split(' ')[0];
-        var valueGasFlow = double.Parse(numberGasFlow);
+        var valueGasFlow = ParseLeadingNumber(_gasFlow.text);
         area = (Math.Log(1 / (1 - 0.7)) / 0.1 / 3600) * valueGasFlow;
 
         height = Math.Ceiling(Math.Sqrt(area / 6.0));
@@ -144,20 +102,15 @@ public class MathModuleForElectro : MonoBehaviour
 
         var countElectro = (valueGasFlow * _specificPower) / 1000000;
         electro = countElectro * 38.85;
-        consumables = 0.7058 * valueGasFlow / 365/24;
+        consumables = 0.7058 * valueGasFlow / 365 / 24;
         ashFormation = valueGasFlow * (valueSolidParticle - (1 - valueSolidParticle)) / 1000000000;
     }
 
-    private float ParseInputValue(string inputText)
-    {
-        string numericPart = inputText.Substring(0, inputText.IndexOf(' '));
-        numericPart = numericPart.Replace(',', '.'); 
-        return float.Parse(numericPart, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
-    }
+    private float ParseInputValue(string inputText) => ParseLeadingNumber(inputText);
 
     private void UpdateUI()
     {
-        switch (_translator.currentLanguage)
+        switch (translator.currentLanguage)
         {
             case Translator.Language.Russian:
                 _potentialText.text = $"Потенциал: \n\t\t{_electricPotential:0.000} Дж/Кл";
@@ -173,7 +126,7 @@ public class MathModuleForElectro : MonoBehaviour
                 _sizeText.text = $"Ұзындығы: {length:0.0} м \n" +
                                     $"Ені: {width:0.0} м \n" +
                                         $"Биіктігі: {height:0.0} м \n" +
-                                         $"Шығын материалдар: {electro + consumables: 0.0} тг"; ;
+                                         $"Шығын материалдар: {electro + consumables: 0.0} тг";
                 break;
             default:
                 _potentialText.text = $"Potential: {_electricPotential:0.000} J/Kl";
@@ -181,11 +134,10 @@ public class MathModuleForElectro : MonoBehaviour
                 _sizeText.text = $"Length: {length:0.0} m \n" +
                                     $"Width: {width:0.0} m \n" +
                                         $"Height: {height:0.0} m \n" +
-                                         $"Consumables: {electro + consumables: 0.0} tg"; ;
+                                         $"Consumables: {electro + consumables: 0.0} tg";
                 break;
         }
     }
-
 
     private void UpdateVisualEffects()
     {
@@ -214,19 +166,6 @@ public class MathModuleForElectro : MonoBehaviour
             _ => 1.0f
         };
 
-        foreach (var smoke in _smokeParticles)
-        {
-            var colorModule = smoke.colorOverLifetime;
-            var gradient = colorModule.color.gradient;
-
-            var newGradient = new Gradient();
-            newGradient.SetKeys(
-                gradient.colorKeys,
-                new[] { new GradientAlphaKey(targetAlpha, 0f), new GradientAlphaKey(targetAlpha, 1f) }
-            );
-
-            colorModule.color = new ParticleSystem.MinMaxGradient(newGradient);
-        }
+        ParticleFxUtility.SetOverLifetimeAlpha(_smokeParticles, targetAlpha);
     }
-
 }
