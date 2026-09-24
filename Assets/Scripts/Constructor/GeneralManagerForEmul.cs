@@ -1,172 +1,86 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
-using UnityEngine.UI;
 
-public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
+public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
 {
     [Header("Emul")]
-    [Space]
-
-    [SerializeField] private List<ParameterRowUI> rows = new List<ParameterRowUI>();
-    public List<ParameterRowUI> Rows => rows;
-    [SerializeField] private ParticleSystem[] _emulSmokes;
-    [SerializeField] private PlayableDirector[] _emulFluid;
+    [SerializeField] private ParticleSystem[] emulSmokes;
+    [SerializeField] private PlayableDirector[] emulFluid;
     [SerializeField] private DropSpawner[] dropSpawners;
-    [SerializeField] private Camera _componentCamera;
-    [SerializeField] private CameraSequenceController _cameraSequenceController;
+    [SerializeField] private TextMeshProUGUI fluidTest;
 
-    [SerializeField] private Button exitButton;
-    [SerializeField] private Button enterButton;
-    [SerializeField] private Button switchButton;
+    private bool _isPlaying;
 
-    private bool _isPlaying = false;
-    private Coroutine updateRoutine;
-    private float updateInterval = 5f;
-    private ChamgingEmul emulType;
-    [SerializeField] private MathModuleForEmul _emul;
-    [SerializeField] private TextMeshProUGUI _fluidTest;
-    
-    private static int globalCounter = 0;
-    public int instanceID;
-    private bool isStart = false;
-    private void Start()
+    protected override void OnMathModuleReady(MathModuleForEmul module)
     {
-        globalCounter++;
-        instanceID = globalCounter;
+        module._mySmokes = emulSmokes;
 
-        Debug.Log($"[Emul] Назначен instanceID = {instanceID} для {gameObject.name}");
-        MathModuleForEmul[] modules = FindObjectsOfType<MathModuleForEmul>();
-
-        foreach (var m in modules)
+        var emulType = GetComponent<ChamgingEmul>();
+        if (emulType == null)
         {
-            if (m.instanceID == instanceID)
-            {
-                _emul = m;
-                break;
-            }
-        }
-        
-        if (_emul != null)
-        {
-            _emul._mySmokes = _emulSmokes;
-        }
-
-        _cameraSequenceController = GameObject.FindFirstObjectByType<CameraSequenceController>();
-
-        if (_cameraSequenceController != null)
-        {
-            _cameraSequenceController.OnRevealStateChanged += HandleRevealState;
-            if (exitButton != null)
-                exitButton.onClick.AddListener(_cameraSequenceController.RestoreWallFromReveal);
-
-            if (switchButton != null)
-                switchButton.onClick.AddListener(_cameraSequenceController.ShowOverview);
-
-            if (enterButton != null && _componentCamera != null)
-                enterButton.onClick.AddListener(() => _cameraSequenceController.Reveal(_componentCamera));
-        }
-        updateRoutine = StartCoroutine(UpdateValuesRoutine());
-
-        emulType = gameObject.GetComponent<ChamgingEmul>();
-        
-        if (emulType.countWater == 1)
-        {
-            _emul.fluid = "Вода";
-        }
-        else if (emulType.countWater == 2)
-        {
-            _emul.fluid = "Едкий натрий";
+            Debug.LogError($"{name}: не найден компонент ChamgingEmul на этом объекте.");
         }
         else
         {
-            _emul.fluid = "Сода";
+            module.fluid = emulType.countWater switch
+            {
+                1 => "Вода",
+                2 => "Едкий натрий",
+                _ => "Сода"
+            };
         }
-        
+
         GameObject testText = GameObject.FindGameObjectWithTag("TestText");
-        _fluidTest = testText.GetComponent<TextMeshProUGUI>();
-    }
-
-    private void HandleRevealState(bool revealed)
-    {
-        if (enterButton != null)
-            enterButton.gameObject.SetActive(!revealed);
-
-        if (exitButton != null)
-            exitButton.gameObject.SetActive(revealed);
-    }
-    private IEnumerator UpdateValuesRoutine()
-    {
-        while (true)
-        {
-            UpdateCalculatedParameters();
-            yield return new WaitForSeconds(updateInterval);
-        }
+        if (testText == null)
+            Debug.LogError("GeneralManagerForEmul: объект с тегом 'TestText' не найден на сцене.");
+        else
+            fluidTest = testText.GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
     {
-        if (_isPlaying)
-        {
-            if (_emulFluid != null)
-            {
-                foreach (PlayableDirector fluid in _emulFluid)
-                {
-                    if (fluid)
-                    {
-                        fluid.Play();
-                        DiagnoseTimeline(fluid);
-                    }
+        if (emulFluid == null) return;
 
-                }
-            }
-        }
-        else
+        foreach (var fluid in emulFluid)
         {
-            if (_emulFluid != null)
+            if (fluid == null) continue;
+
+            if (_isPlaying)
             {
-                foreach (PlayableDirector fluid in _emulFluid)
-                {
-                    if (fluid)
-                        fluid.Stop();
-                }
+                fluid.Play();
+                DiagnoseTimeline(fluid);
+            }
+            else
+            {
+                fluid.Stop();
             }
         }
     }
-    public void DiagnoseTimeline(PlayableDirector dir)
-    {
-        if (dir == null)
-        {
-            return;
-        }
-        if (dir.gameObject.scene.name == null || dir.gameObject.scene.name == "")
-            Debug.LogWarning("Объект находится в prefab scene (НЕ в активной сцене!)");
-        if (dir.gameObject.scene != SceneManager.GetActiveScene())
-            Debug.LogWarning("Объект НЕ в активной сцене. Это может ломать Timeline.");
 
+    private static void DiagnoseTimeline(PlayableDirector dir)
+    {
+        if (dir == null) return;
+
+        if (string.IsNullOrEmpty(dir.gameObject.scene.name))
+            Debug.LogWarning("Объект находится в prefab scene (не в активной сцене!)");
+        if (dir.gameObject.scene != SceneManager.GetActiveScene())
+            Debug.LogWarning("Объект не в активной сцене. Это может ломать Timeline.");
         if (dir.playableAsset == null)
-            Debug.LogError(" Timeline asset (playableAsset) = NULL — в BUILD asset НЕ сохранился.");
-        
+            Debug.LogError("Timeline asset (playableAsset) = NULL — в BUILD asset не сохранился.");
         if (!dir.playableGraph.IsValid())
             Debug.LogWarning("PlayableGraph = INVALID. RebuildGraph() требуется.");
-        
         if (!dir.gameObject.activeInHierarchy)
             Debug.LogWarning("Объект не активен. Timeline не будет играть.");
-        
-        var timeline = dir.playableAsset as TimelineAsset;
-        if (timeline != null)
+
+        if (dir.playableAsset is TimelineAsset timeline)
         {
             foreach (var track in timeline.GetOutputTracks())
             {
-                var binding = dir.GetGenericBinding(track);
-
-                if (binding == null)
-                    Debug.LogWarning("TRACK '" + track.name + "' потерял binding! (частая причина в динамически загруженных префабах)");
+                if (dir.GetGenericBinding(track) == null)
+                    Debug.LogWarning($"TRACK '{track.name}' потерял binding! (частая причина — в динамически загруженных префабах)");
             }
         }
         else
@@ -174,140 +88,57 @@ public class GeneralManagerForEmul : GeneralManagerBase, IParameterModule
             Debug.LogWarning("TimelineAsset не является TimelineAsset (null или другой тип?).");
         }
     }
-    private void UpdateCalculatedParameters()
+
+    protected override bool TryCalculateRow(ParameterRowUI row, float originalValue)
     {
-        foreach (var row in rows)
+        switch (row.id)
         {
-            if (!row.valueTextIn)
-                continue;
-            
-            if (!float.TryParse(row.valueTextIn.text, out float originalValue))
-            {
-                Debug.LogWarning($"[Emul] Невозможно преобразовать valueTextIn у id={row.id}");
-                continue;
-            }
-            
-            if (row.id == "Температура")
-            {
-                float newTemperature = originalValue - (140000 *(_emul._gasСonsumption/_emul.сonsumption)); 
-                float roundedTemp = Mathf.Ceil(newTemperature);
-                
-                row.valueTextOut.text = roundedTemp.ToString();
-            }
-            
-            else if (row.id == "Твердые частицы")
-            {
-                float newDust = originalValue * 0.005f;
-                float roundedDust = Mathf.Ceil(newDust);
+            case "Температура":
+                float newTemperature = originalValue - (140000 * (MathModule._gasСonsumption / MathModule.сonsumption));
+                row.valueTextOut.text = Mathf.Ceil(newTemperature).ToString();
+                return true;
 
-                row.valueTextOut.text = roundedDust.ToString();
-            }
-            else if (row.id == "NO2")
-            {
-                float num = 0;
-                if (_emul._fluidType.text == "Вода")
-                {
-                    num = 0.8f;
-                }
-                else
-                {
-                    num = 0.05f;
-                }
-                float no2 = originalValue * num; // 30%
-                float roundedDust = Mathf.Ceil(no2);
+            case "Твердые частицы":
+                row.valueTextOut.text = Mathf.Ceil(originalValue * 0.005f).ToString();
+                return true;
 
-                row.valueTextOut.text = roundedDust.ToString();
-            }
-            
-            else if (row.id == "SO2")
-            {
-                float num = 0;
-                if (_emul._fluidType.text == "Вода")
-                {
-                    num = 0.8f;
-                }
-                else
-                {
-                    num = 0.05f;
-                }
-                float so2 = originalValue * num; // 30%
-                float roundedDust = Mathf.Ceil(so2);
+            case "NO2":
+            case "SO2":
+            case "H2S":
+                float ratio = MathModule._fluidType.text == "Вода" ? 0.8f : 0.05f;
+                row.valueTextOut.text = Mathf.Ceil(originalValue * ratio).ToString();
+                return true;
 
-                row.valueTextOut.text = roundedDust.ToString();
-            }
-            
-            else if (row.id == "H2S")
-            {
-                float num = 0;
-                if (_emul._fluidType.text == "Вода")
-                {
-                    num = 0.8f;
-                }
-                else
-                {
-                    num = 0.05f;
-                }
-                float h2s = originalValue * num; // 30%
-                float roundedDust = Mathf.Ceil(h2s);
-
-                row.valueTextOut.text = roundedDust.ToString();
-            }
-            else
-            {
-                row.valueTextOut.text = row.valueTextIn.text;
-            }
+            default:
+                return false;
         }
     }
-    
+
     protected override void OnStartModule()
     {
-        if (_isPlaying)
-            return;
+        if (_isPlaying) return;
 
-        if (_emulSmokes != null)
-        {
-            foreach (ParticleSystem smoke in _emulSmokes)
-            {
-                if (smoke != null)
-                    smoke.Play();
-            }
-        }
+        if (emulSmokes != null)
+            foreach (var smoke in emulSmokes)
+                if (smoke != null) smoke.Play();
 
         if (dropSpawners != null)
-        {
-            foreach (DropSpawner spawner in dropSpawners)
-            {
+            foreach (var spawner in dropSpawners)
                 spawner.startCor();
-            }
-        }
 
         _isPlaying = true;
     }
-    
+
     protected override void OnStopModule()
     {
-        if (_emulSmokes != null)
-        {
-            foreach (ParticleSystem smoke in _emulSmokes)
-            {
-                if (smoke != null)
-                    smoke.Stop();
-            }
-        }
-        
+        if (emulSmokes != null)
+            foreach (var smoke in emulSmokes)
+                if (smoke != null) smoke.Stop();
+
         if (dropSpawners != null)
-        {
-            foreach (DropSpawner spawner in dropSpawners)
-            {
+            foreach (var spawner in dropSpawners)
                 spawner.stopCor();
-            }
-        }
 
         _isPlaying = false;
-    }
-        
-    private void OnDisable()
-    {
-        globalCounter = 0;
     }
 }
