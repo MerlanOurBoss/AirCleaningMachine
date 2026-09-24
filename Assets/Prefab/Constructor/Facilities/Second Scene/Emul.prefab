@@ -12001,6 +12001,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105184ae1ab13a54fb1a461ea08bf549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mathModule: {fileID: 0}
+  facilityId: Emulgator_TEC1
   rows:
   - id: "\u0422\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u0430"
     slider: {fileID: 2648784945219762167}
@@ -12046,14 +12048,20 @@ MonoBehaviour:
     slider: {fileID: 8913483948542904524}
     valueTextIn: {fileID: 102290537745476539}
     valueTextOut: {fileID: 7045383221587299984}
-  _emulSmokes:
+  updateInterval: 5
+  componentCamera: {fileID: 8460262841871989156}
+  cameraSequenceController: {fileID: 0}
+  exitButton: {fileID: 59779472939756563}
+  enterButton: {fileID: 7667350339011788036}
+  switchButton: {fileID: 8861656741924344658}
+  emulSmokes:
   - {fileID: 1417758878872691943}
   - {fileID: 553815067831673972}
   - {fileID: 3278185585895555093}
   - {fileID: 2226585726690832051}
   - {fileID: 998113336961079561}
   - {fileID: 5922772230512561746}
-  _emulFluid:
+  emulFluid:
   - {fileID: 9102616501332871194}
   - {fileID: 4800922017097318580}
   - {fileID: 3304437386275494729}
@@ -12067,14 +12075,7 @@ MonoBehaviour:
   - {fileID: 1929960916131399179}
   - {fileID: 5708479264265825175}
   - {fileID: 2454835658270677225}
-  _componentCamera: {fileID: 8460262841871989156}
-  _cameraSequenceController: {fileID: 0}
-  exitButton: {fileID: 59779472939756563}
-  enterButton: {fileID: 7667350339011788036}
-  switchButton: {fileID: 8861656741924344658}
-  _emul: {fileID: 0}
-  _fluidTest: {fileID: 0}
-  instanceID: 0
+  fluidTest: {fileID: 0}
 --- !u!1 &898945447355845936
 GameObject:
   m_ObjectHideFlags: 0

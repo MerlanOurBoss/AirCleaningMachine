@@ -10263,6 +10263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03beb795b370bf40b95812f6df7757e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  translator: {fileID: 0}
+  facilityId: SborCO2_TEC1
   _smokes: []
   _sorbentTypeText: {fileID: 3641941810289593508}
   _gasVolumeText: {fileID: 7915030206350405230}
@@ -10282,10 +10284,8 @@ MonoBehaviour:
   _sizeText: {fileID: 910349417565150353}
   newSbor: {fileID: 0}
   fansAnim: []
-  _translator: {fileID: 0}
   capturedCO2: 0
   co2FlowRate: 0
-  instanceID: 0
 --- !u!1 &6599586879126472980
 GameObject:
   m_ObjectHideFlags: 0

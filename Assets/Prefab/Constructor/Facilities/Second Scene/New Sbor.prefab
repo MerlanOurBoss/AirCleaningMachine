@@ -9627,20 +9627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e892f66f491a1de458200dcea77969a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _SborSmokes:
-  - {fileID: 643137105008225921}
-  - {fileID: 2882344990337738290}
-  - {fileID: 7656074149450640585}
-  - {fileID: 4870001624550476605}
-  - {fileID: 963020516823131634}
-  - {fileID: 4687888492471820897}
-  - {fileID: 724154439893408691}
-  - {fileID: 6818265368886858880}
-  - {fileID: 3335477254045748957}
-  - {fileID: 2871011194204991925}
-  - {fileID: 7968592939332617337}
-  - {fileID: 8742044198677059110}
-  - {fileID: 4534551740971241909}
+  mathModule: {fileID: 0}
+  facilityId: SborCO2_TEC1
   rows:
   - id: "\u0422\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u0430"
     slider: {fileID: 5324971954319062824}
@@ -9686,16 +9674,30 @@ MonoBehaviour:
     slider: {fileID: 8862291008911170118}
     valueTextIn: {fileID: 8236624873704913789}
     valueTextOut: {fileID: 9220684745022574369}
-  _SborFans:
-  - {fileID: 7764716023009190724}
-  - {fileID: 9075478444693732264}
-  _SborScript: {fileID: 1292928805578414515}
-  _componentCamera: {fileID: 7566412257704818431}
-  _cameraSequenceController: {fileID: 0}
+  updateInterval: 5
+  componentCamera: {fileID: 7566412257704818431}
+  cameraSequenceController: {fileID: 0}
   exitButton: {fileID: 2968330212687628201}
   enterButton: {fileID: 5802475199211046919}
   switchButton: {fileID: 1732330712605319757}
-  instanceID: 0
+  sborSmokes:
+  - {fileID: 643137105008225921}
+  - {fileID: 2882344990337738290}
+  - {fileID: 7656074149450640585}
+  - {fileID: 4870001624550476605}
+  - {fileID: 963020516823131634}
+  - {fileID: 4687888492471820897}
+  - {fileID: 724154439893408691}
+  - {fileID: 6818265368886858880}
+  - {fileID: 3335477254045748957}
+  - {fileID: 2871011194204991925}
+  - {fileID: 7968592939332617337}
+  - {fileID: 8742044198677059110}
+  - {fileID: 4534551740971241909}
+  sborFans:
+  - {fileID: 7764716023009190724}
+  - {fileID: 9075478444693732264}
+  sborScript: {fileID: 1292928805578414515}
 --- !u!114 &1292928805578414515
 MonoBehaviour:
   m_ObjectHideFlags: 0

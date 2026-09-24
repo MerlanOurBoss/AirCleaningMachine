@@ -28224,8 +28224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57507491c548169488ab3e0459b26717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _katazSmokes:
-  - {fileID: 695159296408644326}
+  mathModule: {fileID: 0}
+  facilityId: Katalizator_TEC1
   rows:
   - id: "\u0422\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u0430"
     slider: {fileID: 538130099643692315}
@@ -28271,13 +28271,26 @@ MonoBehaviour:
     slider: {fileID: 2747542796064808261}
     valueTextIn: {fileID: 342626391650173535}
     valueTextOut: {fileID: 3864891818417346182}
-  _componentCamera: {fileID: 317767787470371693}
-  _cameraSequenceController: {fileID: 0}
-  _temperatureCatalizator: {fileID: 2364164512323699949}
+  updateInterval: 5
+  componentCamera: {fileID: 317767787470371693}
+  cameraSequenceController: {fileID: 0}
   exitButton: {fileID: 7576912801115790011}
   enterButton: {fileID: 6816583742075663712}
   switchButton: {fileID: 6342669078120660414}
-  instanceID: 0
+  katazSmokes:
+  - {fileID: 5705990264103696803}
+  - {fileID: 859126067249639613}
+  - {fileID: 1735616300390314459}
+  - {fileID: 1823773411007126517}
+  - {fileID: 8484998993719545489}
+  - {fileID: 6123214833793780626}
+  - {fileID: 3020532618074158276}
+  - {fileID: 243015459402767525}
+  - {fileID: 5878304660770296657}
+  - {fileID: 3915128036081288561}
+  - {fileID: 1766648920025161439}
+  - {fileID: 695159296408644326}
+  temperatureCatalizator: {fileID: 2364164512323699949}
 --- !u!114 &2364164512323699949
 MonoBehaviour:
   m_ObjectHideFlags: 0

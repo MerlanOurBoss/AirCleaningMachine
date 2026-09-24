@@ -6208,9 +6208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333f5cc290ce6cb4b9d244460b521b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _electroFilterSmokes:
-  - {fileID: 8848868115323975364}
-  - {fileID: 4073521660276650624}
+  mathModule: {fileID: 0}
+  facilityId: Electrofilter_TEC1
   rows:
   - id: "\u0422\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u0430"
     slider: {fileID: 5760139815399617394}
@@ -6256,14 +6255,16 @@ MonoBehaviour:
     slider: {fileID: 1438955731704190869}
     valueTextIn: {fileID: 8513077301020723465}
     valueTextOut: {fileID: 8476707022692801138}
-  _electroFilterAnimation: {fileID: 611834992898835660}
-  _componentCamera: {fileID: 909918498098905248}
-  _cameraSequenceController: {fileID: 0}
+  updateInterval: 5
+  componentCamera: {fileID: 909918498098905248}
+  cameraSequenceController: {fileID: 0}
   exitButton: {fileID: 5396005740570947216}
   enterButton: {fileID: 1934987665714594271}
   switchButton: {fileID: 8298942905590540576}
-  _collec: {fileID: 0}
-  instanceID: 0
+  electroFilterSmokes:
+  - {fileID: 8848868115323975364}
+  - {fileID: 4073521660276650624}
+  electroFilterAnimation: {fileID: 611834992898835660}
 --- !u!1 &1084292375175899313
 GameObject:
   m_ObjectHideFlags: 0

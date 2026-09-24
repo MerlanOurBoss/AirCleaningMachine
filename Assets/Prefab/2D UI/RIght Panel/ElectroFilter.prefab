@@ -5519,6 +5519,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f6017f874e64143b66c3b8b29f90e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  translator: {fileID: 0}
+  facilityId: Electrofilter_TEC1
   _smokeParticles: []
   _densityInput: {fileID: 3698120947269386561}
   _speedInput: {fileID: 5005943065355574226}
@@ -5531,9 +5533,7 @@ MonoBehaviour:
   _potentialText: {fileID: 5412353246926241277}
   _fieldText: {fileID: 3724531403589103070}
   _sizeText: {fileID: 8482815976588512964}
-  _translator: {fileID: 0}
   length: 0
-  instanceID: 0
 --- !u!1 &4655265287369618401
 GameObject:
   m_ObjectHideFlags: 0

@@ -7828,6 +7828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99457799d9acffe4caf10da92037070c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  translator: {fileID: 0}
+  facilityId: Emulgator_TEC1
   _mySmokes: []
   _temperature: {fileID: 3514814889083526086}
   _gasFlow: {fileID: 103969893657184019}
@@ -7842,10 +7844,8 @@ MonoBehaviour:
   massTransfer: {fileID: 4511987889937699262}
   "gas\u0421onsumption": {fileID: 867804234372335120}
   sizeText: {fileID: 1191795291936981107}
-  _translator: {fileID: 0}
   "_gas\u0421onsumption": 0
   "\u0441onsumption": 0
-  instanceID: 0
 --- !u!1 &7507363520260798254
 GameObject:
   m_ObjectHideFlags: 0

@@ -7554,7 +7554,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1048680152628091069}
   m_HandleRect: {fileID: 2268976460738134431}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9118,6 +9118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7935564f513f4e645b8dbcb9088bfd45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  translator: {fileID: 0}
+  facilityId: Katalizator_TEC1
   _smokes: []
   _temperatureText: {fileID: 3990782750909940036}
   _pressureText: {fileID: 6589232380919640421}
@@ -9132,10 +9134,8 @@ MonoBehaviour:
   gasmassFlow: {fileID: 1854417996803241368}
   coGaz: {fileID: 840593729260076638}
   _sizeText: {fileID: 2231615048047541220}
-  _translator: {fileID: 0}
   _tempBefore: 0
   _tempAfter: 0
-  instanceID: 0
 --- !u!1 &5955698594533856258
 GameObject:
   m_ObjectHideFlags: 0
