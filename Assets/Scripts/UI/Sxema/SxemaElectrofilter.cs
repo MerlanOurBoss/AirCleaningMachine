@@ -15,15 +15,21 @@ public class SxemaElectrofilter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dustCountText;
     [SerializeField] private TextMeshProUGUI TensionText;
 
-    public GameObject prefab; // Префаб, который будем спавнить
-    public Transform target;  // Целевой объект для спавна
-    public Slider slider;     // Слайдер
-    public Slider sliderMat;     
-    public bool movePrefabs = false; // Флаг для движения префабов
+    public GameObject prefab;
+    public Transform target;
+    public Slider slider;
+    public Slider sliderMat;
+
+    public bool movePrefabs = false;
     public bool goDown = false;
-    public Transform[] stopPositions; // Массив позиций остановки
+
+    public Transform[] stopPositions;
 
     private List<GameObject> spawnedPrefabs = new List<GameObject>();
+
+    // РџСЂРµС„Р°Р±С‹, РєРѕС‚РѕСЂС‹Рµ РґРѕР»Р¶РЅС‹ РґРІРёРіР°С‚СЊСЃСЏ РІРїСЂР°РІРѕ
+    private HashSet<GameObject> rightMovingPrefabs = new HashSet<GameObject>();
+    private List<Vector3> originalPrefabPositions = new List<Vector3>();
     private int previousSliderValue = 0;
 
     private float tensionCount = 0;
@@ -31,64 +37,95 @@ public class SxemaElectrofilter : MonoBehaviour
     private bool isOff = false;
 
     private bool isActivated = false;
-
     private bool isPaused = false;
+
 
     public void Start()
     {
-        pauseText.text = "Pause";
         slider.onValueChanged.AddListener(OnSliderValueChanged);
         sliderMat.onValueChanged.AddListener(OnSliderValueChangedTension);
     }
+
+
+    // =========================================================
+    // РќРђРџР РЇР–Р•РќРР•
+    // =========================================================
+
     void OnSliderValueChangedTension(float value)
     {
-        // Update UI text
         TensionText.text = value.ToString("0");
 
-        // Update material emission color based on slider value ranges
         if (value <= 14)
         {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0f);
+            electrofilterMat.SetColor(
+                "_EmissionColor",
+                new Color(0, 102, 191, 0) * 0f
+            );
         }
         else if (value >= 14 && value <= 28)
         {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.01f);
+            electrofilterMat.SetColor(
+                "_EmissionColor",
+                new Color(0, 102, 191, 0) * 0.01f
+            );
         }
         else if (value >= 28 && value <= 42)
         {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.05f);
+            electrofilterMat.SetColor(
+                "_EmissionColor",
+                new Color(0, 102, 191, 0) * 0.05f
+            );
         }
         else if (value >= 42 && value <= 70)
         {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.1f);
+            electrofilterMat.SetColor(
+                "_EmissionColor",
+                new Color(0, 102, 191, 0) * 0.1f
+            );
         }
         else if (value >= 70 && value <= 98)
         {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 0.5f);
+            electrofilterMat.SetColor(
+                "_EmissionColor",
+                new Color(0, 102, 191, 0) * 0.5f
+            );
         }
         else if (value >= 98 && value <= 100)
         {
-            electrofilterMat.SetColor("_EmissionColor", new Color(0, 102, 191, 0) * 1f);
+            electrofilterMat.SetColor(
+                "_EmissionColor",
+                new Color(0, 102, 191, 0) * 1f
+            );
         }
+
+        // РџРµСЂРµСЃС‡РёС‚С‹РІР°РµРј, РєР°РєРёРµ С‡Р°СЃС‚РёС†С‹ РёРґСѓС‚ РІРїСЂР°РІРѕ
+        CalculateRightMovingPrefabs();
     }
+
+
+    // =========================================================
+    // РљРћР›РР§Р•РЎРўР’Рћ РџР«Р›Р
+    // =========================================================
+
     void OnSliderValueChanged(float value)
     {
         int newValue = Mathf.FloorToInt(value);
+
         dustCountText.text = newValue.ToString();
-        // Если значение слайдера больше предыдущего, то спавним недостающие префабы
+
         if (newValue > previousSliderValue)
         {
             int prefabsToSpawn = newValue - previousSliderValue;
+
             for (int i = 0; i < prefabsToSpawn; i++)
             {
                 SpawnPrefab();
             }
-            
         }
-        // Если значение слайдера меньше, то удаляем лишние префабы (опционально)
         else if (newValue < previousSliderValue)
         {
             int prefabsToRemove = previousSliderValue - newValue;
+
             for (int i = 0; i < prefabsToRemove; i++)
             {
                 RemovePrefab();
@@ -96,57 +133,188 @@ public class SxemaElectrofilter : MonoBehaviour
         }
 
         previousSliderValue = newValue;
+
+        // РџРµСЂРµСЃС‡РёС‚С‹РІР°РµРј РґРІРёР¶РµРЅРёРµ РІРїСЂР°РІРѕ
+        CalculateRightMovingPrefabs();
     }
+
+
+    // =========================================================
+    // РћРџР Р•Р”Р•Р›Р•РќРР• Р§РђРЎРўРР¦, РљРћРўРћР Р«Р• РР”РЈРў Р’РџР РђР’Рћ
+    // =========================================================
+
+    private void CalculateRightMovingPrefabs()
+    {
+        rightMovingPrefabs.Clear();
+
+        int dust = Mathf.FloorToInt(slider.value);
+        int tension = Mathf.FloorToInt(sliderMat.value);
+
+        if (dust <= 0)
+            return;
+
+        // РџРѕСЂРѕРі = РЅР°РїСЂСЏР¶РµРЅРёРµ + 5%
+        float threshold = tension * 1.05f;
+
+        // Р•СЃР»Рё РїС‹Р»Рё РЅРµ Р±РѕР»СЊС€Рµ С‡РµРј РЅР° 5% РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ,
+        // С‡Р°СЃС‚РёС†С‹ РІРїСЂР°РІРѕ РЅРµ РёРґСѓС‚
+        if (dust <= threshold)
+            return;
+
+        // РќР°СЃРєРѕР»СЊРєРѕ РїС‹Р»СЊ РїСЂРµРІС‹С€Р°РµС‚ РЅР°РїСЂСЏР¶РµРЅРёРµ
+        float excessPercent = (dust - tension) / (float)dust;
+
+        // РљРѕР»РёС‡РµСЃС‚РІРѕ С‡Р°СЃС‚РёС†, РєРѕС‚РѕСЂС‹Рµ РїРѕР№РґСѓС‚ РІРїСЂР°РІРѕ
+        int rightCount = Mathf.RoundToInt(
+            dust * excessPercent
+        );
+
+        // РќРµ Р±РѕР»СЊС€Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёС… РїСЂРµС„Р°Р±РѕРІ
+        rightCount = Mathf.Clamp(
+            rightCount,
+            0,
+            spawnedPrefabs.Count
+        );
+
+        // РќР°Р·РЅР°С‡Р°РµРј РїРµСЂРІС‹Рµ С‡Р°СЃС‚РёС†С‹ РґРІРёР¶СѓС‰РёРјРёСЃСЏ РІРїСЂР°РІРѕ
+        int added = 0;
+
+        for (int i = 0; i < spawnedPrefabs.Count; i++)
+        {
+            if (spawnedPrefabs[i] != null)
+            {
+                rightMovingPrefabs.Add(spawnedPrefabs[i]);
+
+                added++;
+
+                if (added >= rightCount)
+                    break;
+            }
+        }
+    }
+
+
+    // =========================================================
+    // РЈР”РђР›Р•РќРР• РџР Р•Р¤РђР‘Рђ
+    // =========================================================
+
     private void RemovePrefab()
     {
         if (spawnedPrefabs.Count > 0)
         {
-            // Удаляем последний спавненный префаб
-            GameObject prefabToRemove = spawnedPrefabs[spawnedPrefabs.Count - 1];
-            spawnedPrefabs.RemoveAt(spawnedPrefabs.Count - 1);
+            int lastIndex = spawnedPrefabs.Count - 1;
+
+            GameObject prefabToRemove =
+                spawnedPrefabs[lastIndex];
+
+            rightMovingPrefabs.Remove(prefabToRemove);
+
+            spawnedPrefabs.RemoveAt(lastIndex);
+
+            if (originalPrefabPositions.Count > lastIndex)
+            {
+                originalPrefabPositions.RemoveAt(lastIndex);
+            }
+
             Destroy(prefabToRemove);
         }
     }
+
+
+    // =========================================================
+    // РљРќРћРџРљРђ Р”Р’РР–Р•РќРРЇ
+    // =========================================================
 
     public void boolOnMove()
     {
         movePrefabs = true;
     }
+
+
+    // =========================================================
+    // РљРќРћРџРљРђ Р”Р’РР–Р•РќРРЇ Р’РќРР—
+    // =========================================================
+
     public void boolOnDown()
     {
         goDown = true;
     }
+
+
+    // =========================================================
+    // РћРЎРўРђРќРћР’РљРђ
+    // =========================================================
+
     public void boolsOff()
     {
-        movePrefabs = false; // Флаг для движения префабов
+        movePrefabs = false;
         goDown = false;
+
         slider.value = 0;
         sliderMat.value = 0;
+
         sxemElectroAnim.Play("Stop");
     }
+
+
+    // =========================================================
+    // РЎРћР—Р”РђРќРР• РџР Р•Р¤РђР‘Рђ
+    // =========================================================
+
     void SpawnPrefab()
     {
         RectTransform rectTransform = target.GetComponent<RectTransform>();
+
         if (rectTransform != null)
         {
             float width = rectTransform.rect.width;
             float height = rectTransform.rect.height;
 
-            // Генерируем случайные координаты по X и Y внутри границ target
             float randomX = Random.Range(-width / 2, width / 2);
             float randomY = Random.Range(-height / 2, height / 2);
 
-            // Задаем позицию спавна относительно target
-            Vector3 spawnPosition = target.position + new Vector3(randomX / 1000, randomY / 1000,0);
-            // Спавним префаб на сгенерированной позиции
-            GameObject newPrefab = Instantiate(prefab, spawnPosition, new Quaternion(0,0,0,0), target);
-            RectTransform prefabRectTransform = newPrefab.GetComponent<RectTransform>();
+            Vector3 spawnPosition =
+                target.position +
+                new Vector3(
+                    randomX / 1000,
+                    randomY / 1000,
+                    0
+                );
 
-            // Устанавливаем позицию по Z в 0 для UI
-            prefabRectTransform.localPosition = new Vector3(prefabRectTransform.localPosition.x, prefabRectTransform.localPosition.y, 0);
+            GameObject newPrefab = Instantiate(
+                prefab,
+                spawnPosition,
+                Quaternion.identity,
+                target
+            );
+
+            RectTransform prefabRectTransform =
+                newPrefab.GetComponent<RectTransform>();
+
+            // Rotation = 0
+            prefabRectTransform.localRotation = Quaternion.identity;
+
+            // Z = 0
+            prefabRectTransform.localPosition =
+                new Vector3(
+                    prefabRectTransform.localPosition.x,
+                    prefabRectTransform.localPosition.y,
+                    0
+                );
+
             spawnedPrefabs.Add(newPrefab);
+
+            // Р—Р°РїРѕРјРёРЅР°РµРј РёСЃС…РѕРґРЅСѓСЋ РїРѕР·РёС†РёСЋ
+            originalPrefabPositions.Add(
+                prefabRectTransform.localPosition
+            );
         }
     }
+
+
+    // =========================================================
+    // Р’РљР›Р®Р§Р•РќРР• / Р’Р«РљР›Р®Р§Р•РќРР• РЎРҐР•РњР«
+    // =========================================================
 
     public void OnOffSxema()
     {
@@ -154,25 +322,39 @@ public class SxemaElectrofilter : MonoBehaviour
         {
             sxema.SetActive(true);
             sxemaOriginal.SetActive(false);
+
             sxemElectroAnim.Play("Stop");
+
             isActivated = true;
         }
         else
         {
             isOff = true;
+
             sxema.SetActive(false);
             sxemaOriginal.SetActive(true);
+
             sxemElectroAnim.Play("Stop");
+
             isActivated = false;
         }
     }
 
+
+    // =========================================================
+    // UPDATE
+    // =========================================================
+
     private void Update()
     {
+        if (isPaused)
+            return;
+
         if (movePrefabs)
         {
             MovePrefabsToStopPositions();
         }
+
         if (isOff)
         {
             sxemElectroAnim.Play("Stop");
@@ -180,89 +362,164 @@ public class SxemaElectrofilter : MonoBehaviour
         }
     }
 
+
+    // =========================================================
+    // Р”Р’РР–Р•РќРР• РџР Р•Р¤РђР‘РћР’
+    // =========================================================
+
     void MovePrefabsToStopPositions()
     {
         for (int i = 0; i < spawnedPrefabs.Count; i++)
         {
-            GameObject prefab = spawnedPrefabs[i];
-            if (prefab != null)
+            GameObject currentPrefab = spawnedPrefabs[i];
+
+            if (currentPrefab == null)
+                continue;
+
+            RectTransform prefabRectTransform =
+                currentPrefab.GetComponent<RectTransform>();
+
+
+            // =================================================
+            // Р§РђРЎРўРР¦Р«, РљРћРўРћР Р«Р• Р”Р’РР–РЈРўРЎРЇ Р’РџР РђР’Рћ
+            // =================================================
+
+            if (rightMovingPrefabs.Contains(currentPrefab))
             {
-                RectTransform prefabRectTransform = prefab.GetComponent<RectTransform>();
+                float newX =
+                    prefabRectTransform.localPosition.x +
+                    Time.deltaTime * 100f;
 
-                if (goDown)
+                prefabRectTransform.localPosition =
+                    new Vector3(
+                        newX,
+                        prefabRectTransform.localPosition.y,
+                        0
+                    );
+
+                continue;
+            }
+
+
+            // =================================================
+            // РћРЎРўРђР›Р¬РќР«Р• Р§РђРЎРўРР¦Р«
+            // =================================================
+
+            if (goDown)
+            {
+                // Р”РІРёР¶РµРЅРёРµ РІРЅРёР·
+
+                float newY = Mathf.MoveTowards(
+                    prefabRectTransform.localPosition.y,
+                    -Screen.height,
+                    Time.deltaTime * 100f
+                );
+
+                prefabRectTransform.localPosition =
+                    new Vector3(
+                        prefabRectTransform.localPosition.x,
+                        newY,
+                        0
+                    );
+
+                if (prefabRectTransform.localPosition.y <= -Screen.height)
                 {
-                    // Двигаем префаб вниз по оси Y
-                    float newY = Mathf.MoveTowards(prefabRectTransform.localPosition.y, -Screen.height, Time.deltaTime * 100f); // -Screen.height для перемещения вниз за экран
-                    prefabRectTransform.localPosition = new Vector3(prefabRectTransform.localPosition.x, newY, prefabRectTransform.localPosition.z);
-
-                    // Останавливаем движение, если объект достиг нижней границы экрана
-                    if (prefabRectTransform.localPosition.y <= -Screen.height)
-                    {
-                        spawnedPrefabs[i] = null; // Остановить движение для достигнутого префаба
-                    }
+                    spawnedPrefabs[i] = null;
                 }
-                else
+            }
+            else
+            {
+                // Р”РІРёР¶РµРЅРёРµ Рє stopPosition
+
+                Transform stopPosition =
+                    stopPositions[i % stopPositions.Length];
+
+                float newX = Mathf.MoveTowards(
+                    prefabRectTransform.localPosition.x,
+                    stopPosition.localPosition.x,
+                    Time.deltaTime * 100f
+                );
+
+                prefabRectTransform.localPosition =
+                    new Vector3(
+                        newX,
+                        prefabRectTransform.localPosition.y,
+                        0
+                    );
+
+                if (Vector3.Distance(
+                    prefabRectTransform.localPosition,
+                    stopPosition.localPosition
+                ) < 0.1f)
                 {
-                    Transform stopPosition = stopPositions[i % stopPositions.Length];
-                    // Используем localPosition для UI-объектов
-                    float newX = Mathf.MoveTowards(prefabRectTransform.localPosition.x, stopPosition.localPosition.x, Time.deltaTime * 100f);
-                    prefabRectTransform.localPosition = new Vector3(newX, prefabRectTransform.localPosition.y, prefabRectTransform.localPosition.z); ;
-                    // Проверка расстояния между текущей позицией и позицией остановки
-                    if (Vector3.Distance(prefabRectTransform.localPosition, stopPosition.localPosition) < 0.1f)
-                    {
-                        spawnedPrefabs[i] = null; // Остановить движение для достигнутого префаба
-                    }
+                    spawnedPrefabs[i] = null;
                 }
             }
         }
     }
+
+
+    // =========================================================
+    // Р—РђРџРЈРЎРљ РђРќРРњРђР¦РР
+    // =========================================================
+
     public void SxemaStart()
     {
         sxemElectroAnim.Play("Main");
     }
 
 
+    // =========================================================
+    // PAUSE
+    // =========================================================
+
     public void PauseSxema()
     {
         if (!isPaused)
         {
-            pauseText.text = "Resume";
             sxemElectroAnim.speed = 0;
+
             isPaused = true;
         }
         else
         {
-            pauseText.text = "Pause";
             sxemElectroAnim.speed = 1;
+
             isPaused = false;
         }
     }
+
+
+    // =========================================================
+    // STOP
+    // =========================================================
+
     public void SxemasStop()
     {
-        sxemElectroAnim.Play("Stop");
-    }
-}
+        movePrefabs = false;
+        goDown = false;
 
-public class PrefabMover : MonoBehaviour
-{
-    private Vector3 targetPosition;
-    private bool moveForward;
-
-    public void SetTargetPosition(Vector3 position, bool shouldMove)
-    {
-        targetPosition = position;
-        moveForward = shouldMove;
-    }
-
-    void Update()
-    {
-        if (moveForward)
+        for (int i = 0; i < spawnedPrefabs.Count; i++)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * 2f);
-            if (transform.position == targetPosition)
+            if (spawnedPrefabs[i] != null &&
+                i < originalPrefabPositions.Count)
             {
-                moveForward = false;
+                RectTransform prefabRectTransform =
+                    spawnedPrefabs[i].GetComponent<RectTransform>();
+
+                prefabRectTransform.localPosition =
+                    originalPrefabPositions[i];
+
+                // РќР° РІСЃСЏРєРёР№ СЃР»СѓС‡Р°Р№ РІРѕР·РІСЂР°С‰Р°РµРј Rotation = 0
+                prefabRectTransform.localRotation =
+                    Quaternion.identity;
             }
         }
+
+        // РЈР±РёСЂР°РµРј РЅР°Р·РЅР°С‡РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ РІРїСЂР°РІРѕ
+        rightMovingPrefabs.Clear();
+
+        // РћСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р°РЅРёРјР°С†РёСЋ
+        sxemElectroAnim.Play("Stop");
     }
 }
