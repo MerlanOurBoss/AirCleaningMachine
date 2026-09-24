@@ -84,26 +84,56 @@ public class LoadRightPanel : MonoBehaviour
                     script._solidParticle = _solidParticleElectro;
                     
                     script._electroFilterAnimator = _collec;
+
+                    LinkManagerToMathModule<GeneralManagerForElectroFilter, MathModuleForElectro>(child.gameObject, script);
                 }
                 else if(spawnedObject.name == "New Katalizator(Clone)")
                 {
                     var script = spawnedObject.GetComponent<MathModulForKataz>();
                     script._gasFlowMain = _gasFlow;
+
+                    LinkManagerToMathModule<GeneralManagerForKataz, MathModulForKataz>(child.gameObject, script);
                 }
                 else if(spawnedObject.name == "Emul(Clone)")
                 {
                     var script = spawnedObject.GetComponent<MathModuleForEmul>();
                     script._gasFlowMain = _gasFlow;
+
+                    LinkManagerToMathModule<GeneralManagerForEmul, MathModuleForEmul>(child.gameObject, script);
                 }
                 else if(spawnedObject.name == "New Sbor(Clone)")
                 {
                     var script = spawnedObject.GetComponent<MathModulForSborCO2>();
                     script._gasFlowMain = _gasFlow;
+
+                    LinkManagerToMathModule<GeneralManagerForSborCO2, MathModulForSborCO2>(child.gameObject, script);
                 }
             }
         }
         _translator.LoadAllTextMeshProUGUI();
         StartCoroutine(ActivateFirstItemDelayed());
+    }
+
+    private static void LinkManagerToMathModule<TManager, TMathModule>(GameObject managerHost, TMathModule mathModule)
+        where TManager : ModuleManagerBase<TMathModule>
+        where TMathModule : MonoBehaviour, IFacilityIdentified
+    {
+        var manager = managerHost.GetComponent<TManager>();
+        if (manager == null)
+        {
+            Debug.LogError($"LoadRightPanel: на объекте '{managerHost.name}' не найден компонент " +
+                            $"{typeof(TManager).Name} — не могу связать его с только что созданным " +
+                            $"{typeof(TMathModule).Name}.");
+            return;
+        }
+        else
+        {
+            Debug.Log($"LoadRightPanel: на объекте '{managerHost.name}' не найден компонент " +
+                      $"{typeof(TManager).Name} — не могу связать его с только что созданным " +
+                      $"{typeof(TMathModule).Name}.");;
+        }
+
+        manager.SetMathModule(mathModule);
     }
 
     private void SetupButtonLogic()
