@@ -57,10 +57,10 @@ public class MovingFacilities : MonoBehaviour
             {
                 if (!IsChildCollider(hit.collider))
                 {
-                    if (hit.transform == transform && (gameObject.tag == "Facilities" || gameObject.tag == "Facilities_Capsul" || gameObject.tag == "Facilities_Steam" 
-                        || gameObject.tag == "Facilities_DryAir" || gameObject.tag == "Facilities_Oven" || gameObject.tag == "Facilities_Emul" 
-                        || gameObject.tag == "Facilities_Cool" || gameObject.tag == "Facilities_Electro" || gameObject.tag == "Facilities_Kataz" || gameObject.tag == "Facilities_NewCapsul"
-                        || gameObject.tag == "Facilities_Emul_Reagent" || gameObject.tag == "Facilities_Emul_Soda"))
+                    if (hit.transform == transform && (gameObject.CompareTag("Facilities") || gameObject.CompareTag("Facilities_Capsul") || gameObject.CompareTag("Facilities_Steam") 
+                        || gameObject.CompareTag("Facilities_DryAir") || gameObject.CompareTag("Facilities_Oven") || gameObject.CompareTag("Facilities_Emul") 
+                        || gameObject.CompareTag("Facilities_Cool") || gameObject.CompareTag("Facilities_Electro") || gameObject.CompareTag("Facilities_Kataz") || gameObject.CompareTag("Facilities_NewCapsul")
+                        || gameObject.CompareTag("Facilities_Emul_Reagent") || gameObject.CompareTag("Facilities_Emul_Soda")))
                     {
                         isSelected = true;
                         isDragging = !isDragging;
@@ -146,7 +146,6 @@ public class MovingFacilities : MonoBehaviour
 
 
     }
-
     public void ToggleCollider(bool enabled)
     {
         if (objectCollider != null)

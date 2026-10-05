@@ -13,22 +13,19 @@ public class GasTableManager : MonoBehaviour
         Catalyst,
         CO2Collector
     }
-
-    //[Header("Связь со слайдерами и текстом в таблице")]
     [Serializable]
     public class ParameterRowUI
     {
-        public string id;                 // Например: "Температура", "Пыль", "CO", ...
-        public Slider slider;             // Слайдер справа
-        public TextMeshProUGUI valueText; // Значение в таблице (столбец 'Вход')
+        public string id;
+        public Slider slider;
+        public TextMeshProUGUI valueText;
     }
 
-    //[Header("Настройки модулей")]
     [Serializable]
     public class ModuleData
     {
-        public ModuleType type;           // Какой модуль
-        public List<float> values;        // Значения по всем параметрам (по порядку, как в списке rows)
+        public ModuleType type;
+        public List<float> values;
     }
 
     [SerializeField] private List<ParameterRowUI> rows = new List<ParameterRowUI>();
@@ -39,10 +36,9 @@ public class GasTableManager : MonoBehaviour
 
     private void Start()
     {
-        // Подписываемся на изменение каждого слайдера
         for (int i = 0; i < rows.Count; i++)
         {
-            int paramIndex = i; // важно сделать копию индекса
+            int paramIndex = i;
             if (rows[i].slider != null)
             {
                 rows[i].slider.onValueChanged.AddListener(
@@ -52,11 +48,7 @@ public class GasTableManager : MonoBehaviour
 
         ApplyModule(currentModuleIndex);
     }
-
-    /// <summary>
-    /// Вызывается извне, когда вы по логике перешли к следующему модулю
-    /// (например из скрипта камер или кнопки "Далее").
-    /// </summary>
+    
     public void SetModule(ModuleType type)
     {
         int index = modules.FindIndex(m => m.type == type);
@@ -70,11 +62,6 @@ public class GasTableManager : MonoBehaviour
             Debug.LogWarning($"GasTableManager: модуль {type} не найден в списке modules.");
         }
     }
-
-    /// <summary>
-    /// Переключение по очереди: 0→1→2→3→0 ...
-    /// Можно повесить на кнопку "Следующий компонент".
-    /// </summary>
     public void NextModule()
     {
         currentModuleIndex++;
@@ -94,7 +81,6 @@ public class GasTableManager : MonoBehaviour
 
         ModuleData module = modules[moduleIndex];
 
-        // На всякий случай проверяем, что количество значений совпадает
         if (module.values.Count < rows.Count)
         {
             Debug.LogWarning("GasTableManager: в ModuleData не хватает значений для всех параметров.");
@@ -106,7 +92,7 @@ public class GasTableManager : MonoBehaviour
 
             if (rows[i].slider != null)
             {
-                rows[i].slider.SetValueWithoutNotify(value); // чтобы не вызвать лишний OnValueChanged
+                rows[i].slider.SetValueWithoutNotify(value);
             }
 
             if (rows[i].valueText != null)
@@ -115,27 +101,19 @@ public class GasTableManager : MonoBehaviour
             }
         }
     }
-
-    // Вызывается, когда пользователь двигает слайдер
     private void OnSliderChanged(int paramIndex, float value)
     {
-        // Обновляем текст в таблице
         if (paramIndex < 0 || paramIndex >= rows.Count)
             return;
 
         if (rows[paramIndex].valueText != null)
             rows[paramIndex].valueText.text = Mathf.RoundToInt(value).ToString();
 
-        // Сохраняем значение в данных текущего модуля
         ModuleData currentModule = modules[currentModuleIndex];
-
-        // Убедимся, что в списке есть место
+        
         while (currentModule.values.Count <= paramIndex)
             currentModule.values.Add(0f);
 
         currentModule.values[paramIndex] = value;
-
-        // Здесь можно добавить свою логику:
-        // например, пересчёт "Выхода" и влияния компонента на следующую ступень
     }
 }

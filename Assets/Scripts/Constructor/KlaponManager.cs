@@ -39,7 +39,7 @@ public class KlaponManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                if (hit.transform == transform && gameObject.tag == "Klapon")
+                if (hit.transform == transform && gameObject.CompareTag("Klapon"))
                 {
                     isSelected = true;
                 }

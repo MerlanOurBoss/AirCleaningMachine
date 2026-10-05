@@ -86,11 +86,11 @@ public class MoveObjectWithMouse : MonoBehaviour
             {
                 if (!IsChildCollider(hit.collider))
                 {
-                    if (hit.transform == transform && (gameObject.tag == "Pipe" || gameObject.tag == "Pipe_45" || gameObject.tag == "Pipe_90" || gameObject.tag == "Pipe_T"))
+                    if (hit.transform == transform && (gameObject.CompareTag("Pipe") || gameObject.CompareTag("Pipe_45") || gameObject.CompareTag("Pipe_90") || gameObject.CompareTag("Pipe_T")))
                     {
                         isSelected = true;
                         isDragging = !isDragging;
-                        ChangeColor(Color.red); // Меняем цвет на красный
+                        ChangeColor(Color.red);
 
                         isDragging = true;
                         Vector3 mousePosition = Input.mousePosition + mouseOffset;
@@ -101,7 +101,7 @@ public class MoveObjectWithMouse : MonoBehaviour
                     {
                         isSelected = false;
                         isDragging = false;
-                        ChangeColor(originalColor); // Возвращаем исходный цвет
+                        ChangeColor(originalColor); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
                     }
                 }
             }
@@ -127,7 +127,7 @@ public class MoveObjectWithMouse : MonoBehaviour
         {
             isSelected = false;
             isDragging = false;
-            ChangeColor(originalColor); // Возвращаем исходный цвет
+            ChangeColor(originalColor);
         }
 
         if (isSelected)

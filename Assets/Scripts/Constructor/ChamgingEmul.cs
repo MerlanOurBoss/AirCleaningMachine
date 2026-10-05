@@ -15,7 +15,7 @@ public class ChamgingEmul : MonoBehaviour
 
     private void Start()
     {
-        if (gameObject.tag == "Facilities_Emul")
+        if (gameObject.CompareTag("Facilities_Emul"))
         {
             foreach (MeshRenderer item in fluidsWater)
             {
@@ -29,7 +29,7 @@ public class ChamgingEmul : MonoBehaviour
 
             countWater = 1;
         }
-        else if (gameObject.tag == "Facilities_Emul_Reagent")
+        else if (gameObject.CompareTag("Facilities_Emul_Reagent"))
         {
             foreach (MeshRenderer item in fluidsWater)
             {
@@ -42,7 +42,7 @@ public class ChamgingEmul : MonoBehaviour
             }
             countWater = 2;
         }
-        else if (gameObject.tag == "Facilities_Emul_Soda")
+        else if (gameObject.CompareTag("Facilities_Emul_Soda"))
         {
             foreach (MeshRenderer item in fluidsWater)
             {
@@ -70,7 +70,7 @@ public class ChamgingEmul : MonoBehaviour
             {
                 item.material = blued;
             }
-            gameObject.tag = "Facilities_Emul";
+            gameObject.CompareTag("Facilities_Emul");
         }
         if (countWater == 2)
         {
@@ -83,7 +83,7 @@ public class ChamgingEmul : MonoBehaviour
             {
                 item.material = reded;
             }
-            gameObject.tag = "Facilities_Emul_Reagent";
+            gameObject.CompareTag("Facilities_Emul_Reagent");
         }
         if (countWater == 3)
         {
@@ -96,7 +96,7 @@ public class ChamgingEmul : MonoBehaviour
             {
                 item.material = greened;
             }
-            gameObject.tag = "Facilities_Emul_Soda";
+            gameObject.CompareTag("Facilities_Emul_Soda");
         }
         if (countWater > 3)
         {
