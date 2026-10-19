@@ -167,7 +167,9 @@ public class MoveObjectWithMouse : MonoBehaviour
                 
             }
         }
-        if (isConnected && !isActivated)
+        // Подсветка подключения — одна корутина за раз. Раньше она запускалась каждый кадр,
+        // поздние запоминали уже зелёный цвет как «исходный», и труба оставалась зелёной.
+        if (isConnected && !isActivated && !isFlashing)
         {
             StartCoroutine(ChangeColorForDuration(gameObject, Color.green, .1f));
         }
@@ -194,9 +196,11 @@ public class MoveObjectWithMouse : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (transform.parent != null)
+        // При выгрузке сцены родитель может быть уже уничтожен или без коллайдера.
+        if (transform.parent != null && transform.parent.gameObject.scene.isLoaded)
         {
-            transform.parent.gameObject.GetComponent<Collider>().enabled = true;
+            var parentCollider = transform.parent.GetComponent<Collider>();
+            if (parentCollider != null) parentCollider.enabled = true;
             transform.parent.gameObject.tag = "ConnectionPoint";
         }
     }
@@ -207,17 +211,21 @@ public class MoveObjectWithMouse : MonoBehaviour
             objectCollider.enabled  = enabled;
         }
     }
+    private bool isFlashing;
+
     public IEnumerator ChangeColorForDuration(GameObject obj, Color color, float duration)
     {
         Renderer rend = obj.GetComponent<Renderer>();
         if (rend != null)
         {
+            isFlashing = true;
             Color originalColor = rend.material.color;
             rend.material.color = color;
             yield return new WaitForSeconds(duration);
             isConnected = false;
             isActivated = true;
             rend.material.color = originalColor;
+            isFlashing = false;
         }
     }
 }

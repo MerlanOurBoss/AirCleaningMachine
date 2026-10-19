@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CameraSequenceController : MonoBehaviour
 {
@@ -48,7 +49,12 @@ public class CameraSequenceController : MonoBehaviour
     [ContextMenu("Refresh Cameras From Tag")]
     public void RefreshCamerasFromTag()
     {
-        var found = GameObject.FindGameObjectsWithTag(componentsTag);
+        // FindGameObjectsWithTag не видит выключенные объекты, а Awake выключает камеры из списка —
+        // поэтому ищем по всем камерам сцены, включая неактивные.
+        var foundList = new List<GameObject>();
+        foreach (var c in FindObjectsOfType<Camera>(true))
+            if (c.CompareTag(componentsTag)) foundList.Add(c.gameObject);
+        var found = foundList.ToArray();
         var seenNames = new HashSet<string>();
         int emulgatorCount = 0;
         const int emulgatorLimit = 2;
@@ -64,7 +70,7 @@ public class CameraSequenceController : MonoBehaviour
             {
                 if (emulgatorCount >= emulgatorLimit)
                 {
-                    cam.gameObject.transform.parent.gameObject.SetActive(false);
+                    HideCameraHost(cam);
                     continue;
                 }
                 
@@ -75,7 +81,7 @@ public class CameraSequenceController : MonoBehaviour
 
             if (!seenNames.Add(cam.name))
             {
-                cam.gameObject.transform.parent.gameObject.SetActive(false);
+                HideCameraHost(cam);
                 continue;
             }
             componentCameras.Add(cam);
@@ -83,6 +89,33 @@ public class CameraSequenceController : MonoBehaviour
         
         componentCameras.Sort((a, b) => string.Compare(a.name, b.name, System.StringComparison.Ordinal));
     }
+    // Выключить объект-носитель камеры (родителя, если он есть; раньше без родителя был NullReference).
+    private static void HideCameraHost(Camera cam)
+    {
+        var host = cam.transform.parent != null ? cam.transform.parent.gameObject : cam.gameObject;
+        host.SetActive(false);
+    }
+
+    private readonly List<RaycastResult> _uiRaycastResults = new List<RaycastResult>();
+
+    // Клик пришёлся на интерактивный элемент UI (кнопку, поле, слайдер и т.п.)?
+    // Проверяем именно Selectable, а не любой UI, чтобы декоративные панели поверх
+    // стены камер не блокировали клики.
+    private bool IsPointerOverInteractableUI()
+    {
+        if (EventSystem.current == null) return false;
+
+        var pointer = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        _uiRaycastResults.Clear();
+        EventSystem.current.RaycastAll(pointer, _uiRaycastResults);
+
+        foreach (var result in _uiRaycastResults)
+            if (result.gameObject != null && result.gameObject.GetComponentInParent<Selectable>() != null)
+                return true;
+
+        return false;
+    }
+
     public void ShowWall()
     {
         if (overviewCamera) overviewCamera.gameObject.SetActive(false);
@@ -141,7 +174,8 @@ public class CameraSequenceController : MonoBehaviour
         if (!clickToReveal) return;
         if (Time.unscaledTime - _lastClickTime < clickCooldown) return;
         if (!Input.GetMouseButtonDown(0)) return;
-        //if (EventSystem.current && EventSystem.current.IsPointerOverGameObject()) return;
+        // Клик по кнопке интерфейса не должен одновременно раскрывать/закрывать стену камер.
+        if (IsPointerOverInteractableUI()) return;
         
         _lastClickTime = Time.unscaledTime;
 

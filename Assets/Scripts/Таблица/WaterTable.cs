@@ -80,35 +80,35 @@ public class WaterTable : MonoBehaviour
     void Start()
     {
         delayPrivate = delay;
-        water_Temperature = float.Parse(tablesData[0].text);
-        water_Dust = float.Parse(tablesData[1].text);
-        water_SolidParticles = float.Parse(tablesData[2].text);
-        water_Zola = float.Parse(tablesData[3].text);
+        water_Temperature = ParseValue(tablesData[0].text);
+        water_Dust = ParseValue(tablesData[1].text);
+        water_SolidParticles = ParseValue(tablesData[2].text);
+        water_Zola = ParseValue(tablesData[3].text);
 
-        water_CO_enter = float.Parse(tablesData[4].text);
-        water_CO2_enter = float.Parse(tablesData[5].text);
-        water_NO_enter = float.Parse(tablesData[6].text);
-        water_NO2_enter = float.Parse(tablesData[7].text);
+        water_CO_enter = ParseValue(tablesData[4].text);
+        water_CO2_enter = ParseValue(tablesData[5].text);
+        water_NO_enter = ParseValue(tablesData[6].text);
+        water_NO2_enter = ParseValue(tablesData[7].text);
         
-        water_SO2_enter = float.Parse(tablesData[8].text);
-        water_CH4_enter = float.Parse(tablesData[9].text);
-        water_H2S_enter = float.Parse(tablesData[10].text);
-        water_O2_enter = float.Parse(tablesData[11].text);
-        water_N2_enter = float.Parse(tablesData[12].text);
+        water_SO2_enter = ParseValue(tablesData[8].text);
+        water_CH4_enter = ParseValue(tablesData[9].text);
+        water_H2S_enter = ParseValue(tablesData[10].text);
+        water_O2_enter = ParseValue(tablesData[11].text);
+        water_N2_enter = ParseValue(tablesData[12].text);
 
-        water_Temperature_exit = float.Parse(tablesData[0].text);
-        water_Dust_exit = float.Parse(tablesData[1].text);
-        water_SolidParticles_exit = float.Parse(tablesData[2].text);
-        water_Zola_exit = float.Parse(tablesData[3].text);
+        water_Temperature_exit = ParseValue(tablesData[0].text);
+        water_Dust_exit = ParseValue(tablesData[1].text);
+        water_SolidParticles_exit = ParseValue(tablesData[2].text);
+        water_Zola_exit = ParseValue(tablesData[3].text);
 
-        water_CO_exit = float.Parse(tablesData[4].text);
-        water_CO2_exit = float.Parse(tablesData[5].text);
-        water_NO_exit = float.Parse(tablesData[6].text);
-        water_NO2_exit = float.Parse(tablesData[7].text);
+        water_CO_exit = ParseValue(tablesData[4].text);
+        water_CO2_exit = ParseValue(tablesData[5].text);
+        water_NO_exit = ParseValue(tablesData[6].text);
+        water_NO2_exit = ParseValue(tablesData[7].text);
 
-        water_SO2_exit = float.Parse(tablesData[8].text);
-        water_CH4_exit = float.Parse(tablesData[9].text);
-        water_H2S_exit = float.Parse(tablesData[10].text); 
+        water_SO2_exit = ParseValue(tablesData[8].text);
+        water_CH4_exit = ParseValue(tablesData[9].text);
+        water_H2S_exit = ParseValue(tablesData[10].text); 
     }
 
     // Update is called once per frame
@@ -127,7 +127,7 @@ public class WaterTable : MonoBehaviour
                         item.startColor = new Color(1f, 1f, 1f, 0.5f);
                     }
                 }
-                else if (Water_SolidParticle_enter.value > 20 && Water_SolidParticle_enter.value < 50)
+                else if (Water_SolidParticle_enter.value >= 20 && Water_SolidParticle_enter.value < 50)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -150,20 +150,20 @@ public class WaterTable : MonoBehaviour
                 Water_O2_enter.value = water_O2_enter;
                 Water_N2_enter.value = water_N2_enter;
 
-                water_Temperature = Mathf.Lerp(water_Temperature, float.Parse(tablesData[0].text), 2 * Time.deltaTime);
-                water_Dust = Mathf.Lerp(water_Dust, float.Parse(tablesData[1].text), 2 * Time.deltaTime);
-                water_SolidParticles = Mathf.Lerp(water_SolidParticles, float.Parse(tablesData[2].text), 2 * Time.deltaTime);
-                water_Zola = Mathf.Lerp(water_Zola, float.Parse(tablesData[3].text), 2 * Time.deltaTime);
-                water_CO_enter = Mathf.Lerp(water_CO_enter, float.Parse(tablesData[4].text), 2 * Time.deltaTime);
-                water_CO2_enter = Mathf.Lerp(water_CO2_enter, float.Parse(tablesData[5].text), 2 * Time.deltaTime);
-                water_NO_enter = Mathf.Lerp(water_NO_enter, float.Parse(tablesData[6].text), 2 * Time.deltaTime);
-                water_NO2_enter = Mathf.Lerp(water_NO2_enter, float.Parse(tablesData[7].text), 2 * Time.deltaTime);
+                water_Temperature = Mathf.Lerp(water_Temperature, ParseValue(tablesData[0].text), 2 * Time.deltaTime);
+                water_Dust = Mathf.Lerp(water_Dust, ParseValue(tablesData[1].text), 2 * Time.deltaTime);
+                water_SolidParticles = Mathf.Lerp(water_SolidParticles, ParseValue(tablesData[2].text), 2 * Time.deltaTime);
+                water_Zola = Mathf.Lerp(water_Zola, ParseValue(tablesData[3].text), 2 * Time.deltaTime);
+                water_CO_enter = Mathf.Lerp(water_CO_enter, ParseValue(tablesData[4].text), 2 * Time.deltaTime);
+                water_CO2_enter = Mathf.Lerp(water_CO2_enter, ParseValue(tablesData[5].text), 2 * Time.deltaTime);
+                water_NO_enter = Mathf.Lerp(water_NO_enter, ParseValue(tablesData[6].text), 2 * Time.deltaTime);
+                water_NO2_enter = Mathf.Lerp(water_NO2_enter, ParseValue(tablesData[7].text), 2 * Time.deltaTime);
 
-                water_SO2_enter = Mathf.Lerp(water_SO2_enter, float.Parse(tablesData[8].text), 2 * Time.deltaTime);
-                water_CH4_enter = Mathf.Lerp(water_CH4_enter, float.Parse(tablesData[9].text), 2 * Time.deltaTime);
-                water_H2S_enter = Mathf.Lerp(water_H2S_enter, float.Parse(tablesData[10].text), 2 * Time.deltaTime);
-                water_O2_enter = Mathf.Lerp(water_O2_enter, float.Parse(tablesData[11].text), 2 * Time.deltaTime);
-                water_N2_enter = Mathf.Lerp(water_N2_enter, float.Parse(tablesData[12].text), 2 * Time.deltaTime);
+                water_SO2_enter = Mathf.Lerp(water_SO2_enter, ParseValue(tablesData[8].text), 2 * Time.deltaTime);
+                water_CH4_enter = Mathf.Lerp(water_CH4_enter, ParseValue(tablesData[9].text), 2 * Time.deltaTime);
+                water_H2S_enter = Mathf.Lerp(water_H2S_enter, ParseValue(tablesData[10].text), 2 * Time.deltaTime);
+                water_O2_enter = Mathf.Lerp(water_O2_enter, ParseValue(tablesData[11].text), 2 * Time.deltaTime);
+                water_N2_enter = Mathf.Lerp(water_N2_enter, ParseValue(tablesData[12].text), 2 * Time.deltaTime);
             }
             if (delay < 0)
             {
@@ -183,25 +183,28 @@ public class WaterTable : MonoBehaviour
                 Water_O2_exit.text = water_O2_enter.ToString("0.");
                 Water_N2_exit.text = water_N2_enter.ToString("0.");
 
-                water_Temperature_exit = Mathf.Lerp(water_Temperature_exit, float.Parse(tablesData[0].text) * 0.12f, 2 * Time.deltaTime);
-                water_Dust_exit = Mathf.Lerp(water_Dust_exit, float.Parse(tablesData[1].text) * 0.1f, 2 * Time.deltaTime);
-                water_SolidParticles_exit = Mathf.Lerp(water_SolidParticles_exit, float.Parse(tablesData[2].text) * 0.1f, 2 * Time.deltaTime);
-                water_Zola_exit = Mathf.Lerp(water_Zola_exit, float.Parse(tablesData[3].text) * 0.25f, 2 * Time.deltaTime);
+                water_Temperature_exit = Mathf.Lerp(water_Temperature_exit, ParseValue(tablesData[0].text) * 0.12f, 2 * Time.deltaTime);
+                water_Dust_exit = Mathf.Lerp(water_Dust_exit, ParseValue(tablesData[1].text) * 0.1f, 2 * Time.deltaTime);
+                water_SolidParticles_exit = Mathf.Lerp(water_SolidParticles_exit, ParseValue(tablesData[2].text) * 0.1f, 2 * Time.deltaTime);
+                water_Zola_exit = Mathf.Lerp(water_Zola_exit, ParseValue(tablesData[3].text) * 0.25f, 2 * Time.deltaTime);
 
-                water_CO_exit = Mathf.Lerp(water_CO_exit, float.Parse(tablesData[4].text) , 2 * Time.deltaTime);
-                water_CO2_exit = Mathf.Lerp(water_CO2_exit, float.Parse(tablesData[5].text) * 0.922f, 2 * Time.deltaTime);
-                water_NO_exit = Mathf.Lerp(water_NO_exit, float.Parse(tablesData[6].text) , 2 * Time.deltaTime);
-                water_NO2_exit = Mathf.Lerp(water_NO2_exit, float.Parse(tablesData[7].text) , 2 * Time.deltaTime);
+                water_CO_exit = Mathf.Lerp(water_CO_exit, ParseValue(tablesData[4].text) , 2 * Time.deltaTime);
+                water_CO2_exit = Mathf.Lerp(water_CO2_exit, ParseValue(tablesData[5].text) * 0.922f, 2 * Time.deltaTime);
+                water_NO_exit = Mathf.Lerp(water_NO_exit, ParseValue(tablesData[6].text) , 2 * Time.deltaTime);
+                water_NO2_exit = Mathf.Lerp(water_NO2_exit, ParseValue(tablesData[7].text) , 2 * Time.deltaTime);
 
                 
-                water_SO2_exit = Mathf.Lerp(water_SO2_exit, float.Parse(tablesData[8].text) * 0.043f, 2 * Time.deltaTime);
-                water_CH4_exit = Mathf.Lerp(water_CH4_exit, float.Parse(tablesData[9].text) * 0.294f, 2 * Time.deltaTime);
-                water_H2S_exit = Mathf.Lerp(water_H2S_exit, float.Parse(tablesData[10].text) * 0.04f, 2 * Time.deltaTime);
-                water_O2_enter = Mathf.Lerp(water_O2_enter, float.Parse(tablesData[11].text) , 2 * Time.deltaTime);
-                water_N2_enter = Mathf.Lerp(water_N2_enter, float.Parse(tablesData[12].text) , 2 * Time.deltaTime);
+                water_SO2_exit = Mathf.Lerp(water_SO2_exit, ParseValue(tablesData[8].text) * 0.043f, 2 * Time.deltaTime);
+                water_CH4_exit = Mathf.Lerp(water_CH4_exit, ParseValue(tablesData[9].text) * 0.294f, 2 * Time.deltaTime);
+                water_H2S_exit = Mathf.Lerp(water_H2S_exit, ParseValue(tablesData[10].text) * 0.04f, 2 * Time.deltaTime);
+                water_O2_enter = Mathf.Lerp(water_O2_enter, ParseValue(tablesData[11].text) , 2 * Time.deltaTime);
+                water_N2_enter = Mathf.Lerp(water_N2_enter, ParseValue(tablesData[12].text) , 2 * Time.deltaTime);
 
             }
-            else if (delay < -10)
+
+            // Раньше было "else if" после "if (delay < 0)" — ветка никогда не срабатывала,
+            // и таблица пересчитывалась бесконечно.
+            if (delay < -10)
             {
                 isEnable = false;
 
@@ -212,19 +215,30 @@ public class WaterTable : MonoBehaviour
     {
         delay = delayPrivate;
         isEnable = true;
-        water_Temperature = float.Parse(tablesData[0].text);
-        water_Dust = float.Parse(tablesData[1].text);
-        water_SolidParticles = float.Parse(tablesData[2].text);
-        water_Zola = float.Parse(tablesData[3].text);
-        water_CO_enter = float.Parse(tablesData[4].text);
-        water_CO2_enter = float.Parse(tablesData[5].text);
-        water_NO_enter = float.Parse(tablesData[6].text);
-        water_NO2_enter = float.Parse(tablesData[7].text);
+        water_Temperature = ParseValue(tablesData[0].text);
+        water_Dust = ParseValue(tablesData[1].text);
+        water_SolidParticles = ParseValue(tablesData[2].text);
+        water_Zola = ParseValue(tablesData[3].text);
+        water_CO_enter = ParseValue(tablesData[4].text);
+        water_CO2_enter = ParseValue(tablesData[5].text);
+        water_NO_enter = ParseValue(tablesData[6].text);
+        water_NO2_enter = ParseValue(tablesData[7].text);
         
-        water_SO2_enter = float.Parse(tablesData[8].text);
-        water_CH4_enter = float.Parse(tablesData[9].text);
-        water_H2S_enter = float.Parse(tablesData[10].text);
-        water_O2_enter = float.Parse(tablesData[11].text);
-        water_N2_enter = float.Parse(tablesData[12].text);
+        water_SO2_enter = ParseValue(tablesData[8].text);
+        water_CH4_enter = ParseValue(tablesData[9].text);
+        water_H2S_enter = ParseValue(tablesData[10].text);
+        water_O2_enter = ParseValue(tablesData[11].text);
+        water_N2_enter = ParseValue(tablesData[12].text);
+    }
+
+    // Разбор числа из текста таблицы без зависимости от языка Windows ("12.5" и "12,5").
+    // Раньше float.Parse бросал исключение каждый кадр, если формат не совпадал с локалью.
+    private static float ParseValue(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return 0f;
+        return float.TryParse(text.Trim().Replace(',', '.'),
+            System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture,
+            out float value) ? value : 0f;
     }
 }

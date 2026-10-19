@@ -81,35 +81,36 @@ public class ReactTable : MonoBehaviour
     void Start()
     {
         delayPrivate = delay;
-        react_Temperature = float.Parse(tablesData[0].text);
-        react_Dust = float.Parse(tablesData[1].text); 
-        react_SolidParticles = float.Parse(tablesData[2].text); 
-        react_Zola = float.Parse(tablesData[3].text); 
+        react_Temperature = ParseValue(tablesData[0].text);
+        react_Dust = ParseValue(tablesData[1].text); 
+        react_SolidParticles = ParseValue(tablesData[2].text); 
+        react_Zola = ParseValue(tablesData[3].text); 
 
-        react_Temperature_exit = float.Parse(tablesData[0].text); 
-        react_Dust_exit = float.Parse(tablesData[1].text); 
-        react_SolidParticles_exit = float.Parse(tablesData[2].text); 
-        react_Zola_exit = float.Parse(tablesData[3].text); 
+        react_Temperature_exit = ParseValue(tablesData[0].text); 
+        react_Dust_exit = ParseValue(tablesData[1].text); 
+        react_SolidParticles_exit = ParseValue(tablesData[2].text); 
+        react_Zola_exit = ParseValue(tablesData[3].text); 
 
-        react_CO_enter = float.Parse(tablesData[4].text); 
-        react_NO_enter = float.Parse(tablesData[6].text); 
-        react_NO2_enter = float.Parse(tablesData[7].text);
+        react_CO_enter = ParseValue(tablesData[4].text); 
+        react_NO_enter = ParseValue(tablesData[6].text); 
+        react_NO2_enter = ParseValue(tablesData[7].text);
 
-        react_CO2_enter = float.Parse(tablesData[5].text);
-        react_SO2_enter = float.Parse(tablesData[8].text);
-        react_CH4_enter = float.Parse(tablesData[9].text);
-        react_H2S_enter = float.Parse(tablesData[10].text);
-        react_O2_enter = float.Parse(tablesData[10].text);
-        react_N2_enter = float.Parse(tablesData[10].text);
+        react_CO2_enter = ParseValue(tablesData[5].text);
+        react_SO2_enter = ParseValue(tablesData[8].text);
+        react_CH4_enter = ParseValue(tablesData[9].text);
+        react_H2S_enter = ParseValue(tablesData[10].text);
+        // Было tablesData[10] (H2S) для O2 и N2.
+        react_O2_enter = ParseValue(tablesData[11].text);
+        react_N2_enter = ParseValue(tablesData[12].text);
 
-        react_CO_exit = float.Parse(tablesData[4].text);
-        react_NO_exit = float.Parse(tablesData[6].text);
-        react_NO2_exit = float.Parse(tablesData[7].text);
+        react_CO_exit = ParseValue(tablesData[4].text);
+        react_NO_exit = ParseValue(tablesData[6].text);
+        react_NO2_exit = ParseValue(tablesData[7].text);
 
-        react_CO2_exit = float.Parse(tablesData[5].text);
-        react_SO2_exit = float.Parse(tablesData[8].text);
-        react_CH4_exit = float.Parse(tablesData[9].text);
-        react_H2S_exit = float.Parse(tablesData[10].text);
+        react_CO2_exit = ParseValue(tablesData[5].text);
+        react_SO2_exit = ParseValue(tablesData[8].text);
+        react_CH4_exit = ParseValue(tablesData[9].text);
+        react_H2S_exit = ParseValue(tablesData[10].text);
     }
 
     // Update is called once per frame
@@ -127,7 +128,7 @@ public class ReactTable : MonoBehaviour
                         item.startColor = new Color(1f, 1f, 1f, 0.2f);
                     }
                 }
-                else if (React_SolidParticle_enter.value > 2 && React_SolidParticle_enter.value <= 5)
+                else if (React_SolidParticle_enter.value >= 2 && React_SolidParticle_enter.value <= 5)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -149,19 +150,19 @@ public class ReactTable : MonoBehaviour
                 React_O2.value = react_O2_enter;
                 React_N2.value = react_N2_enter;
 
-                react_Temperature = Mathf.Lerp(react_Temperature, float.Parse(tablesData[0].text), 2 * Time.deltaTime);
-                react_Dust = Mathf.Lerp(react_Dust, float.Parse(tablesData[1].text), 2 * Time.deltaTime);
-                react_SolidParticles = Mathf.Lerp(react_SolidParticles, float.Parse(tablesData[2].text), 2 * Time.deltaTime);
-                react_Zola = Mathf.Lerp(react_Zola, float.Parse(tablesData[3].text), 2 * Time.deltaTime);
-                react_CO_enter = Mathf.Lerp(react_CO_enter, float.Parse(tablesData[4].text), 2 * Time.deltaTime);
-                react_NO_enter = Mathf.Lerp(react_NO_enter, float.Parse(tablesData[6].text), 2 * Time.deltaTime);
-                react_NO2_enter = Mathf.Lerp(react_NO2_enter, float.Parse(tablesData[7].text), 2 * Time.deltaTime);
-                react_CO2_enter = Mathf.Lerp(react_CO2_enter, float.Parse(tablesData[5].text), 2 * Time.deltaTime);
-                react_SO2_enter = Mathf.Lerp(react_SO2_enter, float.Parse(tablesData[8].text), 2 * Time.deltaTime);
-                react_CH4_enter = Mathf.Lerp(react_CH4_enter, float.Parse(tablesData[9].text), 2 * Time.deltaTime);
-                react_H2S_enter = Mathf.Lerp(react_H2S_enter, float.Parse(tablesData[10].text), 2 * Time.deltaTime);
-                react_O2_enter = Mathf.Lerp(react_O2_enter, float.Parse(tablesData[11].text), 2 * Time.deltaTime);
-                react_N2_enter = Mathf.Lerp(react_N2_enter, float.Parse(tablesData[12].text), 2 * Time.deltaTime);
+                react_Temperature = Mathf.Lerp(react_Temperature, ParseValue(tablesData[0].text), 2 * Time.deltaTime);
+                react_Dust = Mathf.Lerp(react_Dust, ParseValue(tablesData[1].text), 2 * Time.deltaTime);
+                react_SolidParticles = Mathf.Lerp(react_SolidParticles, ParseValue(tablesData[2].text), 2 * Time.deltaTime);
+                react_Zola = Mathf.Lerp(react_Zola, ParseValue(tablesData[3].text), 2 * Time.deltaTime);
+                react_CO_enter = Mathf.Lerp(react_CO_enter, ParseValue(tablesData[4].text), 2 * Time.deltaTime);
+                react_NO_enter = Mathf.Lerp(react_NO_enter, ParseValue(tablesData[6].text), 2 * Time.deltaTime);
+                react_NO2_enter = Mathf.Lerp(react_NO2_enter, ParseValue(tablesData[7].text), 2 * Time.deltaTime);
+                react_CO2_enter = Mathf.Lerp(react_CO2_enter, ParseValue(tablesData[5].text), 2 * Time.deltaTime);
+                react_SO2_enter = Mathf.Lerp(react_SO2_enter, ParseValue(tablesData[8].text), 2 * Time.deltaTime);
+                react_CH4_enter = Mathf.Lerp(react_CH4_enter, ParseValue(tablesData[9].text), 2 * Time.deltaTime);
+                react_H2S_enter = Mathf.Lerp(react_H2S_enter, ParseValue(tablesData[10].text), 2 * Time.deltaTime);
+                react_O2_enter = Mathf.Lerp(react_O2_enter, ParseValue(tablesData[11].text), 2 * Time.deltaTime);
+                react_N2_enter = Mathf.Lerp(react_N2_enter, ParseValue(tablesData[12].text), 2 * Time.deltaTime);
             }
             if (delay < 0)
             {
@@ -180,22 +181,25 @@ public class ReactTable : MonoBehaviour
                 React_O2_exit.text = react_O2_enter.ToString("0.");
                 React_N2_exit.text = react_N2_enter.ToString("0.");
 
-                react_Temperature_exit = Mathf.Lerp(react_Temperature_exit, float.Parse(tablesData[0].text) * 0.84f, 2 * Time.deltaTime);
-                react_Dust_exit = Mathf.Lerp(react_Dust_exit, float.Parse(tablesData[1].text) * 0f, 2 * Time.deltaTime);
-                react_SolidParticles_exit = Mathf.Lerp(react_SolidParticles_exit, float.Parse(tablesData[2].text) * 0.5f, 2 * Time.deltaTime);
-                react_Zola_exit = Mathf.Lerp(react_Zola_exit, float.Parse(tablesData[3].text) * 0f, 2 * Time.deltaTime);
-                react_CO_exit = Mathf.Lerp(react_CO_exit, float.Parse(tablesData[4].text) * 0.5f, 2 * Time.deltaTime);
-                react_NO_exit = Mathf.Lerp(react_NO_exit, float.Parse(tablesData[6].text) * 0.45f, 2 * Time.deltaTime);
-                react_NO2_exit = Mathf.Lerp(react_NO2_exit, float.Parse(tablesData[7].text) * 0.5f, 2 * Time.deltaTime);
-                react_CO2_exit = Mathf.Lerp(react_CO2_exit, float.Parse(tablesData[5].text) * 0.5f, 2 * Time.deltaTime);
-                react_SO2_exit = Mathf.Lerp(react_SO2_exit, float.Parse(tablesData[8].text) * 0f, 2 * Time.deltaTime);
-                react_CH4_exit = Mathf.Lerp(react_CH4_exit, float.Parse(tablesData[9].text) * 0.5f, 2 * Time.deltaTime);
-                react_H2S_exit = Mathf.Lerp(react_H2S_exit, float.Parse(tablesData[10].text) * 0f, 2 * Time.deltaTime);
-                react_O2_enter = Mathf.Lerp(react_O2_enter, float.Parse(tablesData[11].text) , 2 * Time.deltaTime);
-                react_N2_enter = Mathf.Lerp(react_N2_enter, float.Parse(tablesData[12].text) , 2 * Time.deltaTime);
+                react_Temperature_exit = Mathf.Lerp(react_Temperature_exit, ParseValue(tablesData[0].text) * 0.84f, 2 * Time.deltaTime);
+                react_Dust_exit = Mathf.Lerp(react_Dust_exit, ParseValue(tablesData[1].text) * 0f, 2 * Time.deltaTime);
+                react_SolidParticles_exit = Mathf.Lerp(react_SolidParticles_exit, ParseValue(tablesData[2].text) * 0.5f, 2 * Time.deltaTime);
+                react_Zola_exit = Mathf.Lerp(react_Zola_exit, ParseValue(tablesData[3].text) * 0f, 2 * Time.deltaTime);
+                react_CO_exit = Mathf.Lerp(react_CO_exit, ParseValue(tablesData[4].text) * 0.5f, 2 * Time.deltaTime);
+                react_NO_exit = Mathf.Lerp(react_NO_exit, ParseValue(tablesData[6].text) * 0.45f, 2 * Time.deltaTime);
+                react_NO2_exit = Mathf.Lerp(react_NO2_exit, ParseValue(tablesData[7].text) * 0.5f, 2 * Time.deltaTime);
+                react_CO2_exit = Mathf.Lerp(react_CO2_exit, ParseValue(tablesData[5].text) * 0.5f, 2 * Time.deltaTime);
+                react_SO2_exit = Mathf.Lerp(react_SO2_exit, ParseValue(tablesData[8].text) * 0f, 2 * Time.deltaTime);
+                react_CH4_exit = Mathf.Lerp(react_CH4_exit, ParseValue(tablesData[9].text) * 0.5f, 2 * Time.deltaTime);
+                react_H2S_exit = Mathf.Lerp(react_H2S_exit, ParseValue(tablesData[10].text) * 0f, 2 * Time.deltaTime);
+                react_O2_enter = Mathf.Lerp(react_O2_enter, ParseValue(tablesData[11].text) , 2 * Time.deltaTime);
+                react_N2_enter = Mathf.Lerp(react_N2_enter, ParseValue(tablesData[12].text) , 2 * Time.deltaTime);
 
             }
-            else if (delay < -10)
+
+            // Раньше было "else if" после "if (delay < 0)" — ветка никогда не срабатывала,
+            // и таблица пересчитывалась бесконечно.
+            if (delay < -10)
             {
                 isEnable = false;
 
@@ -207,18 +211,30 @@ public class ReactTable : MonoBehaviour
     {
         delay = delayPrivate;
         isEnable = true;
-        react_Temperature = float.Parse(tablesData[0].text);
-        react_Dust = float.Parse(tablesData[1].text);
-        react_SolidParticles = float.Parse(tablesData[2].text);
-        react_Zola = float.Parse(tablesData[3].text);
-        react_CO_enter = float.Parse(tablesData[4].text);
-        react_NO_enter = float.Parse(tablesData[5].text);
-        react_NO2_enter = float.Parse(tablesData[6].text);
-        react_CO2_enter = float.Parse(tablesData[7].text);
-        react_SO2_enter = float.Parse(tablesData[8].text);
-        react_CH4_enter = float.Parse(tablesData[9].text);
-        react_H2S_enter = float.Parse(tablesData[10].text);
-        react_O2_enter = float.Parse(tablesData[11].text);
-        react_N2_enter = float.Parse(tablesData[12].text);
+        react_Temperature = ParseValue(tablesData[0].text);
+        react_Dust = ParseValue(tablesData[1].text);
+        react_SolidParticles = ParseValue(tablesData[2].text);
+        react_Zola = ParseValue(tablesData[3].text);
+        react_CO_enter = ParseValue(tablesData[4].text);
+        // Индексы как в Start/Update: 5 — CO2, 6 — NO, 7 — NO2 (раньше были сдвинуты).
+        react_NO_enter = ParseValue(tablesData[6].text);
+        react_NO2_enter = ParseValue(tablesData[7].text);
+        react_CO2_enter = ParseValue(tablesData[5].text);
+        react_SO2_enter = ParseValue(tablesData[8].text);
+        react_CH4_enter = ParseValue(tablesData[9].text);
+        react_H2S_enter = ParseValue(tablesData[10].text);
+        react_O2_enter = ParseValue(tablesData[11].text);
+        react_N2_enter = ParseValue(tablesData[12].text);
+    }
+
+    // Разбор числа из текста таблицы без зависимости от языка Windows ("12.5" и "12,5").
+    // Раньше float.Parse бросал исключение каждый кадр, если формат не совпадал с локалью.
+    private static float ParseValue(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return 0f;
+        return float.TryParse(text.Trim().Replace(',', '.'),
+            System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture,
+            out float value) ? value : 0f;
     }
 }

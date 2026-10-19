@@ -154,13 +154,17 @@ public abstract class ModuleManagerBase<TMathModule> : GeneralManagerBase, IPara
         {
             if (!row.valueTextIn) continue;
 
-            if (!float.TryParse(row.valueTextIn.text, out float originalValue))
+            // Разбор не зависит от языка Windows: принимаются и "12.5", и "12,5".
+            if (!float.TryParse(row.valueTextIn.text?.Trim().Replace(',', '.'),
+                    System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out float originalValue))
             {
                 Debug.LogWarning($"[{GetType().Name}] Невозможно преобразовать valueTextIn у id={row.id}");
                 continue;
             }
 
-            if (!TryCalculateRow(row, originalValue))
+            if (!TryCalculateRow(row, originalValue) && row.valueTextOut != null)
                 row.valueTextOut.text = row.valueTextIn.text;
         }
     }

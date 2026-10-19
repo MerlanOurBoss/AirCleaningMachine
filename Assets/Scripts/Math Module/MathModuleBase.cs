@@ -73,6 +73,27 @@ public abstract class MathModuleBase : MonoBehaviour, IFacilityIdentified
 
     protected abstract void Recalculate();
 
+    /// <summary>
+    /// Совпадает ли текст поля с одним из вариантов (без учёта регистра и пробелов по краям).
+    /// Нужен, чтобы расчёты не зависели от языка интерфейса: передаются названия на всех языках.
+    /// </summary>
+    protected static bool MatchesAny(string text, params string[] options)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return false;
+        string t = text.Trim();
+        foreach (var option in options)
+            if (string.Equals(t, option.Trim(), System.StringComparison.OrdinalIgnoreCase))
+                return true;
+        return false;
+    }
+
+    /// <summary>Сравнение числа из поля ("1,5 м³/с", "1.5 m³/s") с ожидаемым значением.</summary>
+    protected static bool NumberEquals(string text, float expected, float tolerance = 0.001f)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return false;
+        return Mathf.Abs(ParseLeadingNumber(text) - expected) <= tolerance;
+    }
+
     protected static float ParseLeadingNumber(string text)
     {
         if (string.IsNullOrWhiteSpace(text)) return 0f;

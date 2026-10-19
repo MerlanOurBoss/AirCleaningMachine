@@ -23,26 +23,34 @@ public class MoleculasScript : MonoBehaviour
 
     public GameObject spawnInObj;
 
-    private void Update()
+    // Скорость дрейфа молекул по оси Z, ед./с. Раньше было -0.05 за кадр (около -3 ед./с при 60 FPS),
+    // поэтому скорость зависела от FPS.
+    public float driftSpeed = -3f;
+
+    private readonly List<Rigidbody> _molecBodies = new List<Rigidbody>();
+
+    // Физику двигаем в FixedUpdate и только молекулы (дочерние объекты spawnInObj).
+    // Раньше FindObjectsOfType<Rigidbody>() каждый кадр двигал ВСЕ Rigidbody на сцене (в т.ч. NPC_man).
+    private void FixedUpdate()
     {
-        MoveObjects(-0.05f);
-        
+        MoveObjects(driftSpeed * Time.fixedDeltaTime);
     }
-    void MoveObjects(float direction)
+
+    void MoveObjects(float zOffset)
     {
-        Rigidbody[] rigidbodies = FindObjectsOfType<Rigidbody>();
+        if (spawnInObj == null) return;
 
-        for (int i = 0; i < rigidbodies.Length; i++)
+        spawnInObj.GetComponentsInChildren(false, _molecBodies);
+
+        float rotation = rotationSpeed * Time.fixedDeltaTime * 1.5f;
+        Quaternion deltaRotation = Quaternion.Euler(rotation, rotation, rotation);
+        Vector3 movement = new Vector3(0f, 0f, zOffset);
+
+        for (int i = 0; i < _molecBodies.Count; i++)
         {
-            Vector3 movement = new Vector3(0f, 0f, direction);
-
-            // Используйте MovePosition для перемещения объекта
-            rigidbodies[i].MovePosition(rigidbodies[i].position + movement);
-
-            float rotation = rotationSpeed * Time.deltaTime * 1.5f;
-            Quaternion deltaRotation = Quaternion.Euler(rotation, rotation, rotation);
-
-            rigidbodies[i].MoveRotation(rigidbodies[i].rotation * deltaRotation);
+            Rigidbody rb = _molecBodies[i];
+            rb.MovePosition(rb.position + movement);
+            rb.MoveRotation(rb.rotation * deltaRotation);
         }
     }
     public void StartSimulate()

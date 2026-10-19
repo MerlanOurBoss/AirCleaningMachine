@@ -31,6 +31,7 @@ public class BaseTable : MonoBehaviour
     [SerializeField] private float staleAfter = 3f;
 
     private bool _locked;
+    private OptimaHidPoller _acquiredPoller; // у какого поллера мы «взяли» захват
 
     private OptimaHidPoller Poller => poller != null ? poller : OptimaHidPoller.Instance;
 
@@ -38,16 +39,21 @@ public class BaseTable : MonoBehaviour
     {
         if (!useAnalyzer || !controlCapture) return;
         var p = Poller;
-        if (p != null) p.StartCapture();
+        if (p != null)
+        {
+            // Счётчик пользователей: захват остановится, только когда выключится последняя таблица.
+            p.AcquireCapture();
+            _acquiredPoller = p;
+        }
         else Debug.LogWarning("[BaseTable] OptimaHidPoller не найден: добавьте его в сцену или назначьте в поле Poller");
     }
 
     private void OnDisable()
     {
-        if (useAnalyzer && controlCapture)
+        if (_acquiredPoller != null)
         {
-            var p = Poller;
-            if (p != null) p.StopCapture();
+            _acquiredPoller.ReleaseCapture();
+            _acquiredPoller = null;
         }
         SetLocked(false);
     }
@@ -60,6 +66,8 @@ public class BaseTable : MonoBehaviour
 
         for (int i = 0; i < texts.Length && i < sliders.Length; i++)
         {
+            if (sliders[i] == null || texts[i] == null) continue;
+
             if (live && HasKey(i) && p.TryGet(analyzerKeys[i], out float v))
             {
                 sliders[i].value = v;                              // слайдер ограничит значение своими Min/Max

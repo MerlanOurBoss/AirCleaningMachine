@@ -22,35 +22,51 @@ public class ValveLampController : MonoBehaviour
     public bool IsOpen => greenLamp != null && greenLamp.activeSelf;
 
     private Coroutine _running;
+    private bool _runningToOpen; // куда ведёт текущая последовательность (имеет смысл, пока _running != null)
 
     private void Reset()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
+    // При выключении объекта Unity останавливает корутины — сбрасываем признак «идёт переключение».
+    private void OnDisable()
+    {
+        _running = null;
+    }
+
     /// <summary>Открыть клапан (зелёная лампа) — было StartGreenSequence(transform).</summary>
     public void Open()
     {
-        if (greenLamp != null && greenLamp.activeSelf)
+        // Повторный вызов, пока клапан уже открывается (или уже открыт), ничего не делает.
+        // SborCO2Controller вызывает Open каждый кадр в своём временном окне, и раньше мигание
+        // и звук перезапускались каждый кадр, пока не загорится зелёная лампа.
+        if (_running != null ? _runningToOpen : IsOpen)
             return;
 
-        Restart(Sequence(openClip, openWhenDone: true));
+        Restart(openClip, toOpen: true);
     }
 
     /// <summary>Закрыть клапан (красная лампа) — было StartRedSequence(transform).</summary>
     public void Close()
     {
-        if (redLamp != null && redLamp.activeSelf)
+        bool isClosed = redLamp != null && redLamp.activeSelf;
+        if (_running != null ? !_runningToOpen : isClosed)
             return;
 
-        Restart(Sequence(closeClip, openWhenDone: false));
+        Restart(closeClip, toOpen: false);
     }
 
-    private void Restart(IEnumerator routine)
+    private void Restart(AudioClip clip, bool toOpen)
     {
         if (_running != null)
             StopCoroutine(_running);
-        _running = StartCoroutine(routine);
+        _running = null;
+
+        if (!isActiveAndEnabled) return; // на выключенном объекте корутину запустить нельзя
+
+        _runningToOpen = toOpen;
+        _running = StartCoroutine(Sequence(clip, toOpen));
     }
 
     private IEnumerator Sequence(AudioClip clip, bool openWhenDone)
@@ -61,11 +77,15 @@ public class ValveLampController : MonoBehaviour
             audioSource.Play();
         }
 
-        yield return StartCoroutine(BlinkYellow());
+        // Вложенный перечислитель вместо отдельной корутины: при перезапуске StopCoroutine
+        // останавливает и мигание (раньше старое мигание продолжалось параллельно с новым).
+        yield return BlinkYellow();
 
         if (yellowLamp != null) yellowLamp.SetActive(false);
         if (greenLamp != null) greenLamp.SetActive(openWhenDone);
         if (redLamp != null) redLamp.SetActive(!openWhenDone);
+
+        _running = null;
     }
 
     private IEnumerator BlinkYellow()

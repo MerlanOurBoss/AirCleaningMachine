@@ -16,14 +16,32 @@ public class MovingFacilities : MonoBehaviour
     public Vector3 mouseOffset = new Vector3(1.0f, 1.0f, 0.0f);
 
     private string startTag;
+    private ChamgingEmul emulType;
+
+    // Подсказка эмульгатора общая на сцену: показываем её, если выбран хотя бы один эмульгатор.
+    // Раньше каждый эмульгатор каждый кадр включал/выключал её по-своему, и при двух — она мигала.
+    private static readonly HashSet<MovingFacilities> s_selectedEmuls = new HashSet<MovingFacilities>();
+    private static FindEmulTag s_emulTip;
+
     void Start()
     {
         objectCollider = GetComponent<Collider>();
         mainCamera = Camera.main;
+        emulType = GetComponent<ChamgingEmul>();
 
         startTag = gameObject.tag;
+    }
 
+    private void OnDisable()
+    {
+        if (s_selectedEmuls.Remove(this)) UpdateEmulTip();
+    }
 
+    private static void UpdateEmulTip()
+    {
+        if (s_emulTip == null) s_emulTip = FindAnyObjectByType<FindEmulTag>();
+        if (s_emulTip != null && s_emulTip.tip != null)
+            s_emulTip.tip.SetActive(s_selectedEmuls.Count > 0);
     }
     bool IsChildCollider(Collider collider)
     {
@@ -84,22 +102,17 @@ public class MovingFacilities : MonoBehaviour
         if ( Input.GetKey(KeyCode.R))
         {
             gameObject.tag = startTag;
-            gameObject.GetComponent<Collider>().enabled = true;
+            if (objectCollider != null) objectCollider.enabled = true;
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            if (gameObject.GetComponent<ChamgingEmul>()  != null && isSelected == true)
+            if (emulType != null && isSelected)
             {
-                gameObject.GetComponent<ChamgingEmul>().ChangingE();
+                emulType.ChangingE();
             }
-                
         }
         if (isSelected)
         {
-            if (gameObject.GetComponent<ChamgingEmul>() != null )
-            {
-                FindAnyObjectByType<FindEmulTag>().tip.SetActive(true);
-            }
             if (Input.GetKeyDown(KeyCode.A))
             {
                 transform.Rotate(0f, -90f, 0f);
@@ -113,15 +126,14 @@ public class MovingFacilities : MonoBehaviour
         {
             isSelected = false;
             isDragging = false;
-            gameObject.GetComponent<Collider>().enabled = false;
+            if (objectCollider != null) objectCollider.enabled = false;
             //gameObject.tag = "Untagged";
         }
-        if (!isSelected)
+
+        if (emulType != null)
         {
-            if (gameObject.GetComponent<ChamgingEmul>() != null )
-            {
-                FindAnyObjectByType<FindEmulTag>().tip.SetActive(false);
-            }
+            bool changed = isSelected ? s_selectedEmuls.Add(this) : s_selectedEmuls.Remove(this);
+            if (changed) UpdateEmulTip();
         }
 
         if (isDragging)

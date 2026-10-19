@@ -78,35 +78,35 @@ public class SborTable : MonoBehaviour
 
     void Start()
     {
-        sbor_Temperature = float.Parse(tablesData[0].text);
-        sbor_Dust = float.Parse(tablesData[1].text);
-        sbor_SolidParticles = float.Parse(tablesData[2].text);
-        sbor_Zola = float.Parse(tablesData[3].text);
+        sbor_Temperature = ParseValue(tablesData[0].text);
+        sbor_Dust = ParseValue(tablesData[1].text);
+        sbor_SolidParticles = ParseValue(tablesData[2].text);
+        sbor_Zola = ParseValue(tablesData[3].text);
         
-        sbor_CO_enter = float.Parse(tablesData[4].text);
-        sbor_NO_enter = float.Parse(tablesData[6].text);
-        sbor_NO2_enter = float.Parse(tablesData[7].text);
+        sbor_CO_enter = ParseValue(tablesData[4].text);
+        sbor_NO_enter = ParseValue(tablesData[6].text);
+        sbor_NO2_enter = ParseValue(tablesData[7].text);
         
-        sbor_CO2 = float.Parse(tablesData[5].text);
-        sbor_SO2 = float.Parse(tablesData[8].text);
-        sbor_CH4 = float.Parse(tablesData[9].text);
-        sbor_H2S = float.Parse(tablesData[10].text);
-        sbor_O2 = float.Parse(tablesData[11].text);
-        sbor_N2 = float.Parse(tablesData[12].text);
+        sbor_CO2 = ParseValue(tablesData[5].text);
+        sbor_SO2 = ParseValue(tablesData[8].text);
+        sbor_CH4 = ParseValue(tablesData[9].text);
+        sbor_H2S = ParseValue(tablesData[10].text);
+        sbor_O2 = ParseValue(tablesData[11].text);
+        sbor_N2 = ParseValue(tablesData[12].text);
 
-        sbor_Temperature_exit = float.Parse(tablesData[0].text);
-        sbor_Dust_exit = float.Parse(tablesData[1].text);
-        sbor_SolidParticles_exit = float.Parse(tablesData[2].text);
-        sbor_Zola_exit = float.Parse(tablesData[3].text);
+        sbor_Temperature_exit = ParseValue(tablesData[0].text);
+        sbor_Dust_exit = ParseValue(tablesData[1].text);
+        sbor_SolidParticles_exit = ParseValue(tablesData[2].text);
+        sbor_Zola_exit = ParseValue(tablesData[3].text);
 
-        sbor_CO_exit = float.Parse(tablesData[4].text);
-        sbor_NO_exit = float.Parse(tablesData[6].text);
-        sbor_NO2_exit = float.Parse(tablesData[7].text);
+        sbor_CO_exit = ParseValue(tablesData[4].text);
+        sbor_NO_exit = ParseValue(tablesData[6].text);
+        sbor_NO2_exit = ParseValue(tablesData[7].text);
 
-        sbor_CO2_exit = float.Parse(tablesData[5].text);
-        sbor_SO2_exit = float.Parse(tablesData[8].text);
-        sbor_CH4_exit = float.Parse(tablesData[9].text);
-        sbor_H2S_exit = float.Parse(tablesData[10].text);
+        sbor_CO2_exit = ParseValue(tablesData[5].text);
+        sbor_SO2_exit = ParseValue(tablesData[8].text);
+        sbor_CH4_exit = ParseValue(tablesData[9].text);
+        sbor_H2S_exit = ParseValue(tablesData[10].text);
     }
 
     // Update is called once per frame
@@ -131,19 +131,19 @@ public class SborTable : MonoBehaviour
                 Sbor_O2.value = sbor_O2;
                 Sbor_N2.value = sbor_N2;
 
-                sbor_Temperature = Mathf.Lerp(sbor_Temperature, float.Parse(tablesData[0].text), 2 * Time.deltaTime);
-                sbor_Dust = Mathf.Lerp(sbor_Dust, float.Parse(tablesData[1].text), 2 * Time.deltaTime);
-                sbor_SolidParticles = Mathf.Lerp(sbor_SolidParticles, float.Parse(tablesData[2].text), 2 * Time.deltaTime);
-                sbor_Zola = Mathf.Lerp(sbor_Zola, float.Parse(tablesData[3].text), 2 * Time.deltaTime);
-                sbor_CO_enter = Mathf.Lerp(sbor_CO_enter, float.Parse(tablesData[4].text), 2 * Time.deltaTime);
-                sbor_NO_enter = Mathf.Lerp(sbor_NO_enter, float.Parse(tablesData[6].text), 2 * Time.deltaTime);
-                sbor_NO2_enter = Mathf.Lerp(sbor_NO2_enter, float.Parse(tablesData[7].text), 2 * Time.deltaTime);
-                sbor_CO2 = Mathf.Lerp(sbor_CO2, float.Parse(tablesData[5].text), 2 * Time.deltaTime);
-                sbor_SO2 = Mathf.Lerp(sbor_SO2, float.Parse(tablesData[8].text), 2 * Time.deltaTime);
-                sbor_CH4 = Mathf.Lerp(sbor_CH4, float.Parse(tablesData[9].text), 2 * Time.deltaTime);
-                sbor_H2S = Mathf.Lerp(sbor_H2S, float.Parse(tablesData[10].text), 2 * Time.deltaTime);
-                sbor_O2 = Mathf.Lerp(sbor_O2, float.Parse(tablesData[11].text), 2 * Time.deltaTime);
-                sbor_N2 = Mathf.Lerp(sbor_N2, float.Parse(tablesData[12].text), 2 * Time.deltaTime);
+                sbor_Temperature = Mathf.Lerp(sbor_Temperature, ParseValue(tablesData[0].text), 2 * Time.deltaTime);
+                sbor_Dust = Mathf.Lerp(sbor_Dust, ParseValue(tablesData[1].text), 2 * Time.deltaTime);
+                sbor_SolidParticles = Mathf.Lerp(sbor_SolidParticles, ParseValue(tablesData[2].text), 2 * Time.deltaTime);
+                sbor_Zola = Mathf.Lerp(sbor_Zola, ParseValue(tablesData[3].text), 2 * Time.deltaTime);
+                sbor_CO_enter = Mathf.Lerp(sbor_CO_enter, ParseValue(tablesData[4].text), 2 * Time.deltaTime);
+                sbor_NO_enter = Mathf.Lerp(sbor_NO_enter, ParseValue(tablesData[6].text), 2 * Time.deltaTime);
+                sbor_NO2_enter = Mathf.Lerp(sbor_NO2_enter, ParseValue(tablesData[7].text), 2 * Time.deltaTime);
+                sbor_CO2 = Mathf.Lerp(sbor_CO2, ParseValue(tablesData[5].text), 2 * Time.deltaTime);
+                sbor_SO2 = Mathf.Lerp(sbor_SO2, ParseValue(tablesData[8].text), 2 * Time.deltaTime);
+                sbor_CH4 = Mathf.Lerp(sbor_CH4, ParseValue(tablesData[9].text), 2 * Time.deltaTime);
+                sbor_H2S = Mathf.Lerp(sbor_H2S, ParseValue(tablesData[10].text), 2 * Time.deltaTime);
+                sbor_O2 = Mathf.Lerp(sbor_O2, ParseValue(tablesData[11].text), 2 * Time.deltaTime);
+                sbor_N2 = Mathf.Lerp(sbor_N2, ParseValue(tablesData[12].text), 2 * Time.deltaTime);
 
             }
             if (delay < 0)
@@ -163,22 +163,25 @@ public class SborTable : MonoBehaviour
                 Sbor_O2_exit.text = sbor_O2.ToString("0.");
                 Sbor_N2_exit.text = sbor_N2.ToString("0.");
 
-                sbor_Temperature_exit = Mathf.Lerp(sbor_Temperature_exit, float.Parse(tablesData[0].text) * 0.6f, 2 * Time.deltaTime);
-                sbor_Dust_exit = Mathf.Lerp(sbor_Dust_exit, float.Parse(tablesData[1].text) * 0f, 2 * Time.deltaTime);
-                sbor_SolidParticles_exit = Mathf.Lerp(sbor_SolidParticles_exit, float.Parse(tablesData[2].text) * 1f, 2 * Time.deltaTime);
-                sbor_Zola_exit = Mathf.Lerp(sbor_Zola_exit, float.Parse(tablesData[3].text) * 0f, 2 * Time.deltaTime);
-                sbor_CO_exit = Mathf.Lerp(sbor_CO_exit, float.Parse(tablesData[4].text) * 1f, 2 * Time.deltaTime);
-                sbor_NO_exit = Mathf.Lerp(sbor_NO_exit, float.Parse(tablesData[6].text) * 1f, 2 * Time.deltaTime);
-                sbor_NO2_exit = Mathf.Lerp(sbor_NO2_exit, float.Parse(tablesData[7].text) * 1f, 2 * Time.deltaTime);
-                sbor_CO2_exit = Mathf.Lerp(sbor_CO2_exit, float.Parse(tablesData[5].text) * 0.008f, 2 * Time.deltaTime);
-                sbor_SO2_exit = Mathf.Lerp(sbor_SO2_exit, float.Parse(tablesData[8].text) * 0f, 2 * Time.deltaTime);
-                sbor_CH4_exit = Mathf.Lerp(sbor_CH4_exit, float.Parse(tablesData[9].text) * 1f, 2 * Time.deltaTime);
-                sbor_H2S_exit = Mathf.Lerp(sbor_H2S_exit, float.Parse(tablesData[10].text) * 0f, 2 * Time.deltaTime);
-                sbor_O2 = Mathf.Lerp(sbor_O2, float.Parse(tablesData[11].text), 2 * Time.deltaTime);
-                sbor_N2 = Mathf.Lerp(sbor_N2, float.Parse(tablesData[12].text), 2 * Time.deltaTime);
+                sbor_Temperature_exit = Mathf.Lerp(sbor_Temperature_exit, ParseValue(tablesData[0].text) * 0.6f, 2 * Time.deltaTime);
+                sbor_Dust_exit = Mathf.Lerp(sbor_Dust_exit, ParseValue(tablesData[1].text) * 0f, 2 * Time.deltaTime);
+                sbor_SolidParticles_exit = Mathf.Lerp(sbor_SolidParticles_exit, ParseValue(tablesData[2].text) * 1f, 2 * Time.deltaTime);
+                sbor_Zola_exit = Mathf.Lerp(sbor_Zola_exit, ParseValue(tablesData[3].text) * 0f, 2 * Time.deltaTime);
+                sbor_CO_exit = Mathf.Lerp(sbor_CO_exit, ParseValue(tablesData[4].text) * 1f, 2 * Time.deltaTime);
+                sbor_NO_exit = Mathf.Lerp(sbor_NO_exit, ParseValue(tablesData[6].text) * 1f, 2 * Time.deltaTime);
+                sbor_NO2_exit = Mathf.Lerp(sbor_NO2_exit, ParseValue(tablesData[7].text) * 1f, 2 * Time.deltaTime);
+                sbor_CO2_exit = Mathf.Lerp(sbor_CO2_exit, ParseValue(tablesData[5].text) * 0.008f, 2 * Time.deltaTime);
+                sbor_SO2_exit = Mathf.Lerp(sbor_SO2_exit, ParseValue(tablesData[8].text) * 0f, 2 * Time.deltaTime);
+                sbor_CH4_exit = Mathf.Lerp(sbor_CH4_exit, ParseValue(tablesData[9].text) * 1f, 2 * Time.deltaTime);
+                sbor_H2S_exit = Mathf.Lerp(sbor_H2S_exit, ParseValue(tablesData[10].text) * 0f, 2 * Time.deltaTime);
+                sbor_O2 = Mathf.Lerp(sbor_O2, ParseValue(tablesData[11].text), 2 * Time.deltaTime);
+                sbor_N2 = Mathf.Lerp(sbor_N2, ParseValue(tablesData[12].text), 2 * Time.deltaTime);
                 
             }
-            else if (delay < -10)
+
+            // Раньше было "else if" после "if (delay < 0)" — ветка никогда не срабатывала,
+            // и таблица пересчитывалась бесконечно.
+            if (delay < -10)
             {
                 isEnable = false;
 
@@ -190,18 +193,30 @@ public class SborTable : MonoBehaviour
     {
         delay = 19f;
         isEnable = true;
-        sbor_Temperature = float.Parse(tablesData[0].text);
-        sbor_Dust = float.Parse(tablesData[1].text);
-        sbor_SolidParticles = float.Parse(tablesData[2].text);
-        sbor_Zola = float.Parse(tablesData[3].text);
-        sbor_CO_enter = float.Parse(tablesData[4].text);
-        sbor_NO_enter = float.Parse(tablesData[5].text);
-        sbor_NO2_enter = float.Parse(tablesData[6].text);
-        sbor_CO2 = float.Parse(tablesData[7].text);
-        sbor_SO2 = float.Parse(tablesData[8].text);
-        sbor_CH4 = float.Parse(tablesData[9].text);
-        sbor_H2S = float.Parse(tablesData[10].text);
-        sbor_O2 = float.Parse(tablesData[11].text);
-        sbor_N2 = float.Parse(tablesData[12].text);
+        sbor_Temperature = ParseValue(tablesData[0].text);
+        sbor_Dust = ParseValue(tablesData[1].text);
+        sbor_SolidParticles = ParseValue(tablesData[2].text);
+        sbor_Zola = ParseValue(tablesData[3].text);
+        sbor_CO_enter = ParseValue(tablesData[4].text);
+        // Индексы как в Start/Update: 5 — CO2, 6 — NO, 7 — NO2 (раньше были сдвинуты).
+        sbor_NO_enter = ParseValue(tablesData[6].text);
+        sbor_NO2_enter = ParseValue(tablesData[7].text);
+        sbor_CO2 = ParseValue(tablesData[5].text);
+        sbor_SO2 = ParseValue(tablesData[8].text);
+        sbor_CH4 = ParseValue(tablesData[9].text);
+        sbor_H2S = ParseValue(tablesData[10].text);
+        sbor_O2 = ParseValue(tablesData[11].text);
+        sbor_N2 = ParseValue(tablesData[12].text);
+    }
+
+    // Разбор числа из текста таблицы без зависимости от языка Windows ("12.5" и "12,5").
+    // Раньше float.Parse бросал исключение каждый кадр, если формат не совпадал с локалью.
+    private static float ParseValue(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return 0f;
+        return float.TryParse(text.Trim().Replace(',', '.'),
+            System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture,
+            out float value) ? value : 0f;
     }
 }

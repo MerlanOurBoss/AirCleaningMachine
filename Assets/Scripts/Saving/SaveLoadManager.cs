@@ -31,13 +31,26 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Awake()
     {
-        if (sborCO2 == null)
-            sborCO2 = GameObject.FindWithTag("SborCO2");
+        ResolveSborCO2();
     }
 
     private void Update()
     {
-        sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        // SborManager пересоздаёт объект SborCO2 после очистки — поэтому ссылку проверяем постоянно.
+        ResolveSborCO2();
+    }
+
+    /// <summary>
+    /// Возвращает объект с тегом "SborCO2" (родитель конструкции).
+    /// Ссылка из инспектора используется, только если у объекта действительно тег SborCO2:
+    /// в сцене "Constructor second scene" в поле sborCO2 назначен CameraUI, и при сохранении
+    /// в слот попадали кнопки интерфейса (Button, Settings, System settings, Tips).
+    /// </summary>
+    private GameObject ResolveSborCO2()
+    {
+        if (sborCO2 == null || !sborCO2.CompareTag("SborCO2"))
+            sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        return sborCO2;
     }
 
     private void Start()
@@ -53,10 +66,10 @@ public class SaveLoadManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("�� ����� SelectedIndex � ������ ���������.");
+            Debug.LogWarning("Не задан SelectedIndex — загрузка конструкции не выполняется.");
         }
 
-        if (gameObject.transform.parent != null)
+        if (gameObject.transform.parent != null && gameObject.transform.parent.parent != null)
         {
             CameraUI = gameObject.transform.parent.parent.gameObject;
         }
@@ -140,161 +153,203 @@ public class SaveLoadManager : MonoBehaviour
                 Debug.LogError($"Error loading file: {e.Message}");
             }
         }
+        else if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)
+        {
+            // SceneData — ScriptableObject-ассет: в редакторе данные прошлых запусков остаются в нём
+            // и слот выглядит занятым, хотя файла сохранения нет. Очищаем.
+            sceneDatas[sceneIndex].objectsData = null;
+            sceneDatas[sceneIndex].screenshotPath = null;
+        }
     }
 
     public void Save()
     {
+        // Сначала проверяем, есть ли куда сохранять. Раньше при занятых слотах объекты
+        // всё равно уничтожались, и конструкция пропадала без сохранения.
+        SceneData currentSceneData = FindAvailableSceneData();
+        if (currentSceneData == null)
+        {
+            Debug.LogWarning("Нет свободного слота для сохранения. Удалите одно из сохранений — " +
+                             "текущая конструкция не сохранена и не удалена.");
+            return;
+        }
+
+        if (ResolveSborCO2() == null)
+        {
+            Debug.LogWarning("SaveLoadManager: объект с тегом 'SborCO2' не найден — сохранять нечего.");
+            return;
+        }
+
         List<ObjectData> dataList = new List<ObjectData>();
         List<GameObject> objectsToDelete = new List<GameObject>();
 
         foreach (GameObject pipeObject in GameObject.FindGameObjectsWithTag("Klapon"))
         {
-            if (pipeObject.activeInHierarchy)
-            {
-                string cleanName = pipeObject.name;
-                if (cleanName.EndsWith("(Clone)"))
-                {
-                    cleanName = cleanName.Substring(0, cleanName.Length - "(Clone)".Length);
-                }
+            if (!pipeObject.activeInHierarchy) continue;
 
-                ObjectData data = new ObjectData
-                {
-                    objectName = cleanName,
-                    position = pipeObject.transform.position,
-                    rotation = pipeObject.transform.rotation,
-                    scale = pipeObject.transform.localScale
-                };
-                dataList.Add(data);
+            // Клапаны внутри SborCO2 обработаются в цикле ниже — не пишем их дважды.
+            if (pipeObject.transform.IsChildOf(sborCO2.transform)) continue;
 
-                objectsToDelete.Add(pipeObject);
-            }
+            TryAddObjectData(pipeObject, dataList);
+            objectsToDelete.Add(pipeObject);
         }
 
         foreach (Transform child in sborCO2.transform)
         {
-            if (child.gameObject.activeInHierarchy)
-            {
-                string cleanName = child.gameObject.name;
-                if (cleanName.EndsWith("(Clone)"))
-                {
-                    cleanName = cleanName.Substring(0, cleanName.Length - "(Clone)".Length);
-                }
+            if (!child.gameObject.activeInHierarchy) continue;
 
-                ObjectData data = new()
-                {
-                    objectName = cleanName,
-                    position = child.transform.position,
-                    rotation = child.transform.rotation,
-                    scale = child.transform.localScale,
-                    tag = child.transform.tag
-                };
-                dataList.Add(data);
-
-                objectsToDelete.Add(child.gameObject);
-            }
+            TryAddObjectData(child.gameObject, dataList);
+            objectsToDelete.Add(child.gameObject);
         }
 
-        SceneData currentSceneData = FindAvailableSceneData();
-
-        if (currentSceneData != null)
+        // Если среди объектов нет ни одного префаба из prefabs[], слот не занимаем и ничего не удаляем.
+        if (dataList.Count == 0)
         {
-            currentSceneData.objectsData = dataList.ToArray();
-            Debug.Log("Data saved to SceneData.");
-
-            int index = System.Array.IndexOf(sceneDatas, currentSceneData);
-            ScreenShotTake(index);
-
-            if (index != -1)
-            {
-                CreateLoadButton(index);
-                SaveSceneDataToFile(index);
-            }
-            else
-            {
-                Debug.LogWarning("SceneData instance not found in the array.");
-            }
+            Debug.LogWarning("SaveLoadManager: на сцене нет объектов из списка prefabs[] — сохранять нечего.");
+            return;
         }
-        else
-        {
-            Debug.LogWarning("No available SceneData instance found.");
-        }
+
+        currentSceneData.objectsData = dataList.ToArray();
+        int index = System.Array.IndexOf(sceneDatas, currentSceneData);
+
+        ScreenShotTake(index);
+        CreateLoadButton(index);
+        SaveSceneDataToFile(index);
+        Debug.Log($"Конструкция сохранена в слот {index}.");
 
         foreach (GameObject obj in objectsToDelete)
         {
             Destroy(obj);
         }
 
-        pipe.ClearAllPipesAndFacilities();
+        if (pipe != null)
+            pipe.ClearAllPipesAndFacilities();
+    }
+
+    // Сохраняем только объекты, для которых есть префаб с таким же именем в prefabs[]:
+    // остальные (сгенерированные меши труб и т.п.) всё равно нельзя восстановить при загрузке.
+    private bool TryAddObjectData(GameObject go, List<ObjectData> dataList)
+    {
+        string cleanName = GetCleanName(go);
+
+        bool isKnownPrefab = prefabs != null &&
+                             System.Array.Exists(prefabs, p => p != null && p.name == cleanName);
+
+        dataList.Add(CreateObjectData(go, cleanName));
+        return true;
+    }
+
+    private static string GetCleanName(GameObject go)
+    {
+        string cleanName = go.name.Trim();
+        if (cleanName.EndsWith("(Clone)"))
+            cleanName = cleanName.Substring(0, cleanName.Length - "(Clone)".Length).TrimEnd();
+        return cleanName;
+    }
+
+    private static ObjectData CreateObjectData(GameObject go, string cleanName)
+    {
+        return new ObjectData
+        {
+            objectName = cleanName,
+            position = go.transform.position,
+            rotation = go.transform.rotation,
+            scale = go.transform.localScale,
+            tag = go.tag // раньше у клапанов тег не сохранялся
+        };
     }
 
     public void Load(int sceneIndex)
     {
         LoadSceneDataFromFile(sceneIndex);
 
-        if (sceneIndex >= 0 && sceneIndex < sceneDatas.Length)
+        if (sceneIndex < 0 || sceneIndex >= sceneDatas.Length)
         {
-            SceneData sceneData = sceneDatas[sceneIndex];
+            Debug.LogError($"SceneIndex {sceneIndex} is out of bounds for SceneDatas array.");
+            return;
+        }
 
-            if (sceneData.objectsData != null && sceneData.objectsData.Length > 0)
+        SceneData sceneData = sceneDatas[sceneIndex];
+
+        if (sceneData.objectsData == null || sceneData.objectsData.Length == 0)
+        {
+            Debug.LogWarning($"SceneData at index {sceneIndex} is empty or null.");
+            return;
+        }
+
+        Debug.Log($"Loading data from SceneData at index {sceneIndex}.");
+
+        // Повторная загрузка того же слота раньше создавала дубликаты — убираем уже загруженное.
+        if (sceneObjects.TryGetValue(sceneIndex, out var previouslyLoaded))
+        {
+            foreach (GameObject obj in previouslyLoaded)
+                if (obj != null) Destroy(obj);
+            previouslyLoaded.Clear();
+        }
+        else
+        {
+            sceneObjects[sceneIndex] = new List<GameObject>();
+        }
+
+        ResolveSborCO2();
+
+        foreach (ObjectData data in sceneData.objectsData)
+        {
+            GameObject prefab = System.Array.Find(prefabs, p => p != null && p.name == data.objectName);
+
+            if (prefab == null)
             {
-                Debug.Log($"Loading data from SceneData at index {sceneIndex}.");
+                Debug.LogError($"Prefab with name {data.objectName} not found.");
+                continue;
+            }
 
-                if (!sceneObjects.ContainsKey(sceneIndex))
+            GameObject obj = Instantiate(prefab, data.position, data.rotation);
+
+            // Восстанавливаем тег (тип эмульгатора и т.п.). Пустой тег не ставим — Unity бросит исключение.
+            if (!string.IsNullOrEmpty(data.tag))
+                obj.tag = data.tag;
+
+            if (obj.CompareTag("Pipe"))
+            {
+            }
+            else if (obj.CompareTag("Klapon"))
+            {
+                var klapon = obj.GetComponent<KlaponManager>();
+                if (klapon != null) klapon.isSelected = false;
+            }
+            else if (obj.CompareTag("Pipe_T"))
+            {
+                var mover = obj.GetComponent<MoveObjectWithMouse>();
+                if (mover != null)
                 {
-                    sceneObjects[sceneIndex] = new List<GameObject>();
-                }
-
-                foreach (ObjectData data in sceneData.objectsData)
-                {
-                    GameObject prefab = System.Array.Find(prefabs, p => p.name == data.objectName);
-
-                    if (prefab != null)
-                    {
-                        GameObject obj = Instantiate(prefab, data.position, data.rotation);
-                        if (obj.tag == "Pipe")
-                        {
-                        }
-                        else if (obj.tag == "Klapon")
-                        {
-                            obj.GetComponent<KlaponManager>().isSelected = false;
-                        }
-                        else if (obj.tag == "Pipe_T")
-                        {
-                            obj.GetComponent<MoveObjectWithMouse>().isDragging = false;
-                            obj.GetComponent<MoveObjectWithMouse>().isSelected = false;
-                        }
-                        else
-                        {
-                            obj.GetComponent<MovingFacilities>().isDragging = false;
-                            obj.GetComponent<BoxCollider>().enabled = false;
-                        }
-                        obj.transform.localScale = data.scale;
-                        obj.transform.parent = sborCO2.transform;
-                        sceneObjects[sceneIndex].Add(obj);
-                        Debug.Log($"Instantiated {prefab.name} at position {data.position}.");
-                    }
-                    else
-                    {
-                        Debug.LogError($"Prefab with name {data.objectName} not found.");
-                    }
+                    mover.isDragging = false;
+                    mover.isSelected = false;
                 }
             }
             else
             {
-                Debug.LogWarning($"SceneData at index {sceneIndex} is empty or null.");
+                var facility = obj.GetComponent<MovingFacilities>();
+                if (facility != null) facility.isDragging = false;
+
+                var box = obj.GetComponent<BoxCollider>();
+                if (box != null) box.enabled = false;
             }
 
-            Invoke(nameof(ConnectPipe), 0.5f);
+            obj.transform.localScale = data.scale;
+            if (sborCO2 != null)
+                obj.transform.parent = sborCO2.transform;
+
+            sceneObjects[sceneIndex].Add(obj);
+            Debug.Log($"Instantiated {prefab.name} at position {data.position}.");
         }
-        else
-        {
-            Debug.LogError($"SceneIndex {sceneIndex} is out of bounds for SceneDatas array.");
-        }
+
+        Invoke(nameof(ConnectPipe), 0.5f);
     }
 
     void ConnectPipe()
     {
-        pipe.ConnectComponents();
+        if (pipe != null)
+            pipe.ConnectComponents();
     }
 
     private SceneData FindAvailableSceneData()
@@ -337,37 +392,63 @@ public class SaveLoadManager : MonoBehaviour
         });
     }
 
+    private static string ScreenshotsDirectory =>
+        Path.Combine(Application.persistentDataPath, "SavedConstructions", "Images");
+
+    // В SceneData храним относительный путь; старые сохранения могли содержать абсолютный.
+    private static string ResolveScreenshotPath(string path)
+    {
+        if (string.IsNullOrEmpty(path)) return null;
+        return Path.IsPathRooted(path) ? path : Path.Combine(Application.persistentDataPath, path);
+    }
+
     private void ScreenShotTake(int index)
     {
-        if (cam != null)
+        if (cam == null || index < 0) return;
+
+        int width = Screen.width * 3;
+        int height = Screen.height * 3;
+        Rect previousRect = cam.rect;
+
+        if (CameraUI != null) CameraUI.SetActive(false);
+        cam.rect = new Rect(0, 0, 1, 1);
+
+        RenderTexture screenTexture = new RenderTexture(width, height, 24);
+        Texture2D renderedTexture = null;
+        try
         {
-            CameraUI.SetActive(false);
-            cam.rect = new Rect(0, 0, 1, 1);
-            RenderTexture screenTexture = new RenderTexture(Screen.width * 3, Screen.height * 3, 24);
             cam.targetTexture = screenTexture;
             RenderTexture.active = screenTexture;
             cam.Render();
 
-            Texture2D renderedTexture = new Texture2D(Screen.width * 3, Screen.height * 3);
-            renderedTexture.ReadPixels(new Rect(0, 0, Screen.width * 3, Screen.height * 3), 0, 0);
+            renderedTexture = new Texture2D(width, height);
+            renderedTexture.ReadPixels(new Rect(0, 0, width, height), 0, 0);
             renderedTexture.Apply();
-            RenderTexture.active = null;
 
             byte[] byteArray = renderedTexture.EncodeToPNG();
 
+            Directory.CreateDirectory(ScreenshotsDirectory);
             string relativePath = Path.Combine("SavedConstructions", "Images", $"cameracapture_{index}.png");
-            string fullPath = Path.Combine(Application.persistentDataPath, relativePath);
+            File.WriteAllBytes(Path.Combine(Application.persistentDataPath, relativePath), byteArray);
 
-            File.WriteAllBytes(fullPath, byteArray);
+            // Раньше здесь путь перезаписывался абсолютным — сейв ломался на другом компьютере.
             sceneDatas[index].screenshotPath = relativePath;
-            
-            cam.rect = new Rect(0.22f, 0.051f, 0.753f, 0.883f);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Не удалось сохранить скриншот конструкции: {e.Message}");
+        }
+        finally
+        {
+            RenderTexture.active = null;
             cam.targetTexture = null;
-            CameraUI.SetActive(true);
+            cam.rect = previousRect;
+            if (CameraUI != null) CameraUI.SetActive(true);
 
-            sceneDatas[index].screenshotPath = fullPath;
-
-            SaveSceneDataToFile(index);
+            // Освобождаем память (раньше RenderTexture и Texture2D утекали при каждом сохранении).
+            screenTexture.Release();
+            Destroy(screenTexture);
+            if (renderedTexture != null) Destroy(renderedTexture);
         }
     }
     
@@ -381,17 +462,19 @@ public class SaveLoadManager : MonoBehaviour
                 // Сохраняем путь ДО обнуления
                 string screenshotPath = sceneData.screenshotPath;
 
-                // Удаляем скриншот
-                if (!string.IsNullOrEmpty(screenshotPath))
+                // Удаляем скриншот: путь из сохранения (относительный или старый абсолютный)
+                // и стандартный файл слота — иначе в меню оставалась картинка без конструкции.
+                var screenshotCandidates = new HashSet<string>();
+                string resolved = ResolveScreenshotPath(screenshotPath);
+                if (resolved != null) screenshotCandidates.Add(Path.GetFullPath(resolved));
+                screenshotCandidates.Add(Path.GetFullPath(Path.Combine(ScreenshotsDirectory, $"cameracapture_{sceneIndex}.png")));
+
+                foreach (string candidate in screenshotCandidates)
                 {
-                    if (File.Exists(screenshotPath))
+                    if (File.Exists(candidate))
                     {
-                        File.Delete(screenshotPath);
-                        Debug.Log($"Screenshot deleted: {screenshotPath}");
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"Screenshot file not found: {screenshotPath}");
+                        File.Delete(candidate);
+                        Debug.Log($"Screenshot deleted: {candidate}");
                     }
                 }
 

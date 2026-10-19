@@ -91,14 +91,15 @@ public class MathModuleForElectro : MathModuleBase
         var valueTemperature = ParseLeadingNumber(_temperature.text);
         var valueSolidParticle = ParseLeadingNumber(_solidParticle.text);
 
-        _specificPower = 35.7 * Math.Exp(0.015 * (((valueTemperature + (valueTemperature - 0.5 * length * 4)) / 2.0) - 150.0)) * Math.Log(1.0 / (1.0 - 0.7));
-
         var valueGasFlow = ParseLeadingNumber(_gasFlow.text);
         area = (Math.Log(1 / (1 - 0.7)) / 0.1 / 3600) * valueGasFlow;
 
         height = Math.Ceiling(Math.Sqrt(area / 6.0));
-        length = Math.Ceiling(area / 4.0f / height);
-        width = Math.Ceiling(valueGasFlow / 3600.0 / 1.2 / height);
+        length = height > 0 ? Math.Ceiling(area / 4.0f / height) : 0;
+        width = height > 0 ? Math.Ceiling(valueGasFlow / 3600.0 / 1.2 / height) : 0;
+
+        // Перенесено после расчёта length: раньше использовалась длина с прошлого шага (в первый раз 0).
+        _specificPower = 35.7 * Math.Exp(0.015 * (((valueTemperature + (valueTemperature - 0.5 * length * 4)) / 2.0) - 150.0)) * Math.Log(1.0 / (1.0 - 0.7));
 
         var countElectro = (valueGasFlow * _specificPower) / 1000000;
         electro = countElectro * 38.85;

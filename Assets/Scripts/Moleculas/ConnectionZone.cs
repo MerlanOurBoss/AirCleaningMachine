@@ -22,8 +22,14 @@ public class ConnectionZone : MonoBehaviour
     private int totalObjects3;
     private int totalObjects4;
 
+    // Молекулы, для которых уже запущено разрушение. OnTriggerStay вызывается каждый физический кадр,
+    // и раньше Play("Destroyng") перезапускал анимацию каждый кадр — она застревала на первом кадре.
+    private readonly HashSet<GameObject> _destroying = new HashSet<GameObject>();
+
     private void OnTriggerEnter(Collider other)
     {
+        _destroying.RemoveWhere(o => o == null);
+
         totalObjects = targetTags.Sum(tag => GameObject.FindGameObjectsWithTag(tag).Length);
         totalObjects2 = targetTags2.Sum(tag => GameObject.FindGameObjectsWithTag(tag).Length);
         totalObjects3 = targetTags3.Sum(tag => GameObject.FindGameObjectsWithTag(tag).Length);
@@ -46,10 +52,13 @@ public class ConnectionZone : MonoBehaviour
                     // Притягиваем каждый объект к точке
                     foreach (GameObject obj in objectss)
                     {
-                        animator = obj.GetComponent<Animator>();
                         Attract(obj.transform);
-                        animator.Play("Destroyng");
-                        Destroy(obj, 1.7f);
+                        if (_destroying.Add(obj))
+                        {
+                            animator = obj.GetComponent<Animator>();
+                            if (animator != null) animator.Play("Destroyng");
+                            Destroy(obj, 1.7f);
+                        }
                     }
                 }
             }
@@ -69,10 +78,13 @@ public class ConnectionZone : MonoBehaviour
                     // Притягиваем каждый объект к точке
                     foreach (GameObject obj in objectss)
                     {
-                        animator = obj.GetComponent<Animator>();
                         Attract(obj.transform);
-                        animator.Play("Destroyng");
-                        Destroy(obj, 1.7f);
+                        if (_destroying.Add(obj))
+                        {
+                            animator = obj.GetComponent<Animator>();
+                            if (animator != null) animator.Play("Destroyng");
+                            Destroy(obj, 1.7f);
+                        }
                     }
                 }
             }
@@ -92,10 +104,13 @@ public class ConnectionZone : MonoBehaviour
                     // Притягиваем каждый объект к точке
                     foreach (GameObject obj in objectss)
                     {
-                        animator = obj.GetComponent<Animator>();
                         Attract(obj.transform);
-                        animator.Play("Destroyng");
-                        Destroy(obj, 1.7f);
+                        if (_destroying.Add(obj))
+                        {
+                            animator = obj.GetComponent<Animator>();
+                            if (animator != null) animator.Play("Destroyng");
+                            Destroy(obj, 1.7f);
+                        }
                     }
                 }
             }
@@ -113,10 +128,13 @@ public class ConnectionZone : MonoBehaviour
                 {
                     foreach (GameObject obj in objectss)
                     {
-                        animator = obj.GetComponent<Animator>();
                         Attract(obj.transform);
-                        animator.Play("Destroyng");
-                        Destroy(obj, 1.7f);
+                        if (_destroying.Add(obj))
+                        {
+                            animator = obj.GetComponent<Animator>();
+                            if (animator != null) animator.Play("Destroyng");
+                            Destroy(obj, 1.7f);
+                        }
                     }
                 }
             }

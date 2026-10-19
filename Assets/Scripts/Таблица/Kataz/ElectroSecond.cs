@@ -72,30 +72,30 @@ public class ElectroSecond : MonoBehaviour
     void Start()
     {
         delayPrivate = delay;
-        elec_Temperature = float.Parse(tablesData[0].text);
-        elec_Dust = float.Parse(tablesData[1].text);
-        elec_SolidParticle = float.Parse(tablesData[2].text);
-        elec_Zola = float.Parse(tablesData[3].text);
+        elec_Temperature = ParseValue(tablesData[0].text);
+        elec_Dust = ParseValue(tablesData[1].text);
+        elec_SolidParticle = ParseValue(tablesData[2].text);
+        elec_Zola = ParseValue(tablesData[3].text);
 
-        elec_CO = float.Parse(tablesData[4].text);
-        elec_NO = float.Parse(tablesData[6].text);
-        elec_NO2 = float.Parse(tablesData[7].text);
+        elec_CO = ParseValue(tablesData[4].text);
+        elec_NO = ParseValue(tablesData[6].text);
+        elec_NO2 = ParseValue(tablesData[7].text);
 
-        elec_CO2 = float.Parse(tablesData[5].text);
-        elec_SO2 = float.Parse(tablesData[8].text);
-        elec_CH4 = float.Parse(tablesData[9].text);
-        elec_H2S = float.Parse(tablesData[10].text);
-        elec_O2 = float.Parse(tablesData[11].text);
-        elec_N2 = float.Parse(tablesData[12].text);
+        elec_CO2 = ParseValue(tablesData[5].text);
+        elec_SO2 = ParseValue(tablesData[8].text);
+        elec_CH4 = ParseValue(tablesData[9].text);
+        elec_H2S = ParseValue(tablesData[10].text);
+        elec_O2 = ParseValue(tablesData[11].text);
+        elec_N2 = ParseValue(tablesData[12].text);
 
-        elec_Temperature_exit = float.Parse(tablesData[0].text);
-        elec_Dust_exit = float.Parse(tablesData[1].text);
-        elec_SolidParticle_exit = float.Parse(tablesData[2].text);
-        elec_Zola_exit = float.Parse(tablesData[3].text);
+        elec_Temperature_exit = ParseValue(tablesData[0].text);
+        elec_Dust_exit = ParseValue(tablesData[1].text);
+        elec_SolidParticle_exit = ParseValue(tablesData[2].text);
+        elec_Zola_exit = ParseValue(tablesData[3].text);
 
-        elec_CO_exit = float.Parse(tablesData[4].text);
-        elec_NO_exit = float.Parse(tablesData[6].text);
-        elec_NO2_exit = float.Parse(tablesData[7].text);
+        elec_CO_exit = ParseValue(tablesData[4].text);
+        elec_NO_exit = ParseValue(tablesData[6].text);
+        elec_NO2_exit = ParseValue(tablesData[7].text);
     }
 
     void Update()
@@ -113,13 +113,13 @@ public class ElectroSecond : MonoBehaviour
                     smokes[1].startColor = new Color(1f, 1f, 1f, 1f);
                     smokes[2].startColor = new Color(1f, 1f, 1f, 1f);
                 }
-                else if (Electrofilter_Dust_enter.value > 100 && Electrofilter_Dust_enter.value < 200)
+                else if (Electrofilter_Dust_enter.value >= 100 && Electrofilter_Dust_enter.value < 200)
                 {
                     smokes[0].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
                     smokes[1].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[2].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                 }
-                else if (Electrofilter_Dust_enter.value > 200 && Electrofilter_Dust_enter.value < 300)
+                else if (Electrofilter_Dust_enter.value >= 200 && Electrofilter_Dust_enter.value < 300)
                 {
                     smokes[0].startColor = new Color(0f, 0f, 0f, 1f);
                     smokes[1].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
@@ -134,7 +134,7 @@ public class ElectroSecond : MonoBehaviour
                         item.startSpeed = 5f;
                     }
                 }
-                else if (Electrofilter_SolidParticle_enter.value > 300 && Electrofilter_SolidParticle_enter.value < 400)
+                else if (Electrofilter_SolidParticle_enter.value >= 300 && Electrofilter_SolidParticle_enter.value < 400)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -142,7 +142,7 @@ public class ElectroSecond : MonoBehaviour
                         item.startSpeed = 4.5f;
                     }
                 }
-                else if (Electrofilter_SolidParticle_enter.value > 400 && Electrofilter_SolidParticle_enter.value < 500)
+                else if (Electrofilter_SolidParticle_enter.value >= 400 && Electrofilter_SolidParticle_enter.value < 500)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -158,13 +158,13 @@ public class ElectroSecond : MonoBehaviour
                     smokes[1].startColor = new Color(1f, 1f, 1f, 1f);
                     smokes[2].startColor = new Color(1f, 1f, 1f, 1f);
                 }
-                else if (Electrofilter_Zola_enter.value > 50 && Electrofilter_Zola_enter.value < 100)
+                else if (Electrofilter_Zola_enter.value >= 50 && Electrofilter_Zola_enter.value < 100)
                 {
                     smokes[0].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[1].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[2].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                 }
-                else if (Electrofilter_Zola_enter.value > 100 && Electrofilter_Zola_enter.value < 200)
+                else if (Electrofilter_Zola_enter.value >= 100 && Electrofilter_Zola_enter.value < 200)
                 {
                     smokes[0].startColor = new Color(0f, 0f, 0f, 1f);
                     smokes[1].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
@@ -187,21 +187,21 @@ public class ElectroSecond : MonoBehaviour
                 Electrofilter_O2.value = elec_O2;
                 Electrofilter_N2.value = elec_N2;
 
-                elec_Temperature = Mathf.Lerp(elec_Temperature, float.Parse(tablesData[0].text), 2 * Time.deltaTime);
-                elec_Dust = Mathf.Lerp(elec_Dust, float.Parse(tablesData[1].text), 2 * Time.deltaTime);
-                elec_SolidParticle = Mathf.Lerp(elec_SolidParticle, float.Parse(tablesData[2].text), 2 * Time.deltaTime);
-                elec_Zola = Mathf.Lerp(elec_Zola, float.Parse(tablesData[3].text), 2 * Time.deltaTime);
+                elec_Temperature = Mathf.Lerp(elec_Temperature, ParseValue(tablesData[0].text), 2 * Time.deltaTime);
+                elec_Dust = Mathf.Lerp(elec_Dust, ParseValue(tablesData[1].text), 2 * Time.deltaTime);
+                elec_SolidParticle = Mathf.Lerp(elec_SolidParticle, ParseValue(tablesData[2].text), 2 * Time.deltaTime);
+                elec_Zola = Mathf.Lerp(elec_Zola, ParseValue(tablesData[3].text), 2 * Time.deltaTime);
 
-                elec_CO = Mathf.Lerp(elec_CO, float.Parse(tablesData[4].text), 2 * Time.deltaTime);
-                elec_CO2 = Mathf.Lerp(elec_CO2, float.Parse(tablesData[5].text), 2 * Time.deltaTime);
+                elec_CO = Mathf.Lerp(elec_CO, ParseValue(tablesData[4].text), 2 * Time.deltaTime);
+                elec_CO2 = Mathf.Lerp(elec_CO2, ParseValue(tablesData[5].text), 2 * Time.deltaTime);
 
-                elec_NO = Mathf.Lerp(elec_NO, float.Parse(tablesData[6].text), 2 * Time.deltaTime);
-                elec_NO2 = Mathf.Lerp(elec_NO2, float.Parse(tablesData[7].text), 2 * Time.deltaTime);
-                elec_SO2 = Mathf.Lerp(elec_SO2, float.Parse(tablesData[8].text), 2 * Time.deltaTime);
-                elec_CH4 = Mathf.Lerp(elec_CH4, float.Parse(tablesData[9].text), 2 * Time.deltaTime);
-                elec_H2S = Mathf.Lerp(elec_H2S, float.Parse(tablesData[10].text), 2 * Time.deltaTime);
-                elec_O2 = Mathf.Lerp(elec_O2, float.Parse(tablesData[11].text), 2 * Time.deltaTime);
-                elec_N2 = Mathf.Lerp(elec_N2, float.Parse(tablesData[12].text), 2 * Time.deltaTime);
+                elec_NO = Mathf.Lerp(elec_NO, ParseValue(tablesData[6].text), 2 * Time.deltaTime);
+                elec_NO2 = Mathf.Lerp(elec_NO2, ParseValue(tablesData[7].text), 2 * Time.deltaTime);
+                elec_SO2 = Mathf.Lerp(elec_SO2, ParseValue(tablesData[8].text), 2 * Time.deltaTime);
+                elec_CH4 = Mathf.Lerp(elec_CH4, ParseValue(tablesData[9].text), 2 * Time.deltaTime);
+                elec_H2S = Mathf.Lerp(elec_H2S, ParseValue(tablesData[10].text), 2 * Time.deltaTime);
+                elec_O2 = Mathf.Lerp(elec_O2, ParseValue(tablesData[11].text), 2 * Time.deltaTime);
+                elec_N2 = Mathf.Lerp(elec_N2, ParseValue(tablesData[12].text), 2 * Time.deltaTime);
             }
             if (delay < 0)
             {
@@ -219,21 +219,21 @@ public class ElectroSecond : MonoBehaviour
                 Electrofilter_O2_exit.text = elec_O2.ToString("0.");
                 Electrofilter_N2_exit.text = elec_N2.ToString("0.");
 
-                elec_Temperature_exit = Mathf.Lerp(elec_Temperature_exit, float.Parse(tablesData[0].text) * 0.215f, 2 * Time.deltaTime);
-                elec_Dust_exit = Mathf.Lerp(elec_Dust_exit, float.Parse(tablesData[1].text) * 0.1f, 2 * Time.deltaTime);
-                elec_SolidParticle_exit = Mathf.Lerp(elec_SolidParticle_exit, float.Parse(tablesData[2].text) * 0.093f, 2 * Time.deltaTime);
-                elec_Zola_exit = Mathf.Lerp(elec_Zola_exit, float.Parse(tablesData[3].text) * 0.095f, 2 * Time.deltaTime);
+                elec_Temperature_exit = Mathf.Lerp(elec_Temperature_exit, ParseValue(tablesData[0].text) * 0.215f, 2 * Time.deltaTime);
+                elec_Dust_exit = Mathf.Lerp(elec_Dust_exit, ParseValue(tablesData[1].text) * 0.1f, 2 * Time.deltaTime);
+                elec_SolidParticle_exit = Mathf.Lerp(elec_SolidParticle_exit, ParseValue(tablesData[2].text) * 0.093f, 2 * Time.deltaTime);
+                elec_Zola_exit = Mathf.Lerp(elec_Zola_exit, ParseValue(tablesData[3].text) * 0.095f, 2 * Time.deltaTime);
 
-                elec_CO_exit = Mathf.Lerp(elec_CO_exit, float.Parse(tablesData[4].text), 2 * Time.deltaTime);
-                elec_CO2 = Mathf.Lerp(elec_CO2, float.Parse(tablesData[5].text), 2 * Time.deltaTime);
-                elec_NO_exit = Mathf.Lerp(elec_NO_exit, float.Parse(tablesData[6].text), 2 * Time.deltaTime);
-                elec_NO2_exit = Mathf.Lerp(elec_NO2_exit, float.Parse(tablesData[7].text), 2 * Time.deltaTime);
+                elec_CO_exit = Mathf.Lerp(elec_CO_exit, ParseValue(tablesData[4].text), 2 * Time.deltaTime);
+                elec_CO2 = Mathf.Lerp(elec_CO2, ParseValue(tablesData[5].text), 2 * Time.deltaTime);
+                elec_NO_exit = Mathf.Lerp(elec_NO_exit, ParseValue(tablesData[6].text), 2 * Time.deltaTime);
+                elec_NO2_exit = Mathf.Lerp(elec_NO2_exit, ParseValue(tablesData[7].text), 2 * Time.deltaTime);
 
-                elec_SO2 = Mathf.Lerp(elec_SO2, float.Parse(tablesData[8].text), 2 * Time.deltaTime);
-                elec_CH4 = Mathf.Lerp(elec_CH4, float.Parse(tablesData[9].text), 2 * Time.deltaTime);
-                elec_H2S = Mathf.Lerp(elec_H2S, float.Parse(tablesData[10].text), 2 * Time.deltaTime);
-                elec_O2 = Mathf.Lerp(elec_O2, float.Parse(tablesData[11].text), 2 * Time.deltaTime);
-                elec_N2 = Mathf.Lerp(elec_N2, float.Parse(tablesData[12].text), 2 * Time.deltaTime);
+                elec_SO2 = Mathf.Lerp(elec_SO2, ParseValue(tablesData[8].text), 2 * Time.deltaTime);
+                elec_CH4 = Mathf.Lerp(elec_CH4, ParseValue(tablesData[9].text), 2 * Time.deltaTime);
+                elec_H2S = Mathf.Lerp(elec_H2S, ParseValue(tablesData[10].text), 2 * Time.deltaTime);
+                elec_O2 = Mathf.Lerp(elec_O2, ParseValue(tablesData[11].text), 2 * Time.deltaTime);
+                elec_N2 = Mathf.Lerp(elec_N2, ParseValue(tablesData[12].text), 2 * Time.deltaTime);
             }
             if (delay < -10)
             {
@@ -249,21 +249,32 @@ public class ElectroSecond : MonoBehaviour
         //Electrofilter_Temperature_enter.onValueChanged.RemoveListener(delegate { RepeatCalculateelecz(); });
         delay = delayPrivate;
         isEnable = true;
-        elec_Temperature = float.Parse(tablesData[0].text);
-        elec_Dust = float.Parse(tablesData[1].text);
-        elec_SolidParticle = float.Parse(tablesData[2].text);
-        elec_Zola = float.Parse(tablesData[3].text);
+        elec_Temperature = ParseValue(tablesData[0].text);
+        elec_Dust = ParseValue(tablesData[1].text);
+        elec_SolidParticle = ParseValue(tablesData[2].text);
+        elec_Zola = ParseValue(tablesData[3].text);
 
-        elec_CO = float.Parse(tablesData[4].text);
-        elec_NO = float.Parse(tablesData[6].text);
-        elec_NO2 = float.Parse(tablesData[7].text);
+        elec_CO = ParseValue(tablesData[4].text);
+        elec_NO = ParseValue(tablesData[6].text);
+        elec_NO2 = ParseValue(tablesData[7].text);
 
-        elec_CO2 = float.Parse(tablesData[5].text);
-        elec_SO2 = float.Parse(tablesData[8].text);
-        elec_CH4 = float.Parse(tablesData[9].text);
-        elec_H2S = float.Parse(tablesData[10].text);
-        elec_O2 = float.Parse(tablesData[11].text);
-        elec_N2 = float.Parse(tablesData[12].text);
+        elec_CO2 = ParseValue(tablesData[5].text);
+        elec_SO2 = ParseValue(tablesData[8].text);
+        elec_CH4 = ParseValue(tablesData[9].text);
+        elec_H2S = ParseValue(tablesData[10].text);
+        elec_O2 = ParseValue(tablesData[11].text);
+        elec_N2 = ParseValue(tablesData[12].text);
 
+    }
+
+    // Разбор числа из текста таблицы без зависимости от языка Windows ("12.5" и "12,5").
+    // Раньше float.Parse бросал исключение каждый кадр, если формат не совпадал с локалью.
+    private static float ParseValue(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return 0f;
+        return float.TryParse(text.Trim().Replace(',', '.'),
+            System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture,
+            out float value) ? value : 0f;
     }
 }

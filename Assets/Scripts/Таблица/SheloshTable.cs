@@ -80,35 +80,35 @@ public class SheloshTable : MonoBehaviour
     void Start()
     {
         delayPrivate = delay;
-        shelosh_Temperature = float.Parse(tablesData[0].text);
-        shelosh_Dust = float.Parse(tablesData[1].text);
-        shelosh_SolidParticles = float.Parse(tablesData[2].text);
-        shelosh_Zola = float.Parse(tablesData[3].text);
+        shelosh_Temperature = ParseValue(tablesData[0].text);
+        shelosh_Dust = ParseValue(tablesData[1].text);
+        shelosh_SolidParticles = ParseValue(tablesData[2].text);
+        shelosh_Zola = ParseValue(tablesData[3].text);
 
-        shelosh_CO_enter = float.Parse(tablesData[4].text);
-        shelosh_CO2_enter = float.Parse(tablesData[5].text);
-        shelosh_NO_enter = float.Parse(tablesData[6].text);
-        shelosh_NO2_enter = float.Parse(tablesData[7].text);
+        shelosh_CO_enter = ParseValue(tablesData[4].text);
+        shelosh_CO2_enter = ParseValue(tablesData[5].text);
+        shelosh_NO_enter = ParseValue(tablesData[6].text);
+        shelosh_NO2_enter = ParseValue(tablesData[7].text);
         
-        shelosh_SO2_enter = float.Parse(tablesData[8].text);
-        shelosh_CH4_enter = float.Parse(tablesData[9].text);
-        shelosh_H2S_enter = float.Parse(tablesData[10].text);
-        shelosh_O2_enter = float.Parse(tablesData[11].text);
-        shelosh_N2_enter = float.Parse(tablesData[12].text);
+        shelosh_SO2_enter = ParseValue(tablesData[8].text);
+        shelosh_CH4_enter = ParseValue(tablesData[9].text);
+        shelosh_H2S_enter = ParseValue(tablesData[10].text);
+        shelosh_O2_enter = ParseValue(tablesData[11].text);
+        shelosh_N2_enter = ParseValue(tablesData[12].text);
 
-        shelosh_Temperature_exit = float.Parse(tablesData[0].text);
-        shelosh_Dust_exit = float.Parse(tablesData[1].text);
-        shelosh_SolidParticles_exit = float.Parse(tablesData[2].text);
-        shelosh_Zola_exit = float.Parse(tablesData[3].text);
+        shelosh_Temperature_exit = ParseValue(tablesData[0].text);
+        shelosh_Dust_exit = ParseValue(tablesData[1].text);
+        shelosh_SolidParticles_exit = ParseValue(tablesData[2].text);
+        shelosh_Zola_exit = ParseValue(tablesData[3].text);
 
-        shelosh_CO_exit = float.Parse(tablesData[4].text);
-        shelosh_CO2_exit = float.Parse(tablesData[5].text);
-        shelosh_NO_exit = float.Parse(tablesData[6].text);
-        shelosh_NO2_exit = float.Parse(tablesData[7].text);
+        shelosh_CO_exit = ParseValue(tablesData[4].text);
+        shelosh_CO2_exit = ParseValue(tablesData[5].text);
+        shelosh_NO_exit = ParseValue(tablesData[6].text);
+        shelosh_NO2_exit = ParseValue(tablesData[7].text);
 
-        shelosh_SO2_exit = float.Parse(tablesData[8].text);
-        shelosh_CH4_exit = float.Parse(tablesData[9].text);
-        shelosh_H2S_exit = float.Parse(tablesData[10].text); 
+        shelosh_SO2_exit = ParseValue(tablesData[8].text);
+        shelosh_CH4_exit = ParseValue(tablesData[9].text);
+        shelosh_H2S_exit = ParseValue(tablesData[10].text); 
     }
 
     // Update is called once per frame
@@ -127,7 +127,7 @@ public class SheloshTable : MonoBehaviour
                         item.startColor = new Color(1f, 1f, 1f, 0.5f);
                     }
                 }
-                else if (Shelosh_SolidParticle_enter.value > 20 && Shelosh_SolidParticle_enter.value <= 50)
+                else if (Shelosh_SolidParticle_enter.value >= 20 && Shelosh_SolidParticle_enter.value <= 50)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -150,20 +150,20 @@ public class SheloshTable : MonoBehaviour
                 Shelosh_O2_enter.value = shelosh_O2_enter;
                 Shelosh_N2_enter.value = shelosh_N2_enter;
 
-                shelosh_Temperature = Mathf.Lerp(shelosh_Temperature, float.Parse(tablesData[0].text), 2 * Time.deltaTime);
-                shelosh_Dust = Mathf.Lerp(shelosh_Dust, float.Parse(tablesData[1].text), 2 * Time.deltaTime);
-                shelosh_SolidParticles = Mathf.Lerp(shelosh_SolidParticles, float.Parse(tablesData[2].text), 2 * Time.deltaTime);
-                shelosh_Zola = Mathf.Lerp(shelosh_Zola, float.Parse(tablesData[3].text), 2 * Time.deltaTime);
-                shelosh_CO_enter = Mathf.Lerp(shelosh_CO_enter, float.Parse(tablesData[4].text), 2 * Time.deltaTime);
-                shelosh_CO2_enter = Mathf.Lerp(shelosh_CO2_enter, float.Parse(tablesData[5].text), 2 * Time.deltaTime);
-                shelosh_NO_enter = Mathf.Lerp(shelosh_NO_enter, float.Parse(tablesData[6].text), 2 * Time.deltaTime);
-                shelosh_NO2_enter = Mathf.Lerp(shelosh_NO2_enter, float.Parse(tablesData[7].text), 2 * Time.deltaTime);
+                shelosh_Temperature = Mathf.Lerp(shelosh_Temperature, ParseValue(tablesData[0].text), 2 * Time.deltaTime);
+                shelosh_Dust = Mathf.Lerp(shelosh_Dust, ParseValue(tablesData[1].text), 2 * Time.deltaTime);
+                shelosh_SolidParticles = Mathf.Lerp(shelosh_SolidParticles, ParseValue(tablesData[2].text), 2 * Time.deltaTime);
+                shelosh_Zola = Mathf.Lerp(shelosh_Zola, ParseValue(tablesData[3].text), 2 * Time.deltaTime);
+                shelosh_CO_enter = Mathf.Lerp(shelosh_CO_enter, ParseValue(tablesData[4].text), 2 * Time.deltaTime);
+                shelosh_CO2_enter = Mathf.Lerp(shelosh_CO2_enter, ParseValue(tablesData[5].text), 2 * Time.deltaTime);
+                shelosh_NO_enter = Mathf.Lerp(shelosh_NO_enter, ParseValue(tablesData[6].text), 2 * Time.deltaTime);
+                shelosh_NO2_enter = Mathf.Lerp(shelosh_NO2_enter, ParseValue(tablesData[7].text), 2 * Time.deltaTime);
 
-                shelosh_SO2_enter = Mathf.Lerp(shelosh_SO2_enter, float.Parse(tablesData[8].text), 2 * Time.deltaTime);
-                shelosh_CH4_enter = Mathf.Lerp(shelosh_CH4_enter, float.Parse(tablesData[9].text), 2 * Time.deltaTime);
-                shelosh_H2S_enter = Mathf.Lerp(shelosh_H2S_enter, float.Parse(tablesData[10].text), 2 * Time.deltaTime);
-                shelosh_O2_enter = Mathf.Lerp(shelosh_O2_enter, float.Parse(tablesData[11].text), 2 * Time.deltaTime);
-                shelosh_N2_enter = Mathf.Lerp(shelosh_N2_enter, float.Parse(tablesData[12].text), 2 * Time.deltaTime);
+                shelosh_SO2_enter = Mathf.Lerp(shelosh_SO2_enter, ParseValue(tablesData[8].text), 2 * Time.deltaTime);
+                shelosh_CH4_enter = Mathf.Lerp(shelosh_CH4_enter, ParseValue(tablesData[9].text), 2 * Time.deltaTime);
+                shelosh_H2S_enter = Mathf.Lerp(shelosh_H2S_enter, ParseValue(tablesData[10].text), 2 * Time.deltaTime);
+                shelosh_O2_enter = Mathf.Lerp(shelosh_O2_enter, ParseValue(tablesData[11].text), 2 * Time.deltaTime);
+                shelosh_N2_enter = Mathf.Lerp(shelosh_N2_enter, ParseValue(tablesData[12].text), 2 * Time.deltaTime);
             }
             if (delay < 0)
             {
@@ -183,25 +183,28 @@ public class SheloshTable : MonoBehaviour
                 Shelosh_O2_exit.text = shelosh_O2_enter.ToString("0.");
                 Shelosh_N2_exit.text = shelosh_N2_enter.ToString("0.");
 
-                shelosh_Temperature_exit = Mathf.Lerp(shelosh_Temperature_exit, float.Parse(tablesData[0].text) * 0.12f, 2 * Time.deltaTime);
-                shelosh_Dust_exit = Mathf.Lerp(shelosh_Dust_exit, float.Parse(tablesData[1].text) * 0.1f, 2 * Time.deltaTime);
-                shelosh_SolidParticles_exit = Mathf.Lerp(shelosh_SolidParticles_exit, float.Parse(tablesData[2].text) * 0.1f, 2 * Time.deltaTime);
-                shelosh_Zola_exit = Mathf.Lerp(shelosh_Zola_exit, float.Parse(tablesData[3].text) * 0.25f, 2 * Time.deltaTime);
+                shelosh_Temperature_exit = Mathf.Lerp(shelosh_Temperature_exit, ParseValue(tablesData[0].text) * 0.12f, 2 * Time.deltaTime);
+                shelosh_Dust_exit = Mathf.Lerp(shelosh_Dust_exit, ParseValue(tablesData[1].text) * 0.1f, 2 * Time.deltaTime);
+                shelosh_SolidParticles_exit = Mathf.Lerp(shelosh_SolidParticles_exit, ParseValue(tablesData[2].text) * 0.1f, 2 * Time.deltaTime);
+                shelosh_Zola_exit = Mathf.Lerp(shelosh_Zola_exit, ParseValue(tablesData[3].text) * 0.25f, 2 * Time.deltaTime);
 
-                shelosh_CO_exit = Mathf.Lerp(shelosh_CO_exit, float.Parse(tablesData[4].text) , 2 * Time.deltaTime);
-                shelosh_CO2_exit = Mathf.Lerp(shelosh_CO2_exit, float.Parse(tablesData[5].text) * 0.922f, 2 * Time.deltaTime);
-                shelosh_NO_exit = Mathf.Lerp(shelosh_NO_exit, float.Parse(tablesData[6].text) , 2 * Time.deltaTime);
-                shelosh_NO2_exit = Mathf.Lerp(shelosh_NO2_exit, float.Parse(tablesData[7].text) , 2 * Time.deltaTime);
+                shelosh_CO_exit = Mathf.Lerp(shelosh_CO_exit, ParseValue(tablesData[4].text) , 2 * Time.deltaTime);
+                shelosh_CO2_exit = Mathf.Lerp(shelosh_CO2_exit, ParseValue(tablesData[5].text) * 0.922f, 2 * Time.deltaTime);
+                shelosh_NO_exit = Mathf.Lerp(shelosh_NO_exit, ParseValue(tablesData[6].text) , 2 * Time.deltaTime);
+                shelosh_NO2_exit = Mathf.Lerp(shelosh_NO2_exit, ParseValue(tablesData[7].text) , 2 * Time.deltaTime);
 
                 
-                shelosh_SO2_exit = Mathf.Lerp(shelosh_SO2_exit, float.Parse(tablesData[8].text) * 0.043f, 2 * Time.deltaTime);
-                shelosh_CH4_exit = Mathf.Lerp(shelosh_CH4_exit, float.Parse(tablesData[9].text) * 0.294f, 2 * Time.deltaTime);
-                shelosh_H2S_exit = Mathf.Lerp(shelosh_H2S_exit, float.Parse(tablesData[10].text) * 0.04f, 2 * Time.deltaTime);
-                shelosh_O2_enter = Mathf.Lerp(shelosh_O2_enter, float.Parse(tablesData[11].text) , 2 * Time.deltaTime);
-                shelosh_N2_enter = Mathf.Lerp(shelosh_N2_enter, float.Parse(tablesData[12].text) , 2 * Time.deltaTime);
+                shelosh_SO2_exit = Mathf.Lerp(shelosh_SO2_exit, ParseValue(tablesData[8].text) * 0.043f, 2 * Time.deltaTime);
+                shelosh_CH4_exit = Mathf.Lerp(shelosh_CH4_exit, ParseValue(tablesData[9].text) * 0.294f, 2 * Time.deltaTime);
+                shelosh_H2S_exit = Mathf.Lerp(shelosh_H2S_exit, ParseValue(tablesData[10].text) * 0.04f, 2 * Time.deltaTime);
+                shelosh_O2_enter = Mathf.Lerp(shelosh_O2_enter, ParseValue(tablesData[11].text) , 2 * Time.deltaTime);
+                shelosh_N2_enter = Mathf.Lerp(shelosh_N2_enter, ParseValue(tablesData[12].text) , 2 * Time.deltaTime);
 
             }
-            else if (delay < -10)
+
+            // Раньше было "else if" после "if (delay < 0)" — ветка никогда не срабатывала,
+            // и таблица пересчитывалась бесконечно.
+            if (delay < -10)
             {
                 isEnable = false;
 
@@ -212,19 +215,30 @@ public class SheloshTable : MonoBehaviour
     {
         delay = delayPrivate;
         isEnable = true;
-        shelosh_Temperature = float.Parse(tablesData[0].text);
-        shelosh_Dust = float.Parse(tablesData[1].text);
-        shelosh_SolidParticles = float.Parse(tablesData[2].text);
-        shelosh_Zola = float.Parse(tablesData[3].text);
-        shelosh_CO_enter = float.Parse(tablesData[4].text);
-        shelosh_CO2_enter = float.Parse(tablesData[5].text);
-        shelosh_NO_enter = float.Parse(tablesData[6].text);
-        shelosh_NO2_enter = float.Parse(tablesData[7].text);
+        shelosh_Temperature = ParseValue(tablesData[0].text);
+        shelosh_Dust = ParseValue(tablesData[1].text);
+        shelosh_SolidParticles = ParseValue(tablesData[2].text);
+        shelosh_Zola = ParseValue(tablesData[3].text);
+        shelosh_CO_enter = ParseValue(tablesData[4].text);
+        shelosh_CO2_enter = ParseValue(tablesData[5].text);
+        shelosh_NO_enter = ParseValue(tablesData[6].text);
+        shelosh_NO2_enter = ParseValue(tablesData[7].text);
         
-        shelosh_SO2_enter = float.Parse(tablesData[8].text);
-        shelosh_CH4_enter = float.Parse(tablesData[9].text);
-        shelosh_H2S_enter = float.Parse(tablesData[10].text);
-        shelosh_O2_enter = float.Parse(tablesData[11].text);
-        shelosh_N2_enter = float.Parse(tablesData[12].text);
+        shelosh_SO2_enter = ParseValue(tablesData[8].text);
+        shelosh_CH4_enter = ParseValue(tablesData[9].text);
+        shelosh_H2S_enter = ParseValue(tablesData[10].text);
+        shelosh_O2_enter = ParseValue(tablesData[11].text);
+        shelosh_N2_enter = ParseValue(tablesData[12].text);
+    }
+
+    // Разбор числа из текста таблицы без зависимости от языка Windows ("12.5" и "12,5").
+    // Раньше float.Parse бросал исключение каждый кадр, если формат не совпадал с локалью.
+    private static float ParseValue(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return 0f;
+        return float.TryParse(text.Trim().Replace(',', '.'),
+            System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture,
+            out float value) ? value : 0f;
     }
 }

@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 using static Unity.Burst.Intrinsics.X86.Avx;
 
-public class TutoriolSimulatio : MonoBehaviour
+public class TutoriolSimulation : MonoBehaviour
 {
     [SerializeField] private ParticleSystem[] _mySmokes;
     [SerializeField] private PlayableDirector[] _myFluidsWater;

@@ -123,6 +123,24 @@ public class OptimaHidPoller : MonoBehaviour
         Debug.Log("[Optima] Захват запущен");
     }
 
+    // Сколько объектов (таблиц) сейчас используют захват. Раньше каждая таблица в OnDisable
+    // вызывала StopCapture, и выключение одной останавливало приём данных для всех.
+    private int _captureUsers;
+
+    /// <summary>Начать пользоваться захватом (захват запускается, если ещё не идёт).</summary>
+    public void AcquireCapture()
+    {
+        _captureUsers++;
+        StartCapture();
+    }
+
+    /// <summary>Перестать пользоваться захватом; остановка — когда отпустил последний пользователь.</summary>
+    public void ReleaseCapture()
+    {
+        if (_captureUsers > 0) _captureUsers--;
+        if (_captureUsers == 0) StopCapture();
+    }
+
     public void StopCapture()
     {
         if (!_running) return;
@@ -163,26 +181,41 @@ public class OptimaHidPoller : MonoBehaviour
         {
             while (_running)
             {
-                if (_h == null)
+                // Ошибка внутри одной итерации больше не завершает поток насовсем:
+                // соединение закрывается и (при autoReconnect) открывается заново.
+                try
                 {
-                    if (!Open())
+                    if (_h == null)
                     {
-                        if (!autoReconnect) break;
-                        SleepWhileRunning(2000);
-                        continue;
+                        if (!Open())
+                        {
+                            if (!autoReconnect) break;
+                            SleepWhileRunning(2000);
+                            continue;
+                        }
+                        fails = 0;
+                        if (sendLiveStartStop && Transact(LiveStart, out _)) _liveStarted = true;
                     }
-                    fails = 0;
-                    if (sendLiveStartStop && Transact(LiveStart, out _)) _liveStarted = true;
-                }
 
-                fails = PollOnce() ? 0 : fails + 1;
-                if (fails >= 3)
+                    fails = PollOnce() ? 0 : fails + 1;
+                    if (fails >= 3)
+                    {
+                        Debug.LogWarning("[Optima] Связь с прибором потеряна");
+                        CloseHandle();
+                        fails = 0;
+                        if (!autoReconnect) break;
+                    }
+                }
+                catch (Exception e)
                 {
-                    Debug.LogWarning("[Optima] Связь с прибором потеряна");
+                    Debug.LogError("[Optima] Ошибка опроса: " + e.Message);
                     CloseHandle();
                     fails = 0;
                     if (!autoReconnect) break;
+                    SleepWhileRunning(2000);
+                    continue;
                 }
+
                 SleepWhileRunning((int)(pollInterval * 1000));
             }
         }
@@ -257,6 +290,14 @@ public class OptimaHidPoller : MonoBehaviour
             LogCsv("B8/p" + n, blocks[n]);
         }
         byte[] p0 = blocks[0], p1 = blocks[1], p2 = blocks[2];
+
+        // Ответ короче ожидаемого (другая прошивка/длина отчёта) — не читаем за пределами массива.
+        const int minLength = 1 + 12 + 12 * 4;
+        if (p0.Length < minLength || p1.Length < minLength || p2.Length < minLength)
+        {
+            if (verbose) Debug.LogWarning($"[Optima] Короткий ответ прибора ({p0.Length}/{p1.Length}/{p2.Length} байт)");
+            return false;
+        }
 
         lock (_lock)
         {

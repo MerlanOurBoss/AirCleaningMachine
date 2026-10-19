@@ -13,24 +13,22 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
     [SerializeField] private TextMeshProUGUI fluidTest;
 
     private bool _isPlaying;
+    private ChamgingEmul _emulType;
+    private int _appliedFluidType = -1;
 
     protected override void OnMathModuleReady(MathModuleForEmul module)
     {
         module._mySmokes = emulSmokes;
 
-        var emulType = GetComponent<ChamgingEmul>();
-        if (emulType == null)
+        _emulType = GetComponent<ChamgingEmul>();
+        if (_emulType == null)
         {
             Debug.LogError($"{name}: не найден компонент ChamgingEmul на этом объекте.");
         }
         else
         {
-            module.fluid = emulType.countWater switch
-            {
-                1 => "Вода",
-                2 => "Едкий натрий",
-                _ => "Сода"
-            };
+            _appliedFluidType = _emulType.countWater;
+            module.SetFluidType(_appliedFluidType);
         }
 
         GameObject testText = GameObject.FindGameObjectWithTag("TestText");
@@ -42,22 +40,35 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
 
     private void Update()
     {
+        SyncFluidType();
+
         if (emulFluid == null) return;
 
         foreach (var fluid in emulFluid)
         {
             if (fluid == null) continue;
 
-            if (_isPlaying)
-            {
+            // Play()/Stop() только при расхождении состояния, а не каждый кадр. Поведение то же:
+            // во время работы Timeline перезапускается, если закончился; в простое — остановлен.
+            bool isDirectorPlaying = fluid.state == PlayState.Playing;
+
+            if (_isPlaying && !isDirectorPlaying)
                 fluid.Play();
-                DiagnoseTimeline(fluid);
-            }
-            else
-            {
+            else if (!_isPlaying && isDirectorPlaying)
                 fluid.Stop();
-            }
         }
+    }
+
+    // Смена жидкости в конструкторе (клавиша T) теперь доходит до матмодуля — раньше тип читался один раз.
+    private void SyncFluidType()
+    {
+        if (_emulType == null || MathModule == null) return;
+
+        int current = _emulType.countWater;
+        if (current < 1 || current > 3 || current == _appliedFluidType) return;
+
+        _appliedFluidType = current;
+        MathModule.SetFluidType(current);
     }
 
     private static void DiagnoseTimeline(PlayableDirector dir)
@@ -94,7 +105,9 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
         switch (row.id)
         {
             case "Температура":
-                float newTemperature = originalValue - (140000 * (MathModule._gasСonsumption / MathModule.сonsumption));
+                float newTemperature = MathModule.сonsumption != 0
+                    ? originalValue - (140000 * (MathModule._gasСonsumption / MathModule.сonsumption))
+                    : originalValue;
                 row.valueTextOut.text = Mathf.Ceil(newTemperature).ToString();
                 return true;
 
@@ -105,7 +118,8 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
             case "NO2":
             case "SO2":
             case "H2S":
-                float ratio = MathModule._fluidType.text == "Вода" ? 0.8f : 0.05f;
+                // Было сравнение с "Вода" — на казахском и английском всегда бралось 0.05.
+                float ratio = MathModule.IsWater ? 0.8f : 0.05f;
                 row.valueTextOut.text = Mathf.Ceil(originalValue * ratio).ToString();
                 return true;
 
@@ -124,7 +138,12 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
 
         if (dropSpawners != null)
             foreach (var spawner in dropSpawners)
-                spawner.startCor();
+                if (spawner != null) spawner.startCor();
+
+        // Диагностика Timeline — один раз при запуске (раньше писалась в лог каждый кадр).
+        if (emulFluid != null)
+            foreach (var fluid in emulFluid)
+                if (fluid != null) DiagnoseTimeline(fluid);
 
         _isPlaying = true;
     }
@@ -137,7 +156,7 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
 
         if (dropSpawners != null)
             foreach (var spawner in dropSpawners)
-                spawner.stopCor();
+                if (spawner != null) spawner.stopCor();
 
         _isPlaying = false;
     }

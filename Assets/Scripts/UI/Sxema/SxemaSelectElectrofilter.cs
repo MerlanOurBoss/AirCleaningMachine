@@ -30,6 +30,11 @@ public class SxemaSelectElectrofilter : MonoBehaviour
 
     private List<GameObject> spawnedPrefabs = new List<GameObject>();
 
+    // Частицы, которые уже дошли до цели (стоп-позиции или низа экрана) и больше не двигаются.
+    // Раньше их ссылки в списке обнулялись: объекты оставались на экране, и ни уменьшение
+    // количества пыли, ни сброс схемы их уже не убирали.
+    private HashSet<GameObject> arrivedPrefabs = new HashSet<GameObject>();
+
     // Частицы, которые должны двигаться вправо
     private HashSet<GameObject> rightMovingPrefabs = new HashSet<GameObject>();
 
@@ -165,6 +170,7 @@ public class SxemaSelectElectrofilter : MonoBehaviour
             if (prefabToRemove != null)
             {
                 rightMovingPrefabs.Remove(prefabToRemove);
+                arrivedPrefabs.Remove(prefabToRemove);
                 Destroy(prefabToRemove);
             }
         }
@@ -212,6 +218,7 @@ public class SxemaSelectElectrofilter : MonoBehaviour
 
         spawnedPrefabs.Clear();
         rightMovingPrefabs.Clear();
+        arrivedPrefabs.Clear();
 
         movePrefabs = false;
         goDown = false;
@@ -339,7 +346,7 @@ public class SxemaSelectElectrofilter : MonoBehaviour
         {
             GameObject currentPrefab = spawnedPrefabs[i];
 
-            if (currentPrefab == null)
+            if (currentPrefab == null || arrivedPrefabs.Contains(currentPrefab))
                 continue;
 
             RectTransform prefabRectTransform =
@@ -387,7 +394,7 @@ public class SxemaSelectElectrofilter : MonoBehaviour
 
                 if (prefabRectTransform.localPosition.y <= -Screen.height)
                 {
-                    spawnedPrefabs[i] = null;
+                    arrivedPrefabs.Add(currentPrefab);
                 }
             }
 
@@ -421,7 +428,7 @@ public class SxemaSelectElectrofilter : MonoBehaviour
                     ) < 0.1f
                 )
                 {
-                    spawnedPrefabs[i] = null;
+                    arrivedPrefabs.Add(currentPrefab);
                 }
             }
         }

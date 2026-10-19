@@ -72,30 +72,30 @@ public class KatalizatorTable : MonoBehaviour
     void Start()
     {
         delayPrivate = delay;
-        kata_Temperature = float.Parse(tablesData[0].text);
-        kata_Dust = float.Parse(tablesData[1].text);
-        kata_SolidParticles = float.Parse(tablesData[2].text);
-        kata_Zola = float.Parse(tablesData[3].text);
+        kata_Temperature = ParseValue(tablesData[0].text);
+        kata_Dust = ParseValue(tablesData[1].text);
+        kata_SolidParticles = ParseValue(tablesData[2].text);
+        kata_Zola = ParseValue(tablesData[3].text);
 
-        kata_CO = float.Parse(tablesData[4].text);
-        kata_NO = float.Parse(tablesData[6].text);
-        kata_NO2 = float.Parse(tablesData[7].text);
+        kata_CO = ParseValue(tablesData[4].text);
+        kata_NO = ParseValue(tablesData[6].text);
+        kata_NO2 = ParseValue(tablesData[7].text);
 
-        kata_CO2 = float.Parse(tablesData[5].text);
-        kata_SO2 = float.Parse(tablesData[8].text);
-        kata_CH4 = float.Parse(tablesData[9].text);
-        kata_H2S = float.Parse(tablesData[10].text);
-        kata_O2 = float.Parse(tablesData[11].text);
-        kata_N2 = float.Parse(tablesData[12].text);
+        kata_CO2 = ParseValue(tablesData[5].text);
+        kata_SO2 = ParseValue(tablesData[8].text);
+        kata_CH4 = ParseValue(tablesData[9].text);
+        kata_H2S = ParseValue(tablesData[10].text);
+        kata_O2 = ParseValue(tablesData[11].text);
+        kata_N2 = ParseValue(tablesData[12].text);
 
-        kata_Temperature_exit = float.Parse(tablesData[0].text);
-        kata_Dust_exit = float.Parse(tablesData[1].text);
-        kata_SolidParticles_exit = float.Parse(tablesData[2].text);
-        kata_Zola_exit = float.Parse(tablesData[3].text);
+        kata_Temperature_exit = ParseValue(tablesData[0].text);
+        kata_Dust_exit = ParseValue(tablesData[1].text);
+        kata_SolidParticles_exit = ParseValue(tablesData[2].text);
+        kata_Zola_exit = ParseValue(tablesData[3].text);
 
-        kata_CO_exit = float.Parse(tablesData[4].text);
-        kata_NO_exit = float.Parse(tablesData[6].text);
-        kata_NO2_exit = float.Parse(tablesData[7].text);
+        kata_CO_exit = ParseValue(tablesData[4].text);
+        kata_NO_exit = ParseValue(tablesData[6].text);
+        kata_NO2_exit = ParseValue(tablesData[7].text);
     }
 
     void Update()
@@ -114,14 +114,14 @@ public class KatalizatorTable : MonoBehaviour
                         item.startColor = new Color(1f, 1f, 1f, 0.3f);
                     }
                 }
-                else if (Katalizator_Dust_enter.value > 10 && Katalizator_Dust_enter.value < 20)
+                else if (Katalizator_Dust_enter.value >= 10 && Katalizator_Dust_enter.value < 20)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
                         item.startColor = new Color(0.9f, 0.9f, 0.9f, 0.3f);
                     }
                 }
-                else if (Katalizator_Dust_enter.value > 20 && Katalizator_Dust_enter.value <= 30)
+                else if (Katalizator_Dust_enter.value >= 20 && Katalizator_Dust_enter.value <= 30)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -136,14 +136,14 @@ public class KatalizatorTable : MonoBehaviour
                         item.startColor = new Color(1f, 1f, 1f, 0.3f);
                     }
                 }
-                else if (Katalizator_Zola_enter.value > 5 && Katalizator_Zola_enter.value < 10)
+                else if (Katalizator_Zola_enter.value >= 5 && Katalizator_Zola_enter.value < 10)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
                         item.startColor = new Color(0.8f, 0.8f, 0.8f, 0.3f);
                     }
                 }
-                else if (Katalizator_Zola_enter.value > 10 && Katalizator_Zola_enter.value <= 20)
+                else if (Katalizator_Zola_enter.value >= 10 && Katalizator_Zola_enter.value <= 20)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -167,21 +167,21 @@ public class KatalizatorTable : MonoBehaviour
                 Katalizator_O2.value = kata_O2;
                 Katalizator_N2.value = kata_N2;
 
-                kata_Temperature = Mathf.Lerp(kata_Temperature, float.Parse(tablesData[0].text), 2 * Time.deltaTime);
-                kata_Dust = Mathf.Lerp(kata_Dust, float.Parse(tablesData[1].text), 2 * Time.deltaTime);
-                kata_SolidParticles = Mathf.Lerp(kata_SolidParticles, float.Parse(tablesData[2].text), 2 * Time.deltaTime);
-                kata_Zola = Mathf.Lerp(kata_Zola, float.Parse(tablesData[3].text), 2 * Time.deltaTime);
+                kata_Temperature = Mathf.Lerp(kata_Temperature, ParseValue(tablesData[0].text), 2 * Time.deltaTime);
+                kata_Dust = Mathf.Lerp(kata_Dust, ParseValue(tablesData[1].text), 2 * Time.deltaTime);
+                kata_SolidParticles = Mathf.Lerp(kata_SolidParticles, ParseValue(tablesData[2].text), 2 * Time.deltaTime);
+                kata_Zola = Mathf.Lerp(kata_Zola, ParseValue(tablesData[3].text), 2 * Time.deltaTime);
 
-                kata_CO = Mathf.Lerp(kata_CO, float.Parse(tablesData[4].text), 2 * Time.deltaTime);
-                kata_CO2 = Mathf.Lerp(kata_CO2, float.Parse(tablesData[5].text), 2 * Time.deltaTime);
+                kata_CO = Mathf.Lerp(kata_CO, ParseValue(tablesData[4].text), 2 * Time.deltaTime);
+                kata_CO2 = Mathf.Lerp(kata_CO2, ParseValue(tablesData[5].text), 2 * Time.deltaTime);
 
-                kata_NO = Mathf.Lerp(kata_NO, float.Parse(tablesData[6].text), 2 * Time.deltaTime);
-                kata_NO2 = Mathf.Lerp(kata_NO2, float.Parse(tablesData[7].text), 2 * Time.deltaTime);
-                kata_SO2 = Mathf.Lerp(kata_SO2, float.Parse(tablesData[8].text), 2 * Time.deltaTime);
-                kata_CH4 = Mathf.Lerp(kata_CH4, float.Parse(tablesData[9].text), 2 * Time.deltaTime);
-                kata_H2S = Mathf.Lerp(kata_H2S, float.Parse(tablesData[10].text), 2 * Time.deltaTime);
-                kata_O2 = Mathf.Lerp(kata_O2, float.Parse(tablesData[11].text), 2 * Time.deltaTime);
-                kata_N2 = Mathf.Lerp(kata_N2, float.Parse(tablesData[12].text), 2 * Time.deltaTime);
+                kata_NO = Mathf.Lerp(kata_NO, ParseValue(tablesData[6].text), 2 * Time.deltaTime);
+                kata_NO2 = Mathf.Lerp(kata_NO2, ParseValue(tablesData[7].text), 2 * Time.deltaTime);
+                kata_SO2 = Mathf.Lerp(kata_SO2, ParseValue(tablesData[8].text), 2 * Time.deltaTime);
+                kata_CH4 = Mathf.Lerp(kata_CH4, ParseValue(tablesData[9].text), 2 * Time.deltaTime);
+                kata_H2S = Mathf.Lerp(kata_H2S, ParseValue(tablesData[10].text), 2 * Time.deltaTime);
+                kata_O2 = Mathf.Lerp(kata_O2, ParseValue(tablesData[11].text), 2 * Time.deltaTime);
+                kata_N2 = Mathf.Lerp(kata_N2, ParseValue(tablesData[12].text), 2 * Time.deltaTime);
             }
             if (delay < 0)
             {
@@ -199,21 +199,21 @@ public class KatalizatorTable : MonoBehaviour
                 Katalizator_O2_exit.text = kata_O2.ToString("0.");
                 Katalizator_N2_exit.text = kata_N2.ToString("0.");
 
-                kata_Temperature_exit = Mathf.Lerp(kata_Temperature_exit, float.Parse(tablesData[0].text) * 4.17f, 2 * Time.deltaTime);
-                kata_Dust_exit = Mathf.Lerp(kata_Dust_exit, float.Parse(tablesData[1].text), 2 * Time.deltaTime);
-                kata_SolidParticles_exit = Mathf.Lerp(kata_SolidParticles_exit, float.Parse(tablesData[2].text), 2 * Time.deltaTime);
-                kata_Zola_exit = Mathf.Lerp(kata_Zola_exit, float.Parse(tablesData[3].text), 2 * Time.deltaTime);
+                kata_Temperature_exit = Mathf.Lerp(kata_Temperature_exit, ParseValue(tablesData[0].text) * 4.17f, 2 * Time.deltaTime);
+                kata_Dust_exit = Mathf.Lerp(kata_Dust_exit, ParseValue(tablesData[1].text), 2 * Time.deltaTime);
+                kata_SolidParticles_exit = Mathf.Lerp(kata_SolidParticles_exit, ParseValue(tablesData[2].text), 2 * Time.deltaTime);
+                kata_Zola_exit = Mathf.Lerp(kata_Zola_exit, ParseValue(tablesData[3].text), 2 * Time.deltaTime);
 
-                kata_CO_exit = Mathf.Lerp(kata_CO_exit, float.Parse(tablesData[4].text) * 0.025f, 2 * Time.deltaTime);
-                kata_CO2 = Mathf.Lerp(kata_CO2, float.Parse(tablesData[5].text), 2 * Time.deltaTime);
-                kata_NO_exit = Mathf.Lerp(kata_NO_exit, float.Parse(tablesData[6].text) * 0.023f, 2 * Time.deltaTime);
-                kata_NO2_exit = Mathf.Lerp(kata_NO2_exit, float.Parse(tablesData[7].text) * 0.023f, 2 * Time.deltaTime);
+                kata_CO_exit = Mathf.Lerp(kata_CO_exit, ParseValue(tablesData[4].text) * 0.025f, 2 * Time.deltaTime);
+                kata_CO2 = Mathf.Lerp(kata_CO2, ParseValue(tablesData[5].text), 2 * Time.deltaTime);
+                kata_NO_exit = Mathf.Lerp(kata_NO_exit, ParseValue(tablesData[6].text) * 0.023f, 2 * Time.deltaTime);
+                kata_NO2_exit = Mathf.Lerp(kata_NO2_exit, ParseValue(tablesData[7].text) * 0.023f, 2 * Time.deltaTime);
 
-                kata_SO2 = Mathf.Lerp(kata_SO2, float.Parse(tablesData[8].text), 2 * Time.deltaTime);
-                kata_CH4 = Mathf.Lerp(kata_CH4, float.Parse(tablesData[9].text), 2 * Time.deltaTime);
-                kata_H2S = Mathf.Lerp(kata_H2S, float.Parse(tablesData[10].text), 2 * Time.deltaTime);
-                kata_O2 = Mathf.Lerp(kata_O2, float.Parse(tablesData[11].text), 2 * Time.deltaTime);
-                kata_N2 = Mathf.Lerp(kata_N2, float.Parse(tablesData[12].text), 2 * Time.deltaTime);
+                kata_SO2 = Mathf.Lerp(kata_SO2, ParseValue(tablesData[8].text), 2 * Time.deltaTime);
+                kata_CH4 = Mathf.Lerp(kata_CH4, ParseValue(tablesData[9].text), 2 * Time.deltaTime);
+                kata_H2S = Mathf.Lerp(kata_H2S, ParseValue(tablesData[10].text), 2 * Time.deltaTime);
+                kata_O2 = Mathf.Lerp(kata_O2, ParseValue(tablesData[11].text), 2 * Time.deltaTime);
+                kata_N2 = Mathf.Lerp(kata_N2, ParseValue(tablesData[12].text), 2 * Time.deltaTime);
             }
             if (delay < -10)
             {
@@ -229,21 +229,32 @@ public class KatalizatorTable : MonoBehaviour
         //Katalizator_Temperature_enter.onValueChanged.RemoveListener(delegate { RepeatCalculateKataz(); });
         delay = delayPrivate;
         isEnable = true;
-        kata_Temperature = float.Parse(tablesData[0].text);
-        kata_Dust = float.Parse(tablesData[1].text);
-        kata_SolidParticles = float.Parse(tablesData[2].text);
-        kata_Zola = float.Parse(tablesData[3].text);
+        kata_Temperature = ParseValue(tablesData[0].text);
+        kata_Dust = ParseValue(tablesData[1].text);
+        kata_SolidParticles = ParseValue(tablesData[2].text);
+        kata_Zola = ParseValue(tablesData[3].text);
 
-        kata_CO = float.Parse(tablesData[4].text);
-        kata_NO = float.Parse(tablesData[6].text);
-        kata_NO2 = float.Parse(tablesData[7].text);
+        kata_CO = ParseValue(tablesData[4].text);
+        kata_NO = ParseValue(tablesData[6].text);
+        kata_NO2 = ParseValue(tablesData[7].text);
 
-        kata_CO2 = float.Parse(tablesData[5].text);
-        kata_SO2 = float.Parse(tablesData[8].text);
-        kata_CH4 = float.Parse(tablesData[9].text);
-        kata_H2S = float.Parse(tablesData[10].text);
-        kata_O2 = float.Parse(tablesData[11].text);
-        kata_N2 = float.Parse(tablesData[12].text);
+        kata_CO2 = ParseValue(tablesData[5].text);
+        kata_SO2 = ParseValue(tablesData[8].text);
+        kata_CH4 = ParseValue(tablesData[9].text);
+        kata_H2S = ParseValue(tablesData[10].text);
+        kata_O2 = ParseValue(tablesData[11].text);
+        kata_N2 = ParseValue(tablesData[12].text);
 
+    }
+
+    // Разбор числа из текста таблицы без зависимости от языка Windows ("12.5" и "12,5").
+    // Раньше float.Parse бросал исключение каждый кадр, если формат не совпадал с локалью.
+    private static float ParseValue(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return 0f;
+        return float.TryParse(text.Trim().Replace(',', '.'),
+            System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture,
+            out float value) ? value : 0f;
     }
 }

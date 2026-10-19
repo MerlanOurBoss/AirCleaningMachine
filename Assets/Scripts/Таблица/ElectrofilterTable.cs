@@ -56,34 +56,34 @@ public class ElectrofilterTable : MonoBehaviour
     public bool isEnable = false;
     private void Start()
     {
-        ElectroFilter_Temperature_enter.value = float.Parse(originTablesData[0].text);
-        ElectroFilter_Dust_enter.value = float.Parse(originTablesData[1].text);
-        ElectroFilter_SolidParticles_enter.value = float.Parse(originTablesData[2].text);
-        ElectroFilter_Zola_enter.value = float.Parse(originTablesData[3].text);
-        ElectroFilter_CO_enter.value = float.Parse(originTablesData[4].text);
-        ElectroFilter_CO2_enter.value = float.Parse(originTablesData[5].text);
-        ElectroFilter_NO_enter.value = float.Parse(originTablesData[6].text);
-        ElectroFilter_NO2_enter.value = float.Parse(originTablesData[7].text);
-        ElectroFilter_SO2_enter.value = float.Parse(originTablesData[8].text);
-        ElectroFilter_CH4_enter.value = float.Parse(originTablesData[9].text);
-        ElectroFilter_H2S_enter.value = float.Parse(originTablesData[10].text);
-        ElectroFilter_O2_enter.value = float.Parse(originTablesData[11].text);
-        ElectroFilter_N2_enter.value = float.Parse(originTablesData[12].text);
+        ElectroFilter_Temperature_enter.value = ParseValue(originTablesData[0].text);
+        ElectroFilter_Dust_enter.value = ParseValue(originTablesData[1].text);
+        ElectroFilter_SolidParticles_enter.value = ParseValue(originTablesData[2].text);
+        ElectroFilter_Zola_enter.value = ParseValue(originTablesData[3].text);
+        ElectroFilter_CO_enter.value = ParseValue(originTablesData[4].text);
+        ElectroFilter_CO2_enter.value = ParseValue(originTablesData[5].text);
+        ElectroFilter_NO_enter.value = ParseValue(originTablesData[6].text);
+        ElectroFilter_NO2_enter.value = ParseValue(originTablesData[7].text);
+        ElectroFilter_SO2_enter.value = ParseValue(originTablesData[8].text);
+        ElectroFilter_CH4_enter.value = ParseValue(originTablesData[9].text);
+        ElectroFilter_H2S_enter.value = ParseValue(originTablesData[10].text);
+        ElectroFilter_O2_enter.value = ParseValue(originTablesData[11].text);
+        ElectroFilter_N2_enter.value = ParseValue(originTablesData[12].text);
 
-        electro_Temperature = float.Parse(tablesData[0].text);
-        electro_Dust = float.Parse(tablesData[1].text);
-        electro_SolidParticles = float.Parse(tablesData[2].text);
-        electro_Zola = float.Parse(tablesData[3].text);
+        electro_Temperature = ParseValue(tablesData[0].text);
+        electro_Dust = ParseValue(tablesData[1].text);
+        electro_SolidParticles = ParseValue(tablesData[2].text);
+        electro_Zola = ParseValue(tablesData[3].text);
 
-        electro_CO = float.Parse(tablesData[4].text);
-        electro_CO2 = float.Parse(tablesData[5].text);
-        electro_NO = float.Parse(tablesData[6].text);
-        electro_NO2 = float.Parse(tablesData[7].text);
-        electro_SO2 = float.Parse(tablesData[8].text);
-        electro_CH4 = float.Parse(tablesData[9].text);
-        electro_H2S = float.Parse(tablesData[10].text);
-        electro_O2 = float.Parse(tablesData[11].text);
-        electro_N2 = float.Parse(tablesData[12].text);
+        electro_CO = ParseValue(tablesData[4].text);
+        electro_CO2 = ParseValue(tablesData[5].text);
+        electro_NO = ParseValue(tablesData[6].text);
+        electro_NO2 = ParseValue(tablesData[7].text);
+        electro_SO2 = ParseValue(tablesData[8].text);
+        electro_CH4 = ParseValue(tablesData[9].text);
+        electro_H2S = ParseValue(tablesData[10].text);
+        electro_O2 = ParseValue(tablesData[11].text);
+        electro_N2 = ParseValue(tablesData[12].text);
     }
 
     [System.Obsolete]
@@ -101,13 +101,13 @@ public class ElectrofilterTable : MonoBehaviour
                     smokes[1].startColor = new Color(1f, 1f, 1f, 1f);
                     smokes[2].startColor = new Color(1f, 1f, 1f, 1f);
                 }
-                else if (ElectroFilter_Dust_enter.value > 100 && ElectroFilter_Dust_enter.value < 200)
+                else if (ElectroFilter_Dust_enter.value >= 100 && ElectroFilter_Dust_enter.value < 200)
                 {
                     smokes[0].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
                     smokes[1].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[2].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                 }
-                else if (ElectroFilter_Dust_enter.value > 200 && ElectroFilter_Dust_enter.value <= 300)
+                else if (ElectroFilter_Dust_enter.value >= 200 && ElectroFilter_Dust_enter.value <= 300)
                 {
                     smokes[0].startColor = new Color(0f, 0f, 0f, 1f);
                     smokes[1].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
@@ -122,7 +122,7 @@ public class ElectrofilterTable : MonoBehaviour
                         item.startSpeed = 5f;
                     }
                 }
-                else if (ElectroFilter_SolidParticles_enter.value > 300 && ElectroFilter_SolidParticles_enter.value < 400)
+                else if (ElectroFilter_SolidParticles_enter.value >= 300 && ElectroFilter_SolidParticles_enter.value < 400)
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -130,7 +130,7 @@ public class ElectrofilterTable : MonoBehaviour
                         item.startSpeed = 4.5f;
                     }
                 }
-                else if (ElectroFilter_SolidParticles_enter.value > 400 && ElectroFilter_SolidParticles_enter.value <= 500)  
+                else if (ElectroFilter_SolidParticles_enter.value >= 400 && ElectroFilter_SolidParticles_enter.value <= 500)  
                 {
                     foreach (ParticleSystem item in smokes)
                     {
@@ -146,13 +146,13 @@ public class ElectrofilterTable : MonoBehaviour
                     smokes[1].startColor = new Color(1f, 1f, 1f, 1f);
                     smokes[2].startColor = new Color(1f, 1f, 1f, 1f);
                 }
-                else if (ElectroFilter_Zola_enter.value > 50 && ElectroFilter_Zola_enter.value < 100)
+                else if (ElectroFilter_Zola_enter.value >= 50 && ElectroFilter_Zola_enter.value < 100)
                 {
                     smokes[0].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[1].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                     smokes[2].startColor = new Color(0.7f, 0.7f, 0.7f, 1f);
                 }
-                else if (ElectroFilter_Zola_enter.value > 100 && ElectroFilter_Zola_enter.value <= 200)
+                else if (ElectroFilter_Zola_enter.value >= 100 && ElectroFilter_Zola_enter.value <= 200)
                 {
                     smokes[0].startColor = new Color(0f, 0f, 0f, 1f);
                     smokes[1].startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
@@ -175,24 +175,26 @@ public class ElectrofilterTable : MonoBehaviour
                 ElectroFilter_O2.text = electro_O2.ToString("0.");
                 ElectroFilter_N2.text = electro_N2.ToString("0.");
 
-                electro_Temperature = Mathf.Lerp(electro_Temperature, float.Parse(tablesData[0].text) * 0.215f, 2 * Time.deltaTime);
-                electro_Dust = Mathf.Lerp(electro_Dust, float.Parse(tablesData[1].text) * 0.1f, 2 * Time.deltaTime);
-                electro_SolidParticles = Mathf.Lerp(electro_SolidParticles, float.Parse(tablesData[2].text) * 0.093f, 2 * Time.deltaTime);
-                electro_Zola = Mathf.Lerp(electro_Zola, float.Parse(tablesData[3].text) * 0.095f, 2 * Time.deltaTime);
+                electro_Temperature = Mathf.Lerp(electro_Temperature, ParseValue(tablesData[0].text) * 0.215f, 2 * Time.deltaTime);
+                electro_Dust = Mathf.Lerp(electro_Dust, ParseValue(tablesData[1].text) * 0.1f, 2 * Time.deltaTime);
+                electro_SolidParticles = Mathf.Lerp(electro_SolidParticles, ParseValue(tablesData[2].text) * 0.093f, 2 * Time.deltaTime);
+                electro_Zola = Mathf.Lerp(electro_Zola, ParseValue(tablesData[3].text) * 0.095f, 2 * Time.deltaTime);
 
-                electro_CO = Mathf.Lerp(electro_CO, float.Parse(tablesData[4].text), 2 * Time.deltaTime);
-                electro_CO2 = Mathf.Lerp(electro_CO2, float.Parse(tablesData[5].text), 2 * Time.deltaTime);
-                electro_NO = Mathf.Lerp(electro_NO, float.Parse(tablesData[6].text), 2 * Time.deltaTime);
-                electro_NO2 = Mathf.Lerp(electro_NO2, float.Parse(tablesData[7].text), 2 * Time.deltaTime);
-                electro_SO2 = Mathf.Lerp(electro_SO2, float.Parse(tablesData[8].text) , 2 * Time.deltaTime);
-                electro_CH4 = Mathf.Lerp(electro_CH4, float.Parse(tablesData[9].text) , 2 * Time.deltaTime);
-                electro_H2S = Mathf.Lerp(electro_H2S, float.Parse(tablesData[10].text) , 2 * Time.deltaTime);
-                electro_O2 = Mathf.Lerp(electro_O2, float.Parse(tablesData[11].text) , 2 * Time.deltaTime);
-                electro_N2 = Mathf.Lerp(electro_N2, float.Parse(tablesData[12].text) , 2 * Time.deltaTime);
+                electro_CO = Mathf.Lerp(electro_CO, ParseValue(tablesData[4].text), 2 * Time.deltaTime);
+                electro_CO2 = Mathf.Lerp(electro_CO2, ParseValue(tablesData[5].text), 2 * Time.deltaTime);
+                electro_NO = Mathf.Lerp(electro_NO, ParseValue(tablesData[6].text), 2 * Time.deltaTime);
+                electro_NO2 = Mathf.Lerp(electro_NO2, ParseValue(tablesData[7].text), 2 * Time.deltaTime);
+                electro_SO2 = Mathf.Lerp(electro_SO2, ParseValue(tablesData[8].text) , 2 * Time.deltaTime);
+                electro_CH4 = Mathf.Lerp(electro_CH4, ParseValue(tablesData[9].text) , 2 * Time.deltaTime);
+                electro_H2S = Mathf.Lerp(electro_H2S, ParseValue(tablesData[10].text) , 2 * Time.deltaTime);
+                electro_O2 = Mathf.Lerp(electro_O2, ParseValue(tablesData[11].text) , 2 * Time.deltaTime);
+                electro_N2 = Mathf.Lerp(electro_N2, ParseValue(tablesData[12].text) , 2 * Time.deltaTime);
 
             }
 
-            else if (delay < -5)
+            // Раньше было "else if" после "if (delay < 0)" — ветка никогда не срабатывала,
+            // и таблица пересчитывалась бесконечно.
+            if (delay < -5)
             {
                 isEnable = false;
             }
@@ -202,37 +204,48 @@ public class ElectrofilterTable : MonoBehaviour
 
     public void RecalculateData()
     {
-        ElectroFilter_Temperature_enter.value = float.Parse(originTablesData[0].text);
-        ElectroFilter_Dust_enter.value = float.Parse(originTablesData[1].text);
-        ElectroFilter_SolidParticles_enter.value = float.Parse(originTablesData[2].text);
-        ElectroFilter_Zola_enter.value = float.Parse(originTablesData[3].text);
-        ElectroFilter_CO_enter.value = float.Parse(originTablesData[4].text);
-        ElectroFilter_CO2_enter.value = float.Parse(originTablesData[5].text);
-        ElectroFilter_NO_enter.value = float.Parse(originTablesData[6].text);
-        ElectroFilter_NO2_enter.value = float.Parse(originTablesData[7].text);
-        ElectroFilter_SO2_enter.value = float.Parse(originTablesData[8].text);
-        ElectroFilter_CH4_enter.value = float.Parse(originTablesData[9].text);
-        ElectroFilter_H2S_enter.value = float.Parse(originTablesData[10].text);
-        ElectroFilter_O2_enter.value = float.Parse(originTablesData[11].text);
-        ElectroFilter_N2_enter.value = float.Parse(originTablesData[12].text);
+        ElectroFilter_Temperature_enter.value = ParseValue(originTablesData[0].text);
+        ElectroFilter_Dust_enter.value = ParseValue(originTablesData[1].text);
+        ElectroFilter_SolidParticles_enter.value = ParseValue(originTablesData[2].text);
+        ElectroFilter_Zola_enter.value = ParseValue(originTablesData[3].text);
+        ElectroFilter_CO_enter.value = ParseValue(originTablesData[4].text);
+        ElectroFilter_CO2_enter.value = ParseValue(originTablesData[5].text);
+        ElectroFilter_NO_enter.value = ParseValue(originTablesData[6].text);
+        ElectroFilter_NO2_enter.value = ParseValue(originTablesData[7].text);
+        ElectroFilter_SO2_enter.value = ParseValue(originTablesData[8].text);
+        ElectroFilter_CH4_enter.value = ParseValue(originTablesData[9].text);
+        ElectroFilter_H2S_enter.value = ParseValue(originTablesData[10].text);
+        ElectroFilter_O2_enter.value = ParseValue(originTablesData[11].text);
+        ElectroFilter_N2_enter.value = ParseValue(originTablesData[12].text);
     }
     public void RepeatCalculate()
     {
         delay = 5f;
         isEnable = true;
-        electro_Temperature = float.Parse(tablesData[0].text);
-        electro_Dust = float.Parse(tablesData[1].text);
-        electro_SolidParticles = float.Parse(tablesData[2].text);
-        electro_Zola = float.Parse(tablesData[3].text);
+        electro_Temperature = ParseValue(tablesData[0].text);
+        electro_Dust = ParseValue(tablesData[1].text);
+        electro_SolidParticles = ParseValue(tablesData[2].text);
+        electro_Zola = ParseValue(tablesData[3].text);
 
-        electro_CO = float.Parse(tablesData[4].text);
-        electro_CO2 = float.Parse(tablesData[5].text);
-        electro_NO = float.Parse(tablesData[6].text);
-        electro_NO2 = float.Parse(tablesData[7].text);
-        electro_SO2 = float.Parse(tablesData[8].text);
-        electro_CH4 = float.Parse(tablesData[9].text);
-        electro_H2S = float.Parse(tablesData[10].text);
-        electro_O2 = float.Parse(tablesData[11].text);
-        electro_N2 = float.Parse(tablesData[12].text);
+        electro_CO = ParseValue(tablesData[4].text);
+        electro_CO2 = ParseValue(tablesData[5].text);
+        electro_NO = ParseValue(tablesData[6].text);
+        electro_NO2 = ParseValue(tablesData[7].text);
+        electro_SO2 = ParseValue(tablesData[8].text);
+        electro_CH4 = ParseValue(tablesData[9].text);
+        electro_H2S = ParseValue(tablesData[10].text);
+        electro_O2 = ParseValue(tablesData[11].text);
+        electro_N2 = ParseValue(tablesData[12].text);
+    }
+
+    // Разбор числа из текста таблицы без зависимости от языка Windows ("12.5" и "12,5").
+    // Раньше float.Parse бросал исключение каждый кадр, если формат не совпадал с локалью.
+    private static float ParseValue(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return 0f;
+        return float.TryParse(text.Trim().Replace(',', '.'),
+            System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture,
+            out float value) ? value : 0f;
     }
 }

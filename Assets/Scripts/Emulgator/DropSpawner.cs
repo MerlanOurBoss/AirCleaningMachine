@@ -28,20 +28,32 @@ public class DropSpawner : MonoBehaviour
         }
     }
 
+    private Coroutine resumeCoroutine;
+
     public void PauseSpawning()
     {
+        // ќтмен€ем отложенное возобновление: раньше пауза, поставленна€ в течение 7 с
+        // после ResumeSpawning, снималась сама.
+        if (resumeCoroutine != null)
+        {
+            StopCoroutine(resumeCoroutine);
+            resumeCoroutine = null;
+        }
         isPaused = true;
     }
 
     public void ResumeSpawning()
     {
-        StartCoroutine(ResumeAfterDelay());
+        if (resumeCoroutine != null) StopCoroutine(resumeCoroutine);
+        if (isActiveAndEnabled)
+            resumeCoroutine = StartCoroutine(ResumeAfterDelay());
     }
 
     private IEnumerator ResumeAfterDelay()
     {
         yield return new WaitForSeconds(7f);
         isPaused = false;
+        resumeCoroutine = null;
     }
 
     IEnumerator SpawnCoroutine()

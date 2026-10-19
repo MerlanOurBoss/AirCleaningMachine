@@ -27,6 +27,11 @@ public class SxemaElectrofilter : MonoBehaviour
 
     private List<GameObject> spawnedPrefabs = new List<GameObject>();
 
+    // Частицы, которые уже дошли до цели (стоп-позиции или низа экрана) и больше не двигаются.
+    // Раньше их ссылки в списке обнулялись: объекты оставались на экране, и ни уменьшение
+    // количества пыли, ни сброс схемы их уже не убирали.
+    private HashSet<GameObject> arrivedPrefabs = new HashSet<GameObject>();
+
     // Префабы, которые должны двигаться вправо
     private HashSet<GameObject> rightMovingPrefabs = new HashSet<GameObject>();
     private List<Vector3> originalPrefabPositions = new List<Vector3>();
@@ -208,6 +213,7 @@ public class SxemaElectrofilter : MonoBehaviour
                 spawnedPrefabs[lastIndex];
 
             rightMovingPrefabs.Remove(prefabToRemove);
+            arrivedPrefabs.Remove(prefabToRemove);
 
             spawnedPrefabs.RemoveAt(lastIndex);
 
@@ -373,7 +379,7 @@ public class SxemaElectrofilter : MonoBehaviour
         {
             GameObject currentPrefab = spawnedPrefabs[i];
 
-            if (currentPrefab == null)
+            if (currentPrefab == null || arrivedPrefabs.Contains(currentPrefab))
                 continue;
 
             RectTransform prefabRectTransform =
@@ -424,7 +430,7 @@ public class SxemaElectrofilter : MonoBehaviour
 
                 if (prefabRectTransform.localPosition.y <= -Screen.height)
                 {
-                    spawnedPrefabs[i] = null;
+                    arrivedPrefabs.Add(currentPrefab);
                 }
             }
             else
@@ -452,7 +458,7 @@ public class SxemaElectrofilter : MonoBehaviour
                     stopPosition.localPosition
                 ) < 0.1f)
                 {
-                    spawnedPrefabs[i] = null;
+                    arrivedPrefabs.Add(currentPrefab);
                 }
             }
         }
@@ -516,8 +522,9 @@ public class SxemaElectrofilter : MonoBehaviour
             }
         }
 
-        // Убираем назначение движения вправо
+        // Убираем назначение движения вправо и отметки «дошла до цели»
         rightMovingPrefabs.Clear();
+        arrivedPrefabs.Clear();
 
         // Останавливаем анимацию
         sxemElectroAnim.Play("Stop");

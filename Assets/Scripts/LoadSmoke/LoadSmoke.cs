@@ -30,7 +30,10 @@ public class LoadSmoke : MonoBehaviour
         
         var found = FindObjectsOfType<GeneralManagerBase>(true);
         _modules = new List<GeneralManagerBase>(found);
-        _modules.Reverse();
+
+        // Порядок цепочки = порядок объектов в иерархии (тот же, по которому PipeConnector соединяет трубы).
+        // Раньше брался порядок FindObjectsOfType + Reverse(), который Unity не гарантирует.
+        _modules.Sort((a, b) => CompareHierarchyOrder(a.transform, b.transform));
         
         CacheParameterModules();
         StartCoroutine(UpdateChainRoutine());
@@ -66,15 +69,14 @@ public class LoadSmoke : MonoBehaviour
         if (_parameterModules.Count == 0)
             return;
 
-        // 1) mainTable -> первый модуль обновление IN
+        // 1) mainTable -> входные значения первого модуля
         var firstRows = _parameterModules[0].Rows;
-
-        int count0 = Mathf.Min(mainTable.Count, firstRows.Count);
-
-        for (int i = 0; i < count0; i++)
+        for (int i = 0; i < mainTable.Count; i++)
         {
-            // обновляем входные значения первого модуля
-            firstRows[i].valueTextIn.text = mainTable[i].valueTextIn.text;
+            var source = mainTable[i];
+            var target = FindTargetRow(firstRows, source.id, i);
+            if (source.valueTextIn != null && target != null && target.valueTextIn != null)
+                target.valueTextIn.text = source.valueTextIn.text;
         }
 
         // 2) цепочка: OUT текущего -> IN следующего
@@ -83,22 +85,58 @@ public class LoadSmoke : MonoBehaviour
             var currentRows = _parameterModules[m].Rows;
             var nextRows    = _parameterModules[m + 1].Rows;
 
-            int count = Mathf.Min(currentRows.Count, nextRows.Count);
-
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < currentRows.Count; i++)
             {
-                if (currentRows[i].valueTextOut != null && nextRows[i].valueTextIn != null)
-                {
-                    nextRows[i].valueTextIn.text = currentRows[i].valueTextOut.text;
-                    nextRows[i].slider.value = currentRows[i].slider.value;
-                }
+                var source = currentRows[i];
+                var target = FindTargetRow(nextRows, source.id, i);
+                if (target == null || source.valueTextOut == null || target.valueTextIn == null)
+                    continue;
+
+                target.valueTextIn.text = source.valueTextOut.text;
+
+                if (source.slider != null && target.slider != null)
+                    target.slider.value = source.slider.value;
             }
         }
-
-        // INFO FOR DEBUG
-        Debug.Log("Chain values updated at " + DateTime.Now.ToLongTimeString());
     }
-    
+
+    /// <summary>
+    /// Строка-получатель: по совпадению id (если он задан), иначе по тому же индексу.
+    /// Раньше строки сопоставлялись только по индексу, и при разном наборе строк
+    /// в модулях значение уходило в чужой параметр.
+    /// </summary>
+    private static ParameterRowUI FindTargetRow(List<ParameterRowUI> rows, string id, int index)
+    {
+        if (!string.IsNullOrWhiteSpace(id))
+        {
+            foreach (var row in rows)
+                if (row != null && string.Equals(row.id?.Trim(), id.Trim(), StringComparison.OrdinalIgnoreCase))
+                    return row;
+        }
+        return index < rows.Count ? rows[index] : null;
+    }
+
+    private static int CompareHierarchyOrder(Transform a, Transform b)
+    {
+        var pathA = GetHierarchyPath(a);
+        var pathB = GetHierarchyPath(b);
+        int n = Mathf.Min(pathA.Count, pathB.Count);
+        for (int i = 0; i < n; i++)
+        {
+            int cmp = pathA[i].CompareTo(pathB[i]);
+            if (cmp != 0) return cmp;
+        }
+        return pathA.Count.CompareTo(pathB.Count);
+    }
+
+    private static List<int> GetHierarchyPath(Transform t)
+    {
+        var path = new List<int>();
+        for (; t != null; t = t.parent)
+            path.Insert(0, t.GetSiblingIndex());
+        return path;
+    }
+
     private void StartSimulation()
     {        
         if (_modules == null || _modules.Count == 0)

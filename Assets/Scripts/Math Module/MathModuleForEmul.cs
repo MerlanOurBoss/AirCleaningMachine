@@ -53,6 +53,34 @@ public class MathModuleForEmul : MathModuleBase
     private double dryReagentConsumption;
     private double otherConsumables;
 
+    /// <summary>
+    /// Задать тип жидкости по номеру из ChamgingEmul (1 — вода, 2 — едкий натрий, иначе — сода)
+    /// с учётом текущего языка. Пересчёт произойдёт сам: меняется _fluidType.text.
+    /// </summary>
+    public void SetFluidType(int type)
+    {
+        var lang = translator != null ? translator.currentLanguage : Translator.Language.Russian;
+
+        string name = type switch
+        {
+            1 => lang == Translator.Language.Kazakh ? "Су"
+               : lang == Translator.Language.English ? "Water" : "Вода",
+            2 => lang == Translator.Language.Kazakh ? "Каустикалық сода"
+               : lang == Translator.Language.English ? "Caustic soda" : "Едкий натрий",
+            _ => lang == Translator.Language.English ? "Soda" : "Сода"
+        };
+
+        fluid = name;
+        if (_fluidType != null) _fluidType.text = name;
+    }
+
+    private static readonly string[] WaterNames = { "Вода", "Су", "Water" };
+    private static readonly string[] CausticSodaNames = { "Едкий натрий", "Каустикалық сода", "Caustic soda" };
+    private static readonly string[] SodaNames = { "Сода", "Soda" };
+
+    /// <summary>Выбрана вода (на любом языке интерфейса).</summary>
+    public bool IsWater => MatchesAny(_fluidType.text, WaterNames);
+
     protected override string BuildDirtySnapshot() =>
         $"{_fluidType.text}|{_gasFlow.text}|{_waterFlow.text}|{_gasFlowMain.text}|{_temperature.text}";
 
@@ -131,28 +159,10 @@ public class MathModuleForEmul : MathModuleBase
     protected override void Recalculate()
     {
         fluid = _fluidType.text;
-        UpdateDisplayTexts();
-        UpdateSmokeAlphaForGasFlow();
 
-        if (_fluidType.text == "Вода" || _fluidType.text == "Water" || _fluidType.text == "Су")
-        {
-            _reynoldsNumber = (waterDensity * _waterSpeed * deametrDroplet) / waterDynamicViscosity;
-        }
-        else if (_fluidType.text == "Едкий натрий" || _fluidType.text == "Caustic soda" || _fluidType.text == "Каустикалық сода")
-        {
-            _reynoldsNumber = (causticSodaDensity * _waterSpeed * deametrDroplet) / causticSodaDynamicViscosity;
-        }
-        else
-        {
-            _reynoldsNumber = (sodaDensity * _waterSpeed * deametrDroplet) / sodaDynamicViscosity;
-        }
-
-        _gasSpeed = (4 * ParseLeadingNumber(_gasFlow.text)) / (3.14159f * Mathf.Pow(deametr, 2));
-        _waterSpeed = (4 * ParseLeadingNumber(_waterFlow.text)) / (3.14159f * Mathf.Pow(deametr, 2));
-        _gasMassFlow = (_gasSpeed * 3.14159f * Mathf.Pow(deametr, 2)) / 4;
-        _waterMassFlow = (_waterSpeed * 3.14159f * Mathf.Pow(deametr, 2)) / 4;
-        _massTransfer = empiricalConstantsA * Mathf.Pow((_reynoldsNumber / deametrDroplet), empiricalConstantsB);
-
+        // Порядок исправлен: сначала габариты аппарата, потом скорости, потом Рейнольдс.
+        // Раньше скорость делилась на диаметр с прошлого шага (в первый раз — на 0),
+        // Рейнольдс брал старую скорость воды, а вывод шёл до расчёта.
         double valueGasFlow = ParseLeadingNumber(_gasFlowMain.text);
 
         сonsumption = (float)valueGasFlow / 3600;
@@ -161,26 +171,58 @@ public class MathModuleForEmul : MathModuleBase
         deametr = (float)Math.Ceiling(Math.Sqrt((4.0 * valueGasFlow) / Math.PI / 3600.0 / 2.9));
         height = Math.Ceiling(((0.8 + 18 * 0.15 + 0.35 * deametr + 0.6) / 5.0) * 10.0) / 10.0 * 5.0;
 
+        float crossSection = 3.14159f * Mathf.Pow(deametr, 2);
+        if (crossSection > 0f)
+        {
+            _gasSpeed = (4 * ParseLeadingNumber(_gasFlow.text)) / crossSection;
+            _waterSpeed = (4 * ParseLeadingNumber(_waterFlow.text)) / crossSection;
+        }
+        else
+        {
+            _gasSpeed = 0f;
+            _waterSpeed = 0f;
+        }
+        _gasMassFlow = (_gasSpeed * crossSection) / 4;
+        _waterMassFlow = (_waterSpeed * crossSection) / 4;
+
+        if (MatchesAny(fluid, WaterNames))
+        {
+            _reynoldsNumber = (waterDensity * _waterSpeed * deametrDroplet) / waterDynamicViscosity;
+        }
+        else if (MatchesAny(fluid, CausticSodaNames))
+        {
+            _reynoldsNumber = (causticSodaDensity * _waterSpeed * deametrDroplet) / causticSodaDynamicViscosity;
+        }
+        else
+        {
+            _reynoldsNumber = (sodaDensity * _waterSpeed * deametrDroplet) / sodaDynamicViscosity;
+        }
+
+        _massTransfer = empiricalConstantsA * Mathf.Pow((_reynoldsNumber / deametrDroplet), empiricalConstantsB);
+
         electro = 0.12 * (_gasСonsumption * 3600);
         waterConsumables = 0.005 * (valueGasFlow * 1000);
         dryReagentConsumptionCount = (10 / 100.0) * (1100 / 1000.0) * (valueGasFlow / 1000.0) / 0.95 / 1000;
 
         float fluidCon;
-        if (fluid == "Едкий натрий" || fluid == "Каустикалық сода" || fluid == "Caustic soda")
+        if (MatchesAny(fluid, CausticSodaNames))
         {
             fluidCon = 200000;
         }
-        else if (fluid == "Сода" || fluid == "Soda")
+        else if (MatchesAny(fluid, SodaNames))
         {
             fluidCon = 125000;
         }
         else
         {
-            fluidCon = 1;
+            fluidCon = 1; // вода
         }
 
         dryReagentConsumption = dryReagentConsumptionCount * fluidCon;
         otherConsumables = (8090 + 0.036 * valueGasFlow) / 365 / 24;
+
+        UpdateDisplayTexts();
+        UpdateSmokeAlphaForGasFlow();
     }
 
     private void UpdateDisplayTexts()
@@ -227,12 +269,10 @@ public class MathModuleForEmul : MathModuleBase
 
     private void UpdateSmokeAlphaForGasFlow()
     {
-        float alpha = _gasFlow.text switch
-        {
-            "10 м³/с" => 0.3f,
-            "12 м³/с" => 0.7f,
-            _ => 1.0f
-        };
+        // По числу, а не по строке "10 м³/с" — работает и на английском ("10 m³/s").
+        float alpha = NumberEquals(_gasFlow.text, 10f) ? 0.3f
+                    : NumberEquals(_gasFlow.text, 12f) ? 0.7f
+                    : 1.0f;
 
         ParticleFxUtility.SetOverLifetimeAlpha(_mySmokes, alpha);
     }

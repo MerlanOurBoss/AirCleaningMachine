@@ -70,7 +70,8 @@ public class ChamgingEmul : MonoBehaviour
             {
                 item.material = blued;
             }
-            gameObject.CompareTag("Facilities_Emul");
+            // Раньше здесь был gameObject.CompareTag(...) — проверка без эффекта, тег не менялся.
+            if (!gameObject.CompareTag("Facilities_Emul")) gameObject.tag = "Facilities_Emul";
         }
         if (countWater == 2)
         {
@@ -83,7 +84,8 @@ public class ChamgingEmul : MonoBehaviour
             {
                 item.material = reded;
             }
-            gameObject.CompareTag("Facilities_Emul_Reagent");
+            // Раньше здесь был gameObject.CompareTag(...) — проверка без эффекта, тег не менялся.
+            if (!gameObject.CompareTag("Facilities_Emul_Reagent")) gameObject.tag = "Facilities_Emul_Reagent";
         }
         if (countWater == 3)
         {
@@ -96,7 +98,8 @@ public class ChamgingEmul : MonoBehaviour
             {
                 item.material = greened;
             }
-            gameObject.CompareTag("Facilities_Emul_Soda");
+            // Раньше здесь был gameObject.CompareTag(...) — проверка без эффекта, тег не менялся.
+            if (!gameObject.CompareTag("Facilities_Emul_Soda")) gameObject.tag = "Facilities_Emul_Soda";
         }
         if (countWater > 3)
         {

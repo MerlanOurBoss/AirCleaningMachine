@@ -34,6 +34,7 @@ public class MathModulForKataz : MathModuleBase
     private float CO_Gaz_Out;
 
     private float deametr = 0;
+    private const float BlockDiameter = 0.9f; // м — как в GeneralManagerForKataz
 
     private float CO_Gaz_In = 0.1f;
     private float k_CO = 0.02f;
@@ -48,6 +49,18 @@ public class MathModulForKataz : MathModuleBase
     private double catalyzator;
     private double waterConsumables;
     private double reagentConsumables;
+
+    // Варианты из выпадающих списков на русском, казахском и английском (префаб New Katalizator).
+    private static readonly string[] WithPreciousMetals = { "с драгметаллами", "бағалы металдармен", "with precious metals" };
+    private static readonly string[] WithoutPreciousMetals = { "без драгметаллов", "бағалы металдарсыз", "without precious metals" };
+    private static readonly string[] CoalSource = { "Угольный", "Көміртек", "Coal" };
+    private static readonly string[] GasSource = { "Газ", "Gas" };
+
+    /// <summary>Тип блока «с драгметаллами» — на любом языке интерфейса.</summary>
+    public bool HasPreciousMetals => MatchesAny(_katazBlockType.text, WithPreciousMetals);
+
+    /// <summary>Тип блока «без драгметаллов» — на любом языке интерфейса.</summary>
+    public bool HasNoPreciousMetals => MatchesAny(_katazBlockType.text, WithoutPreciousMetals);
 
     protected override string BuildDirtySnapshot() =>
         $"{_temperatureText.text}|{_pressureText.text}|{_flowRateText.text}|{_gasFlowMain.text}|" +
@@ -97,52 +110,60 @@ public class MathModulForKataz : MathModuleBase
 
     protected override void Recalculate()
     {
-        UpdateDisplayTexts();
-
         float crossSectionArea = (float)(Pi * Math.Pow(0.5 / 2, 2));
 
-        CO_Gaz_Out = (float)(CO_Gaz_In * Math.Pow(Math.E, k_CO * 1 * (1 / velocity)));
+        // Порядок исправлен: сначала скорость и плотность, потом зависящие от них величины.
+        // Раньше CO_Gaz_Out считался по скорости с прошлого шага (в первый раз — делением на 0).
         density = (ParseLeadingNumber(_pressureText.text) * molarMass) / (R * ParseLeadingNumber(_temperatureText.text));
         velocity = ParseLeadingNumber(_flowRateText.text) / crossSectionArea;
         massFlow = density * velocity * crossSectionArea;
+        CO_Gaz_Out = (float)(CO_Gaz_In * Math.Pow(Math.E, k_CO * 1 * (1 / velocity)));
 
         valueGasFlow = ParseLeadingNumber(_gasFlowMain.text);
 
-        deametr = (float)Math.Ceiling(Math.Sqrt((4.0 * valueGasFlow) / Math.PI / 3600.0 / 2.9));
+        // Диаметр каталитического блока фиксированный — 0.9 м (таблица: Y19, Y56).
+        // Раньше здесь стояла формула диаметра эмульгатора √(4Q/π/3600/2.9), и стоимость
+        // катализатора 28.4·D²·N выходила примерно в 20 раз больше.
+        deametr = BlockDiameter;
 
         double _catalyzBlock = ParseLeadingNumber(_katazBlockCount.text);
 
-        electro = (1.06 * (_tempAfter - _tempBefore) * 29.68 / 22.4) * valueGasFlow / 3600;
-
-        if (_gasSource.text == "Угольный")
+        // Подогрев: при угле или газе считается расход топлива (U51, U52),
+        // электроэнергия на нагрев — только при остальных источниках, т.е. «Ресурсы ТЭЦ» (U50).
+        electro = 0;
+        if (MatchesAny(_gasSource.text, CoalSource))
         {
             consumption = (0.429 * valueGasFlow) / 0.85 * 1000;
         }
-        else if (_gasSource.text == "Газ")
+        else if (MatchesAny(_gasSource.text, GasSource))
         {
             consumption = 0.429 * valueGasFlow / (3400 - 1600) * 1000 * 24 * 71.56;
         }
         else
         {
             consumption = 0;
+            electro = (1.06 * (_tempAfter - _tempBefore) * 29.68 / 22.4) * valueGasFlow / 3600;
         }
 
         catalyzator = 28.4 * (deametr * deametr) * _catalyzBlock;
 
         waterConsumables = 0.4 * 450 / 1000 / 34 * (valueGasFlow / 3600);
-        reagentConsumables = 135 / 1000 / 34 * (valueGasFlow / 3600);
+        // Было 135 / 1000 / 34 — целочисленное деление, результат всегда 0.
+        reagentConsumables = 135.0 / 1000 / 34 * (valueGasFlow / 3600);
 
         electroAdditional = Mathf.Ceil((float)(0.12f * (450f / 1000f) / 5f / 34f * (valueGasFlow / 3600) * 10f)) / 10f * 5f;
 
-        if (_katazBlockType.text == "с драгметаллами")
+        if (HasPreciousMetals)
         {
             catalyzator = catalyzator * 25076 * 2 / 365 / 24;
         }
-        else if (_katazBlockType.text == "без драгметаллов")
+        else if (HasNoPreciousMetals)
         {
             catalyzator = (catalyzator * 25076 + catalyzator * 0.2 * 4200) / 365 / 24;
         }
 
+        // Вывод — после расчёта (раньше на экране были значения с прошлого шага).
+        UpdateDisplayTexts();
         ApplySmokeLevelForFlowRate();
     }
 
@@ -191,21 +212,22 @@ public class MathModulForKataz : MathModuleBase
     /// </summary>
     private void ApplySmokeLevelForFlowRate()
     {
-        if (_flowRateText.text == "1,5 м³/с" && _smokeLevel != 0)
+        // Сравнение по числу, а не по строке — работает на любом языке и с точкой или запятой.
+        if (NumberEquals(_flowRateText.text, 1.5f) && _smokeLevel != 0)
         {
             a++;
             ApplySmokeSpeedAndAlpha(0.2f - (0.4f * b), 0.7f);
             _smokeLevel = 0;
             b = 0;
         }
-        else if (_flowRateText.text == "1 м³/с" && _smokeLevel != 1)
+        else if (NumberEquals(_flowRateText.text, 1f) && _smokeLevel != 1)
         {
             ApplySmokeSpeedAndAlpha(-(0.2f * a) - (0.4f * b), 0.3f);
             _smokeLevel = 1;
             a = 0;
             b = 0;
         }
-        else if (_flowRateText.text == "2 м³/с" && _smokeLevel != 2)
+        else if (NumberEquals(_flowRateText.text, 2f) && _smokeLevel != 2)
         {
             b++;
             ApplySmokeSpeedAndAlpha(0.4f - (0.2f * a), 1.0f);
@@ -226,10 +248,14 @@ public class MathModulForKataz : MathModuleBase
 
     public void ChangeBlockNumber(string text)
     {
+        // Раньше int.Parse бросал исключение, пока поле пустое или редактируется.
+        int blocks = Mathf.RoundToInt(ParseLeadingNumber(text));
+        if (blocks <= 0) return;
+
         KatazBlockCountManager[] managers = FindObjectsOfType<KatazBlockCountManager>();
         foreach (KatazBlockCountManager manager in managers)
         {
-            manager.ChangeBlocks(int.Parse(text));
+            manager.ChangeBlocks(blocks);
         }
     }
 }

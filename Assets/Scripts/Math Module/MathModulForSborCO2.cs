@@ -115,21 +115,10 @@ public class MathModulForSborCO2 : MathModuleBase
     {
         UpdateSorbentProperties();
 
-        switch (_fanSpeedSborText.text)
-        {
-            case "500 об/мин":
-                fansAnim[0].speed = 1;
-                fansAnim[1].speed = 1;
-                break;
-            case "1000 об/мин":
-                fansAnim[0].speed = 3;
-                fansAnim[1].speed = 3;
-                break;
-            case "1500 об/мин":
-                fansAnim[0].speed = 5;
-                fansAnim[1].speed = 5;
-                break;
-        }
+        // По числу оборотов, а не по строке "об/мин" — работает и для "айн/мин", и для "rpm".
+        if (NumberEquals(_fanSpeedSborText.text, 500f)) SetFansSpeed(1);
+        else if (NumberEquals(_fanSpeedSborText.text, 1000f)) SetFansSpeed(3);
+        else if (NumberEquals(_fanSpeedSborText.text, 1500f)) SetFansSpeed(5);
 
         float adsorptionTime = CalculateAdsorptionTime();
         float desorbedCO2 = CalculateDesorption();
@@ -140,6 +129,14 @@ public class MathModulForSborCO2 : MathModuleBase
 
         UpdateDisplayTexts(adsorptionTime, desorbedCO2);
         ApplySmokeLevelForGasVolume();
+    }
+
+    // fansAnim назначает GeneralManagerForSborCO2; до этого массив может быть пустым.
+    private void SetFansSpeed(float speed)
+    {
+        if (fansAnim == null) return;
+        foreach (var fan in fansAnim)
+            if (fan != null) fan.speed = speed;
     }
 
     private void UpdateDisplayTexts(float adsorptionTime, float desorbedCO2)
@@ -162,32 +159,35 @@ public class MathModulForSborCO2 : MathModuleBase
         else if (translator.currentLanguage == Translator.Language.Kazakh)
         {
             _adsorptionTimeText.text = $"Адсорбция уақыты:\n           {adsorptionTime:0.00} cағ";
-            _capturedCO2Text.text = $"Ұсталғаң CO2:\n           {capturedCO2:0.00} моль";
+            _desorptionTimeText.text = $"Десорбция уақыты:\n           {desorptionTime:0.00} cағ";
+            _capturedCO2Text.text = $"Ұсталған CO2:\n           {capturedCO2:0.00} моль";
             _co2FlowRate.text = $"Ағын жылдамдығы CO2:\n           {co2FlowRate} кмоль/cағ";
             _totalCapacity.text = $"Жалпы өнімділік:\n           {totalCapacity:0.00} кмоль";
             _massCO2.text = $"CO2 Салмағы:\n           {massCO2:0.00} кг";
             _effectiveFlowRate.text = $"Тиімді ағын жылдамдығы:\n           {effectiveFlowRate:0.000} моль/cағ";
             _sizeText.text = $"Құрылғының ұзындығы: {length:0.0} м \n" +
-                    $"Құрылғының биіктігі: {height:0.0} м" +
+                    $"Құрылғының биіктігі: {height:0.0} м \n" +
                         $"Шығын материалдар: {consumablesTotal: 0.0} тг";
         }
         else
         {
             _adsorptionTimeText.text = $"Adsorption time:\n           {adsorptionTime:0.00} h";
+            _desorptionTimeText.text = $"Desorption time:\n           {desorptionTime:0.00} h";
             _capturedCO2Text.text = $"Captured CO2:\n           {capturedCO2:0.00} mol";
             _co2FlowRate.text = $"Flow rate CO2:\n           {co2FlowRate} kmol/h";
             _totalCapacity.text = $"Overall performance:\n           {totalCapacity:0.00} kmol";
-            _massCO2.text = $"CO2 Mass:\n           {massCO2:0.00} кг";
+            _massCO2.text = $"CO2 Mass:\n           {massCO2:0.00} kg";
             _effectiveFlowRate.text = $"Effective flow rate:\n           {effectiveFlowRate:0.000} mol/h";
             _sizeText.text = $"Length of device: {length:0.0} m \n" +
-                    $"Height of device: {height:0.0} m" +
+                    $"Height of device: {height:0.0} m \n" +
                         $"Consumables: {consumablesTotal: 0.0} tg";
         }
     }
 
     private void ApplySmokeLevelForGasVolume()
     {
-        if (_gasVolumeText.text == "150 м³/ч" && _smokeLevel != 0)
+        // По числу, а не по строке "м³/ч" — работает и для "м³/сағ", и для "m³/h".
+        if (NumberEquals(_gasVolumeText.text, 150f) && _smokeLevel != 0)
         {
             a++;
             //newSbor.timingDelay = 170f;
@@ -195,7 +195,7 @@ public class MathModulForSborCO2 : MathModuleBase
             _smokeLevel = 0;
             b = 0;
         }
-        else if (_gasVolumeText.text == "100 м³/ч" && _smokeLevel != 1)
+        else if (NumberEquals(_gasVolumeText.text, 100f) && _smokeLevel != 1)
         {
             //newSbor.timingDelay = 150f;
             ApplySmokeSpeedAndAlpha(-(0.2f * a) - (0.4f * b), 0.3f);
@@ -203,7 +203,7 @@ public class MathModulForSborCO2 : MathModuleBase
             a = 0;
             b = 0;
         }
-        else if (_gasVolumeText.text == "200 м³/ч" && _smokeLevel != 2)
+        else if (NumberEquals(_gasVolumeText.text, 200f) && _smokeLevel != 2)
         {
             b++;
             //newSbor.timingDelay = 200f;
@@ -223,27 +223,36 @@ public class MathModulForSborCO2 : MathModuleBase
         }
     }
 
+    // Названия сорбентов на русском, казахском и английском (префаб New Sbor).
+    private static readonly string[] ZeoliteNames = { "Цеолитовые", "Zeolite" };
+    private static readonly string[] LithiumZirconateNames = { "Цирконат лития", "Литий цирконаты", "Lithium zirconate" };
+    private static readonly string[] AminoAcidNames = { "Аминокислотные", "Аминқышқылдары", "Amino acids" };
+
     private void UpdateSorbentProperties()
     {
         sorbentType = _sorbentTypeText.text;
-        switch (sorbentType.ToLower())
+
+        // Раньше сравнивались только русские названия: на казахском и английском
+        // сорбент всегда уходил в значения по умолчанию, и цифры менялись при смене языка.
+        if (MatchesAny(sorbentType, ZeoliteNames))
         {
-            case "цеолитовые":
-                sorbentCapacity = 0.7f;
-                sorbentEfficiency = 0.9f;
-                break;
-            case "цирконат лития":
-                sorbentCapacity = 1f;
-                sorbentEfficiency = 0.85f;
-                break;
-            case "аминокислотные":
-                sorbentCapacity = 0.92f;
-                sorbentEfficiency = 0.92f;
-                break;
-            default:
-                sorbentCapacity = 0.8f;
-                sorbentEfficiency = 0.8f;
-                break;
+            sorbentCapacity = 0.7f;
+            sorbentEfficiency = 0.9f;
+        }
+        else if (MatchesAny(sorbentType, LithiumZirconateNames))
+        {
+            sorbentCapacity = 1f;
+            sorbentEfficiency = 0.85f;
+        }
+        else if (MatchesAny(sorbentType, AminoAcidNames))
+        {
+            sorbentCapacity = 0.92f;
+            sorbentEfficiency = 0.92f;
+        }
+        else
+        {
+            sorbentCapacity = 0.8f;
+            sorbentEfficiency = 0.8f;
         }
     }
 
@@ -263,7 +272,7 @@ public class MathModulForSborCO2 : MathModuleBase
         length = Math.Ceiling(Math.Sqrt((4.0 * (valueGasFlow / 2.0)) / Math.PI / 3600.0 / 0.5));
         height = Math.Ceiling(sorbentMass / (1.0 - 0.37) / 670.0 / (valueGasFlow / 3600.0 / 0.5) + 1.5 * 2.0);
 
-        return capturedCO2 / totalCapacity;
+        return totalCapacity > 0f ? capturedCO2 / totalCapacity : 0f;
     }
 
     private float CalculateDesorption()

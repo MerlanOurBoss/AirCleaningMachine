@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HiddingMesh : MonoBehaviour
 {
-    private Dictionary<ParticleSystem, (Color startColor, bool colorOverLifetime, bool colorBySpeed, bool playOnAwake)> particleStates = new();
+    private Dictionary<ParticleSystem, (Color startColor, bool colorOverLifetime, bool colorBySpeed, bool playOnAwake, bool wasPlaying)> particleStates = new();
     private Dictionary<ParticleSystem, GameObject> particleParents = new();
 
     public void HidingMeshAndParticle(GameObject target)
@@ -31,14 +31,17 @@ public class HiddingMesh : MonoBehaviour
             var colorBySpeed = ps.colorBySpeed;
 
             // Сохраняем состояние
-            particleStates[ps] = (main.startColor.color, colorOverLifetime.enabled, colorBySpeed.enabled, main.playOnAwake);
+            // Запоминаем и то, играла ли система: при показе запускаем только те, что играли.
+            particleStates[ps] = (main.startColor.color, colorOverLifetime.enabled, colorBySpeed.enabled, main.playOnAwake, ps.isPlaying);
             particleParents[ps] = ps.gameObject;
 
             // Отключаем видимость
             main.startColor = new Color(main.startColor.color.r, main.startColor.color.g, main.startColor.color.b, 0);
             colorOverLifetime.enabled = false;
             colorBySpeed.enabled = false;
-            main.playOnAwake = true;
+            // Раньше здесь ставилось playOnAwake = true, и при показе дым запускался,
+            // даже если симуляция была остановлена.
+            main.playOnAwake = false;
 
             // Отключаем GameObject с ParticleSystem
             ps.gameObject.SetActive(false);
@@ -60,6 +63,10 @@ public class HiddingMesh : MonoBehaviour
         {
             SborCO2.PauseProcess();
         }
+
+        // Новый контроллер сбора CO2 (раньше ставился на паузу только старый NewSborScript).
+        var sborController = target.GetComponentInChildren<SborCO2Controller>(true);
+        if (sborController != null) sborController.PauseProcess();
     }
 
     public void ShowMeshAndParticle(GameObject target)
@@ -93,13 +100,15 @@ public class HiddingMesh : MonoBehaviour
             {
                 var main = ps.main;
                 main.startColor = state.startColor;
-                main.playOnAwake = false;
+                main.playOnAwake = state.playOnAwake;
 
                 var colorOverLifetime = ps.colorOverLifetime;
                 colorOverLifetime.enabled = state.colorOverLifetime;
 
                 var colorBySpeed = ps.colorBySpeed;
                 colorBySpeed.enabled = state.colorBySpeed;
+
+                if (state.wasPlaying) ps.Play();
             }
         }
 
@@ -118,6 +127,9 @@ public class HiddingMesh : MonoBehaviour
         {
             SborCO2.ResumeProcess();
         }
+
+        var sborController = target.GetComponentInChildren<SborCO2Controller>(true);
+        if (sborController != null) sborController.ResumeProcess();
 
     }
 }

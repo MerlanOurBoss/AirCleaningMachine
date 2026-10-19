@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MoveAndRotateAlongPoints : MonoBehaviour
+public class MoveAlongPoints : MonoBehaviour
 {
     public Transform[] points;
     public float speed = 2f;

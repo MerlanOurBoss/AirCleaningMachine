@@ -17,6 +17,8 @@ public class PrefabReplacer : MonoBehaviour
 
         // Обновляем ссылку на текущий префаб
         currentPrefab = newInstance;
-        newPrefab.GetComponent<MoveObjectWithMouse>().isSelected = true;
+        // Раньше флаг ставился у префаба-ассета newPrefab, а не у созданного объекта.
+        var mover = newInstance.GetComponent<MoveObjectWithMouse>();
+        if (mover != null) mover.isSelected = true;
     }
 }

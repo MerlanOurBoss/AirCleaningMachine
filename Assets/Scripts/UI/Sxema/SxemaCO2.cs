@@ -127,7 +127,9 @@ public class SxemaCO2 : MonoBehaviour
         if (ifSecondGazeOpen)
         {
             gaz2 = Mathf.Lerp(gaz2, 1f, 0.8f * Time.deltaTime);
-            if (gaz2 >= 5.99)
+            // Цель — 1, а условие было скопировано от gaz1 (>= 5.99) и никогда не выполнялось:
+            // флаг не сбрасывался и мешал CO2-анимации тянуть значение к 80.
+            if (gaz2 >= 0.99f)
             {
                 ifSecondGazeOpen = false;
             }
@@ -136,7 +138,7 @@ public class SxemaCO2 : MonoBehaviour
         if (ifThirdGazeOpen)
         {
             gaz3 = Mathf.Lerp(gaz3, 1f, 0.8f * Time.deltaTime);
-            if (gaz3 >= 5.99)
+            if (gaz3 >= 0.99f)
             {
                 ifThirdGazeOpen = false;
             }
@@ -226,11 +228,13 @@ public class SxemaCO2 : MonoBehaviour
 
     public void StartSecondGazCO2()
     {
+        ifSecondGazeOpen = false; // иначе два процесса тянут gaz2 к разным значениям (1 и 80)
         ifSecondGazeOpenCO2 = true;
     }
 
     public void StartThirdGazCO2()
     {
+        ifThirdGazeOpen = false;
         ifThirdGazeOpenCO2 = true;
     }
 

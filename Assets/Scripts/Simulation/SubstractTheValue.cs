@@ -82,6 +82,14 @@ public class SubstractTheValue : MonoBehaviour
             totalValue -= defaultValue;
         }
 
+        // Подписка один раз (раньше выполнялась в Update каждый кадр и копила тысячи обработчиков).
+        // Делается после установки значений по умолчанию, чтобы они не прошли через обработчик.
+        for (int i = 0; i < _inputFields.Length; i++)
+        {
+            int index = i;
+            _inputFields[i].onValueChanged.AddListener((newValue) => OnInputFieldValueChanged(index, newValue));
+        }
+
         UpdateTotalText();
     }
 
@@ -228,12 +236,6 @@ public class SubstractTheValue : MonoBehaviour
             {
                 HideNotification();
             }
-        }
-
-        for (int i = 0; i < _inputFields.Length; i++)
-        {
-            int index = i;
-            _inputFields[i].onValueChanged.AddListener((newValue) => OnInputFieldValueChanged(index, newValue));
         }
     }
     private void changeParticleSystems(float x)

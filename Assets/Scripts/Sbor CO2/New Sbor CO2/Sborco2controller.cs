@@ -41,6 +41,13 @@ public class SborCO2Controller : MonoBehaviour
     [SerializeField] private float defaultDelay = 6f;
 
     private int _fillCount;
+
+    // Разовые действия внутри стадии. Временные окна (t is >= X and <= Y) истинны много кадров подряд,
+    // и раньше звук и смена материала перезапускались каждый кадр — звук заикался.
+    private readonly System.Collections.Generic.HashSet<string> _firedThisStage =
+        new System.Collections.Generic.HashSet<string>();
+
+    private bool Once(string key) => _firedThisStage.Add(key);
     private bool _materialSborUpdatedThisPhase;
     private int? _leakRoll;
 
@@ -109,6 +116,7 @@ public class SborCO2Controller : MonoBehaviour
         _fillCount = 0;
         _leakRoll = null;
         _materialSborUpdatedThisPhase = false;
+        _firedThisStage.Clear();
     }
 
     public void PauseProcess() => stateMachine.Pause();
@@ -119,6 +127,8 @@ public class SborCO2Controller : MonoBehaviour
 
     private void HandleStageChanged(SborProcessStateMachine.Stage stage)
     {
+        _firedThisStage.Clear();
+
         if (stage == SborProcessStateMachine.Stage.Filling || stage == SborProcessStateMachine.Stage.Unfilling)
         {
             _materialSborUpdatedThisPhase = false;
@@ -157,13 +167,13 @@ public class SborCO2Controller : MonoBehaviour
         if (isStarted)
             smokeInCapsul0_1.Play();
 
-        if (t is >= 15 and <= 16)
+        if (t is >= 15 and <= 16 && Once("fade"))
             absentFade.FadeTo(2f);
 
         if (t is >= 120 and <= 135)
         {
             var src = gazAnalyz[3].GetComponentInParent<AudioSource>();
-            if (src != null) src.Play();
+            if (src != null && Once("endSound")) src.Play();
             smokeInCapsul1end.Play();
         }
 
@@ -223,7 +233,7 @@ public class SborCO2Controller : MonoBehaviour
             smokeInCapsul0_1.Play();
         }
 
-        if (t is >= 15 and <= 16)
+        if (t is >= 15 and <= 16 && Once("fade"))
         {
             absentFade.FadeTo(2f);
             absent2Fade.FadeTo(0.5f);
@@ -250,7 +260,7 @@ public class SborCO2Controller : MonoBehaviour
         if (t is >= 120 and <= 135)
         {
             var src = gazAnalyz[3].GetComponentInParent<AudioSource>();
-            if (src != null) src.Play();
+            if (src != null && Once("endSound")) src.Play();
             smokeInCapsul1end.Play();
         }
 
@@ -320,7 +330,7 @@ public class SborCO2Controller : MonoBehaviour
             smokeInCapsul0_2.Play();
         }
 
-        if (t is >= 15 and <= 16)
+        if (t is >= 15 and <= 16 && Once("fade"))
         {
             absentFade.FadeTo(0.5f);
             absent2Fade.FadeTo(2f);
@@ -347,7 +357,7 @@ public class SborCO2Controller : MonoBehaviour
         if (t is >= 120 and <= 135)
         {
             var src = gazAnalyz[1].GetComponentInParent<AudioSource>();
-            if (src != null) src.Play();
+            if (src != null && Once("endSound")) src.Play();
             smokeInCapsul2end.Play();
         }
 
@@ -422,7 +432,10 @@ public class SborCO2Controller : MonoBehaviour
 
             if (_leakRoll == 9)
             {
-                gates[6].Close();
+                // Закрываем до 148, в 148–150 клапан открывается обратно (ниже).
+                // Раньше Close и Open вызывались в одном кадре и перебивали друг друга.
+                if (t < 148)
+                    gates[6].Close();
                 gazAnalyz[4].SetActive(false);
                 gazAnalyz[5].SetActive(true);
                 display.SetTarget(2, 0f, speedOverride: 30f);
@@ -431,7 +444,7 @@ public class SborCO2Controller : MonoBehaviour
                 if (t is >= 135 and <= 140)
                 {
                     var src = gazAnalyz[5].GetComponentInParent<AudioSource>();
-                    if (src != null) src.Play();
+                    if (src != null && Once("leakSound")) src.Play();
                 }
 
                 if (t is >= 148 and <= 150)

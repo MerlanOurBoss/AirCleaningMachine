@@ -57,20 +57,20 @@ public class CameraCaptureLoader : MonoBehaviour
         }
 
         // ��������� �� ������ �� �����
-        var sorted = files.OrderBy(path =>
-        {
-            var name = Path.GetFileName(path);
-            var m = Regex.Match(name, @"cameracapture_(\d+)\.png");
-            return m.Success ? int.Parse(m.Groups[1].Value) : 0;
-        }).ToArray();
+        // Номер слота берём из имени файла (cameracapture_<слот>.png) — он совпадает с индексом
+        // construction_<слот>.json. Раньше использовалась позиция в списке, и после удаления
+        // любого слота загружалась не та конструкция.
+        var sorted = files
+            .Select(path => new { path, slot = ParseSlotIndex(path) })
+            .Where(x => x.slot >= 0)
+            .OrderBy(x => x.slot)
+            .ToArray();
 
         // ������������ � ��������� ��������
         for (int i = 0; i < sorted.Length; i++)
         {
-            string file = sorted[i];
-
-            int pictureIndex = i;
-            string capturedFile = file; 
+            string file = sorted[i].path;
+            int slotIndex = sorted[i].slot;
             byte[] data = File.ReadAllBytes(file);
             
             Texture2D tex = new Texture2D(2, 2);
@@ -89,12 +89,11 @@ public class CameraCaptureLoader : MonoBehaviour
             {
                 btn.onClick.AddListener(() =>
                 {
-                    ConstructionSelector.SelectedIndex = pictureIndex;
-                    
-                    string fileName = Path.GetFileNameWithoutExtension(capturedFile);
-                    Debug.Log(fileName);
-                    string sceneToLoad = fileName.Contains("cameracapture_1") ? "CHP" : constructionSceneName;
-                    
+                    ConstructionSelector.SelectedIndex = slotIndex;
+
+                    // Раньше было fileName.Contains("cameracapture_1"), что срабатывало и на слоты 10–19.
+                    string sceneToLoad = slotIndex == 1 ? "CHP" : constructionSceneName;
+
                     SceneManager.LoadScene(sceneToLoad);
                 });
                 
@@ -114,9 +113,15 @@ public class CameraCaptureLoader : MonoBehaviour
             {
                 Rect r = new Rect(0, 0, tex.width, tex.height);
                 sr.sprite = Sprite.Create(tex, r, new Vector2(0.5f, 0.5f));
-                
+                continue;
             }
             Debug.LogWarning($"[CameraCaptureLoader] �� ������� ��� �� RawImage, �� SpriteRenderer.");
         }
+    }
+
+    private static int ParseSlotIndex(string path)
+    {
+        var match = Regex.Match(Path.GetFileName(path), @"^cameracapture_(\d+)\.png$", RegexOptions.IgnoreCase);
+        return match.Success && int.TryParse(match.Groups[1].Value, out int slot) ? slot : -1;
     }
 }
