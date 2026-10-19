@@ -9,12 +9,83 @@ public class BaseTable : MonoBehaviour
     [SerializeField] private Slider[] sliders;
     [SerializeField] private TextMeshProUGUI[] texts;
 
+    [Header("Газоанализатор")]
+    [Tooltip("Брать значения слайдеров с прибора. Если выключено или нет связи, работают ручные слайдеры, как раньше.")]
+    [SerializeField] private bool useAnalyzer = true;
+
+    [Tooltip("Компонент OptimaHidPoller. Если пусто, берётся OptimaHidPoller.Instance.")]
+    [SerializeField] private OptimaHidPoller poller;
+
+    [Tooltip("Ключ канала для каждого слайдера (тот же порядок, что в Sliders). Пусто = слайдер ручной.\n" +
+             "Ключи: O2_pct, CO2_pct, CO_ppm, NO_ppm, NO2_ppm, NOx_ppm, SO2_ppm (старый прибор), " +
+             "CO_mgm3, NO_mgm3, NO2_mgm3, NOx_mgm3, SO2_mgm3, P_abs_hPa")]
+    [SerializeField] private string[] analyzerKeys;
+
+    [Tooltip("Запускать захват при включении этого объекта и останавливать при выключении (начало/конец симуляции).")]
+    [SerializeField] private bool controlCapture = true;
+
+    [Tooltip("Пока идут данные с прибора, блокировать ручное перетаскивание слайдеров.")]
+    [SerializeField] private bool lockSlidersWhenLive = true;
+
+    [Tooltip("Через сколько секунд без данных вернуться к ручным значениям.")]
+    [SerializeField] private float staleAfter = 3f;
+
+    private bool _locked;
+
+    private OptimaHidPoller Poller => poller != null ? poller : OptimaHidPoller.Instance;
+
+    private void OnEnable()
+    {
+        if (!useAnalyzer || !controlCapture) return;
+        var p = Poller;
+        if (p != null) p.StartCapture();
+        else Debug.LogWarning("[BaseTable] OptimaHidPoller не найден: добавьте его в сцену или назначьте в поле Poller");
+    }
+
+    private void OnDisable()
+    {
+        if (useAnalyzer && controlCapture)
+        {
+            var p = Poller;
+            if (p != null) p.StopCapture();
+        }
+        SetLocked(false);
+    }
 
     private void Update()
     {
-        for (int i = 0; i < texts.Length; i++)
+        var p = Poller;
+        bool live = useAnalyzer && p != null && p.IsRunning && p.IsConnected && p.SecondsSinceData <= staleAfter;
+        SetLocked(live && lockSlidersWhenLive);
+
+        for (int i = 0; i < texts.Length && i < sliders.Length; i++)
         {
-            texts[i].text = sliders[i].value.ToString();
+            if (live && HasKey(i) && p.TryGet(analyzerKeys[i], out float v))
+            {
+                sliders[i].value = v;                              // слайдер ограничит значение своими Min/Max
+                texts[i].text = v.ToString(Format(analyzerKeys[i]));
+            }
+            else
+            {
+                texts[i].text = sliders[i].value.ToString();       // как было раньше
+            }
         }
+    }
+
+    private bool HasKey(int i) => analyzerKeys != null && i < analyzerKeys.Length && !string.IsNullOrEmpty(analyzerKeys[i]);
+
+    private void SetLocked(bool locked)
+    {
+        if (_locked == locked) return;
+        _locked = locked;
+        for (int i = 0; i < sliders.Length; i++)
+            if (HasKey(i) && sliders[i] != null) sliders[i].interactable = !locked;
+    }
+
+    private static string Format(string key)
+    {
+        if (key.EndsWith("_pct")) return "0.00";
+        if (key.EndsWith("_ppm")) return "0";
+        return "0.0";
     }
 }
