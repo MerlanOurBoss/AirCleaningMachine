@@ -12,7 +12,8 @@ public class SoundForButtons : MonoBehaviour
     {
         foreach(Button button in buttons)
         {
-            button.onClick.AddListener(audi.Play);
+            if (button != null)
+                button.onClick.AddListener(audi.Play);
         }
     }
 }
