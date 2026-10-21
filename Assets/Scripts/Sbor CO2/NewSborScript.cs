@@ -80,7 +80,7 @@ public class NewSborScript : MonoBehaviour
     public float yellowBlinkInterval = 0.3f;
     void Start()
     {
-        var _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        var _mainCamera = GameObject.FindGameObjectWithTag(Tags.MainCamera);
         audioListener =  _mainCamera.GetComponent<AudioListener>();
         
         audioListener.enabled = true;
@@ -218,7 +218,7 @@ public class NewSborScript : MonoBehaviour
             float currentFilling = mat.GetFloat("_Filling");
             float newFilling = currentFilling + 2f;
 
-            // ������������� ����� ��������
+            // Выключаем зеленую лампочку
             mat.SetFloat("_Filling", newFilling);
         }
     }
@@ -227,8 +227,8 @@ public class NewSborScript : MonoBehaviour
         display.text = displayValue.ToString("0.");
         display2.text = displayValue2.ToString("0.");
         display3.text = displayValue3.ToString("0.");
-        display4.text = displayValue4.ToString("0." + " �C");
-        display5.text = displayValue5.ToString("0." + " �C");
+        display4.text = displayValue4.ToString("0." + " °C");
+        display5.text = displayValue5.ToString("0." + " °C");
     }
 
     private void HandleDelay()
@@ -261,7 +261,7 @@ public class NewSborScript : MonoBehaviour
 
             if (fillingCount >= timingDelay)
             {
-                isFirstFilling = false; // ����� ������ �������� ������������� �� ������� �������
+                isFirstFilling = false; // После первой половины переключаемся на обычный процесс
             }
         }
     }
@@ -274,10 +274,10 @@ public class NewSborScript : MonoBehaviour
 
             if (isFirstFilling)
             {
-                PlayFirstFillingEffects(); // ��������� ������ ������� ����������
+                PlayFirstFillingEffects(); // Запускаем первый процесс заполнения
                 if (fillingCount >= timingDelay)
                 {
-                    isFirstFilling = false; // ����� ������ �������� �������������
+                    isFirstFilling = false; // После первой половины переключаемся на обычный процесс
                 }
             }
             else
@@ -349,7 +349,7 @@ public class NewSborScript : MonoBehaviour
             
         }
     }
-    private void PlayFillingEffects() // ��� 1�� �������
+    private void PlayFillingEffects() // для 1го капсуля
     {
         bool isStarted = false;
         if (fillingCount >= 0 && fillingCount <= 2)
@@ -441,7 +441,7 @@ public class NewSborScript : MonoBehaviour
         }
         if (fillingCount >= 135 && fillingCount <= 150)
         {
-            if (randomValue == null) // ���������� ��������� ����� ������ ���� ���
+            if (randomValue == null) // Генерируем случайное число только один раз
             {
                 randomValue = Random.Range(1, 10);
             }
@@ -469,7 +469,7 @@ public class NewSborScript : MonoBehaviour
         }
         else
         {
-            randomValue = null; // ���������� �����, ���� �� � ���������
+            randomValue = null; // Сбрасываем число, если не в диапазоне
         }
 
         if (fillingCount >= 145 && fillingCount <= 150)
@@ -490,7 +490,7 @@ public class NewSborScript : MonoBehaviour
         }
     }
 
-    private void PlayUnfillingEffects()// ��� 2�� �������
+    private void PlayUnfillingEffects()// для 2го капсуля
     {
         bool isStarted = false;
         if (fillingCount >= 0 && fillingCount <= 2)
@@ -592,7 +592,7 @@ public class NewSborScript : MonoBehaviour
         }
         if (fillingCount >= 135 && fillingCount <= 150)
         {
-            if (randomValue == null) // ���������� ��������� ����� ������ ���� ���
+            if (randomValue == null) // Генерируем случайное число только один раз
             {
                 randomValue = Random.Range(1, 10);
             }
@@ -620,7 +620,7 @@ public class NewSborScript : MonoBehaviour
         }
         else
         {
-            randomValue = null; // ���������� �����, ���� �� � ���������
+            randomValue = null; // Сбрасываем число, если не в диапазоне
         }
 
         if (fillingCount >= 134 && fillingCount <= 136)

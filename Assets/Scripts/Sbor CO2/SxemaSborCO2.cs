@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 
@@ -43,7 +42,7 @@ public class SxemaSborCO2 : MonoBehaviour
         }
 
         mathGasSpeed = (4 * volumeValue) / (3600 * 3.14f * (diametValue * diametValue));
-        mathSpeed.text = "U = " + mathGasSpeed.ToString("0.") + " �/�";
+        mathSpeed.text = "U = " + mathGasSpeed.ToString("0.") + " м/с";
         
         if (isStarting)
         {
@@ -62,13 +61,13 @@ public class SxemaSborCO2 : MonoBehaviour
             fillingCount += 5 * Time.deltaTime;
             baseGates[0].SetActive(false);
             baseGates[1].SetActive(true);
-            optionalGates[0].SetActive(false); // ���� � �������� (���)
+            optionalGates[0].SetActive(false); // вход в Адсорбер (вкл)
             optionalGates[1].SetActive(true);
 
             if (fillingCount > 50)
             {
                 
-                optionalGates[2].SetActive(false); // ����� (���)
+                optionalGates[2].SetActive(false); // выход (вкл)
                 optionalGates[3].SetActive(true);
                 baseGates[2].SetActive(false);
                 baseGates[3].SetActive(true);
@@ -81,7 +80,7 @@ public class SxemaSborCO2 : MonoBehaviour
             }
             if (fillingCount >= 150)
             {
-                optionalGates[4].SetActive(false); // ������� ��� (���)
+                optionalGates[4].SetActive(false); // Горячий газ (вкл)
                 optionalGates[5].SetActive(true);
 
                 optionalGates[22].SetActive(true);
@@ -98,20 +97,20 @@ public class SxemaSborCO2 : MonoBehaviour
         {
             fillingCount += 5 * Time.deltaTime;
 
-            optionalGates[0].SetActive(true); // ���� � �������� (����)
+            optionalGates[0].SetActive(true); // вход в Адсорбер (выкл)
             optionalGates[1].SetActive(false);
 
-            optionalGates[2].SetActive(true); // ����� (����)
+            optionalGates[2].SetActive(true); // выход (выкл)
             optionalGates[3].SetActive(false);
 
 
-            optionalGates[6].SetActive(false); // � ���������� (���)
+            optionalGates[6].SetActive(false); // в Компрессор (вкл)
             optionalGates[7].SetActive(true);
 
-            optionalGates[8].SetActive(false); // ���� 2 � �������� (���)
+            optionalGates[8].SetActive(false); // вход 2 в Адсорбер (вкл)
             optionalGates[9].SetActive(true);
 
-            optionalGates[14].SetActive(true); // � ���������� 2 (����)
+            optionalGates[14].SetActive(true); // в Компрессор 2 (выкл)
             optionalGates[15].SetActive(false);
 
             if (fillingCount > 20 && fillingCount < 24)
@@ -135,7 +134,7 @@ public class SxemaSborCO2 : MonoBehaviour
 
             if (fillingCount > 50 && fillingCount < 55)
             {
-                optionalGates[10].SetActive(false); // ����� 2  (���)
+                optionalGates[10].SetActive(false); // выход 2  (вкл)
                 optionalGates[11].SetActive(true);
             }
 
@@ -147,10 +146,10 @@ public class SxemaSborCO2 : MonoBehaviour
 
             if (fillingCount >= 150)
             {
-                optionalGates[4].SetActive(true); // ������� ��� (����)
+                optionalGates[4].SetActive(true); // Горячий газ (выкл)
                 optionalGates[5].SetActive(false);
 
-                optionalGates[12].SetActive(false); // ������� ��� 2 (���)
+                optionalGates[12].SetActive(false); // Горячий газ 2 (вкл)
                 optionalGates[13].SetActive(true);
 
                 optionalGates[22].SetActive(true);
@@ -167,25 +166,25 @@ public class SxemaSborCO2 : MonoBehaviour
         {
             fillingCount += 5 * Time.deltaTime;
 
-            optionalGates[8].SetActive(true); // ���� 2 � �������� (����)
+            optionalGates[8].SetActive(true); // вход 2 в Адсорбер (выкл)
             optionalGates[9].SetActive(false);
 
-            optionalGates[10].SetActive(true); // ����� 2 (����)
+            optionalGates[10].SetActive(true); // выход 2 (выкл)
             optionalGates[11].SetActive(false);
 
-            optionalGates[14].SetActive(false); // � ���������� 2 (���)
+            optionalGates[14].SetActive(false); // в Компрессор 2 (вкл)
             optionalGates[15].SetActive(true);
 
-            optionalGates[6].SetActive(true); // � ���������� (����)
+            optionalGates[6].SetActive(true); // в Компрессор (выкл)
             optionalGates[7].SetActive(false);
 
-            optionalGates[0].SetActive(false); // ���� � �������� (���)
+            optionalGates[0].SetActive(false); // вход в Адсорбер (вкл)
             optionalGates[1].SetActive(true);
 
 
             if (fillingCount > 50 && fillingCount < 55)
             {
-                optionalGates[2].SetActive(false); // ����� (���)
+                optionalGates[2].SetActive(false); // выход (вкл)
                 optionalGates[3].SetActive(true);
                 optionalGates[22].SetActive(false);
                 optionalGates[23].SetActive(true);
@@ -193,10 +192,10 @@ public class SxemaSborCO2 : MonoBehaviour
 
             if (fillingCount >= 150)
             {
-                optionalGates[12].SetActive(true); // ������� ��� 2 (����)
+                optionalGates[12].SetActive(true); // Горячий газ 2 (выкл)
                 optionalGates[13].SetActive(false);
 
-                optionalGates[4].SetActive(false); // ������� ��� (���)
+                optionalGates[4].SetActive(false); // Горячий газ (вкл)
                 optionalGates[5].SetActive(true);
 
                 optionalGates[22].SetActive(true);
@@ -215,16 +214,16 @@ public class SxemaSborCO2 : MonoBehaviour
 
     public void Reset()
     {
-        optionalGates[0].SetActive(true); // ���� 2 � �������� (����)
+        optionalGates[0].SetActive(true); // вход 2 в Адсорбер (выкл)
         optionalGates[4].SetActive(true);
 
-        optionalGates[8].SetActive(true); // ����� 2 (����)
+        optionalGates[8].SetActive(true); // вход 2 в Адсорбер (выкл)
         optionalGates[12].SetActive(true);
 
-        optionalGates[6].SetActive(true); // � ���������� 2 (���)
+        optionalGates[6].SetActive(true); // в Компрессор 2 (вкл)
         optionalGates[2].SetActive(true);
 
-        optionalGates[14].SetActive(true); // � ���������� (����)
+        optionalGates[14].SetActive(true); // в Компрессор (выкл)
         optionalGates[10].SetActive(true);
 
 
@@ -246,7 +245,7 @@ public class SxemaSborCO2 : MonoBehaviour
         optionalGates[22].SetActive(true);
         optionalGates[23].SetActive(false);
 
-        baseGates[0].SetActive(true); // ���� � �������� (���)
+        baseGates[0].SetActive(true); // вход в Адсорбер (вкл)
         baseGates[2].SetActive(true);
         baseGates[1].SetActive(false);
         baseGates[3].SetActive(false);

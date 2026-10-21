@@ -22,6 +22,16 @@ public class PipeConnector : MonoBehaviour
     // Объекты, о которых уже предупредили (раньше LogWarning писался каждый кадр).
     private HashSet<GameObject> warnedFacilities = new HashSet<GameObject>();
     private bool warnedNoSborCO2;
+
+    // Раньше каждый кадр выполнялись FindGameObjectWithTag и обход всей иерархии конструкции
+    // (сотни объектов, а obj.tag на каждом создаёт строку). Теперь объект кешируется, а обход
+    // идёт при изменении числа дочерних объектов и страховочно раз в ScanInterval секунд.
+    private const float ScanInterval = 0.25f;
+    private GameObject cachedSborCO2;
+    private int lastChildCount = -1;
+    private float nextScanTime;
+    private readonly List<Transform> scanBuffer = new List<Transform>();
+
     private void Start()
     {
         if (pipeGenerator == null)
@@ -33,16 +43,23 @@ public class PipeConnector : MonoBehaviour
 
     private void Update()
     {
-        GameObject sborCO2 = null;
-        if (transform.tag == "SborCO2")
+        ScanFacilities(force: false);
+    }
+
+    private void ScanFacilities(bool force)
+    {
+        GameObject sborCO2;
+        if (CompareTag(Tags.SborCO2))
         {
-            sborCO2 = transform.gameObject;
+            sborCO2 = gameObject;
         }
         else
         {
-            sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+            if (cachedSborCO2 == null || !cachedSborCO2.CompareTag(Tags.SborCO2))
+                cachedSborCO2 = GameObject.FindGameObjectWithTag(Tags.SborCO2);
+            sborCO2 = cachedSborCO2;
         }
-        
+
         if (sborCO2 == null)
         {
             if (!warnedNoSborCO2) Debug.LogWarning("SborCO2 object not found!");
@@ -51,15 +68,22 @@ public class PipeConnector : MonoBehaviour
         }
         warnedNoSborCO2 = false;
 
-        foreach (Transform child in sborCO2.transform.GetComponentsInChildren<Transform>())
+        int childCount = sborCO2.transform.childCount;
+        if (!force && childCount == lastChildCount && Time.unscaledTime < nextScanTime)
+            return;
+        lastChildCount = childCount;
+        nextScanTime = Time.unscaledTime + ScanInterval;
+
+        sborCO2.GetComponentsInChildren(scanBuffer);
+        foreach (Transform child in scanBuffer)
         {
             GameObject obj = child.gameObject;
 
-            if (!obj.tag.StartsWith("Facilities_") || trackedFacilities.Contains(obj) || warnedFacilities.Contains(obj))
+            if (trackedFacilities.Contains(obj) || warnedFacilities.Contains(obj) || !obj.tag.StartsWith("Facilities_"))
                 continue;
 
-            Transform input = FindChildByTag(obj.transform, "ConnectionPointIN");
-            Transform output = FindChildByTag(obj.transform, "ConnectionPointOUT");
+            Transform input = FindChildByTag(obj.transform, Tags.ConnectionPointIN);
+            Transform output = FindChildByTag(obj.transform, Tags.ConnectionPointOUT);
 
             if (input != null || output != null)
             {
@@ -94,6 +118,9 @@ public class PipeConnector : MonoBehaviour
 
     public void ConnectComponents()
     {
+        // Установка могла появиться после последнего обхода — перед соединением обходим принудительно.
+        ScanFacilities(force: true);
+
         // Убираем уничтоженные объекты (после сохранения/очистки в списке оставались пустые ссылки).
         components.RemoveAll(c => c == null || c.component == null);
         trackedFacilities.RemoveWhere(o => o == null);
@@ -106,7 +133,7 @@ public class PipeConnector : MonoBehaviour
         }
 
         bool hasCO2Facilities = components.Exists(c =>
-                c.component.CompareTag("Facilities_Kataz") || c.component.CompareTag("Facilities_NewCapsul"));
+                c.component.CompareTag(Tags.Facilities_Kataz) || c.component.CompareTag(Tags.Facilities_NewCapsul));
 
         // Основная цепочка: выход каждой установки -> вход следующей.
         for (int i = 0; i < components.Count - 1; i++)
@@ -145,8 +172,8 @@ public class PipeConnector : MonoBehaviour
 
     private void CreateCO2Connections()
     {
-        SystemComponent fromComp2 = components.Find(c => c.component.CompareTag("Facilities_Kataz"));
-        SystemComponent toComp2 = components.Find(c => c.component.CompareTag("Facilities_NewCapsul"));
+        SystemComponent fromComp2 = components.Find(c => c.component.CompareTag(Tags.Facilities_Kataz));
+        SystemComponent toComp2 = components.Find(c => c.component.CompareTag(Tags.Facilities_NewCapsul));
 
         if (fromComp2 == null || toComp2 == null)
         {
@@ -239,7 +266,7 @@ public class PipeConnector : MonoBehaviour
             components.RemoveAt(i);
         }
 
-        GameObject sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        GameObject sborCO2 = GameObject.FindGameObjectWithTag(Tags.SborCO2);
         if (sborCO2 != null)
             DestroyImmediate(sborCO2);
         trackedFacilities.Clear();
@@ -256,7 +283,7 @@ public class PipeConnector : MonoBehaviour
 
     private void SaveGeneratedMeshToSborCO2(PipeGenerator generator, string name)
     {
-        GameObject sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        GameObject sborCO2 = GameObject.FindGameObjectWithTag(Tags.SborCO2);
         if (sborCO2 == null)
         {
             Debug.LogWarning("SborCO2 object not found!");

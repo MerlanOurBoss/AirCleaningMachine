@@ -19,9 +19,9 @@ public class ChamgingEmul : MonoBehaviour
 
     private void Start()
     {
-        if (gameObject.CompareTag("Facilities_Emul")) countWater = 1;
-        else if (gameObject.CompareTag("Facilities_Emul_Reagent")) countWater = 2;
-        else if (gameObject.CompareTag("Facilities_Emul_Soda")) countWater = 3;
+        if (gameObject.CompareTag(Tags.Facilities_Emul)) countWater = 1;
+        else if (gameObject.CompareTag(Tags.Facilities_Emul_Reagent)) countWater = 2;
+        else if (gameObject.CompareTag(Tags.Facilities_Emul_Soda)) countWater = 3;
 
         ApplyWater();
     }
@@ -39,9 +39,9 @@ public class ChamgingEmul : MonoBehaviour
         }
 
         // Тег проверяется каждый кадр: MovingFacilities по клавише R возвращает стартовый тег.
-        if (countWater == 1 && !gameObject.CompareTag("Facilities_Emul")) gameObject.tag = "Facilities_Emul";
-        if (countWater == 2 && !gameObject.CompareTag("Facilities_Emul_Reagent")) gameObject.tag = "Facilities_Emul_Reagent";
-        if (countWater == 3 && !gameObject.CompareTag("Facilities_Emul_Soda")) gameObject.tag = "Facilities_Emul_Soda";
+        if (countWater == 1 && !gameObject.CompareTag(Tags.Facilities_Emul)) gameObject.tag = Tags.Facilities_Emul;
+        if (countWater == 2 && !gameObject.CompareTag(Tags.Facilities_Emul_Reagent)) gameObject.tag = Tags.Facilities_Emul_Reagent;
+        if (countWater == 3 && !gameObject.CompareTag(Tags.Facilities_Emul_Soda)) gameObject.tag = Tags.Facilities_Emul_Soda;
     }
 
     private void ApplyWater()

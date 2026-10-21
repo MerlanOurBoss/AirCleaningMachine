@@ -1,8 +1,6 @@
 using System;
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.Formats.Alembic.Importer;
 using UnityEngine.Playables;

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -23,14 +22,14 @@ public class MoleculasScript : MonoBehaviour
 
     public GameObject spawnInObj;
 
-    // Скорость дрейфа молекул по оси Z, ед./с. Раньше было -0.05 за кадр (около -3 ед./с при 60 FPS),
-    // поэтому скорость зависела от FPS.
+    // РЎРєРѕСЂРѕСЃС‚СЊ РґСЂРµР№С„Р° РјРѕР»РµРєСѓР» РїРѕ РѕСЃРё Z, РµРґ./СЃ. Р Р°РЅСЊС€Рµ Р±С‹Р»Рѕ -0.05 Р·Р° РєР°РґСЂ (РѕРєРѕР»Рѕ -3 РµРґ./СЃ РїСЂРё 60 FPS),
+    // РїРѕСЌС‚РѕРјСѓ СЃРєРѕСЂРѕСЃС‚СЊ Р·Р°РІРёСЃРµР»Р° РѕС‚ FPS.
     public float driftSpeed = -3f;
 
     private readonly List<Rigidbody> _molecBodies = new List<Rigidbody>();
 
-    // Физику двигаем в FixedUpdate и только молекулы (дочерние объекты spawnInObj).
-    // Раньше FindObjectsOfType<Rigidbody>() каждый кадр двигал ВСЕ Rigidbody на сцене (в т.ч. NPC_man).
+    // Р¤РёР·РёРєСѓ РґРІРёРіР°РµРј РІ FixedUpdate Рё С‚РѕР»СЊРєРѕ РјРѕР»РµРєСѓР»С‹ (РґРѕС‡РµСЂРЅРёРµ РѕР±СЉРµРєС‚С‹ spawnInObj).
+    // Р Р°РЅСЊС€Рµ FindObjectsOfType<Rigidbody>() РєР°Р¶РґС‹Р№ РєР°РґСЂ РґРІРёРіР°Р» Р’РЎР• Rigidbody РЅР° СЃС†РµРЅРµ (РІ С‚.С‡. NPC_man).
     private void FixedUpdate()
     {
         MoveObjects(driftSpeed * Time.fixedDeltaTime);

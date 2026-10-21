@@ -12,15 +12,15 @@ public class LoadLevel : MonoBehaviour
 
     public void LoadLevelString()
     {
-        if (typeOfSystem.text == "Классический c 2 эмульгатор")
+        if (typeOfSystem.text == "РљР»Р°СЃСЃРёС‡РµСЃРєРёР№ c 2 СЌРјСѓР»СЊРіР°С‚РѕСЂ")
         {
             SceneManager.LoadScene(scenes[2]);
         }
-        if (typeOfSystem.text == "4 Классический с 2 эмульгатор")
+        if (typeOfSystem.text == "4 РљР»Р°СЃСЃРёС‡РµСЃРєРёР№ СЃ 2 СЌРјСѓР»СЊРіР°С‚РѕСЂ")
         {
             SceneManager.LoadScene(scenes[3]);
         }
-        if (typeOfSystem.text == "Конструктор")
+        if (typeOfSystem.text == "РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ")
         {
             SceneManager.LoadScene(scenes[1]);
         }

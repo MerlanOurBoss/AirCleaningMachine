@@ -14,7 +14,7 @@ public class CreateFacilities : MonoBehaviour
     public void SpawnTrube()
     {
         // Родителя ищем в момент создания (раньше — каждый кадр в Update, с NullReference без SborCO2).
-        GameObject sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        GameObject sborCO2 = GameObject.FindGameObjectWithTag(Tags.SborCO2);
         if (sborCO2 != null) parentTransform = sborCO2.transform;
 
         // RotY — поворот вокруг вертикальной оси в градусах. Раньше было new Quaternion(0, RotY, 0, 0),

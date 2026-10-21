@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class SubstractTheValue : MonoBehaviour
 {
@@ -39,7 +37,7 @@ public class SubstractTheValue : MonoBehaviour
     {
         AllParticleSystem = FindObjectsOfType<ParticleSystem>();
         
-        var translateObj = GameObject.FindGameObjectWithTag("Translator");
+        var translateObj = GameObject.FindGameObjectWithTag(Tags.Translator);
         _translator = translateObj.GetComponent<Translator>();
 
         if (_translator != null)

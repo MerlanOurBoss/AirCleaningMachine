@@ -15,14 +15,14 @@ public class HiddingMesh : MonoBehaviour
             return;
         }
 
-        // Отключаем все MeshRenderer
+        // РћС‚РєР»СЋС‡Р°РµРј РІСЃРµ MeshRenderer
         MeshRenderer[] meshRenderers = target.GetComponentsInChildren<MeshRenderer>();
         foreach (var meshRenderer in meshRenderers)
         {
             meshRenderer.enabled = false;
         }
 
-        // Сохраняем состояние ParticleSystem и изменяем параметры
+        // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёРµ ParticleSystem Рё РёР·РјРµРЅСЏРµРј РїР°СЂР°РјРµС‚СЂС‹
         ParticleSystem[] particleSystems = target.GetComponentsInChildren<ParticleSystem>();
         foreach (var ps in particleSystems)
         {
@@ -30,25 +30,25 @@ public class HiddingMesh : MonoBehaviour
             var colorOverLifetime = ps.colorOverLifetime;
             var colorBySpeed = ps.colorBySpeed;
 
-            // Сохраняем состояние
-            // Запоминаем и то, играла ли система: при показе запускаем только те, что играли.
+            // РЎРѕС…СЂР°РЅСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёРµ
+            // Р—Р°РїРѕРјРёРЅР°РµРј Рё С‚Рѕ, РёРіСЂР°Р»Р° Р»Рё СЃРёСЃС‚РµРјР°: РїСЂРё РїРѕРєР°Р·Рµ Р·Р°РїСѓСЃРєР°РµРј С‚РѕР»СЊРєРѕ С‚Рµ, С‡С‚Рѕ РёРіСЂР°Р»Рё.
             particleStates[ps] = (main.startColor.color, colorOverLifetime.enabled, colorBySpeed.enabled, main.playOnAwake, ps.isPlaying);
             particleParents[ps] = ps.gameObject;
 
-            // Отключаем видимость
+            // РћС‚РєР»СЋС‡Р°РµРј РІРёРґРёРјРѕСЃС‚СЊ
             main.startColor = new Color(main.startColor.color.r, main.startColor.color.g, main.startColor.color.b, 0);
             colorOverLifetime.enabled = false;
             colorBySpeed.enabled = false;
-            // Раньше здесь ставилось playOnAwake = true, и при показе дым запускался,
-            // даже если симуляция была остановлена.
+            // Р Р°РЅСЊС€Рµ Р·РґРµСЃСЊ СЃС‚Р°РІРёР»РѕСЃСЊ playOnAwake = true, Рё РїСЂРё РїРѕРєР°Р·Рµ РґС‹Рј Р·Р°РїСѓСЃРєР°Р»СЃСЏ,
+            // РґР°Р¶Рµ РµСЃР»Рё СЃРёРјСѓР»СЏС†РёСЏ Р±С‹Р»Р° РѕСЃС‚Р°РЅРѕРІР»РµРЅР°.
             main.playOnAwake = false;
 
-            // Отключаем GameObject с ParticleSystem
+            // РћС‚РєР»СЋС‡Р°РµРј GameObject СЃ ParticleSystem
             ps.gameObject.SetActive(false);
         }
 
-        // Останавливаем спавн объектов
-        GameObject[] dropObjects = GameObject.FindGameObjectsWithTag("DropCreatings");
+        // РћСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРїР°РІРЅ РѕР±СЉРµРєС‚РѕРІ
+        GameObject[] dropObjects = GameObject.FindGameObjectsWithTag(Tags.DropCreatings);
         foreach (var obj in dropObjects)
         {
             DropSpawner spawner = obj.GetComponent<DropSpawner>();
@@ -64,7 +64,7 @@ public class HiddingMesh : MonoBehaviour
             SborCO2.PauseProcess();
         }
 
-        // Новый контроллер сбора CO2 (раньше ставился на паузу только старый NewSborScript).
+        // РќРѕРІС‹Р№ РєРѕРЅС‚СЂРѕР»Р»РµСЂ СЃР±РѕСЂР° CO2 (СЂР°РЅСЊС€Рµ СЃС‚Р°РІРёР»СЃСЏ РЅР° РїР°СѓР·Сѓ С‚РѕР»СЊРєРѕ СЃС‚Р°СЂС‹Р№ NewSborScript).
         var sborController = target.GetComponentInChildren<SborCO2Controller>(true);
         if (sborController != null) sborController.PauseProcess();
     }
@@ -77,14 +77,14 @@ public class HiddingMesh : MonoBehaviour
             return;
         }
 
-        // Включаем все MeshRenderer
+        // Р’РєР»СЋС‡Р°РµРј РІСЃРµ MeshRenderer
         MeshRenderer[] meshRenderers = target.GetComponentsInChildren<MeshRenderer>();
         foreach (var meshRenderer in meshRenderers)
         {
             meshRenderer.enabled = true;
         }
 
-        // Включаем GameObject с ParticleSystem и восстанавливаем состояние
+        // Р’РєР»СЋС‡Р°РµРј GameObject СЃ ParticleSystem Рё РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ
         ParticleSystem[] particleSystems = target.GetComponentsInChildren<ParticleSystem>(true);
         foreach (var ps in particleSystems)
         {
@@ -112,8 +112,8 @@ public class HiddingMesh : MonoBehaviour
             }
         }
 
-        // Возобновляем спавн объектов
-        GameObject[] dropObjects = GameObject.FindGameObjectsWithTag("DropCreatings");
+        // Р’РѕР·РѕР±РЅРѕРІР»СЏРµРј СЃРїР°РІРЅ РѕР±СЉРµРєС‚РѕРІ
+        GameObject[] dropObjects = GameObject.FindGameObjectsWithTag(Tags.DropCreatings);
         foreach (var obj in dropObjects)
         {
             DropSpawner spawner = obj.GetComponent<DropSpawner>();

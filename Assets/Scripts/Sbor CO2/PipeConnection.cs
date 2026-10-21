@@ -41,15 +41,11 @@ public class PipeConnection : MonoBehaviour
     }
     void FindSelectedObject()
     {
-        MoveObjectWithMouse[] moveScript = FindObjectsOfType<MoveObjectWithMouse>();
-
-        foreach (MoveObjectWithMouse obj in moveScript)
+        foreach (MoveObjectWithMouse script in MoveObjectWithMouse.Active)
         {
-            MoveObjectWithMouse script = obj.GetComponent<MoveObjectWithMouse>(); 
-
             if (script != null && script.isSelected && script.isActivated == false)
             {
-                HandlePipe(obj.gameObject, 0, 0, 0, 0, 0, 0, "pipe");
+                HandlePipe(script.gameObject, 0, 0, 0, 0, 0, 0, "pipe");
                 return;
             }
         }
@@ -59,14 +55,14 @@ public class PipeConnection : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))
         {
-            if (other.CompareTag("ConnectionPoint"))
+            if (other.CompareTag(Tags.ConnectionPoint))
             {
                 if (!isMouseOverTrigger)
                 {
                     Debug.Log("connected for " + other.gameObject.name);
                     //this.enabled = false;
                     //gameObject.GetComponent<Collider>().enabled = false;
-                    //gameObject.tag = "Untagged";
+                    //gameObject.tag = Tags.Untagged;
                     PipeConnection otherScript = other.GetComponent<PipeConnection>();
                     Collider collider = other.GetComponent<Collider>();
                     
@@ -87,7 +83,7 @@ public class PipeConnection : MonoBehaviour
                     {
                         //otherScript.enabled = false;
                         //collider.enabled = false;
-                        //other.tag = "Untagged";
+                        //other.tag = Tags.Untagged;
                     }
                 }
             }                
@@ -101,7 +97,7 @@ public class PipeConnection : MonoBehaviour
         other.transform.localScale = new Vector3(1,1,1);
         other.GetComponent<MoveObjectWithMouse>().isDragging = false;
         Destroy(other.GetComponent<BoxCollider>());
-        //other.gameObject.tag = "Untagged";
+        //other.gameObject.tag = Tags.Untagged;
         isClicked = false;
         isConnected = true;
     }
@@ -114,7 +110,7 @@ public class PipeConnection : MonoBehaviour
     //    other.transform.localScale = new Vector3(1, 1, 1);
     //    other.GetComponent<MovingFacilities>().isDragging = false;
     //    //Destroy(other.GetComponent<BoxCollider>());
-    //    //other.gameObject.tag = "Untagged";
+    //    //other.gameObject.tag = Tags.Untagged;
     //    isClicked = false;
     //    isConnected = true;
     //}

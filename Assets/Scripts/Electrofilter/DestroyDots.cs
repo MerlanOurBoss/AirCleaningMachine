@@ -6,7 +6,7 @@ public class DestroyDots : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Dots")) 
+        if (other.CompareTag(Tags.Dots)) 
         {
             Destroy(other.gameObject);
         }

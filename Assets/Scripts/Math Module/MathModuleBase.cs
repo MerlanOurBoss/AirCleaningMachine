@@ -24,7 +24,7 @@ public abstract class MathModuleBase : MonoBehaviour, IFacilityIdentified
 
         if (translator == null)
         {
-            var translatorObj = GameObject.FindGameObjectWithTag("Translator");
+            var translatorObj = GameObject.FindGameObjectWithTag(Tags.Translator);
             if (translatorObj == null)
             {
                 Debug.LogError($"{GetType().Name} ({name}): объект с тегом 'Translator' не найден на сцене.");

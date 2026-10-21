@@ -33,17 +33,17 @@ public class SignInSystem : MonoBehaviour
     private void Start()
     {
         passwordField.contentType = TMP_InputField.ContentType.Password;
-        passwordField.ForceLabelUpdate();  // Применяем изменения
+        passwordField.ForceLabelUpdate();  // РџСЂРёРјРµРЅСЏРµРј РёР·РјРµРЅРµРЅРёСЏ
 
         showPasswordButton.onClick.AddListener(TogglePasswordVisibility);
         showPasswordButton.image.sprite = sprites[0];
         LoadUsersData();
     }
 
-    // Метод для загрузки данных из JSON-файла
+    // РњРµС‚РѕРґ РґР»СЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… РёР· JSON-С„Р°Р№Р»Р°
     void LoadUsersData()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("loginData");  // загружаем файл без расширения
+        TextAsset jsonFile = Resources.Load<TextAsset>("loginData");  // Р·Р°РіСЂСѓР¶Р°РµРј С„Р°Р№Р» Р±РµР· СЂР°СЃС€РёСЂРµРЅРёСЏ
         if (jsonFile != null)
         {
             string json = jsonFile.text;
@@ -63,7 +63,7 @@ public class SignInSystem : MonoBehaviour
         }
     }
 
-    // Метод для входа в систему
+    // РњРµС‚РѕРґ РґР»СЏ РІС…РѕРґР° РІ СЃРёСЃС‚РµРјСѓ
     public void Login()
     {
         string inputLogin = loginField.text;
@@ -83,7 +83,7 @@ public class SignInSystem : MonoBehaviour
         if (loginSuccess)
         {
             resultText.text = "Login successful!";
-            // Логика при успешном входе
+            // Р›РѕРіРёРєР° РїСЂРё СѓСЃРїРµС€РЅРѕРј РІС…РѕРґРµ
             SceneManager.LoadScene(2);
         }
         else
@@ -94,20 +94,20 @@ public class SignInSystem : MonoBehaviour
 
     void TogglePasswordVisibility()
     {
-        isPasswordVisible = !isPasswordVisible;  // Переключаем состояние
+        isPasswordVisible = !isPasswordVisible;  // РџРµСЂРµРєР»СЋС‡Р°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ
 
         if (isPasswordVisible)
         {
-            passwordField.contentType = TMP_InputField.ContentType.Standard;  // Показываем текст
+            passwordField.contentType = TMP_InputField.ContentType.Standard;  // РџРѕРєР°Р·С‹РІР°РµРј С‚РµРєСЃС‚
             showPasswordButton.image.sprite = sprites[1];
         }
         else
         {
-            passwordField.contentType = TMP_InputField.ContentType.Password;  // Скрываем текст
+            passwordField.contentType = TMP_InputField.ContentType.Password;  // РЎРєСЂС‹РІР°РµРј С‚РµРєСЃС‚
             showPasswordButton.image.sprite = sprites[0];
         }
 
-        passwordField.ForceLabelUpdate();  // Обновляем отображение текста
+        passwordField.ForceLabelUpdate();  // РћР±РЅРѕРІР»СЏРµРј РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ С‚РµРєСЃС‚Р°
     }
 
 }

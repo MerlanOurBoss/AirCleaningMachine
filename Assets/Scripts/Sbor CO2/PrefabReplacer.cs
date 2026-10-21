@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class PrefabReplacer : MonoBehaviour
 {
-    public GameObject currentPrefab; // Текущий префаб
-    public GameObject newPrefab; // Новый префаб, на который заменим
+    public GameObject currentPrefab; // РўРµРєСѓС‰РёР№ РїСЂРµС„Р°Р±
+    public GameObject newPrefab; // РќРѕРІС‹Р№ РїСЂРµС„Р°Р±, РЅР° РєРѕС‚РѕСЂС‹Р№ Р·Р°РјРµРЅРёРј
 
     public void ReplacePrefab()
     {
-        // Создаём экземпляр нового префаба на позиции текущего
+        // РЎРѕР·РґР°С‘Рј СЌРєР·РµРјРїР»СЏСЂ РЅРѕРІРѕРіРѕ РїСЂРµС„Р°Р±Р° РЅР° РїРѕР·РёС†РёРё С‚РµРєСѓС‰РµРіРѕ
         GameObject newInstance = Instantiate(newPrefab, currentPrefab.transform.position, currentPrefab.transform.rotation);
 
-        // Уничтожаем текущий префаб
+        // РЈРЅРёС‡С‚РѕР¶Р°РµРј С‚РµРєСѓС‰РёР№ РїСЂРµС„Р°Р±
         Destroy(currentPrefab);
 
-        // Обновляем ссылку на текущий префаб
+        // РћР±РЅРѕРІР»СЏРµРј СЃСЃС‹Р»РєСѓ РЅР° С‚РµРєСѓС‰РёР№ РїСЂРµС„Р°Р±
         currentPrefab = newInstance;
-        // Раньше флаг ставился у префаба-ассета newPrefab, а не у созданного объекта.
+        // Р Р°РЅСЊС€Рµ С„Р»Р°Рі СЃС‚Р°РІРёР»СЃСЏ Сѓ РїСЂРµС„Р°Р±Р°-Р°СЃСЃРµС‚Р° newPrefab, Р° РЅРµ Сѓ СЃРѕР·РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°.
         var mover = newInstance.GetComponent<MoveObjectWithMouse>();
         if (mover != null) mover.isSelected = true;
     }

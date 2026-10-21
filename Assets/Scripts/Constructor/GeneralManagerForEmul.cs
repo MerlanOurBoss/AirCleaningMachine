@@ -31,7 +31,7 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
             module.SetFluidType(_appliedFluidType);
         }
 
-        GameObject testText = GameObject.FindGameObjectWithTag("TestText");
+        GameObject testText = GameObject.FindGameObjectWithTag(Tags.TestText);
         if (testText == null)
             Debug.LogError("GeneralManagerForEmul: объект с тегом 'TestText' не найден на сцене.");
         else

@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class KlaponManager : MonoBehaviour
 {
@@ -43,7 +41,7 @@ public class KlaponManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                if (hit.transform == transform && gameObject.CompareTag("Klapon"))
+                if (hit.transform == transform && gameObject.CompareTag(Tags.Klapon))
                 {
                     isSelected = true;
                 }

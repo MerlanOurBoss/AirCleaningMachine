@@ -32,7 +32,7 @@ public class LoadRightPanel : MonoBehaviour
     {
         if (parentComponent == null || rootToComponent == null || prefabs == null)
         {
-            parentComponent = GameObject.FindGameObjectWithTag("SborCO2");
+            parentComponent = GameObject.FindGameObjectWithTag(Tags.SborCO2);
             
         }
 

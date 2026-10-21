@@ -29,7 +29,7 @@ public class DestroyingAndCreatingMolec : MonoBehaviour
 
     private void Start()
     {
-        spawnInObj = GameObject.FindWithTag("SpawnInObj");
+        spawnInObj = GameObject.FindWithTag(Tags.SpawnInObj);
 
     }
 

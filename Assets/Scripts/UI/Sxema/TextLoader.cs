@@ -23,7 +23,7 @@ public class TextLoader : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Не удалось загрузить файл: " + fileName);
+            Debug.LogError("РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ С„Р°Р№Р»: " + fileName);
         }
     }
 }

@@ -1,17 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class ZoneManager : MonoBehaviour
 {
     public float attractionForce;
 
     public GameObject spawnInObj;
-    // Предупреждения, уже выведенные за текущее пребывание объекта в зоне
-    // (раньше LogError писался каждый физический кадр).
+    // РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ, СѓР¶Рµ РІС‹РІРµРґРµРЅРЅС‹Рµ Р·Р° С‚РµРєСѓС‰РµРµ РїСЂРµР±С‹РІР°РЅРёРµ РѕР±СЉРµРєС‚Р° РІ Р·РѕРЅРµ
+    // (СЂР°РЅСЊС€Рµ LogError РїРёСЃР°Р»СЃСЏ РєР°Р¶РґС‹Р№ С„РёР·РёС‡РµСЃРєРёР№ РєР°РґСЂ).
     private readonly HashSet<string> _warned = new HashSet<string>();
 
     private void OnTriggerExit(Collider other)
@@ -45,16 +43,16 @@ public class ZoneManager : MonoBehaviour
             Destroy(child, delay);
     }
 
-    // Поиск объектов по тегам теперь делается только в нужной ветке (раньше 12 поисков
-    // на каждый вызов OnTriggerStay), а перед обращением к [0]/[1] проверяется длина массивов.
+    // РџРѕРёСЃРє РѕР±СЉРµРєС‚РѕРІ РїРѕ С‚РµРіР°Рј С‚РµРїРµСЂСЊ РґРµР»Р°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РІ РЅСѓР¶РЅРѕР№ РІРµС‚РєРµ (СЂР°РЅСЊС€Рµ 12 РїРѕРёСЃРєРѕРІ
+    // РЅР° РєР°Р¶РґС‹Р№ РІС‹Р·РѕРІ OnTriggerStay), Р° РїРµСЂРµРґ РѕР±СЂР°С‰РµРЅРёРµРј Рє [0]/[1] РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ РґР»РёРЅР° РјР°СЃСЃРёРІРѕРІ.
     private void OnTriggerStay(Collider other)
     {
         float forceMagnitude = attractionForce * Time.deltaTime;
 
-        if (other.CompareTag("OO"))
+        if (other.CompareTag(Tags.OO))
         {
-            GameObject[] O = FindTag("O");
-            GameObject[] CO = FindTag("CO");
+            GameObject[] O = FindTag(Tags.O);
+            GameObject[] CO = FindTag(Tags.CO);
 
             if (O.Length >= 2 && CO.Length == 2)
             {
@@ -66,19 +64,19 @@ public class ZoneManager : MonoBehaviour
 
                 DestroyAll(CO, 1f);
                 DestroyAll(O, 1f);
-                DestroyAll(FindTag("OO"), 1f);
-                DestroyAll(FindTag("CO_Parent"), 1f);
+                DestroyAll(FindTag(Tags.OO), 1f);
+                DestroyAll(FindTag(Tags.CO_Parent), 1f);
             }
             else
             {
-                WarnOnce("OO", $"Не найдены два объекта с каждым из тегов: CO={CO.Length}, O={O.Length}");
+                WarnOnce("OO", $"РќРµ РЅР°Р№РґРµРЅС‹ РґРІР° РѕР±СЉРµРєС‚Р° СЃ РєР°Р¶РґС‹Рј РёР· С‚РµРіРѕРІ: CO={CO.Length}, O={O.Length}");
             }
         }
 
-        if (other.CompareTag("OO3"))
+        if (other.CompareTag(Tags.OO3))
         {
-            GameObject[] O = FindTag("O4");
-            GameObject[] SOO = FindTag("SOO");
+            GameObject[] O = FindTag(Tags.O4);
+            GameObject[] SOO = FindTag(Tags.SOO);
 
             if (O.Length >= 2 && SOO.Length == 2)
             {
@@ -90,20 +88,20 @@ public class ZoneManager : MonoBehaviour
 
                 DestroyAll(O, 1f);
                 DestroyAll(SOO, 1f);
-                DestroyAll(FindTag("OO3"), 1f);
-                DestroyAll(FindTag("SOO_Parent"), 1f);
+                DestroyAll(FindTag(Tags.OO3), 1f);
+                DestroyAll(FindTag(Tags.SOO_Parent), 1f);
             }
             else
             {
-                WarnOnce("OO3", $"Не найдены два объекта с каждым из тегов: SOO={SOO.Length}, O4={O.Length}");
+                WarnOnce("OO3", $"РќРµ РЅР°Р№РґРµРЅС‹ РґРІР° РѕР±СЉРµРєС‚Р° СЃ РєР°Р¶РґС‹Рј РёР· С‚РµРіРѕРІ: SOO={SOO.Length}, O4={O.Length}");
             }
         }
 
-        if (other.CompareTag("OO2"))
+        if (other.CompareTag(Tags.OO2))
         {
-            GameObject[] O = FindTag("O1");
-            GameObject[] CHH = FindTag("CHH");
-            GameObject[] HH = FindTag("HH");
+            GameObject[] O = FindTag(Tags.O1);
+            GameObject[] CHH = FindTag(Tags.CHH);
+            GameObject[] HH = FindTag(Tags.HH);
 
             other.transform.DetachChildren();
             ReleaseRigidbodies(O);
@@ -116,19 +114,19 @@ public class ZoneManager : MonoBehaviour
             }
             else
             {
-                WarnOnce("OO2", $"Недостаточно объектов для реакции OO2: O1={O.Length}, CHH={CHH.Length}, HH={HH.Length}");
+                WarnOnce("OO2", $"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РѕР±СЉРµРєС‚РѕРІ РґР»СЏ СЂРµР°РєС†РёРё OO2: O1={O.Length}, CHH={CHH.Length}, HH={HH.Length}");
             }
 
             DestroyAll(CHH, 1f);
-            DestroyAll(FindTag("OO2"), 1f);
+            DestroyAll(FindTag(Tags.OO2), 1f);
             DestroyAll(HH, 1f);
-            DestroyAll(FindTag("CHH_Parent"), 1f);
+            DestroyAll(FindTag(Tags.CHH_Parent), 1f);
         }
 
-        if (other.CompareTag("OON"))
+        if (other.CompareTag(Tags.OON))
         {
-            GameObject[] O5 = FindTag("O5");
-            GameObject[] N2 = FindTag("N2");
+            GameObject[] O5 = FindTag(Tags.O5);
+            GameObject[] N2 = FindTag(Tags.N2);
 
             other.transform.DetachChildren();
             ReleaseRigidbodies(O5);
@@ -137,17 +135,17 @@ public class ZoneManager : MonoBehaviour
             if (O5.Length >= 2)
                 O5[1].transform.position = Vector3.MoveTowards(O5[1].transform.position, O5[0].transform.position, forceMagnitude * 10);
             else
-                WarnOnce("OON", $"Недостаточно объектов O5 для реакции OON: {O5.Length}");
+                WarnOnce("OON", $"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РѕР±СЉРµРєС‚РѕРІ O5 РґР»СЏ СЂРµР°РєС†РёРё OON: {O5.Length}");
 
             DestroyAll(O5, 1f);
             DestroyAll(N2, 1f);
-            DestroyAll(FindTag("OON"), 1f);
+            DestroyAll(FindTag(Tags.OON), 1f);
         }
 
-        if (other.CompareTag("ON"))
+        if (other.CompareTag(Tags.ON))
         {
-            GameObject[] O3 = FindTag("O3");
-            GameObject[] ON_Child = FindTag("ON_Child");
+            GameObject[] O3 = FindTag(Tags.O3);
+            GameObject[] ON_Child = FindTag(Tags.ON_Child);
 
             other.transform.DetachChildren();
             ReleaseRigidbodies(O3);
@@ -156,18 +154,18 @@ public class ZoneManager : MonoBehaviour
             if (O3.Length >= 2)
                 O3[1].transform.position = Vector3.MoveTowards(O3[1].transform.position, O3[0].transform.position, forceMagnitude * 10);
             else
-                WarnOnce("ON", $"Недостаточно объектов O3 для реакции ON: {O3.Length}");
+                WarnOnce("ON", $"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РѕР±СЉРµРєС‚РѕРІ O3 РґР»СЏ СЂРµР°РєС†РёРё ON: {O3.Length}");
 
             DestroyAll(O3, 1f);
-            DestroyAll(FindTag("ON"), 1f);
-            DestroyAll(FindTag("CO2_Parent"), 1f);
+            DestroyAll(FindTag(Tags.ON), 1f);
+            DestroyAll(FindTag(Tags.CO2_Parent), 1f);
             DestroyAll(ON_Child, 1f);
         }
     }
 
     public void DeleteAllMolec()
     {
-        // Удалённые здесь молекулы не должны порождать «продукты реакции» (см. DestroyingAndCreatingMolec).
+        // РЈРґР°Р»С‘РЅРЅС‹Рµ Р·РґРµСЃСЊ РјРѕР»РµРєСѓР»С‹ РЅРµ РґРѕР»Р¶РЅС‹ РїРѕСЂРѕР¶РґР°С‚СЊ В«РїСЂРѕРґСѓРєС‚С‹ СЂРµР°РєС†РёРёВ» (СЃРј. DestroyingAndCreatingMolec).
         DestroyingAndCreatingMolec.SuppressSpawnThisFrame();
 
         for (var i = spawnInObj.transform.childCount - 1; i >= 0; i--)

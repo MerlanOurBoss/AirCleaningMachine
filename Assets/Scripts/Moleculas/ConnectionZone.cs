@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -22,8 +21,8 @@ public class ConnectionZone : MonoBehaviour
     private int totalObjects3;
     private int totalObjects4;
 
-    // Молекулы, для которых уже запущено разрушение. OnTriggerStay вызывается каждый физический кадр,
-    // и раньше Play("Destroyng") перезапускал анимацию каждый кадр — она застревала на первом кадре.
+    // РњРѕР»РµРєСѓР»С‹, РґР»СЏ РєРѕС‚РѕСЂС‹С… СѓР¶Рµ Р·Р°РїСѓС‰РµРЅРѕ СЂР°Р·СЂСѓС€РµРЅРёРµ. OnTriggerStay РІС‹Р·С‹РІР°РµС‚СЃСЏ РєР°Р¶РґС‹Р№ С„РёР·РёС‡РµСЃРєРёР№ РєР°РґСЂ,
+    // Рё СЂР°РЅСЊС€Рµ Play("Destroyng") РїРµСЂРµР·Р°РїСѓСЃРєР°Р» Р°РЅРёРјР°С†РёСЋ РєР°Р¶РґС‹Р№ РєР°РґСЂ вЂ” РѕРЅР° Р·Р°СЃС‚СЂРµРІР°Р»Р° РЅР° РїРµСЂРІРѕРј РєР°РґСЂРµ.
     private readonly HashSet<GameObject> _destroying = new HashSet<GameObject>();
 
     private void OnTriggerEnter(Collider other)
@@ -37,19 +36,19 @@ public class ConnectionZone : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("CO") || other.CompareTag("OO"))
+        if (other.CompareTag(Tags.CO) || other.CompareTag(Tags.OO))
         {
             foreach (string tag in targetTags)
             {
-                // Находим все объекты с текущим тегом
+                // РќР°С…РѕРґРёРј РІСЃРµ РѕР±СЉРµРєС‚С‹ СЃ С‚РµРєСѓС‰РёРј С‚РµРіРѕРј
                 GameObject[] objectss = GameObject.FindGameObjectsWithTag(tag);
                 if (totalObjects < 3)
                 {
-                    Debug.Log("Недостаточно молекул во втором");
+                    Debug.Log("РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РјРѕР»РµРєСѓР» РІРѕ РІС‚РѕСЂРѕРј");
                 }
                 else
                 {
-                    // Притягиваем каждый объект к точке
+                    // РџСЂРёС‚СЏРіРёРІР°РµРј РєР°Р¶РґС‹Р№ РѕР±СЉРµРєС‚ Рє С‚РѕС‡РєРµ
                     foreach (GameObject obj in objectss)
                     {
                         Attract(obj.transform);
@@ -63,19 +62,19 @@ public class ConnectionZone : MonoBehaviour
                 }
             }
         }
-        else if (other.CompareTag("CHH") || other.CompareTag("HH") || other.CompareTag("OO2"))
+        else if (other.CompareTag(Tags.CHH) || other.CompareTag(Tags.HH) || other.CompareTag(Tags.OO2))
         {
             foreach (string tag in targetTags2)
             {
-                // Находим все объекты с текущим тегом
+                // РќР°С…РѕРґРёРј РІСЃРµ РѕР±СЉРµРєС‚С‹ СЃ С‚РµРєСѓС‰РёРј С‚РµРіРѕРј
                 GameObject[] objectss = GameObject.FindGameObjectsWithTag(tag);
                 if (totalObjects2 < 3)
                 {
-                    Debug.Log("Недостаточно молекул во втором");
+                    Debug.Log("РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РјРѕР»РµРєСѓР» РІРѕ РІС‚РѕСЂРѕРј");
                 }
                 else
                 {
-                    // Притягиваем каждый объект к точке
+                    // РџСЂРёС‚СЏРіРёРІР°РµРј РєР°Р¶РґС‹Р№ РѕР±СЉРµРєС‚ Рє С‚РѕС‡РєРµ
                     foreach (GameObject obj in objectss)
                     {
                         Attract(obj.transform);
@@ -89,19 +88,19 @@ public class ConnectionZone : MonoBehaviour
                 }
             }
         }
-        else if (other.CompareTag("SOO") || other.CompareTag("OO3"))
+        else if (other.CompareTag(Tags.SOO) || other.CompareTag(Tags.OO3))
         {
             foreach (string tag in targetTags3)
             {
-                // Находим все объекты с текущим тегом
+                // РќР°С…РѕРґРёРј РІСЃРµ РѕР±СЉРµРєС‚С‹ СЃ С‚РµРєСѓС‰РёРј С‚РµРіРѕРј
                 GameObject[] objectss = GameObject.FindGameObjectsWithTag(tag);
                 if (totalObjects3 < 2)
                 {
-                    Debug.Log("Недостаточно молекул во втором");
+                    Debug.Log("РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РјРѕР»РµРєСѓР» РІРѕ РІС‚РѕСЂРѕРј");
                 }
                 else
                 {
-                    // Притягиваем каждый объект к точке
+                    // РџСЂРёС‚СЏРіРёРІР°РµРј РєР°Р¶РґС‹Р№ РѕР±СЉРµРєС‚ Рє С‚РѕС‡РєРµ
                     foreach (GameObject obj in objectss)
                     {
                         Attract(obj.transform);
@@ -115,14 +114,14 @@ public class ConnectionZone : MonoBehaviour
                 }
             }
         }
-        else if (other.CompareTag("ON") || other.CompareTag("ON2"))
+        else if (other.CompareTag(Tags.ON) || other.CompareTag(Tags.ON2))
         {
             foreach (string tag in targetTags4)
             {
                 GameObject[] objectss = GameObject.FindGameObjectsWithTag(tag);
                 if (totalObjects4 < 2)
                 {
-                    Debug.Log("Недостаточно молекул во втором");
+                    Debug.Log("РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РјРѕР»РµРєСѓР» РІРѕ РІС‚РѕСЂРѕРј");
                 }
                 else
                 {

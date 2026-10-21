@@ -48,8 +48,8 @@ public class SaveLoadManager : MonoBehaviour
     /// </summary>
     private GameObject ResolveSborCO2()
     {
-        if (sborCO2 == null || !sborCO2.CompareTag("SborCO2"))
-            sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
+        if (sborCO2 == null || !sborCO2.CompareTag(Tags.SborCO2))
+            sborCO2 = GameObject.FindGameObjectWithTag(Tags.SborCO2);
         return sborCO2;
     }
 
@@ -183,7 +183,7 @@ public class SaveLoadManager : MonoBehaviour
         List<ObjectData> dataList = new List<ObjectData>();
         List<GameObject> objectsToDelete = new List<GameObject>();
 
-        foreach (GameObject pipeObject in GameObject.FindGameObjectsWithTag("Klapon"))
+        foreach (GameObject pipeObject in GameObject.FindGameObjectsWithTag(Tags.Klapon))
         {
             if (!pipeObject.activeInHierarchy) continue;
 
@@ -309,15 +309,15 @@ public class SaveLoadManager : MonoBehaviour
             if (!string.IsNullOrEmpty(data.tag))
                 obj.tag = data.tag;
 
-            if (obj.CompareTag("Pipe"))
+            if (obj.CompareTag(Tags.Pipe))
             {
             }
-            else if (obj.CompareTag("Klapon"))
+            else if (obj.CompareTag(Tags.Klapon))
             {
                 var klapon = obj.GetComponent<KlaponManager>();
                 if (klapon != null) klapon.isSelected = false;
             }
-            else if (obj.CompareTag("Pipe_T"))
+            else if (obj.CompareTag(Tags.Pipe_T))
             {
                 var mover = obj.GetComponent<MoveObjectWithMouse>();
                 if (mover != null)

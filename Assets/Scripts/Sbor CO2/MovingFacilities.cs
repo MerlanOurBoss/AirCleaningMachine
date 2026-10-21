@@ -84,10 +84,10 @@ public class MovingFacilities : MonoBehaviour
             {
                 if (!IsChildCollider(hit.collider))
                 {
-                    if (hit.transform == transform && (gameObject.CompareTag("Facilities") || gameObject.CompareTag("Facilities_Capsul") || gameObject.CompareTag("Facilities_Steam") 
-                        || gameObject.CompareTag("Facilities_DryAir") || gameObject.CompareTag("Facilities_Oven") || gameObject.CompareTag("Facilities_Emul") 
-                        || gameObject.CompareTag("Facilities_Cool") || gameObject.CompareTag("Facilities_Electro") || gameObject.CompareTag("Facilities_Kataz") || gameObject.CompareTag("Facilities_NewCapsul")
-                        || gameObject.CompareTag("Facilities_Emul_Reagent") || gameObject.CompareTag("Facilities_Emul_Soda")))
+                    if (hit.transform == transform && (gameObject.CompareTag(Tags.Facilities) || gameObject.CompareTag(Tags.Facilities_Capsul) || gameObject.CompareTag(Tags.Facilities_Steam) 
+                        || gameObject.CompareTag(Tags.Facilities_DryAir) || gameObject.CompareTag(Tags.Facilities_Oven) || gameObject.CompareTag(Tags.Facilities_Emul) 
+                        || gameObject.CompareTag(Tags.Facilities_Cool) || gameObject.CompareTag(Tags.Facilities_Electro) || gameObject.CompareTag(Tags.Facilities_Kataz) || gameObject.CompareTag(Tags.Facilities_NewCapsul)
+                        || gameObject.CompareTag(Tags.Facilities_Emul_Reagent) || gameObject.CompareTag(Tags.Facilities_Emul_Soda)))
                     {
                         isSelected = true;
                         isDragging = !isDragging;
@@ -136,7 +136,7 @@ public class MovingFacilities : MonoBehaviour
             isSelected = false;
             isDragging = false;
             if (objectCollider != null) objectCollider.enabled = false;
-            //gameObject.tag = "Untagged";
+            //gameObject.tag = Tags.Untagged;
         }
 
         if (emulType != null)

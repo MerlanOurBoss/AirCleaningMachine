@@ -6,7 +6,7 @@ public class UnenableCollider : MonoBehaviour
 {
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("ConnectionPoint"))
+        if (other.CompareTag(Tags.ConnectionPoint))
         {
             gameObject.GetComponent<PipeConnection>().isConnected = true;
         }
@@ -14,7 +14,7 @@ public class UnenableCollider : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("ConnectionPoint"))
+        if (other.CompareTag(Tags.ConnectionPoint))
         {
             gameObject.GetComponent<PipeConnection>().isConnected = false;
         }

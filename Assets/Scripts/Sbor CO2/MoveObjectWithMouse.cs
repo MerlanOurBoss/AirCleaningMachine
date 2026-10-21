@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -24,6 +23,19 @@ public class MoveObjectWithMouse : MonoBehaviour
     private int count = 3;
 
     public Vector3 mouseOffset = new Vector3(1.0f, 1.0f, 0.0f);
+
+    // Включённые экземпляры. PipeConnection раньше искал их через FindObjectsOfType каждый кадр.
+    public static readonly List<MoveObjectWithMouse> Active = new List<MoveObjectWithMouse>();
+
+    void OnEnable()
+    {
+        Active.Add(this);
+    }
+
+    void OnDisable()
+    {
+        Active.Remove(this);
+    }
 
     void Start()
     {
@@ -90,7 +102,7 @@ public class MoveObjectWithMouse : MonoBehaviour
             {
                 if (!IsChildCollider(hit.collider))
                 {
-                    if (hit.transform == transform && (gameObject.CompareTag("Pipe") || gameObject.CompareTag("Pipe_45") || gameObject.CompareTag("Pipe_90") || gameObject.CompareTag("Pipe_T")))
+                    if (hit.transform == transform && (gameObject.CompareTag(Tags.Pipe) || gameObject.CompareTag(Tags.Pipe_45) || gameObject.CompareTag(Tags.Pipe_90) || gameObject.CompareTag(Tags.Pipe_T)))
                     {
                         isSelected = true;
                         isDragging = !isDragging;
@@ -105,7 +117,7 @@ public class MoveObjectWithMouse : MonoBehaviour
                     {
                         isSelected = false;
                         isDragging = false;
-                        ChangeColor(originalColor); // ���������� �������� ����
+                        ChangeColor(originalColor); // Возвращаем исходный цвет
                     }
                 }
             }
@@ -205,7 +217,7 @@ public class MoveObjectWithMouse : MonoBehaviour
         {
             var parentCollider = transform.parent.GetComponent<Collider>();
             if (parentCollider != null) parentCollider.enabled = true;
-            transform.parent.gameObject.tag = "ConnectionPoint";
+            transform.parent.gameObject.tag = Tags.ConnectionPoint;
         }
     }
     public void ToggleCollider(bool enabled)

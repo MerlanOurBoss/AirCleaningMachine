@@ -13,7 +13,7 @@ public class DropSpawner : MonoBehaviour
 
     public void startCor()
     {
-        if (spawnCoroutine == null) // Запускаем корутину, только если она не запущена
+        if (spawnCoroutine == null) // Р—Р°РїСѓСЃРєР°РµРј РєРѕСЂСѓС‚РёРЅСѓ, С‚РѕР»СЊРєРѕ РµСЃР»Рё РѕРЅР° РЅРµ Р·Р°РїСѓС‰РµРЅР°
         {
             spawnCoroutine = StartCoroutine(SpawnCoroutine());
         }
@@ -32,8 +32,8 @@ public class DropSpawner : MonoBehaviour
 
     public void PauseSpawning()
     {
-        // Отменяем отложенное возобновление: раньше пауза, поставленная в течение 7 с
-        // после ResumeSpawning, снималась сама.
+        // РћС‚РјРµРЅСЏРµРј РѕС‚Р»РѕР¶РµРЅРЅРѕРµ РІРѕР·РѕР±РЅРѕРІР»РµРЅРёРµ: СЂР°РЅСЊС€Рµ РїР°СѓР·Р°, РїРѕСЃС‚Р°РІР»РµРЅРЅР°СЏ РІ С‚РµС‡РµРЅРёРµ 7 СЃ
+        // РїРѕСЃР»Рµ ResumeSpawning, СЃРЅРёРјР°Р»Р°СЃСЊ СЃР°РјР°.
         if (resumeCoroutine != null)
         {
             StopCoroutine(resumeCoroutine);
@@ -61,7 +61,7 @@ public class DropSpawner : MonoBehaviour
         yield return new WaitForSeconds(_delay);
         while (true)
         {
-            if (!isPaused) // Проверка на паузу
+            if (!isPaused) // РџСЂРѕРІРµСЂРєР° РЅР° РїР°СѓР·Сѓ
             {
                 Vector3 spawnAreaSize = spawnAreaCube.transform.localScale;
 
