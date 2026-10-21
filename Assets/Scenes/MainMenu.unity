@@ -180,7 +180,7 @@ MonoBehaviour:
   imagesSubfolder: SavedObjects/Images
   startPosition: {x: -233, y: 292, z: 0}
   offset: {x: 200, y: -200, z: 0}
-  constructionSceneName: New 3
+  constructionSceneName: Simulation
 --- !u!114 &64183019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4081,7 +4081,7 @@ MonoBehaviour:
   imagesSubfolder: C:/Users/y.assankhan/AppData/LocalLow/DefaultCompany/GasCleaning\SavedConstructions\Images
   startPosition: {x: -233, y: 292, z: 0}
   offset: {x: 200, y: -200, z: 0}
-  constructionSceneName: New 4
+  constructionSceneName: Simulation
 --- !u!1 &857357733
 GameObject:
   m_ObjectHideFlags: 0
@@ -5699,7 +5699,7 @@ MonoBehaviour:
   imagesSubfolder: SavedObjects/Images
   startPosition: {x: -233, y: 292, z: 0}
   offset: {x: 200, y: -200, z: 0}
-  constructionSceneName: New 3
+  constructionSceneName: Simulation
 --- !u!1 &1121001649
 GameObject:
   m_ObjectHideFlags: 0
@@ -8784,7 +8784,7 @@ MonoBehaviour:
   imagesSubfolder: C:/Users/y.assankhan/AppData/LocalLow/DefaultCompany/GasCleaning\SavedConstructions\Images
   startPosition: {x: -233, y: 292, z: 0}
   offset: {x: 200, y: -200, z: 0}
-  constructionSceneName: New 4
+  constructionSceneName: Simulation
 --- !u!1 &1978498445
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class CameraCaptureLoader : MonoBehaviour
     public Vector3 offset = new Vector3(2f, 0f, 0f);
 
     [Tooltip("��� �����, ��� ����� SaveLoadManager")]
-    public string constructionSceneName = "New 3";
+    public string constructionSceneName = "Simulation";
 
     void Start()
     {

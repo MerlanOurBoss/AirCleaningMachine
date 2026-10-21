@@ -43,7 +43,7 @@ public class SaveLoadManager : MonoBehaviour
     /// <summary>
     /// Возвращает объект с тегом "SborCO2" (родитель конструкции).
     /// Ссылка из инспектора используется, только если у объекта действительно тег SborCO2:
-    /// в сцене "Constructor second scene" в поле sborCO2 назначен CameraUI, и при сохранении
+    /// в сцене "Constructor" в поле sborCO2 назначен CameraUI, и при сохранении
     /// в слот попадали кнопки интерфейса (Button, Settings, System settings, Tips).
     /// </summary>
     private GameObject ResolveSborCO2()
