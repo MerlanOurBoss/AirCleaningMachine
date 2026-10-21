@@ -226,18 +226,15 @@ public class SaveLoadManager : MonoBehaviour
             pipe.ClearAllPipesAndFacilities();
     }
 
-    // Сохраняем только объекты, для которых есть префаб с таким же именем в prefabs[]:
-    // остальные (сгенерированные меши труб и т.п.) всё равно нельзя восстановить при загрузке.
+    // Сохраняются все дочерние объекты SborCO2 (фильтр по prefabs[] отключён намеренно).
     private bool TryAddObjectData(GameObject go, List<ObjectData> dataList)
     {
-        string cleanName = GetCleanName(go);
-
-        bool isKnownPrefab = prefabs != null &&
-                             System.Array.Exists(prefabs, p => p != null && p.name == cleanName);
-
-        dataList.Add(CreateObjectData(go, cleanName));
+        dataList.Add(CreateObjectData(go, GetCleanName(go)));
         return true;
     }
+
+    private static bool IsGeneratedPipeMesh(string objectName) =>
+        !string.IsNullOrEmpty(objectName) && objectName.StartsWith("PipeMesh");
 
     private static string GetCleanName(GameObject go)
     {
@@ -299,7 +296,10 @@ public class SaveLoadManager : MonoBehaviour
 
             if (prefab == null)
             {
-                Debug.LogError($"Prefab with name {data.objectName} not found.");
+                // Меш труб сохраняется вместе с конструкцией, но при загрузке строится заново
+                // (PipeConnector.ConnectComponents) — пропускаем его без ошибки, как в LoadManager.
+                if (!IsGeneratedPipeMesh(data.objectName))
+                    Debug.LogError($"Prefab with name {data.objectName} not found.");
                 continue;
             }
 

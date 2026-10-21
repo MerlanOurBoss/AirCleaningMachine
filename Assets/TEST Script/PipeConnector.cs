@@ -194,18 +194,26 @@ public class PipeConnector : MonoBehaviour
     }
     public void ClearAllPipes()
     {
-        if (pipeGenerator != null)
-        {
-            pipeGenerator.Clear();
-            pipeGenerator.UpdateMesh();
-        }
-
+        ClearGenerator(pipeGenerator);
         // CO2-генератор назначен не во всех сценах — раньше здесь был NullReferenceException.
-        if (pipeGeneratorCO2 != null)
-        {
-            pipeGeneratorCO2.Clear();
-            pipeGeneratorCO2.UpdateMesh();
-        }
+        ClearGenerator(pipeGeneratorCO2);
+    }
+
+    /// <summary>
+    /// Удаляет все трубы генератора. В InstantPipes больше нет метода Clear() —
+    /// список труб очищается напрямую, после чего генератор перестраивает меш.
+    /// </summary>
+    private static void ClearGenerator(PipeGenerator generator)
+    {
+        if (generator == null) return;
+
+        generator.Pipes.Clear();
+        generator.UpdateMesh();
+
+        // UpdateMesh() очищает меш только внутри цикла по трубам: при пустом списке
+        // старая геометрия осталась бы в MeshFilter.
+        var filter = generator.GetComponent<MeshFilter>();
+        if (filter != null && filter.sharedMesh != null) filter.sharedMesh.Clear();
     }
 
     public void ClearAllPipesAndFacilities()
@@ -238,6 +246,14 @@ public class PipeConnector : MonoBehaviour
         warnedFacilities.Clear();
     }
 
+    private static bool HasTriangles(Mesh mesh)
+    {
+        if (mesh == null || mesh.vertexCount == 0) return false;
+        for (int i = 0; i < mesh.subMeshCount; i++)
+            if (mesh.GetIndexCount(i) >= 3) return true;
+        return false;
+    }
+
     private void SaveGeneratedMeshToSborCO2(PipeGenerator generator, string name)
     {
         GameObject sborCO2 = GameObject.FindGameObjectWithTag("SborCO2");
@@ -247,8 +263,24 @@ public class PipeConnector : MonoBehaviour
             return;
         }
 
-        Mesh meshCopy = Instantiate(generator.GetComponent<MeshFilter>().sharedMesh);
-        meshCopy.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+        // Ни одной трубы не построено (меньше двух установок или у них нет точек подключения) —
+        // сохранять нечего. Иначе создавался объект с пустым мешем, и MeshCollider выдавал ошибку
+        // "mesh must have at least one non-degenerate triangle".
+        var sourceFilter = generator.GetComponent<MeshFilter>();
+        Mesh sourceMesh = sourceFilter != null ? sourceFilter.sharedMesh : null;
+        if (!HasTriangles(sourceMesh))
+        {
+            if (components.Count >= 2)
+                Debug.LogWarning($"PipeConnector: меш труб '{name}' пустой — ни одна труба не построена. " +
+                                 "Проверьте точки подключения ConnectionPointIN/OUT у установок.");
+            return;
+        }
+
+        // Формат индексов не меняем: установка Mesh.indexFormat очищает индексный буфер.
+        // Новая версия InstantPipes создаёт меш с 16-битными индексами, и после смены формата
+        // у копии не оставалось ни одного треугольника (ошибка MeshCollider и невидимые трубы).
+        // Если вершин больше 65535, CombineMeshes в генераторе сам переключает меш на 32 бита.
+        Mesh meshCopy = Instantiate(sourceMesh);
         GameObject savedMeshObject = null;
         Scene activeScene = SceneManager.GetActiveScene();
         

@@ -201,7 +201,8 @@ public class MathModuleForEmul : MathModuleBase
         _massTransfer = empiricalConstantsA * Mathf.Pow((_reynoldsNumber / deametrDroplet), empiricalConstantsB);
 
         electro = 0.12 * (_gasСonsumption * 3600);
-        waterConsumables = 0.005 * (valueGasFlow * 1000);
+        // Таблица L51: 0.005·(Q/1000) м³/ч. Было valueGasFlow * 1000 — в 1 000 000 раз больше.
+        waterConsumables = 0.005 * (valueGasFlow / 1000);
         dryReagentConsumptionCount = (10 / 100.0) * (1100 / 1000.0) * (valueGasFlow / 1000.0) / 0.95 / 1000;
 
         float fluidCon;

@@ -141,7 +141,7 @@ public class MathModulForSborCO2 : MathModuleBase
 
     private void UpdateDisplayTexts(float adsorptionTime, float desorbedCO2)
     {
-        double consumablesTotal = (electro * 38.85) + (sorbentConsumables * 535 * 193) + (parDesorbentConsumption * 71.56 / 1000);
+        double consumablesTotal = (electro * 38.85) + (sorbentConsumables * 535 * 0.193) + (parDesorbentConsumption * 71.56 / 1000);
 
         if (translator.currentLanguage == Translator.Language.Russian)
         {
@@ -272,7 +272,10 @@ public class MathModulForSborCO2 : MathModuleBase
         length = Math.Ceiling(Math.Sqrt((4.0 * (valueGasFlow / 2.0)) / Math.PI / 3600.0 / 0.5));
         height = Math.Ceiling(sorbentMass / (1.0 - 0.37) / 670.0 / (valueGasFlow / 3600.0 / 0.5) + 1.5 * 2.0);
 
-        return totalCapacity > 0f ? capturedCO2 / totalCapacity : 0f;
+        // Таблица AL39: время адсорбции = общая ёмкость (кмоль) / улавливаемый CO2 (кмоль/ч, AL38 = масса CO2 / 44).
+        // Было наоборот: capturedCO2 / totalCapacity.
+        float capturedPerHour = massCO2 / 44f;
+        return capturedPerHour > 0f ? totalCapacity / capturedPerHour : 0f;
     }
 
     private float CalculateDesorption()
