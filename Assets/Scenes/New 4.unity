@@ -64306,7 +64306,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fdf5548a0b154de4d870b869677b1676, type: 2}
+      objectReference: {fileID: 2100000, guid: 18797d9d8901d2a46805e58065a5c5bc, type: 2}
     - target: {fileID: 5591957499097086149, guid: 5d6bdeb3843d7ff48ab16e4e093d0ca1,
         type: 3}
       propertyPath: sxema
@@ -94910,7 +94910,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fdf5548a0b154de4d870b869677b1676, type: 2}
+      objectReference: {fileID: 2100000, guid: 18797d9d8901d2a46805e58065a5c5bc, type: 2}
     - target: {fileID: 5591957499097086149, guid: 5d6bdeb3843d7ff48ab16e4e093d0ca1,
         type: 3}
       propertyPath: cameraUI
