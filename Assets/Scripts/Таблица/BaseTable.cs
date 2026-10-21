@@ -64,21 +64,44 @@ public class BaseTable : MonoBehaviour
         bool live = useAnalyzer && p != null && p.IsRunning && p.IsConnected && p.SecondsSinceData <= staleAfter;
         SetLocked(live && lockSlidersWhenLive);
 
-        for (int i = 0; i < texts.Length && i < sliders.Length; i++)
+        int count = Mathf.Min(texts.Length, sliders.Length);
+        if (_shownValue == null || _shownValue.Length != count)
+        {
+            _shownValue = new float[count];
+            _shownLive = new bool[count];
+            _shownText = new string[count];
+        }
+
+        for (int i = 0; i < count; i++)
         {
             if (sliders[i] == null || texts[i] == null) continue;
 
-            if (live && HasKey(i) && p.TryGet(analyzerKeys[i], out float v))
+            float v;
+            bool fromAnalyzer = false;
+            if (live && HasKey(i) && p.TryGet(analyzerKeys[i], out v))
             {
+                fromAnalyzer = true;
                 sliders[i].value = v;                              // слайдер ограничит значение своими Min/Max
-                texts[i].text = v.ToString(Format(analyzerKeys[i]));
             }
             else
             {
-                texts[i].text = sliders[i].value.ToString();       // как было раньше
+                v = sliders[i].value;
             }
+
+            // Строку пересобираем только при изменении значения, а не каждый кадр (ToString каждый кадр создаёт мусор).
+            if (_shownText[i] != null && _shownValue[i] == v && _shownLive[i] == fromAnalyzer && texts[i].text == _shownText[i])
+                continue;
+
+            _shownValue[i] = v;
+            _shownLive[i] = fromAnalyzer;
+            _shownText[i] = fromAnalyzer ? v.ToString(Format(analyzerKeys[i])) : v.ToString();   // как было раньше
+            texts[i].text = _shownText[i];
         }
     }
+
+    private float[] _shownValue;
+    private bool[] _shownLive;
+    private string[] _shownText;
 
     private bool HasKey(int i) => analyzerKeys != null && i < analyzerKeys.Length && !string.IsNullOrEmpty(analyzerKeys[i]);
 

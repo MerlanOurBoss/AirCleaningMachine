@@ -12,6 +12,8 @@ public class KlaponManager : MonoBehaviour
     public string targetTag = "Target";
 
     public bool isSelected = true;
+    private Camera mainCamera;
+
     void Start()
     {
         _closedKlapon.SetActive(true);
@@ -32,9 +34,11 @@ public class KlaponManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (mainCamera == null || !mainCamera.isActiveAndEnabled) mainCamera = Camera.main;
+
+        if (Input.GetMouseButtonDown(0) && mainCamera != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))

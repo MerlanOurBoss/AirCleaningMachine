@@ -17,11 +17,16 @@ public class DotsScript : MonoBehaviour
     private int spawnedCount = 0;
     private bool isFull = false;
     private bool isPaused = false;
-    private List<GameObject> spawnedPrefabs = new List<GameObject>(); 
+    private List<GameObject> spawnedPrefabs = new List<GameObject>();
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     private void Update()
     {
-        Animator anim = GetComponent<Animator>();
         if (anim != null)
         {
             anim.speed = isPaused ? 0 : 1;

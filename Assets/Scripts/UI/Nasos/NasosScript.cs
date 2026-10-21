@@ -32,6 +32,8 @@ public class NasosScript : MonoBehaviour
     private void Update()
     {
         mySliderNasos.value = count;
+        // Тип воды хранится в ChamgingEmul (его же используют расчёты); здесь только показываем.
+        if (chamgingEmul != null) countWater = chamgingEmul.countWater > 3 ? 1 : chamgingEmul.countWater;
         mySliderWater.value = countWater;
         if (count == 1 || count == 2)
         {
@@ -115,32 +117,19 @@ public class NasosScript : MonoBehaviour
         }
 
 
-        if (countWater == 1)
+        // Цвет жидкости красит ChamgingEmul при смене типа. Раньше оба скрипта перекрашивали
+        // одни и те же рендереры каждый кадр, каждый по своему countWater, и перебивали друг друга.
+        if (chamgingEmul == null)
         {
+            if (countWater > 3) countWater = 1;
+            Color color = countWater == 2 ? new Color(0.7f, 1, 0, 0.6f)
+                        : countWater == 3 ? new Color(0, 0, 0, 0.6f)
+                        : new Color(1, 1, 1, 0.6f);
             foreach (MeshRenderer item in fluidsWater)
             {
-                item.material.color = new Color(1, 1, 1, 0.6f);
+                if (item.sharedMaterial != null && item.material.color != color) item.material.color = color;
             }
         }
-        if (countWater == 2)
-        {
-            foreach (MeshRenderer item in fluidsWater)
-            {
-                item.material.color = new Color(0.7f, 1, 0, 0.6f);
-            }
-        }
-        if (countWater == 3)
-        {
-            foreach (MeshRenderer item in fluidsWater)
-            {
-                item.material.color = new Color(0, 0, 0, 0.6f);
-            }
-        }
-        if (countWater > 3)
-        {
-            countWater = 1;
-        }
-
     }
 
 
@@ -151,7 +140,8 @@ public class NasosScript : MonoBehaviour
 
     public void PlusCountWater()
     {
-        countWater++;
+        if (chamgingEmul != null) chamgingEmul.ChangingE();
+        else countWater++;
     }
 
 

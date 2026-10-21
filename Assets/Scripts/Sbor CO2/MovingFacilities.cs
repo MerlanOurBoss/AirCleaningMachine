@@ -43,6 +43,13 @@ public class MovingFacilities : MonoBehaviour
         if (s_emulTip != null && s_emulTip.tip != null)
             s_emulTip.tip.SetActive(s_selectedEmuls.Count > 0);
     }
+    // Camera.main бывает null (камера выключена или ещё не создана) — тогда кадр пропускаем вместо NullReferenceException.
+    private Camera ActiveCamera()
+    {
+        if (mainCamera == null || !mainCamera.isActiveAndEnabled) mainCamera = Camera.main;
+        return mainCamera;
+    }
+
     bool IsChildCollider(Collider collider)
     {
         Transform currentTransform = collider.transform;
@@ -66,9 +73,11 @@ public class MovingFacilities : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        Camera cam = ActiveCamera();
+
+        if (Input.GetMouseButtonDown(0) && cam != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, parentLayer))
@@ -84,7 +93,7 @@ public class MovingFacilities : MonoBehaviour
                         isDragging = !isDragging;
 
                         Vector3 mousePosition = Input.mousePosition + mouseOffset;
-                        mousePosition.z = mainCamera.WorldToScreenPoint(transform.position).z;
+                        mousePosition.z = cam.WorldToScreenPoint(transform.position).z;
                     }
                     else
                     {
@@ -136,11 +145,11 @@ public class MovingFacilities : MonoBehaviour
             if (changed) UpdateEmulTip();
         }
 
-        if (isDragging)
+        if (isDragging && cam != null)
         {
             Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = mainCamera.WorldToScreenPoint(transform.position).z;
-            Vector3 newPosition = mainCamera.ScreenToWorldPoint(mousePosition);
+            mousePosition.z = cam.WorldToScreenPoint(transform.position).z;
+            Vector3 newPosition = cam.ScreenToWorldPoint(mousePosition);
 
             if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
             {

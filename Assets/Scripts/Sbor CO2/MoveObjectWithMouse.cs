@@ -60,9 +60,13 @@ public class MoveObjectWithMouse : MonoBehaviour
 
     void Update()
     {
+        // Camera.main бывает null (камера выключена или ещё не создана) — тогда кадр пропускаем вместо NullReferenceException.
+        if (mainCamera == null || !mainCamera.isActiveAndEnabled) mainCamera = Camera.main;
+        if (mainCamera == null) return;
+
         if (Input.GetKey(KeyCode.X))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, parentLayer))
@@ -79,7 +83,7 @@ public class MoveObjectWithMouse : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, parentLayer))

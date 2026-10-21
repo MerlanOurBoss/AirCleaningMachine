@@ -57,7 +57,7 @@ public class CameraSequenceController : MonoBehaviour
         var found = foundList.ToArray();
         var seenNames = new HashSet<string>();
         int emulgatorCount = 0;
-        const int emulgatorLimit = 2;
+        const int emulgatorLimit = 3;
 
         componentCameras = new List<Camera>(found.Length);
 
