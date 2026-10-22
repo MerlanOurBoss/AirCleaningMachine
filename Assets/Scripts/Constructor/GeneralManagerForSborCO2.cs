@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GeneralManagerForSborCO2 : ModuleManagerBase<MathModulForSborCO2>
 {
     [Header("SborCO2")]
+    // Старые имена — для префабов CHP (см. ModuleManagerBase.componentCamera).
+    // Старое _SborScript не подхватывается: там был NewSborScript, а не SborCO2Controller.
+    [FormerlySerializedAs("_SborSmokes")]
     [SerializeField] private ParticleSystem[] sborSmokes;
+    [FormerlySerializedAs("_SborFans")]
     [SerializeField] private Animator[] sborFans;
     [SerializeField] private SborCO2Controller sborScript;
 

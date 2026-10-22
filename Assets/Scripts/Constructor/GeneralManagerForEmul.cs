@@ -2,14 +2,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.Timeline;
 
 public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
 {
     [Header("Emul")]
+    // Старые имена — для префабов CHP (см. ModuleManagerBase.componentCamera).
+    [FormerlySerializedAs("_emulSmokes")]
     [SerializeField] private ParticleSystem[] emulSmokes;
+    [FormerlySerializedAs("_emulFluid")]
     [SerializeField] private PlayableDirector[] emulFluid;
     [SerializeField] private DropSpawner[] dropSpawners;
+    [FormerlySerializedAs("_fluidTest")]
     [SerializeField] private TextMeshProUGUI fluidTest;
 
     // Доля NO2/SO2/H2S, остающаяся в газе после эмульгатора: на воде и на реагенте (едкий натрий, сода).

@@ -20,6 +20,10 @@ public class LoadSmoke : MonoBehaviour
     [SerializeField] private List<GeneralManagerBase> _modules;
     [SerializeField] private List<MainTableRowUI> mainTable = new List<MainTableRowUI>();
 
+    [Tooltip("Брать аппараты (и для расчёта, и для пуска/остановки) только из этой установки. Пусто — все аппараты сцены. " +
+             "В CHP задаётся из CopyObject (SetModuleScope): там 16 одинаковых установок.")]
+    [SerializeField] private Transform moduleScope;
+
     private List<IParameterModule> _parameterModules = new List<IParameterModule>();
 
     /// <summary>Модули цепочки в порядке прохождения газа (по нему же идёт OUT → IN). Читает ProcessMonitor.</summary>
@@ -30,16 +34,40 @@ public class LoadSmoke : MonoBehaviour
     {
         startButton.onClick.AddListener(StartSimulation);
         stopButton.onClick.AddListener(StopSimulation);
-        
-        var found = FindObjectsOfType<GeneralManagerBase>(true);
-        _modules = new List<GeneralManagerBase>(found);
+
+        CollectModules();
+        StartCoroutine(UpdateChainRoutine());
+    }
+
+    /// <summary>
+    /// Оставить только аппараты одной установки и собрать их заново
+    /// (в CHP они появляются в рантайме, после копирования). Можно вызывать и до Start.
+    /// </summary>
+    public void SetModuleScope(Transform scope)
+    {
+        moduleScope = scope;
+        CollectModules();
+    }
+
+    private void CollectModules()
+    {
+        _modules = new List<GeneralManagerBase>();
+        foreach (var module in FindObjectsOfType<GeneralManagerBase>(true))
+        {
+            // Аппараты других установок не считаются и не запускаются — иначе выход одной установки
+            // становился входом следующей.
+            if (moduleScope == null || module.transform.IsChildOf(moduleScope))
+                _modules.Add(module);
+        }
+
+        if (moduleScope != null && _modules.Count == 0)
+            Debug.LogWarning($"LoadSmoke: в установке '{moduleScope.name}' нет аппаратов (GeneralManagerBase)");
 
         // Порядок цепочки = порядок объектов в иерархии (тот же, по которому PipeConnector соединяет трубы).
         // Раньше брался порядок FindObjectsOfType + Reverse(), который Unity не гарантирует.
         _modules.Sort((a, b) => CompareHierarchyOrder(a.transform, b.transform));
-        
+
         CacheParameterModules();
-        StartCoroutine(UpdateChainRoutine());
     }
     private IEnumerator UpdateChainRoutine()
     {
@@ -60,7 +88,8 @@ public class LoadSmoke : MonoBehaviour
                 _parameterModules.Add(pm);
         }
 
-        if (_parameterModules.Count == 0)
+        // Аппаратов может ещё не быть (CHP до копирования установок) — тогда предупреждать не о чем.
+        if (_modules.Count > 0 && _parameterModules.Count == 0)
         {
             Debug.LogWarning("LoadSmoke: ни один из GeneralManagerBase не реализует IParameterModule");
         }

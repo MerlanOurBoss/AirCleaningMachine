@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GeneralManagerForElectroFilter : ModuleManagerBase<MathModuleForElectro>
 {
     [Header("ElectroFilter")]
+    // Старые имена — для префабов CHP (см. ModuleManagerBase.componentCamera).
+    [FormerlySerializedAs("_electroFilterSmokes")]
     [SerializeField] private ParticleSystem[] electroFilterSmokes;
+    [FormerlySerializedAs("_electroFilterAnimation")]
     [SerializeField] private Animator electroFilterAnimation;
 
     protected override void OnMathModuleReady(MathModuleForElectro module)

@@ -12,7 +12,11 @@ public class CameraSequenceController : MonoBehaviour
     
     [SerializeField] private List<Camera> componentCameras;
     [SerializeField] private string componentsTag = "ComponentsCamera";
-    
+
+    [Tooltip("Брать камеры только из этой установки (её дочерних объектов), камеры остальных выключаются. " +
+             "Пусто — все камеры сцены с тегом. В CHP задаётся из CopyObject (SetCameraScope): там 16 одинаковых установок.")]
+    [SerializeField] private Transform cameraScope;
+
     
     [Header("Viewport area (в долях экрана)")]
     [SerializeField] private Rect gridArea = new Rect(0.22f, 0.051f, 0.752f, 0.883f);
@@ -52,7 +56,18 @@ public class CameraSequenceController : MonoBehaviour
         // поэтому ищем по всем камерам сцены, включая неактивные.
         var foundList = new List<GameObject>();
         foreach (var c in FindObjectsOfType<Camera>(true))
-            if (c.CompareTag(componentsTag)) foundList.Add(c.gameObject);
+        {
+            if (!c.CompareTag(componentsTag)) continue;
+
+            // Камеры других установок не попадают в стену и не рисуют поверх неё.
+            if (cameraScope != null && !c.transform.IsChildOf(cameraScope))
+            {
+                HideCameraHost(c);
+                continue;
+            }
+
+            foundList.Add(c.gameObject);
+        }
         var found = foundList.ToArray();
         var seenNames = new HashSet<string>();
         int emulgatorCount = 0;
@@ -88,6 +103,25 @@ public class CameraSequenceController : MonoBehaviour
         
         componentCameras.Sort((a, b) => string.Compare(a.name, b.name, System.StringComparison.Ordinal));
     }
+    /// <summary>
+    /// Оставить в стене камер только аппараты одной установки (камеры остальных выключаются)
+    /// и заново разложить стену в текущем режиме. Можно вызывать и до Start.
+    /// </summary>
+    public void SetCameraScope(Transform scope)
+    {
+        cameraScope = scope;
+        RefreshCamerasFromTag();
+
+        if (mode == Mode.Overview)
+        {
+            ShowOverview();
+            return;
+        }
+
+        if (mode == Mode.Revealed) OnRevealStateChanged?.Invoke(false);
+        ShowWall();
+    }
+
     // Выключить объект-носитель камеры (родителя, если он есть; раньше без родителя был NullReference).
     private static void HideCameraHost(Camera cam)
     {

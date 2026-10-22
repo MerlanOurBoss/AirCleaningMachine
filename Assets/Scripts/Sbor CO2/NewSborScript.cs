@@ -92,8 +92,9 @@ public class NewSborScript : MonoBehaviour
         gazAnalyz[3].SetActive(false);
         absent.SetFloat("_secondColorInfluence", 0.5f);
         absent2.SetFloat("_secondColorInfluence", 0.5f);
-        
-        
+
+        // Материал — общий ассет и в редакторе хранит уровень с прошлого запуска: начинаем с пустой колонны.
+        materialSbor.SetFloat("_Filling", -31f);
     }
 
     void Update()
@@ -432,9 +433,13 @@ public class NewSborScript : MonoBehaviour
             if (!isUpdated)
             {
                 float a = materialSbor.GetFloat("_Filling");
-                if (a < -21)
+                if (a < 31)
                 {
                     materialSbor.SetFloat("_Filling", a + 10f);
+                }
+                else if (a > 31)
+                {
+                    materialSbor.SetFloat("_Filling", -21f);
                 }
                 isUpdated = true;
             }
@@ -574,12 +579,16 @@ public class NewSborScript : MonoBehaviour
             {
                 float a = materialSbor.GetFloat("_Filling");
                 
-                if (a < -21)
+                if (a < 31)
                 {
                     materialSbor.SetFloat("_Filling", a + 10f);
                 }
+                else if (a > 31)
+                {
+                    materialSbor.SetFloat("_Filling", -21f);
+                }
                 isUpdated = true;
-                
+
             }
         }
         if (fillingCount >= 145 && fillingCount <= 150)

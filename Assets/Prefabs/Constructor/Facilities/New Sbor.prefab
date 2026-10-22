@@ -54998,7 +54998,7 @@ MonoBehaviour:
   avoidObstacles: 0
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 4294967259
+    m_Bits: 8155
   lockCursorOnFreeLook: 1
 --- !u!114 &8611977573851600056
 MonoBehaviour:

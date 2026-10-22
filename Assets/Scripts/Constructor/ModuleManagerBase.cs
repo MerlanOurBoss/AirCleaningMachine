@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public abstract class ModuleManagerBase<TMathModule> : GeneralManagerBase, IParameterModule
@@ -23,7 +24,12 @@ public abstract class ModuleManagerBase<TMathModule> : GeneralManagerBase, IPara
     [SerializeField] protected float updateInterval = 5f;
 
     [Header("Camera reveal")]
+    // FormerlySerializedAs — старые имена полей из GeneralManagerForXxx до переноса в базовый класс:
+    // префабы CHP («Sbor CO2 для ТЭЦ») не пересохранялись, и без этого ссылки в них терялись
+    // (componentCamera == null, кнопка входа в камеру аппарата не работала).
+    [FormerlySerializedAs("_componentCamera")]
     [SerializeField] protected Camera componentCamera;
+    [FormerlySerializedAs("_cameraSequenceController")]
     [SerializeField] protected CameraSequenceController cameraSequenceController;
     [SerializeField] protected Button exitButton;
     [SerializeField] protected Button enterButton;

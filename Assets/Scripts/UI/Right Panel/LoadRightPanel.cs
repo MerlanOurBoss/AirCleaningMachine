@@ -28,16 +28,51 @@ public class LoadRightPanel : MonoBehaviour
     private GameObject currentlySelectedPrefab;
     
     private Dictionary<GameObject, Vector3> originalDetailsPositions = new Dictionary<GameObject, Vector3>();
+    private bool _started;
+
     private void Start()
     {
-        if (parentComponent == null || rootToComponent == null || prefabs == null)
-        {
-            parentComponent = GameObject.FindGameObjectWithTag(Tags.SborCO2);
-            
-        }
+        _started = true;
 
+        // В CHP установки создаёт CopyObject в рантайме и сам передаёт активную (SetParentComponent):
+        // по тегу нашлась бы случайная из 16 копий, а до копирования — null и NullReferenceException.
+        if (parentComponent == null && FindAnyObjectByType<CopyObject>() == null)
+            parentComponent = GameObject.FindGameObjectWithTag(Tags.SborCO2);
+
+        if (parentComponent != null)
+            Spawn();
+    }
+
+    /// <summary>
+    /// Установка, аппараты которой показывает панель и с менеджерами которой связываются матмодули.
+    /// Можно вызывать и до Start — панель заполнится в Start.
+    /// </summary>
+    public void SetParentComponent(GameObject installation)
+    {
+        if (installation == null) return;
+
+        parentComponent = installation;
+        if (_started) Spawn();
+    }
+
+    private void Spawn()
+    {
+        ClearSpawned();
         SpawnPrefabs();
         SetupButtonLogic();
+    }
+
+    // Повторный вызов SetParentComponent не должен дублировать карточки аппаратов.
+    private void ClearSpawned()
+    {
+        foreach (var spawned in spawnedPrefabs)
+            if (spawned != null) Destroy(spawned);
+
+        spawnedPrefabs.Clear();
+        spawnedButtons.Clear();
+        originalDetailsPositions.Clear();
+        currentlySelectedButton = null;
+        currentlySelectedPrefab = null;
     }
 
     private void SpawnPrefabs()

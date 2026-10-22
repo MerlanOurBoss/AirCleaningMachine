@@ -13808,6 +13808,10 @@ MonoBehaviour:
   count: 16
   spacing: 350
   uimanager: {fileID: 992444087}
+  activeInstallationIndex: 0
+  cameraSequenceController: {fileID: 0}
+  loadSmoke: {fileID: 0}
+  rightPanel: {fileID: 0}
 --- !u!65 &316357240
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18361,6 +18365,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 930147540}
     m_Modifications:
+    - target: {fileID: 2180566866792040285, guid: bc758dcf4fefc394396eec0c7d3e7031, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 3954809925945330318, guid: bc758dcf4fefc394396eec0c7d3e7031, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -19728,6 +19736,7 @@ MonoBehaviour:
   overviewCameraUI: {fileID: 325731267}
   componentCameras: []
   componentsTag: ComponentsCamera
+  cameraScope: {fileID: 0}
   gridArea:
     serializedVersion: 2
     x: 0.224
@@ -31168,7 +31177,7 @@ MonoBehaviour:
   avoidObstacles: 0
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 4294967259
+    m_Bits: 8155
   lockCursorOnFreeLook: 1
 --- !u!1 &732794156
 GameObject:
@@ -39784,6 +39793,7 @@ MonoBehaviour:
   - id: N2
     slider: {fileID: 691004672}
     valueTextIn: {fileID: 723358877}
+  moduleScope: {fileID: 0}
   updateInterval: 5
 --- !u!4 &949372183
 Transform:
@@ -84279,7 +84289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 454.99994, y: 0}
+  m_AnchoredPosition: {x: 455, y: 0}
   m_SizeDelta: {x: 450, y: -2}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1972872326

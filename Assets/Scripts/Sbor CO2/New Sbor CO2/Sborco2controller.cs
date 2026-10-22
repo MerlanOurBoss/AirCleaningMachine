@@ -390,8 +390,14 @@ public class SborCO2Controller : MonoBehaviour
         if (_materialSborUpdatedThisPhase) return;
 
         float current = materialSbor.GetFloat("_Filling");
-        if (current < -21f)
+        if (current < 31)
+        {
             materialSbor.SetFloat("_Filling", current + 10f);
+        }
+        else if (current > 31)
+        {
+            materialSbor.SetFloat("_Filling", -21f);
+        }
 
         _materialSborUpdatedThisPhase = true;
     }

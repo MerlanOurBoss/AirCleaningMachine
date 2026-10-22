@@ -95,7 +95,7 @@ MonoBehaviour:
     parameterId: CO2
     unit: '%'
     checkMax: 1
-    warningMax: 4
+    warningMax: 3
     criticalMax: 6
     checkMin: 0
     warningMin: 0

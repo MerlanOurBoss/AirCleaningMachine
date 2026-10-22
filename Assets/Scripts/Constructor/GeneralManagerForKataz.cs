@@ -2,11 +2,15 @@ using System;
 using System.Globalization;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GeneralManagerForKataz : ModuleManagerBase<MathModulForKataz>
 {
     [Header("Kataz")]
+    // Старые имена — для префабов CHP (см. ModuleManagerBase.componentCamera).
+    [FormerlySerializedAs("_katazSmokes")]
     [SerializeField] private ParticleSystem[] katazSmokes;
+    [FormerlySerializedAs("_temperatureCatalizator")]
     [SerializeField] private TemperatureCatalizator temperatureCatalizator;
 
     private float _temp;
