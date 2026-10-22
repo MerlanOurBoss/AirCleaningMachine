@@ -12,9 +12,26 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
     [SerializeField] private DropSpawner[] dropSpawners;
     [SerializeField] private TextMeshProUGUI fluidTest;
 
+    // Доля NO2/SO2/H2S, остающаяся в газе после эмульгатора: на воде и на реагенте (едкий натрий, сода).
+    public const float WaterPassRatio = 0.8f;
+    public const float ReagentPassRatio = 0.05f;
+
+    /// <summary>Номера жидкостей в ChamgingEmul.countWater.</summary>
+    public const int FluidWater = 1, FluidCausticSoda = 2, FluidSoda = 3;
+
     private bool _isPlaying;
     private ChamgingEmul _emulType;
     private int _appliedFluidType = -1;
+
+    /// <summary>
+    /// Сменить жидкость (FluidWater / FluidCausticSoda / FluidSoda). Через ChamgingEmul, как клавиша T
+    /// в конструкторе, — меняется и цвет жидкости на модели, а матмодуль подхватит тип в SyncFluidType.
+    /// </summary>
+    public void SelectFluid(int type)
+    {
+        if (_emulType != null) _emulType.countWater = type;
+        else if (MathModule != null) MathModule.SetFluidType(type);
+    }
 
     protected override void OnMathModuleReady(MathModuleForEmul module)
     {
@@ -119,7 +136,7 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
             case "SO2":
             case "H2S":
                 // Было сравнение с "Вода" — на казахском и английском всегда бралось 0.05.
-                float ratio = MathModule.IsWater ? 0.8f : 0.05f;
+                float ratio = MathModule.IsWater ? WaterPassRatio : ReagentPassRatio;
                 row.valueTextOut.text = Mathf.Ceil(originalValue * ratio).ToString();
                 return true;
 

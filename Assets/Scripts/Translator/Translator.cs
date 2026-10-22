@@ -69,6 +69,9 @@ public class Translator : MonoBehaviour
         {
             if (tmp == null) continue;
 
+            // Тексты, которые код собирает сам на нужном языке (панель тревог), в CSV нет — не трогаем их.
+            if (tmp.GetComponentInParent<ExcludeFromTranslation>(true) != null) continue;
+
             if (!originalKeys.ContainsKey(tmp))
                 originalKeys[tmp] = (tmp.text ?? string.Empty).Trim();
         }

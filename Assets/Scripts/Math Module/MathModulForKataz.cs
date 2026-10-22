@@ -62,6 +62,20 @@ public class MathModulForKataz : MathModuleBase
     /// <summary>Тип блока «без драгметаллов» — на любом языке интерфейса.</summary>
     public bool HasNoPreciousMetals => MatchesAny(_katazBlockType.text, WithoutPreciousMetals);
 
+    public int BlockCount => Mathf.RoundToInt(ParseLeadingNumber(_katazBlockCount.text));
+
+    /// <summary>Выставить число блоков (как выбор в выпадающем списке): пересчёт и показ блоков — через onValueChanged.</summary>
+    public void SetBlockCount(int blocks) => _katazBlockCount.text = blocks.ToString();
+
+    /// <summary>Выставить тип блоков названием на текущем языке интерфейса.</summary>
+    public void SetBlockType(bool preciousMetals)
+    {
+        var names = preciousMetals ? WithPreciousMetals : WithoutPreciousMetals;
+        var lang = translator != null ? translator.currentLanguage : Translator.Language.Russian;
+        _katazBlockType.text = lang == Translator.Language.Kazakh ? names[1]
+                             : lang == Translator.Language.English ? names[2] : names[0];
+    }
+
     protected override string BuildDirtySnapshot() =>
         $"{_temperatureText.text}|{_pressureText.text}|{_flowRateText.text}|{_gasFlowMain.text}|" +
         $"{_katazBlockCount.text}|{_katazBlockType.text}|{_gasSource.text}";

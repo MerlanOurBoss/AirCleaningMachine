@@ -29,7 +29,8 @@ public abstract class ModuleManagerBase<TMathModule> : GeneralManagerBase, IPara
     [SerializeField] protected Button enterButton;
     [SerializeField] protected Button switchButton;
 
-    protected TMathModule MathModule => mathModule;
+    // Публичный — его читает ProcessAdvisor, чтобы предлагать настройки аппарата.
+    public TMathModule MathModule => mathModule;
 
     private Coroutine _updateRoutine;
 

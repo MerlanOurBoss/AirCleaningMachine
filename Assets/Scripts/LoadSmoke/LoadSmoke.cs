@@ -21,7 +21,10 @@ public class LoadSmoke : MonoBehaviour
     [SerializeField] private List<MainTableRowUI> mainTable = new List<MainTableRowUI>();
 
     private List<IParameterModule> _parameterModules = new List<IParameterModule>();
-    
+
+    /// <summary>Модули цепочки в порядке прохождения газа (по нему же идёт OUT → IN). Читает ProcessMonitor.</summary>
+    public IReadOnlyList<IParameterModule> ParameterModules => _parameterModules;
+
     [SerializeField] private float updateInterval = 5f;
     private void Start()
     {
