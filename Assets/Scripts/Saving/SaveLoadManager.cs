@@ -309,24 +309,8 @@ public class SaveLoadManager : MonoBehaviour
             if (!string.IsNullOrEmpty(data.tag))
                 obj.tag = data.tag;
 
-            if (obj.CompareTag(Tags.Pipe))
-            {
-            }
-            else if (obj.CompareTag(Tags.Klapon))
-            {
-                var klapon = obj.GetComponent<KlaponManager>();
-                if (klapon != null) klapon.isSelected = false;
-            }
-            else if (obj.CompareTag(Tags.Pipe_T))
-            {
-                var mover = obj.GetComponent<MoveObjectWithMouse>();
-                if (mover != null)
-                {
-                    mover.isDragging = false;
-                    mover.isSelected = false;
-                }
-            }
-            else
+            // У труб и клапанов коллайдер оставляем, у аппаратов — выключаем.
+            if (!obj.CompareTag(Tags.Pipe) && !obj.CompareTag(Tags.Klapon) && !obj.CompareTag(Tags.Pipe_T))
             {
                 var facility = obj.GetComponent<MovingFacilities>();
                 if (facility != null) facility.isDragging = false;

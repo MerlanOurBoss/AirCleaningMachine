@@ -138,26 +138,8 @@ public class LoadManager : MonoBehaviour
 
                         }
                         
-                        if (obj.CompareTag(Tags.Pipe))
-                        {
-
-                        }
-                        else if (obj.CompareTag(Tags.Klapon))
-                        {
-                            var klaponManager = obj.GetComponent<KlaponManager>();
-                            if (klaponManager != null)
-                                klaponManager.isSelected = false;
-                        }
-                        else if (obj.CompareTag(Tags.Pipe_T))
-                        {
-                            var moveObject = obj.GetComponent<MoveObjectWithMouse>();
-                            if (moveObject != null)
-                            {
-                                moveObject.isDragging = false;
-                                moveObject.isSelected = false;
-                            }
-                        }
-                        else
+                        // У труб и клапанов коллайдер оставляем, у аппаратов — выключаем.
+                        if (!obj.CompareTag(Tags.Pipe) && !obj.CompareTag(Tags.Klapon) && !obj.CompareTag(Tags.Pipe_T))
                         {
                             var collider = obj.GetComponent<BoxCollider>();
                             if (collider != null)

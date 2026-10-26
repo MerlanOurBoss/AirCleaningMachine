@@ -12,11 +12,6 @@ public class PipeConnection : MonoBehaviour
     private bool isMouseOverTrigger = false;
     private void Update()
     {
-        if (isClicked)
-        {
-            FindSelectedObject();
-            //FindSelectedFacilities();
-        }
         if (isConnected)
         {
             isClicked = false;
@@ -39,17 +34,6 @@ public class PipeConnection : MonoBehaviour
         isClicked = false;
         isConnected = false;
     }
-    void FindSelectedObject()
-    {
-        foreach (MoveObjectWithMouse script in MoveObjectWithMouse.Active)
-        {
-            if (script != null && script.isSelected && script.isActivated == false)
-            {
-                HandlePipe(script.gameObject, 0, 0, 0, 0, 0, 0, "pipe");
-                return;
-            }
-        }
-    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -60,58 +44,9 @@ public class PipeConnection : MonoBehaviour
                 if (!isMouseOverTrigger)
                 {
                     Debug.Log("connected for " + other.gameObject.name);
-                    //this.enabled = false;
-                    //gameObject.GetComponent<Collider>().enabled = false;
-                    //gameObject.tag = Tags.Untagged;
-                    PipeConnection otherScript = other.GetComponent<PipeConnection>();
-                    Collider collider = other.GetComponent<Collider>();
-                    
-                    Transform parentTransform = other.transform.parent;
-                    MoveObjectWithMouse mv = parentTransform.GetComponent<MoveObjectWithMouse>();
-                    if (mv != null) {
-                        parentTransform.GetComponent<MoveObjectWithMouse>().isConnected = true;
-                    }
-
-                    Transform parentTranfrom1 = transform.parent;
-                    MoveObjectWithMouse mv1 = parentTranfrom1.GetComponent<MoveObjectWithMouse>();
-                    if (mv1 != null) {
-                        parentTranfrom1.GetComponent<MoveObjectWithMouse>().isConnected = true;
-                    }
-                    
                     isActivated = true;
-                    if (otherScript != null)
-                    {
-                        //otherScript.enabled = false;
-                        //collider.enabled = false;
-                        //other.tag = Tags.Untagged;
-                    }
                 }
-            }                
+            }
         }
     }
-    private void HandlePipe(GameObject other, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, string debugMessage)
-    {
-        Debug.Log(debugMessage);
-        other.transform.SetParent(transform);
-        other.transform.localPosition = new Vector3(posX,posY,posZ);
-        other.transform.localScale = new Vector3(1,1,1);
-        other.GetComponent<MoveObjectWithMouse>().isDragging = false;
-        Destroy(other.GetComponent<BoxCollider>());
-        //other.gameObject.tag = Tags.Untagged;
-        isClicked = false;
-        isConnected = true;
-    }
-
-    //private void HandleFacilities(GameObject other, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, string debugMessage)
-    //{
-    //    Debug.Log(debugMessage);
-    //    //other.transform.SetParent(transform);
-    //    other.transform.position = new Vector3(posX, posY, posZ);
-    //    other.transform.localScale = new Vector3(1, 1, 1);
-    //    other.GetComponent<MovingFacilities>().isDragging = false;
-    //    //Destroy(other.GetComponent<BoxCollider>());
-    //    //other.gameObject.tag = Tags.Untagged;
-    //    isClicked = false;
-    //    isConnected = true;
-    //}
 }
