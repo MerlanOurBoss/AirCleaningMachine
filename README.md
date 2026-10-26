@@ -72,17 +72,19 @@ The scenes in Build Settings, in order:
 Assets/
 ├── Scenes/            Game scenes
 ├── Scripts/
-│   ├── Constructor/       Equipment placement, pipe connections, per-module managers
-│   ├── Math Module/       Process calculations for each equipment type
-│   │                      (electrofilter, catalyst, emulsifier, CO₂ capture)
-│   ├── Sbor CO2/          CO₂ capture installation (New Sbor CO2/ is the current state machine)
+│   ├── Facilities/        One folder per piece of equipment: manager, math module, effects
+│   │   ├── Common/            Base classes, Facility ID pairing, ParameterRowUI
+│   │   ├── Electrofilter/, Emulsifier/, Catalyst/, Oven/
+│   │   └── CO2Capture/        CO₂ capture (New/ is the state-machine controller)
+│   ├── Constructor/       Placing equipment and connecting pipes
+│   ├── Simulation/        Equipment chain (LoadSmoke), molecules, CHP, tutorial
 │   ├── Monitoring/        Parameter limits, alerts and recommendations
 │   ├── Saving/            Save and load constructions as JSON
-│   ├── Tables/            Data tables; Gazanalyzer/ holds the MRU Optima USB reader
-│   ├── CameraTranslation/ Camera controller and camera sequences
-│   ├── UI/                Menus, process diagrams (Sxema/), pump UI, fullscreen
-│   ├── Translator/        Localisation (reads Data/Translations.csv)
-│   ├── Moleculas/, Electrofilter/, Emulgator/, Katalizator/, LoadSmoke/  Visual effects
+│   ├── Camera/            Camera controller and camera sequences
+│   ├── Localization/      Translator (reads Data/Translations.csv)
+│   ├── Hardware/          MRU Optima gas analyser (USB HID)
+│   ├── UI/                Menus, sign-in, tables, process diagrams (Scheme/), right panel
+│   ├── Core/              Tags and small shared helpers
 │   └── Editor/            Editor tools
 ├── Prefabs/, Models/, Materials/, Shaders/, Animation/, Audio/, UI/
 ├── Data/              Translations, default simulation, certificate templates
@@ -93,7 +95,7 @@ Assets/
 
 ### How a simulation fits together
 
-- Each piece of equipment in the scene has a **manager** (`ModuleManagerBase` and its subclasses in `Constructor/`) and a **math module** (`MathModuleBase` and its subclasses in `Math Module/`).
+- Each piece of equipment in the scene has a **manager** (`ModuleManagerBase` and its subclasses) and a **math module** (`MathModuleBase` and its subclasses). The base classes are in `Facilities/Common/`, and each equipment folder holds its own pair.
 - `FacilityPairingRegistry` links a manager to its math module by a shared **Facility ID**.
 - `ProcessMonitor` checks the values against the limits in `Resources/ProcessLimits.asset`. `ProcessAlert`, `ProcessAdvisor` and `AlertPanelUI` show the warnings and recommendations to the user.
 
@@ -117,7 +119,7 @@ Constructions are saved as JSON, with camera screenshots, to:
 
 ## Gas analyser (MRU Optima)
 
-`Tables/Gazanalyzer/OptimaHidPoller` reads live measurements from an MRU Optima analyser over USB HID. It polls the device on a background thread and delivers the data to the main thread.
+`Hardware/OptimaHidPoller` reads live measurements from an MRU Optima analyser over USB HID. It polls the device on a background thread and delivers the data to the main thread.
 
 - It supports these models: SN317718 (O₂, CO, NO, NO₂, NOx, SO₂) and SN355211 (O₂, CO₂, CO, NO, NO₂, NOx).
 - **Close MRU4Win** before starting, because only one program can use the device at a time.
