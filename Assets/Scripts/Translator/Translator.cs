@@ -28,15 +28,12 @@ public class Translator : MonoBehaviour
     
     void Start()
     {
-        LoadAllTextMeshProUGUI();
-        
         if (translationsCsv == null)
-        {
             Debug.LogError("[Translator] CSV not assigned.");
-            return;
-        }
-        LoadCsv(translationsCsv);
 
+        // CSV загружается внутри LoadAllTextMeshProUGUI до SetLanguage. Раньше язык применялся
+        // к пустому словарю, а после загрузки CSV — уже нет, и тексты при старте не переводились.
+        LoadAllTextMeshProUGUI();
     }
 
     public void LoadAllTextMeshProUGUI()
@@ -46,11 +43,17 @@ public class Translator : MonoBehaviour
         if (allTextComponents == null || allTextComponents.Length == 0)
         {
 #if UNITY_2023_1_OR_NEWER
-            allTextComponents = GameObject.FindObjectsByType<TextMeshProUGUI>(FindObjectsSortMode.None);
+            // Включая выключенные: иначе тексты на скрытых панелях не переводились.
+            allTextComponents = GameObject.FindObjectsByType<TextMeshProUGUI>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 #else
             allTextComponents = GameObject.FindObjectsOfType<TextMeshProUGUI>(true);
 #endif
         }
+
+        // LoadRightPanel может вызвать этот метод раньше Start — словарь грузим при первом обращении.
+        if (map.Count == 0 && translationsCsv != null)
+            LoadCsv(translationsCsv);
+
         CacheOriginalKeys();
         ApplyFontIfAssigned();
         SetLanguage(currentLanguage);

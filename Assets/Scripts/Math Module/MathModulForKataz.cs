@@ -128,10 +128,15 @@ public class MathModulForKataz : MathModuleBase
 
         // Порядок исправлен: сначала скорость и плотность, потом зависящие от них величины.
         // Раньше CO_Gaz_Out считался по скорости с прошлого шага (в первый раз — делением на 0).
-        density = (ParseLeadingNumber(_pressureText.text) * molarMass) / (R * ParseLeadingNumber(_temperatureText.text));
+        // Уравнение состояния ρ = P·M / (R·T) — температура в кельвинах (в поле она в °C).
+        // Раньше подставлялись °C: при 25 °C выходило 14 кг/м³ вместо 1.18, при 0 °C — деление на ноль.
+        float temperatureK = ParseLeadingNumber(_temperatureText.text) + 273.15f;
+        density = temperatureK > 0f ? (ParseLeadingNumber(_pressureText.text) * molarMass) / (R * temperatureK) : 0f;
         velocity = ParseLeadingNumber(_flowRateText.text) / crossSectionArea;
         massFlow = density * velocity * crossSectionArea;
-        CO_Gaz_Out = (float)(CO_Gaz_In * Math.Pow(Math.E, k_CO * 1 * (1 / velocity)));
+        // Окисление CO на катализаторе: C_вых = C_вх · exp(−k·L/v), L = 1 м. Раньше знак в экспоненте
+        // был «+», и на выходе CO получалось больше, чем на входе. Без потока газа концентрация не меняется.
+        CO_Gaz_Out = velocity > 0f ? (float)(CO_Gaz_In * Math.Exp(-k_CO * 1 / velocity)) : CO_Gaz_In;
 
         valueGasFlow = ParseLeadingNumber(_gasFlowMain.text);
 

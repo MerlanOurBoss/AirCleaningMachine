@@ -18,7 +18,7 @@ public class MathModuleForEmul : MathModuleBase
     [SerializeField] private TextMeshProUGUI gasMassFlow;
     [SerializeField] private TextMeshProUGUI waterMassFlow;
     [SerializeField] private TextMeshProUGUI massTransfer;
-    [SerializeField] private TextMeshProUGUI gasСonsumption;
+    [UnityEngine.Serialization.FormerlySerializedAs("gasСonsumption")] [SerializeField] private TextMeshProUGUI gasConsumption;
     [SerializeField] private TextMeshProUGUI sizeText;
 
     private float _gasSpeed = 0;
@@ -27,8 +27,8 @@ public class MathModuleForEmul : MathModuleBase
     private float _waterMassFlow = 0;
     private float _reynoldsNumber = 0;
     private float _massTransfer = 0;
-    public float _gasСonsumption = 0;
-    public float сonsumption = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("_gasСonsumption")] public float _gasConsumption = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("сonsumption")] public float consumption = 0;
 
     private readonly float empiricalConstantsA = 0.5f;
     private readonly float empiricalConstantsB = 0.8f;
@@ -165,8 +165,8 @@ public class MathModuleForEmul : MathModuleBase
         // Рейнольдс брал старую скорость воды, а вывод шёл до расчёта.
         double valueGasFlow = ParseLeadingNumber(_gasFlowMain.text);
 
-        сonsumption = (float)valueGasFlow / 3600;
-        _gasСonsumption = (0.22f * сonsumption) / 1000;
+        consumption = (float)valueGasFlow / 3600;
+        _gasConsumption = (0.22f * consumption) / 1000;
 
         deametr = (float)Math.Ceiling(Math.Sqrt((4.0 * valueGasFlow) / Math.PI / 3600.0 / 2.9));
         height = Math.Ceiling(((0.8 + 18 * 0.15 + 0.35 * deametr + 0.6) / 5.0) * 10.0) / 10.0 * 5.0;
@@ -200,7 +200,7 @@ public class MathModuleForEmul : MathModuleBase
 
         _massTransfer = empiricalConstantsA * Mathf.Pow((_reynoldsNumber / deametrDroplet), empiricalConstantsB);
 
-        electro = 0.12 * (_gasСonsumption * 3600);
+        electro = 0.12 * (_gasConsumption * 3600);
         // Таблица L51: 0.005·(Q/1000) м³/ч. Было valueGasFlow * 1000 — в 1 000 000 раз больше.
         waterConsumables = 0.005 * (valueGasFlow / 1000);
         dryReagentConsumptionCount = (10 / 100.0) * (1100 / 1000.0) * (valueGasFlow / 1000.0) / 0.95 / 1000;
@@ -237,7 +237,7 @@ public class MathModuleForEmul : MathModuleBase
             gasMassFlow.text = "Массовый поток газа: \n\t\t   " + _gasMassFlow.ToString("0.000") + " м³/с";
             waterMassFlow.text = "Массовый поток жидкости: \n\t\t   " + _waterMassFlow.ToString("0.000") + " м³/с";
             massTransfer.text = "Коэф. массового переноса: \n\t\t   " + _massTransfer.ToString("0.0") + " м/с";
-            gasСonsumption.text = "Расход жидкости: \n\t\t   " + _gasСonsumption.ToString("0.000") + " м³/с";
+            gasConsumption.text = "Расход жидкости: \n\t\t   " + _gasConsumption.ToString("0.000") + " м³/с";
             sizeText.text = $"Диаметр аппарата: {deametr:0.0} м \n" +
                         $"Высота аппарата: {height:0.0} м \n" +
                          $"Расходники: {consumablesTotal: 0.0} тг";
@@ -249,7 +249,7 @@ public class MathModuleForEmul : MathModuleBase
             gasMassFlow.text = "Газ массасы ағыны: \n\t\t   " + _gasMassFlow.ToString("0.000") + " м³/с";
             waterMassFlow.text = "Сұйық масса ағыны: \n\t\t   " + _waterMassFlow.ToString("0.000") + " м³/с";
             massTransfer.text = "Масса тасымалдау коэфф.: \n\t\t   " + _massTransfer.ToString("0.0") + " м/с";
-            gasСonsumption.text = "Сұйықтықты тұтыну: \n\t\t   " + _gasСonsumption.ToString("0.000") + " м³/с";
+            gasConsumption.text = "Сұйықтықты тұтыну: \n\t\t   " + _gasConsumption.ToString("0.000") + " м³/с";
             sizeText.text = $"Құрылғының диаметрі: {deametr:0.0} м \n" +
                                 $"Құрылғының биіктігі: {height:0.0} м \n" +
                                     $"Шығын материалдар: {consumablesTotal: 0.0} тг";
@@ -261,7 +261,7 @@ public class MathModuleForEmul : MathModuleBase
             gasMassFlow.text = "Gas Mass Flow: \n\t\t   " + _gasMassFlow.ToString("0.000") + " m³/s";
             waterMassFlow.text = "Liquid mass flow: \n\t\t   " + _waterMassFlow.ToString("0.000") + " m³/s";
             massTransfer.text = "Mass transfer coefficient: \n\t\t   " + _massTransfer.ToString("0.0") + " m/s";
-            gasСonsumption.text = "Gas Сonsumption: \n\t\t   " + _gasСonsumption.ToString("0.000") + " м³/с";
+            gasConsumption.text = "Gas Consumption: \n\t\t   " + _gasConsumption.ToString("0.000") + " м³/с";
             sizeText.text = $"Diameter of device: {deametr:0.0} m \n" +
                                 $"Height of device: {height:0.0} m \n" +
                                     $"Consumables: {consumablesTotal: 0.0} tg";

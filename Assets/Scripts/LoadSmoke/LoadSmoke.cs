@@ -136,6 +136,8 @@ public class LoadSmoke : MonoBehaviour
     /// Строка-получатель: по совпадению id (если он задан), иначе по тому же индексу.
     /// Раньше строки сопоставлялись только по индексу, и при разном наборе строк
     /// в модулях значение уходило в чужой параметр.
+    /// Если id задан, но такой строки нет — значение не передаётся (раньше оно уходило
+    /// в строку с тем же индексом, т.е. в другой параметр).
     /// </summary>
     private static ParameterRowUI FindTargetRow(List<ParameterRowUI> rows, string id, int index)
     {
@@ -144,6 +146,7 @@ public class LoadSmoke : MonoBehaviour
             foreach (var row in rows)
                 if (row != null && string.Equals(row.id?.Trim(), id.Trim(), StringComparison.OrdinalIgnoreCase))
                     return row;
+            return null;
         }
         return index < rows.Count ? rows[index] : null;
     }

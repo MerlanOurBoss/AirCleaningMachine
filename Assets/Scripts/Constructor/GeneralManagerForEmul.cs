@@ -127,8 +127,8 @@ public class GeneralManagerForEmul : ModuleManagerBase<MathModuleForEmul>
         switch (row.id)
         {
             case "Температура":
-                float newTemperature = MathModule.сonsumption != 0
-                    ? originalValue - (140000 * (MathModule._gasСonsumption / MathModule.сonsumption))
+                float newTemperature = MathModule.consumption != 0
+                    ? originalValue - (140000 * (MathModule._gasConsumption / MathModule.consumption))
                     : originalValue;
                 row.valueTextOut.text = Mathf.Ceil(newTemperature).ToString();
                 return true;
