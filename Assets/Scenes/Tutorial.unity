@@ -5934,8 +5934,8 @@ AudioSource:
   m_GameObject: {fileID: 27743101}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 49b0306475f073341aea12c6f43624a4, type: 3}
+  OutputAudioMixerGroup: {fileID: 4730748413581320197, guid: 1e5ed2625e5ae074bb109d0ddb680d5d, type: 2}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 49b0306475f073341aea12c6f43624a4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -5982,7 +5982,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -48670,7 +48670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -64774,7 +64774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -65683,7 +65683,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -88911,7 +88911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -132219,7 +132219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -141157,7 +141157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2425637699427940084, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_IsActive
@@ -159254,9 +159254,9 @@ AudioSource:
   m_GameObject: {fileID: 695508912}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6e8a47499d6711f4db2d309589e83576, type: 3}
-  m_Resource: {fileID: 8300000, guid: 6e8a47499d6711f4db2d309589e83576, type: 3}
+  OutputAudioMixerGroup: {fileID: -518059876720254902, guid: 1e5ed2625e5ae074bb109d0ddb680d5d, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
@@ -159357,6 +159357,17 @@ MonoBehaviour:
   buttons:
   - {fileID: 2082177474}
   audi: {fileID: 695508916}
+  selectClips:
+  - {fileID: 8300000, guid: 2bb2f5ac51294bf4d82cf20d604af622, type: 3}
+  navigateClips:
+  - {fileID: 8300000, guid: c2bb97363d2e239459be1854de54f6c1, type: 3}
+  confirmClips:
+  - {fileID: 8300000, guid: 09ea6f119093e2247a57dcd609fdccc1, type: 3}
+  cancelClips:
+  - {fileID: 8300000, guid: c01d75d5a91ea164caf99edc1089762f, type: 3}
+  toggleClips:
+  - {fileID: 8300000, guid: d171a230f088e7b4b8891b9f9b6f0b1a, type: 3}
+  pitchVariation: 0.03
 --- !u!114 &695508918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162199,7 +162210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -260004,8 +260015,8 @@ AudioSource:
   m_GameObject: {fileID: 1132295742}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 49b0306475f073341aea12c6f43624a4, type: 3}
+  OutputAudioMixerGroup: {fileID: 4730748413581320197, guid: 1e5ed2625e5ae074bb109d0ddb680d5d, type: 2}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 49b0306475f073341aea12c6f43624a4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -260052,7 +260063,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -265075,7 +265086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2425637699427940084, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_IsActive
@@ -286597,7 +286608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -331773,7 +331784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -349249,8 +349260,8 @@ AudioSource:
   m_GameObject: {fileID: 1583260092}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 49b0306475f073341aea12c6f43624a4, type: 3}
+  OutputAudioMixerGroup: {fileID: 4730748413581320197, guid: 1e5ed2625e5ae074bb109d0ddb680d5d, type: 2}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 49b0306475f073341aea12c6f43624a4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -349297,7 +349308,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -349623,7 +349634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -395878,7 +395889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -396446,7 +396457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalScale.x
@@ -399658,7 +399669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903097437530622667, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748645264737041998, guid: abb5da0e9f962404b9e4cc63878534ad, type: 3}
       propertyPath: m_LocalPosition.x
