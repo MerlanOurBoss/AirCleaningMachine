@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraRotationAFK : MonoBehaviour
 {
     [SerializeField] private CameraRotation cam;
-    public float time = 300f;
+    [SerializeField] private float time = 300f;
 
     void Update()
     {

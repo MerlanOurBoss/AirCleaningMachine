@@ -18750,6 +18750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6908680862404400726}
   - component: {fileID: 1010558340531442036}
+  - component: {fileID: 7155810576633665653}
   m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u0430\u043D"
   m_TagString: Untagged
@@ -18873,6 +18874,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7155810576633665653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621243619985116926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b4deb539d0d58d438887c4df08e6b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenLamp: {fileID: 7740035388689313354}
+  yellowLamp: {fileID: 5692340017047287362}
+  redLamp: {fileID: 6689320990912645822}
+  audioSource: {fileID: 1010558340531442036}
+  openClip: {fileID: 8300000, guid: 63bafd58a7fad6b439813796e857d120, type: 3}
+  closeClip: {fileID: 8300000, guid: 006dc47318e109b468eff4abdcc438ef, type: 3}
+  yellowBlinkDuration: 3
+  yellowBlinkInterval: 0.3
 --- !u!1 &622194073877209594
 GameObject:
   m_ObjectHideFlags: 0
@@ -38618,6 +38639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5794175657686871375}
   - component: {fileID: 2428894470995780728}
+  - component: {fileID: 1399184664592245917}
   m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u0430\u043D under Capsul 2"
   m_TagString: Untagged
@@ -38741,6 +38763,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1399184664592245917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178931291240673142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b4deb539d0d58d438887c4df08e6b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenLamp: {fileID: 4720802775854369790}
+  yellowLamp: {fileID: 3365311034652396734}
+  redLamp: {fileID: 3593305544526656901}
+  audioSource: {fileID: 2428894470995780728}
+  openClip: {fileID: 8300000, guid: 63bafd58a7fad6b439813796e857d120, type: 3}
+  closeClip: {fileID: 8300000, guid: 006dc47318e109b468eff4abdcc438ef, type: 3}
+  yellowBlinkDuration: 3
+  yellowBlinkInterval: 0.3
 --- !u!1 &1179180724832835457
 GameObject:
   m_ObjectHideFlags: 0
@@ -79258,6 +79300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4323851269391917873}
   - component: {fileID: 7519575608698513531}
+  - component: {fileID: 6126349770602785177}
   m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u0430\u043D Par Capsul 2"
   m_TagString: Untagged
@@ -79381,6 +79424,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6126349770602785177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2398901249449478653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b4deb539d0d58d438887c4df08e6b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenLamp: {fileID: 2116438396243184581}
+  yellowLamp: {fileID: 2039090085840736780}
+  redLamp: {fileID: 3385177219527708313}
+  audioSource: {fileID: 7519575608698513531}
+  openClip: {fileID: 8300000, guid: 63bafd58a7fad6b439813796e857d120, type: 3}
+  closeClip: {fileID: 8300000, guid: 006dc47318e109b468eff4abdcc438ef, type: 3}
+  yellowBlinkDuration: 3
+  yellowBlinkInterval: 0.3
 --- !u!1 &2399074593062346737
 GameObject:
   m_ObjectHideFlags: 0
@@ -86708,6 +86771,7 @@ GameObject:
   m_Component:
   - component: {fileID: 724854410741443423}
   - component: {fileID: 7152828069884917494}
+  - component: {fileID: 3271579394067469199}
   m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u0430\u043D under Capsul 1"
   m_TagString: Untagged
@@ -86831,6 +86895,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3271579394067469199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2655079251289703190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b4deb539d0d58d438887c4df08e6b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenLamp: {fileID: 5687745595984514218}
+  yellowLamp: {fileID: 7304013311231278199}
+  redLamp: {fileID: 2972373144706957359}
+  audioSource: {fileID: 7152828069884917494}
+  openClip: {fileID: 8300000, guid: 63bafd58a7fad6b439813796e857d120, type: 3}
+  closeClip: {fileID: 8300000, guid: 006dc47318e109b468eff4abdcc438ef, type: 3}
+  yellowBlinkDuration: 3
+  yellowBlinkInterval: 0.3
 --- !u!1 &2662530470495223157
 GameObject:
   m_ObjectHideFlags: 0
@@ -187554,12 +187638,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7962940311009298743}
-  - component: {fileID: 6308474216186612389}
-  - component: {fileID: 4944754293836804801}
   - component: {fileID: 5161068161057923281}
   - component: {fileID: 6886169598699920138}
   - component: {fileID: 4637967612060894986}
   - component: {fileID: 564538550905531689}
+  - component: {fileID: 8686799626350948001}
+  - component: {fileID: 769642805248580085}
+  - component: {fileID: 3454160617098872445}
+  - component: {fileID: 4257197010933904838}
+  - component: {fileID: 7316843543287084493}
   m_Layer: 10
   m_Name: New Sbor(Clone)
   m_TagString: Facilities_NewCapsul
@@ -187589,102 +187676,6 @@ Transform:
   - {fileID: 5342650955855073363}
   m_Father: {fileID: 6689500808010823117}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!114 &6308474216186612389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6426190430327142757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca6c7cec852ec694e8cd5ae03ac83b9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smokeParInCapsul: {fileID: 7163199677029147702}
-  smokeParInCapsul2: {fileID: 8412551261569777102}
-  smokeOutCapsul: {fileID: 7438255994192632025}
-  smokeOutCapsulSecond: {fileID: 3079235409365325304}
-  smokeInCapsul0_1: {fileID: 6959135378420248034}
-  smokeInCapsul0_2: {fileID: 1933863564659281155}
-  smokeInCapsul: {fileID: 915577768778971971}
-  smokeInCapsul2: {fileID: 342940487615917823}
-  smokeInCapsul1end: {fileID: 6376505712212288688}
-  smokeInCapsul2end: {fileID: 5990871103974693111}
-  parInCapsul1: {fileID: 3839802102273930507}
-  parInCapsul2: {fileID: 3715860758822971176}
-  parInStraightPipe: {fileID: 8612932361332661063}
-  display: {fileID: 6728535872114496991}
-  display2: {fileID: 5375575958797960698}
-  display3: {fileID: 1809403112228923950}
-  display4: {fileID: 7466927782063056765}
-  display5: {fileID: 5622869720660284416}
-  absent: {fileID: 2100000, guid: 008cc717221e8c448bb59bb5ab6948e2, type: 2}
-  absent2: {fileID: 2100000, guid: deb4e7eaccf17e541a2ef3af4e4b8d0a, type: 2}
-  materialSbor: {fileID: 2100000, guid: b142a1efddf983844a943771f36e95fb, type: 2}
-  targetColor: {r: 0.5137255, g: 0.8862745, b: 1, a: 1}
-  gate: {fileID: 6378066040926270597}
-  gates:
-  - {fileID: 2655079251289703190}
-  - {fileID: 7424056848362799555}
-  - {fileID: 9108000547826700287}
-  - {fileID: 1178931291240673142}
-  - {fileID: 2398901249449478653}
-  - {fileID: 6812788543006278803}
-  - {fileID: 621243619985116926}
-  gazAnalyz:
-  - {fileID: 3161995526372201110}
-  - {fileID: 5920285299531253987}
-  - {fileID: 7585449410341523095}
-  - {fileID: 6072672586921985598}
-  - {fileID: 4696290512559457511}
-  - {fileID: 4655004285050517952}
-  delay: 6
-  uroven1: {fileID: 7093734614822777111}
-  uroven2: {fileID: 2232389190107049637}
-  klapanOpen: {fileID: 8300000, guid: 63bafd58a7fad6b439813796e857d120, type: 3}
-  klapanClose: {fileID: 8300000, guid: 006dc47318e109b468eff4abdcc438ef, type: 3}
-  audioListener: {fileID: 0}
-  objectsWithMaterial:
-  - {fileID: 2838846635397770659}
-  - {fileID: 114387589382284739}
-  - {fileID: 1794515620398490058}
-  timingDelay: 150
-  yellowBlinkDuration: 3
-  yellowBlinkInterval: 0.3
---- !u!114 &4944754293836804801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6426190430327142757}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647070bb058b0d34899dbff5faabc531, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTriggerFromOven: 0
-  smokeInCapsul: {fileID: 0}
-  smokeOutCapsul: {fileID: 7438255994192632025}
-  smokeOutCapsulSecond: {fileID: 3079235409365325304}
-  smokeParInCapsul: {fileID: 915577768778971971}
-  display: {fileID: 6728535872114496991}
-  display2: {fileID: 5375575958797960698}
-  absent: {fileID: 2100000, guid: 008cc717221e8c448bb59bb5ab6948e2, type: 2}
-  absent2: {fileID: 2100000, guid: deb4e7eaccf17e541a2ef3af4e4b8d0a, type: 2}
-  targetColor: {r: 0.42745098, g: 0.8745098, b: 1, a: 1}
-  gate: {fileID: 0}
-  gates:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  timingDelay: 150
 --- !u!65 &5161068161057923281
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -187837,7 +187828,144 @@ MonoBehaviour:
   sborFans:
   - {fileID: 2493927978053465166}
   - {fileID: 8575874709735393300}
-  sborScript: {fileID: 0}
+  sborScript: {fileID: 7316843543287084493}
+--- !u!114 &8686799626350948001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426190430327142757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bbd30a139c8cc6449b1be16c36b6463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillSpeed: 5
+  timingDelay: 150
+  resumeDelay: 5
+--- !u!114 &769642805248580085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426190430327142757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 395253508d51d614b9f20befcb484375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  channels:
+  - label: {fileID: 6728535872114496991}
+    numberFormat: 0.
+    suffix: 
+    current: 0
+    target: 0
+  - label: {fileID: 5375575958797960698}
+    numberFormat: 0.
+    suffix: 
+    current: 0
+    target: 0
+  - label: {fileID: 1809403112228923950}
+    numberFormat: 0.
+    suffix: 
+    current: 0
+    target: 0
+  - label: {fileID: 7466927782063056765}
+    numberFormat: 0.
+    suffix: "\xB0C"
+    current: 0
+    target: 0
+  - label: {fileID: 5622869720660284416}
+    numberFormat: 0.
+    suffix: "\xB0C"
+    current: 0
+    target: 0
+  lerpSpeed: 4
+--- !u!114 &3454160617098872445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426190430327142757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ff370314e826247bbd3a464486b229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMaterial: {fileID: 2100000, guid: 008cc717221e8c448bb59bb5ab6948e2, type: 2}
+  floatProperty: _secondColorInfluence
+  stepPerSecond: 0.05
+  tickInterval: 1
+--- !u!114 &4257197010933904838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426190430327142757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ff370314e826247bbd3a464486b229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMaterial: {fileID: 2100000, guid: deb4e7eaccf17e541a2ef3af4e4b8d0a, type: 2}
+  floatProperty: _secondColorInfluence
+  stepPerSecond: 0.05
+  tickInterval: 1
+--- !u!114 &7316843543287084493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426190430327142757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e690b8c202a2c4b959ae86c77b545c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateMachine: {fileID: 8686799626350948001}
+  display: {fileID: 769642805248580085}
+  gates:
+  - {fileID: 3271579394067469199}
+  - {fileID: 2731563478789500207}
+  - {fileID: 7543749993112326996}
+  - {fileID: 1399184664592245917}
+  - {fileID: 6126349770602785177}
+  - {fileID: 7073721548084071719}
+  - {fileID: 7155810576633665653}
+  gazAnalyz:
+  - {fileID: 3161995526372201110}
+  - {fileID: 5920285299531253987}
+  - {fileID: 7585449410341523095}
+  - {fileID: 6072672586921985598}
+  - {fileID: 4696290512559457511}
+  - {fileID: 4655004285050517952}
+  smokeParInCapsul: {fileID: 7163199677029147702}
+  smokeParInCapsul2: {fileID: 8412551261569777102}
+  smokeOutCapsul: {fileID: 7438255994192632025}
+  smokeOutCapsulSecond: {fileID: 3079235409365325304}
+  smokeInCapsul0_1: {fileID: 6959135378420248034}
+  smokeInCapsul0_2: {fileID: 1933863564659281155}
+  smokeInCapsul1end: {fileID: 6376505712212288688}
+  smokeInCapsul2end: {fileID: 5990871103974693111}
+  parInCapsul1: {fileID: 3839802102273930507}
+  parInCapsul2: {fileID: 3715860758822971176}
+  parInStraightPipe: {fileID: 8612932361332661063}
+  absentFade: {fileID: 3454160617098872445}
+  absent2Fade: {fileID: 4257197010933904838}
+  materialSbor: {fileID: 2100000, guid: b142a1efddf983844a943771f36e95fb, type: 2}
+  objectsWithMaterial:
+  - {fileID: 2838846635397770659}
+  - {fileID: 114387589382284739}
+  - {fileID: 1794515620398490058}
+  uroven1: {fileID: 7093734614822777111}
+  uroven2: {fileID: 2232389190107049637}
+  gate: {fileID: 6378066040926270597}
+  defaultDelay: 6
 --- !u!1 &6439089579300425090
 GameObject:
   m_ObjectHideFlags: 0
@@ -203036,6 +203164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5658007279957017554}
   - component: {fileID: 5439014372423093793}
+  - component: {fileID: 7073721548084071719}
   m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u0430\u043D Par Capsul 1"
   m_TagString: Untagged
@@ -203159,6 +203288,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7073721548084071719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812788543006278803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b4deb539d0d58d438887c4df08e6b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenLamp: {fileID: 3200512995529992921}
+  yellowLamp: {fileID: 6740219107346456500}
+  redLamp: {fileID: 9089783986101911011}
+  audioSource: {fileID: 5439014372423093793}
+  openClip: {fileID: 8300000, guid: 63bafd58a7fad6b439813796e857d120, type: 3}
+  closeClip: {fileID: 8300000, guid: 006dc47318e109b468eff4abdcc438ef, type: 3}
+  yellowBlinkDuration: 3
+  yellowBlinkInterval: 0.3
 --- !u!1 &6817606379796704689
 GameObject:
   m_ObjectHideFlags: 0
@@ -208596,283 +208745,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MolecScriptForTable, Assembly-CSharp
-        m_MethodName: getDataMolec
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CameraRotation, Assembly-CSharp
-        m_MethodName: setReact
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MoleculasScript, Assembly-CSharp
-        m_MethodName: StartSimulate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MoleculasScript, Assembly-CSharp
-        m_MethodName: StartSimulate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3239857892936621136}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -225236,6 +225109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1467020184489710815}
   - component: {fileID: 1542575400328903120}
+  - component: {fileID: 2731563478789500207}
   m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u0430\u043D upper Capsul 1"
   m_TagString: Untagged
@@ -225359,6 +225233,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2731563478789500207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7424056848362799555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b4deb539d0d58d438887c4df08e6b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenLamp: {fileID: 8548538446129408525}
+  yellowLamp: {fileID: 8226029395145759282}
+  redLamp: {fileID: 4598767089535288745}
+  audioSource: {fileID: 1542575400328903120}
+  openClip: {fileID: 8300000, guid: 63bafd58a7fad6b439813796e857d120, type: 3}
+  closeClip: {fileID: 8300000, guid: 006dc47318e109b468eff4abdcc438ef, type: 3}
+  yellowBlinkDuration: 3
+  yellowBlinkInterval: 0.3
 --- !u!1 &7424757563024599667
 GameObject:
   m_ObjectHideFlags: 0
@@ -245979,7 +245873,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "0 \uFFFDC"
+  m_text: "0 \xB0C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8094ed3b5f723034a9155c4d0333f15f, type: 2}
   m_sharedMaterial: {fileID: -1148389318886441812, guid: 8094ed3b5f723034a9155c4d0333f15f, type: 2}
@@ -263225,7 +263119,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "0 \uFFFDC"
+  m_text: "0 \xB0C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8094ed3b5f723034a9155c4d0333f15f, type: 2}
   m_sharedMaterial: {fileID: -1148389318886441812, guid: 8094ed3b5f723034a9155c4d0333f15f, type: 2}
@@ -280685,6 +280579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 37286965020258386}
   - component: {fileID: 6814389889646937690}
+  - component: {fileID: 7543749993112326996}
   m_Layer: 0
   m_Name: "\u041A\u043B\u0430\u043F\u0430\u043D under Capsul 2"
   m_TagString: Untagged
@@ -280808,6 +280703,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7543749993112326996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108000547826700287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b4deb539d0d58d438887c4df08e6b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenLamp: {fileID: 8153689144186793547}
+  yellowLamp: {fileID: 5812994612240496783}
+  redLamp: {fileID: 4351470722008231783}
+  audioSource: {fileID: 6814389889646937690}
+  openClip: {fileID: 8300000, guid: 63bafd58a7fad6b439813796e857d120, type: 3}
+  closeClip: {fileID: 8300000, guid: 006dc47318e109b468eff4abdcc438ef, type: 3}
+  yellowBlinkDuration: 3
+  yellowBlinkInterval: 0.3
 --- !u!1 &9132812785242503490
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,13 +58,6 @@ public class HiddingMesh : MonoBehaviour
             }
         }
 
-        NewSborScript SborCO2 = target.GetComponent<NewSborScript>();
-        if (SborCO2 != null)
-        {
-            SborCO2.PauseProcess();
-        }
-
-        // Новый контроллер сбора CO2 (раньше ставился на паузу только старый NewSborScript).
         var sborController = target.GetComponentInChildren<SborCO2Controller>(true);
         if (sborController != null) sborController.PauseProcess();
     }
@@ -122,12 +115,6 @@ public class HiddingMesh : MonoBehaviour
                 spawner.ResumeSpawning();
             }
         }
-        NewSborScript SborCO2 = target.GetComponent<NewSborScript>();
-        if (SborCO2 != null)
-        {
-            SborCO2.ResumeProcess();
-        }
-
         var sborController = target.GetComponentInChildren<SborCO2Controller>(true);
         if (sborController != null) sborController.ResumeProcess();
 

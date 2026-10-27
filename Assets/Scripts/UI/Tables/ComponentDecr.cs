@@ -5,33 +5,33 @@ using UnityEngine;
 
 public class ComponentDecr : MonoBehaviour
 {
-    public TextMeshProUGUI[] Temperature;
-    public TextMeshProUGUI[] Dust;
-    public TextMeshProUGUI[] SolidParticles;
-    public TextMeshProUGUI[] Zola;
+    [SerializeField] private TextMeshProUGUI[] Temperature;
+    [SerializeField] private TextMeshProUGUI[] Dust;
+    [SerializeField] private TextMeshProUGUI[] SolidParticles;
+    [SerializeField] private TextMeshProUGUI[] Zola;
     public TextMeshProUGUI[] CO;
-    public TextMeshProUGUI[] CO2;
-    public TextMeshProUGUI[] NO;
-    public TextMeshProUGUI[] NO2;
-    public TextMeshProUGUI[] SO2;
-    public TextMeshProUGUI[] CH4;
-    public TextMeshProUGUI[] H2S;
-    public TextMeshProUGUI[] O2;
+    [SerializeField] private TextMeshProUGUI[] CO2;
+    [SerializeField] private TextMeshProUGUI[] NO;
+    [SerializeField] private TextMeshProUGUI[] NO2;
+    [SerializeField] private TextMeshProUGUI[] SO2;
+    [SerializeField] private TextMeshProUGUI[] CH4;
+    [SerializeField] private TextMeshProUGUI[] H2S;
+    [SerializeField] private TextMeshProUGUI[] O2;
     public TextMeshProUGUI[] N2;
 
-    public TextMeshProUGUI Temperature_orig;
-    public TextMeshProUGUI Dust_orig;
-    public TextMeshProUGUI SolidParticles_orig;
-    public TextMeshProUGUI Zola_orig;
-    public TextMeshProUGUI CO_orig;
-    public TextMeshProUGUI CO2_orig;
-    public TextMeshProUGUI NO_orig;
-    public TextMeshProUGUI NO2_orig;
-    public TextMeshProUGUI SO2_orig;
-    public TextMeshProUGUI CH4_orig;
-    public TextMeshProUGUI H2S_orig;
-    public TextMeshProUGUI O2_orig;
-    public TextMeshProUGUI N2_orig;
+    [SerializeField] private TextMeshProUGUI Temperature_orig;
+    [SerializeField] private TextMeshProUGUI Dust_orig;
+    [SerializeField] private TextMeshProUGUI SolidParticles_orig;
+    [SerializeField] private TextMeshProUGUI Zola_orig;
+    [SerializeField] private TextMeshProUGUI CO_orig;
+    [SerializeField] private TextMeshProUGUI CO2_orig;
+    [SerializeField] private TextMeshProUGUI NO_orig;
+    [SerializeField] private TextMeshProUGUI NO2_orig;
+    [SerializeField] private TextMeshProUGUI SO2_orig;
+    [SerializeField] private TextMeshProUGUI CH4_orig;
+    [SerializeField] private TextMeshProUGUI H2S_orig;
+    [SerializeField] private TextMeshProUGUI O2_orig;
+    [SerializeField] private TextMeshProUGUI N2_orig;
 
 
     private void Start()

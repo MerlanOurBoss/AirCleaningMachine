@@ -7,8 +7,8 @@ using UnityEngine;
 public class LoadDefaultSimulation : MonoBehaviour
 {
     [Header("Default simulation assets")]
-    public TextAsset[] defaultSimulationTexts;
-    public Texture2D[] defaultSimulationTextures;
+    [SerializeField] private TextAsset[] defaultSimulationTexts;
+    [SerializeField] private Texture2D[] defaultSimulationTextures;
 
     private void Awake()
     {

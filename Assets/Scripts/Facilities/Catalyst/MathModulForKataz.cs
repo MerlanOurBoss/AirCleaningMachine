@@ -10,7 +10,7 @@ public class MathModulForKataz : MathModuleBase
     [SerializeField] private TMP_InputField _pressureText;
     [SerializeField] private TMP_InputField _flowRateText;
     public TMP_InputField _katazBlockCount;
-    public TMP_InputField _katazBlockType;
+    [SerializeField] private TMP_InputField _katazBlockType;
     public TMP_InputField _gasFlowMain;
     [SerializeField] private TMP_InputField _gasSource;
     public double valueGasFlow = 0;

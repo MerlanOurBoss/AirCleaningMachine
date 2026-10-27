@@ -9,8 +9,8 @@ public class RightPanelShowButton : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private Image _image;
 
-    public Sprite rightSprite;
-    public Sprite leftSprite;
+    [SerializeField] private Sprite rightSprite;
+    [SerializeField] private Sprite leftSprite;
 
     private bool isOpened = false;
 

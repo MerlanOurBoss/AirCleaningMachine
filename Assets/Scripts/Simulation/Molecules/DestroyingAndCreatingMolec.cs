@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DestroyingAndCreatingMolec : MonoBehaviour
 {
-    public GameObject spawnPrefab;
-    public GameObject spawnInObj;
+    [SerializeField] private GameObject spawnPrefab;
+    [SerializeField] private GameObject spawnInObj;
 
     private static bool s_isQuitting;
     private static int s_suppressSpawnFrame = -1;

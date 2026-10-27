@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class OvenManager : MonoBehaviour
 {
     [Header("UI Elements")]
-    public Toggle[] toggles;
+    [SerializeField] private Toggle[] toggles;
 
     [Header("Particle System")]
-    public ParticleSystem smoke;
+    [SerializeField] private ParticleSystem smoke;
 
     private readonly Color defaultColor = new Color(0.6075471f, 0.6075471f, 0.6075471f);
     private readonly Color electrofilterColor = new Color(0.6235294f, 0.4130386f, 0);

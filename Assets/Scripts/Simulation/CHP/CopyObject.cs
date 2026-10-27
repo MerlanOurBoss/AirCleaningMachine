@@ -7,7 +7,7 @@ public class CopyObject : MonoBehaviour
 {
     [Header("Настройки спавна")]
     public GameObject prefab;       // Перетащите префаб в инспекторе
-    public int count = 5;           // Количество копий
+    [SerializeField] private int count = 5;           // Количество копий
     public float spacing = 1900f;      // Расстояние между копиями по Z
     
     [SerializeField] private UIManager uimanager;

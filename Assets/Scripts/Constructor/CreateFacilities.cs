@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CreateFacilities : MonoBehaviour
 {
-    public GameObject prefabToSpawn;
-    public Transform spawnPosition;
-    public Transform parentTransform;
+    [SerializeField] private GameObject prefabToSpawn;
+    [SerializeField] private Transform spawnPosition;
+    [SerializeField] private Transform parentTransform;
     [Tooltip("Поворот создаваемого объекта вокруг вертикальной оси, в градусах.")]
-    public float RotY = 0;
-    public int PosY = 0;
+    [SerializeField] private float RotY = 0;
+    [SerializeField] private int PosY = 0;
 
     public void SpawnTrube()
     {

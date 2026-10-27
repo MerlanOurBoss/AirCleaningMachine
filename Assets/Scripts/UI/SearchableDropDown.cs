@@ -31,7 +31,7 @@ public class SearchableDropDown : MonoBehaviour
     private List<Button> initializedButtons = new List<Button>();
 
     public delegate void OnValueChangedDel(string val);
-    public OnValueChangedDel OnValueChangedEvt;
+    [SerializeField] private OnValueChangedDel OnValueChangedEvt;
     private Translator translator;
     
     void Start()

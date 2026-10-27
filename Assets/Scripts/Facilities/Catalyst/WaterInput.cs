@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class WaterInput : MonoBehaviour
 {
-    public Slider mySliderNasos;
-    public ParticleSystem[] fluids;
-    public GameObject nasoso;
+    [SerializeField] private Slider mySliderNasos;
+    [SerializeField] private ParticleSystem[] fluids;
+    [SerializeField] private GameObject nasoso;
 
     private int count = 1;
     private bool isEnableNasos = false;

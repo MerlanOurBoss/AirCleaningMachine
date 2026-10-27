@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class ChamgingEmul : MonoBehaviour
 {
-    public MeshRenderer[] fluidsWater;
-    public MeshRenderer[] meshMaterial;
+    [SerializeField] private MeshRenderer[] fluidsWater;
+    [SerializeField] private MeshRenderer[] meshMaterial;
 
-    public Material reded;
-    public Material blued;
-    public Material greened;
+    [SerializeField] private Material reded;
+    [SerializeField] private Material blued;
+    [SerializeField] private Material greened;
     public int countWater;
 
     // Какой режим уже применён к материалам. Раньше материалы и цвет переназначались каждый кадр;

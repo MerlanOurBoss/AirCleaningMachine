@@ -9,11 +9,11 @@ public class Translator : MonoBehaviour
 {
     [Header("Data")]
     [Tooltip("CSV (UTF-8) with header: OriginalName,Kazakh,English,Russian")]
-    public TextAsset translationsCsv;
+    [SerializeField] private TextAsset translationsCsv;
 
     [Header("UI")]
     public TMP_FontAsset newFont;
-    public TextMeshProUGUI[] allTextComponents;
+    [SerializeField] private TextMeshProUGUI[] allTextComponents;
 
     public enum Language { Kazakh, English, Russian }
     [SerializeField] public Language currentLanguage = Language.Russian;
@@ -23,6 +23,16 @@ public class Translator : MonoBehaviour
 
     private readonly Dictionary<TextMeshProUGUI, string> originalKeys =
         new Dictionary<TextMeshProUGUI, string>();
+
+    // Ключи, о которых уже предупредили (раньше предупреждение повторялось при каждой смене языка).
+    private readonly HashSet<string> warnedKeys = new HashSet<string>();
+
+    private static bool HasLetters(string s)
+    {
+        foreach (char c in s)
+            if (char.IsLetter(c)) return true;
+        return false;
+    }
 
     public Action<Language> OnLanguageChanged;
     
@@ -75,8 +85,12 @@ public class Translator : MonoBehaviour
             // Тексты, которые код собирает сам на нужном языке (панель тревог), в CSV нет — не трогаем их.
             if (tmp.GetComponentInParent<ExcludeFromTranslation>(true) != null) continue;
 
+            string key = (tmp.text ?? string.Empty).Trim();
+            // Числа, единицы и пустые строки переводить не нужно: раньше по ним сыпались предупреждения.
+            if (!HasLetters(key)) continue;
+
             if (!originalKeys.ContainsKey(tmp))
-                originalKeys[tmp] = (tmp.text ?? string.Empty).Trim();
+                originalKeys[tmp] = key;
         }
     }
 
@@ -102,7 +116,9 @@ public class Translator : MonoBehaviour
 
             if (TryGetTranslation(key, language, out var translated))
                 tmp.text = translated;
-            else
+            else if (language == Language.Russian)
+                tmp.text = key; // ключ и есть русский текст
+            else if (warnedKeys.Add(key + "|" + language))
                 Debug.LogWarning($"[Translator] No translation for key '{key}' → {language}");
         }
         currentLanguage = language;
@@ -156,14 +172,15 @@ public class Translator : MonoBehaviour
             var row = ParseCsvLine(line, delimiter);
             if (row.Count == 0) continue;
 
-            string original = GetCell(row, colOriginal);
+            // В ячейках многострочные подписи записываются как \n (CSV читается построчно).
+            string original = Unescape(GetCell(row, colOriginal));
             if (string.IsNullOrWhiteSpace(original)) continue;
 
             var dict = new Dictionary<Language, string>
             {
-                { Language.Kazakh,  GetCell(row, colKz) },
-                { Language.English, GetCell(row, colEn) },
-                { Language.Russian, GetCell(row, colRu) }
+                { Language.Kazakh,  Unescape(GetCell(row, colKz)) },
+                { Language.English, Unescape(GetCell(row, colEn)) },
+                { Language.Russian, Unescape(GetCell(row, colRu)) }
             };
 
             map[original] = dict;
@@ -172,6 +189,8 @@ public class Translator : MonoBehaviour
 
         Debug.Log($"[Translator] Loaded {rows} row(s) from CSV. Delimiter='{delimiter}'");
     }
+
+    private static string Unescape(string s) => string.IsNullOrEmpty(s) ? s : s.Replace("\\n", "\n");
 
     private static char DetectDelimiter(string s)
     {

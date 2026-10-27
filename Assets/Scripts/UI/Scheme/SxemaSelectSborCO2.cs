@@ -8,7 +8,7 @@ public class SxemaSelectSborCO2 : MonoBehaviour
 
     [SerializeField] private AborberPercent[] aborberPercents;
 
-    public GameObject child;
+    [SerializeField] private GameObject child;
 
     private void Start()
     {

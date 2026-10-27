@@ -6,7 +6,7 @@ using UnityEngine;
 public class TemperatureCatalizator : MonoBehaviour
 {
     [SerializeField] private TMP_Text[] displays;
-    public float delay = 5f;
+    [SerializeField] private float delay = 5f;
 
     public bool isStarting = false;
     private float displayValue0 = 0;

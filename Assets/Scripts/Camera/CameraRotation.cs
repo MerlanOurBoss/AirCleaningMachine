@@ -24,70 +24,70 @@ public class CameraRotation : MonoBehaviour,
     IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("References")]
-    public Transform cam;
+    [SerializeField] private Transform cam;
     [Tooltip("Начальная точка вращения (и точка для «вида по умолчанию»). Сам объект не двигается.")]
-    public Transform orbitTarget;
+    [SerializeField] private Transform orbitTarget;
 
     [Header("Sensitivity & Limits")]
-    public float mouseSensitivity = 3f;
-    public float verticalLimit = 85f;
+    [SerializeField] private float mouseSensitivity = 3f;
+    [SerializeField] private float verticalLimit = 85f;
 
     [Header("Orbit Settings")]
-    public float orbitMinDistance = 2f;
-    public float orbitMaxDistance = 100f;
+    [SerializeField] private float orbitMinDistance = 2f;
+    [SerializeField] private float orbitMaxDistance = 100f;
     [Tooltip("На сколько процентов меняется дистанция за одно деление колеса (не зависит от масштаба сцены).")]
     [Range(1f, 50f)] public float zoomStepPercent = 15f;
     [Tooltip("Колесо приближает к точке под курсором, а не к центру экрана.")]
-    public bool zoomToCursor = true;
+    [SerializeField] private bool zoomToCursor = true;
 
     [Header("Movement Settings")]
-    public float moveSpeed = 10f;
-    public float fastMoveMultiplier = 3f;
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float fastMoveMultiplier = 3f;
     [Tooltip("Скорость полёта меняется вместе с дистанцией до точки вращения: вблизи медленнее, издалека быстрее. " +
              "Move Speed — скорость на стартовой дистанции.")]
-    public bool scaleSpeedWithDistance = true;
+    [SerializeField] private bool scaleSpeedWithDistance = true;
     [Tooltip("Клавиши работают при наведении курсора на область камеры, без зажатой кнопки мыши. " +
              "Выключите, если в сцене эти клавиши заняты другими действиями (например, в конструкторе).")]
-    public bool keysOnHover = true;
+    [SerializeField] private bool keysOnHover = true;
     public bool isMouseMoving = false;
 
     [Header("Smoothing (0 = без сглаживания)")]
-    public float rotationSmoothing = 15f;
-    public float zoomSmoothing = 10f;
+    [SerializeField] private float rotationSmoothing = 15f;
+    [SerializeField] private float zoomSmoothing = 10f;
     [Tooltip("Разгон и торможение при полёте на клавишах.")]
-    public float moveSmoothing = 8f;
+    [SerializeField] private float moveSmoothing = 8f;
     [Tooltip("Плавность перелётов: фокус на объекте, вид по умолчанию, готовые ракурсы.")]
-    public float transitionSmoothing = 5f;
+    [SerializeField] private float transitionSmoothing = 5f;
 
     [Header("Inertia")]
-    public bool useInertia = true;
+    [SerializeField] private bool useInertia = true;
     [Tooltip("Чем больше, тем быстрее затухает движение после отпускания кнопки.")]
-    public float inertiaDamping = 6f;
+    [SerializeField] private float inertiaDamping = 6f;
 
     [Header("Height Limit")]
-    public float minWorldY = -1f;
+    [SerializeField] private float minWorldY = -1f;
 
     [Header("Focus & Views")]
     [Tooltip("Дистанция при фокусе = размер объекта × этот множитель (в пределах Orbit Min/Max Distance).")]
-    public float focusDistanceMultiplier = 2.5f;
+    [SerializeField] private float focusDistanceMultiplier = 2.5f;
     [Tooltip("Точки обзора (пустые объекты, повёрнутые как камера). Клавиши 4…9 или метод GoToViewPoint(index).")]
-    public Transform[] viewPoints;
+    [SerializeField] private Transform[] viewPoints;
 
     [Header("Scene Bounds")]
     [Tooltip("Не давать точке вращения уходить за пределы сцены (считается по моделям сцены).")]
-    public bool limitToSceneBounds = true;
+    [SerializeField] private bool limitToSceneBounds = true;
     [Tooltip("Запас за краями сцены, в долях её размера.")]
     [Range(0f, 1f)] public float boundsPadding = 0.25f;
 
     [Header("Obstacles")]
     [Tooltip("При вращении камера подходит ближе, если между ней и точкой вращения стена, и не залезает внутрь объектов. " +
              "Не включайте в сценах, где точка вращения стоит внутри модели установки: камеру будет затягивать внутрь.")]
-    public bool avoidObstacles = false;
+    [SerializeField] private bool avoidObstacles = false;
     public LayerMask obstacleMask = Physics.DefaultRaycastLayers & ~(1 << 5);
 
     [Header("Cursor")]
     [Tooltip("Скрывать и фиксировать курсор, пока зажата ПКМ (осмотр).")]
-    public bool lockCursorOnFreeLook = true;
+    [SerializeField] private bool lockCursorOnFreeLook = true;
 
     // ---------- состояние ----------
     private const float WheelNotch = 0.1f;     // одно деление колеса в Input Manager по умолчанию

@@ -9,12 +9,12 @@ using UnityEngine.UI;
 
 public class SubstractTheValue : MonoBehaviour
 {
-    public TMP_InputField[] _inputFields;
+    [SerializeField] private TMP_InputField[] _inputFields;
 
-    public TMP_Text _maxValue;
+    [SerializeField] private TMP_Text _maxValue;
     private int totalValue = 150;
     private int[] previousValues;
-    public GameObject Planes;
+    [SerializeField] private GameObject Planes;
 
     [SerializeField] private TMP_InputField _gasFlowMain;
     [SerializeField] private TMP_Text notificationText;

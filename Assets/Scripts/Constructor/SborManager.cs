@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SborManager : MonoBehaviour
 {
-    public GameObject prefabSborCO2;
+    [SerializeField] private GameObject prefabSborCO2;
 
     private GameObject obj;
     private void Awake()

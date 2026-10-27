@@ -20,13 +20,13 @@ public class UsersData
 
 public class SignInSystem : MonoBehaviour
 {
-    public TMP_InputField loginField;
-    public TMP_InputField passwordField;
-    public TextMeshProUGUI resultText;
-    public Button showPasswordButton;
+    [SerializeField] private TMP_InputField loginField;
+    [SerializeField] private TMP_InputField passwordField;
+    [SerializeField] private TextMeshProUGUI resultText;
+    [SerializeField] private Button showPasswordButton;
     private bool isPasswordVisible = false;
 
-    public Sprite[] sprites;
+    [SerializeField] private Sprite[] sprites;
 
     private UsersData usersData;
 

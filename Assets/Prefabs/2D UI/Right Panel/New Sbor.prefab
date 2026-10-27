@@ -1377,6 +1377,7 @@ GameObject:
   - component: {fileID: 6099955345573494666}
   - component: {fileID: 2863444804619017094}
   - component: {fileID: 153514717109637235}
+  - component: {fileID: 2055651085560252269}
   m_Layer: 5
   m_Name: "\u0423\u043B\u043E\u0432\u043B\u0435\u043D\u043D\u044B\u0439 CO2"
   m_TagString: Untagged
@@ -1503,6 +1504,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2055651085560252269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967871047741863894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71591489f7abb044bb7f54c9fa880a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExcludeFromTranslation
 --- !u!1 &1120840643976023462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,6 +1653,7 @@ GameObject:
   - component: {fileID: 8254804610530939521}
   - component: {fileID: 7677687240817639041}
   - component: {fileID: 637361213640816421}
+  - component: {fileID: 4791325330075042780}
   m_Layer: 5
   m_Name: "\u041C\u0430\u0441\u0441\u0430 CO2 "
   m_TagString: Untagged
@@ -1766,6 +1780,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4791325330075042780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173713256015424754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71591489f7abb044bb7f54c9fa880a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExcludeFromTranslation
 --- !u!1 &1224538247930289028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2199,6 +2225,7 @@ GameObject:
   - component: {fileID: 790966593035311241}
   - component: {fileID: 7212848349558283718}
   - component: {fileID: 1481704740560672471}
+  - component: {fileID: 244963545414060514}
   m_Layer: 5
   m_Name: "\u042D\u0444\u0444\u0435\u043A\u0442\u0438\u0432\u043D\u0430\u044F \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u043F\u043E\u0442\u043E\u043A\u0430 "
   m_TagString: Untagged
@@ -2325,6 +2352,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &244963545414060514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355646165379273260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71591489f7abb044bb7f54c9fa880a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExcludeFromTranslation
 --- !u!1 &1427173694194621633
 GameObject:
   m_ObjectHideFlags: 0
@@ -4098,6 +4137,7 @@ GameObject:
   - component: {fileID: 5289682182497498749}
   - component: {fileID: 1491675425325303528}
   - component: {fileID: 7681606271075173636}
+  - component: {fileID: 3025491107603013675}
   m_Layer: 5
   m_Name: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u043F\u043E\u0442\u043E\u043A\u0430 CO2 "
   m_TagString: Untagged
@@ -4224,6 +4264,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3025491107603013675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2674822411595436737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71591489f7abb044bb7f54c9fa880a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExcludeFromTranslation
 --- !u!1 &2770423325269103141
 GameObject:
   m_ObjectHideFlags: 0
@@ -5772,6 +5824,7 @@ GameObject:
   - component: {fileID: 7458095351885887797}
   - component: {fileID: 7699287956752843915}
   - component: {fileID: 4685946871715063070}
+  - component: {fileID: 3850443197220493445}
   m_Layer: 5
   m_Name: "\u0412\u0440\u0435\u043C\u044F \u0434\u0435\u0441\u043E\u0440\u0431\u0446\u0438\u0438"
   m_TagString: Untagged
@@ -5898,6 +5951,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3850443197220493445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4191956159695118586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71591489f7abb044bb7f54c9fa880a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExcludeFromTranslation
 --- !u!1 &4263042457506449584
 GameObject:
   m_ObjectHideFlags: 0
@@ -11766,6 +11831,7 @@ GameObject:
   - component: {fileID: 8577749874637344996}
   - component: {fileID: 5779812179325499508}
   - component: {fileID: 5535967977412551365}
+  - component: {fileID: 6045842709465310083}
   m_Layer: 5
   m_Name: "\u0412\u0440\u0435\u043C\u044F \u0430\u0434\u0441\u043E\u0440\u0431\u0446\u0438\u0438"
   m_TagString: Untagged
@@ -11892,6 +11958,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6045842709465310083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7267586780860826986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71591489f7abb044bb7f54c9fa880a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExcludeFromTranslation
 --- !u!1 &7302988693885475511
 GameObject:
   m_ObjectHideFlags: 0
@@ -12596,6 +12674,7 @@ GameObject:
   - component: {fileID: 4195544743362499217}
   - component: {fileID: 7913782265215770966}
   - component: {fileID: 9023645440009313563}
+  - component: {fileID: 6267722730379920704}
   m_Layer: 5
   m_Name: "\u041E\u0431\u0449\u0430\u044F \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C"
   m_TagString: Untagged
@@ -12722,6 +12801,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6267722730379920704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7823416436658558512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71591489f7abb044bb7f54c9fa880a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExcludeFromTranslation
 --- !u!1 &8037685466877447307
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,17 +8,17 @@ using UnityEngine.UI;  // Button и RawImage для UI
 public class CameraCaptureLoader : MonoBehaviour
 {
     [Header("Префаб для отображения картинки")]
-    public GameObject picturePrefab;
+    [SerializeField] private GameObject picturePrefab;
 
     [Header("Подпапка относительно DataPath (например DataPath/SavedObjects/Images)")]
-    public string imagesSubfolder = "SavedObjects/Images";
+    [SerializeField] private string imagesSubfolder = "SavedObjects/Images";
 
     [Header("Начальная позиция и смещение между картинками")]
-    public Vector3 startPosition = Vector3.zero;
+    [SerializeField] private Vector3 startPosition = Vector3.zero;
     public Vector3 offset = new Vector3(2f, 0f, 0f);
 
     [Tooltip("Имя сцены, где стоит SaveLoadManager")]
-    public string constructionSceneName = "Simulation";
+    [SerializeField] private string constructionSceneName = "Simulation";
 
     void Start()
     {

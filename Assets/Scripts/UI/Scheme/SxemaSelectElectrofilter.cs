@@ -16,14 +16,14 @@ public class SxemaSelectElectrofilter : MonoBehaviour
     public Transform target;
 
     public Slider slider;
-    public Slider sliderMat;
+    [SerializeField] private Slider sliderMat;
 
-    public bool movePrefabs = false;
-    public bool goDown = false;
+    [SerializeField] private bool movePrefabs = false;
+    [SerializeField] private bool goDown = false;
 
-    public GameObject child;
+    [SerializeField] private GameObject child;
 
-    public Transform[] stopPositions;
+    [SerializeField] private Transform[] stopPositions;
 
     // Точка, куда будут уходить частицы вправо
     [SerializeField] private Transform rightTarget;

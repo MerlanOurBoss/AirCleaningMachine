@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class DotsScript : MonoBehaviour
 {
-    public GameObject prefabToSpawn;
-    public Transform spawnArea;
-    public BoxCollider spawnCollider;
-    public int numberOfPrefabs = 200;
-    public float respawnTime = 10f;
-    public Transform parentObject;
+    [SerializeField] private GameObject prefabToSpawn;
+    [SerializeField] private Transform spawnArea;
+    [SerializeField] private BoxCollider spawnCollider;
+    [SerializeField] private int numberOfPrefabs = 200;
+    [SerializeField] private float respawnTime = 10f;
+    [SerializeField] private Transform parentObject;
     
     [Header("Spawn area (локальные размеры)")]
     public Vector3 spawnBoxSize = new Vector3(1f, 1f, 1f);

@@ -6,16 +6,16 @@ using System.IO;
 
 public class SaveLoadManager : MonoBehaviour
 {
-    public SceneData[] sceneDatas;
-    public GameObject[] prefabs;
+    [SerializeField] private SceneData[] sceneDatas;
+    [SerializeField] private GameObject[] prefabs;
 
-    public GameObject sborCO2;
+    [SerializeField] private GameObject sborCO2;
 
-    public GameObject buttonPrefab;
-    public Transform buttonContainer;
+    [SerializeField] private GameObject buttonPrefab;
+    [SerializeField] private Transform buttonContainer;
 
-    public Camera cam;
-    public PipeConnector pipe;
+    [SerializeField] private Camera cam;
+    [SerializeField] private PipeConnector pipe;
 
     private GameObject CameraUI;
 

@@ -5,10 +5,10 @@ using UnityEngine;
 public class MovingFacilities : MonoBehaviour
 {
     public bool isDragging = false;
-    public LayerMask parentLayer;
-    public LayerMask ignoreLayer;
+    [SerializeField] private LayerMask parentLayer;
+    [SerializeField] private LayerMask ignoreLayer;
 
-    public bool isSelected = true;
+    [SerializeField] private bool isSelected = true;
     private Collider objectCollider;
     private Camera mainCamera;
     public bool isConnected = false;

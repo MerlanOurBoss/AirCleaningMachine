@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class MoveAlongPoints : MonoBehaviour
 {
-    public Transform[] points;
+    [SerializeField] private Transform[] points;
     public float speed = 2f;
-    public float rotationSpeed = 5f;
-    public TemperatureCatalizator temp;
-    public ParticleSystem pc;
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private TemperatureCatalizator temp;
+    [SerializeField] private ParticleSystem pc;
 
     private int currentPointIndex = 0;
 

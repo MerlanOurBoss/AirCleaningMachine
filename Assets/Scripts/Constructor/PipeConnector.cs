@@ -15,9 +15,9 @@ public class PipeConnector : MonoBehaviour
     }
 
     public List<SystemComponent> components = new List<SystemComponent>();
-    public PipeGenerator pipeGenerator;
-    public PipeGenerator pipeGeneratorCO2;
-    public GameObject pipeMeshStandardPrefab;
+    [SerializeField] private PipeGenerator pipeGenerator;
+    [SerializeField] private PipeGenerator pipeGeneratorCO2;
+    [SerializeField] private GameObject pipeMeshStandardPrefab;
     private HashSet<GameObject> trackedFacilities = new HashSet<GameObject>();
     // Объекты, о которых уже предупредили (раньше LogWarning писался каждый кадр).
     private HashSet<GameObject> warnedFacilities = new HashSet<GameObject>();

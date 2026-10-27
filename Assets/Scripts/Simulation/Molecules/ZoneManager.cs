@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class ZoneManager : MonoBehaviour
 {
-    public float attractionForce;
+    [SerializeField] private float attractionForce;
 
-    public GameObject spawnInObj;
+    [SerializeField] private GameObject spawnInObj;
     // Предупреждения, уже выведенные за текущее пребывание объекта в зоне
     // (раньше LogError писался каждый физический кадр).
     private readonly HashSet<string> _warned = new HashSet<string>();

@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class SliderAnimationScript : MonoBehaviour
 {
-    public Animator animator;
-    public Animator animator2;
-    public string str;
-    public string str1;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Animator animator2;
+    [SerializeField] private string str;
+    [SerializeField] private string str1;
 
     public Image image;
 
-    public Sprite[] mysprites;
+    [SerializeField] private Sprite[] mysprites;
     private bool isActiveGameObject = false;
 
     private void Start()

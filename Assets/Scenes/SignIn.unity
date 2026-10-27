@@ -1839,6 +1839,7 @@ GameObject:
   - component: {fileID: 1848883181}
   - component: {fileID: 1848883180}
   - component: {fileID: 1848883179}
+  - component: {fileID: 1848883182}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -1983,6 +1984,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1848883182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848883178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17489755bb2295744a61323f2cfc6615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioVolumeSettings
+  mixer: {fileID: 24100000, guid: 1e5ed2625e5ae074bb109d0ddb680d5d, type: 2}
+  masterSlider: {fileID: 0}
+  uiSlider: {fileID: 0}
+  sfxSlider: {fileID: 0}
 --- !u!1 &1919824981
 GameObject:
   m_ObjectHideFlags: 0

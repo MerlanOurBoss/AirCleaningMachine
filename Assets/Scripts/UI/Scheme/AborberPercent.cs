@@ -11,7 +11,7 @@ public class AborberPercent : MonoBehaviour
     public bool backProcess = false;
     public bool stopProcess = false;
     private float percentValue;
-    public bool resumeAndPause = false;
+    [SerializeField] private bool resumeAndPause = false;
 
     // Start is called before the first frame update
     void Start()

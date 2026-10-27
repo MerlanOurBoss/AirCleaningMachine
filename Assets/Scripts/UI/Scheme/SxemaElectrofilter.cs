@@ -18,12 +18,12 @@ public class SxemaElectrofilter : MonoBehaviour
     public GameObject prefab;
     public Transform target;
     public Slider slider;
-    public Slider sliderMat;
+    [SerializeField] private Slider sliderMat;
 
-    public bool movePrefabs = false;
-    public bool goDown = false;
+    [SerializeField] private bool movePrefabs = false;
+    [SerializeField] private bool goDown = false;
 
-    public Transform[] stopPositions;
+    [SerializeField] private Transform[] stopPositions;
 
     private List<GameObject> spawnedPrefabs = new List<GameObject>();
 

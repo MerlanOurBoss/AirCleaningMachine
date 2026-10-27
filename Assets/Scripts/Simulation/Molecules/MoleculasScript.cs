@@ -8,23 +8,23 @@ using UnityEngine;
 public class PrefabSpawnInfo
 {
     public GameObject prefab;
-    public Rigidbody rigid;
+    [SerializeField] private Rigidbody rigid;
     public TMP_InputField text;
 }
 public class MoleculasScript : MonoBehaviour
 {
-    public PrefabSpawnInfo[] prefabsToSpawn;
+    [SerializeField] private PrefabSpawnInfo[] prefabsToSpawn;
     private List<GameObject> molec = new List<GameObject>();
-    public Collider spawnArea;
+    [SerializeField] private Collider spawnArea;
 
-    public float moveSpeed = 0.5f;
-    public float rotationSpeed = 1000f;
+    [SerializeField] private float moveSpeed = 0.5f;
+    [SerializeField] private float rotationSpeed = 1000f;
 
-    public GameObject spawnInObj;
+    [SerializeField] private GameObject spawnInObj;
 
     // Скорость дрейфа молекул по оси Z, ед./с. Раньше было -0.05 за кадр (около -3 ед./с при 60 FPS),
     // поэтому скорость зависела от FPS.
-    public float driftSpeed = -3f;
+    [SerializeField] private float driftSpeed = -3f;
 
     private readonly List<Rigidbody> _molecBodies = new List<Rigidbody>();
 

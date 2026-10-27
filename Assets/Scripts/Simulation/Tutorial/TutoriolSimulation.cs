@@ -13,7 +13,7 @@ public class TutoriolSimulation : MonoBehaviour
     [SerializeField] private DropSpawner[] _dropSpawns;
 
     [SerializeField] private Animator _electroFilter;
-    [SerializeField] private NewSborScript _myCollector;
+    [SerializeField] private SborCO2Controller _myCollector;
     [SerializeField] private TemperatureCatalizator _myCatalizator;
 
 

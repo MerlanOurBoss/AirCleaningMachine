@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class Fullscreen : MonoBehaviour
 {
-    public Image[] toggleBack;
-    public Sprite fullscreen;
-    public Sprite windowed;
-    public Toggle[] myToggle;
-    public GameObject res;
+    [SerializeField] private Image[] toggleBack;
+    [SerializeField] private Sprite fullscreen;
+    [SerializeField] private Sprite windowed;
+    [SerializeField] private Toggle[] myToggle;
+    [SerializeField] private GameObject res;
 
     private Camera myCamera;
     private bool isChanged = false;

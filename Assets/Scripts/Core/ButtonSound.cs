@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class ButtonSound : MonoBehaviour
 {
-    public UISoundType type = UISoundType.Select;
+    [SerializeField] private UISoundType type = UISoundType.Select;
 
     private void Awake()
     {

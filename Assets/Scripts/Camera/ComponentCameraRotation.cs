@@ -5,23 +5,23 @@ using UnityEngine;
 public class ComponentCameraRotation : MonoBehaviour
 {
     public Transform target;
-    public Camera myCamera;
-    public Vector3 offset;
-    public float sensitivity = 3; 
-    public float limit = 80;
-    public float zoom = 1f; 
-    public float zoomMax = 100;
-    public float zoomMin = 3;
+    [SerializeField] private Camera myCamera;
+    [SerializeField] private Vector3 offset;
+    [SerializeField] private float sensitivity = 3; 
+    [SerializeField] private float limit = 80;
+    [SerializeField] private float zoom = 1f; 
+    [SerializeField] private float zoomMax = 100;
+    [SerializeField] private float zoomMin = 3;
     private float X, Y;
-    public string str;
-    public bool isEnabled = false;
+    [SerializeField] private string str;
+    [SerializeField] private bool isEnabled = false;
 
     private float moveSpeed = 1.0f; 
 
-    public float sensitivityx = 0.1f; 
+    [SerializeField] private float sensitivityx = 0.1f; 
     public Vector3 moveLimits = new Vector3(1000, 1000, 1000);
 
-    public bool isMoving = false;
+    [SerializeField] private bool isMoving = false;
     private Vector3 startPosition;
     void Start()
     {

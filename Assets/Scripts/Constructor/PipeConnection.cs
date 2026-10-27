@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class PipeConnection : MonoBehaviour
 {
-    public Transform entrance;
+    [SerializeField] private Transform entrance;
     public bool isConnected = false;
 
-    public bool isClicked = false;
-    public bool isActivated = false;
+    [SerializeField] private bool isClicked = false;
+    [SerializeField] private bool isActivated = false;
 
     private bool isMouseOverTrigger = false;
     private void Update()

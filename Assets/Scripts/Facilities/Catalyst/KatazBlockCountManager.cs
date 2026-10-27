@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class KatazBlockCountManager : MonoBehaviour
 {
-    public int count;
-    public GameObject[] blocks;
+    [SerializeField] private int count;
+    [SerializeField] private GameObject[] blocks;
 
     private void Start()
     {

@@ -18,15 +18,15 @@ public enum UISoundType
 public class SoundForButtons : MonoBehaviour
 {
     [Tooltip("Устарело: звук подключается ко всем кнопкам сцены автоматически. Оставлено для совместимости.")]
-    public Button[] buttons;
-    public AudioSource audi;
+    [SerializeField] private Button[] buttons;
+    [SerializeField] private AudioSource audi;
 
     [Header("Звуки по типам кнопок (несколько вариантов — выбирается случайный)")]
-    public AudioClip[] selectClips;
-    public AudioClip[] navigateClips;
-    public AudioClip[] confirmClips;
-    public AudioClip[] cancelClips;
-    public AudioClip[] toggleClips;
+    [SerializeField] private AudioClip[] selectClips;
+    [SerializeField] private AudioClip[] navigateClips;
+    [SerializeField] private AudioClip[] confirmClips;
+    [SerializeField] private AudioClip[] cancelClips;
+    [SerializeField] private AudioClip[] toggleClips;
 
     [Tooltip("Случайный разброс высоты звука, чтобы частые нажатия не звучали одинаково.")]
     [Range(0f, 0.1f)] public float pitchVariation = 0.03f;

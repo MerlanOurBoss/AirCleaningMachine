@@ -9,16 +9,16 @@ using UnityEngine.UI;
 
 public class NasosScript : MonoBehaviour
 {
-    public Slider mySliderNasos;
-    public Slider mySliderWater;
-    public GameObject[] fluids;
-    public MeshRenderer[] fluidsWater;
-    public PlayableDirector[] fliudDirector;
-    public GameObject nasoso;
-    public GameObject water;
+    [SerializeField] private Slider mySliderNasos;
+    [SerializeField] private Slider mySliderWater;
+    [SerializeField] private GameObject[] fluids;
+    [SerializeField] private MeshRenderer[] fluidsWater;
+    [SerializeField] private PlayableDirector[] fliudDirector;
+    [SerializeField] private GameObject nasoso;
+    [SerializeField] private GameObject water;
     private int count = 1;
     public int countWater = 1;
-    public ChamgingEmul chamgingEmul;
+    [SerializeField] private ChamgingEmul chamgingEmul;
     private bool isEnableNasos = false;
     private bool isEnableWater = false;
 

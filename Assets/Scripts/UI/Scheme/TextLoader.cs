@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TextLoader : MonoBehaviour
 {
-    public TextMeshProUGUI uiText; 
+    [SerializeField] private TextMeshProUGUI uiText; 
 
     void Start()
     {

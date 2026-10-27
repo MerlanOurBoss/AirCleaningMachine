@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class UIscript : MonoBehaviour
 {
     public GameObject gameObjects;
-    public Image images;
+    [SerializeField] private Image images;
 
-    public Sprite[] mysprites;
+    [SerializeField] private Sprite[] mysprites;
     private bool isActiveGameObject = true;
     private void Update()
     {

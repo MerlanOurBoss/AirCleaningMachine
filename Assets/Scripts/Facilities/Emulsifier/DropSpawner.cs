@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DropSpawner : MonoBehaviour
 {
-    public GameObject prefabToSpawn;
-    public GameObject spawnAreaCube;
-    public float spawnInterval = 0.001f;
-    public float _delay;
+    [SerializeField] private GameObject prefabToSpawn;
+    [SerializeField] private GameObject spawnAreaCube;
+    [SerializeField] private float spawnInterval = 0.001f;
+    [SerializeField] private float _delay;
     private bool isPaused = false;
     private Coroutine spawnCoroutine;
 

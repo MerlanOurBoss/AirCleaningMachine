@@ -32,16 +32,16 @@ public class OptimaHidPoller : MonoBehaviour
 
     [Header("Запуск")]
     [Tooltip("Старт захвата при включении объекта (начало симуляции), остановка при выключении.")]
-    public bool autoStart = true;
-    public float pollInterval = 1.0f;
+    [SerializeField] private bool autoStart = true;
+    [SerializeField] private float pollInterval = 1.0f;
     [Tooltip("Переподключаться, если прибор отключили или он не найден.")]
-    public bool autoReconnect = true;
+    [SerializeField] private bool autoReconnect = true;
     [Tooltip("Отправлять команды старта/конца онлайн-режима из лога MRU4Win (по умолчанию выключено).")]
-    public bool sendLiveStartStop = false;
+    [SerializeField] private bool sendLiveStartStop = false;
 
     [Header("Отладка")]
-    public bool writeCsv = false;       // CSV с сырыми блоками в persistentDataPath
-    public bool verbose = false;
+    [SerializeField] private bool writeCsv = false;       // CSV с сырыми блоками в persistentDataPath
+    [SerializeField] private bool verbose = false;
 
     const int VendorId = 0x152A;
     const int PidOptima7 = 0x83F0;      // SN317718: O2/CO/NO/NO2/NOx/SO2

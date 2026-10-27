@@ -5,15 +5,15 @@ using System.IO;
 
 public class LoadManager : MonoBehaviour
 {
-    public SceneData[] sceneDatas; // Array to hold multiple SceneData instances
-    public GameObject[] prefabs;
+    [SerializeField] private SceneData[] sceneDatas; // Array to hold multiple SceneData instances
+    [SerializeField] private GameObject[] prefabs;
 
-    public GameObject sborCO2; // Object Sbor CO2
-    public PipeConnector pipe;
+    [SerializeField] private GameObject sborCO2; // Object Sbor CO2
+    [SerializeField] private PipeConnector pipe;
     private Dictionary<int, List<GameObject>> sceneObjects = new Dictionary<int, List<GameObject>>();
 
     [Header("UIManager")]
-    public UIManager uiManager;
+    [SerializeField] private UIManager uiManager;
     
     
     [System.Serializable]

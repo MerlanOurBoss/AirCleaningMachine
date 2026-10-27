@@ -9,9 +9,9 @@ public class MathModuleForEmul : MathModuleBase
     [SerializeField] private TMP_InputField _temperature;
     [SerializeField] private TMP_InputField _gasFlow;
     [SerializeField] private TMP_InputField _waterFlow;
-    public TMP_InputField _fluidType;
+    [SerializeField] private TMP_InputField _fluidType;
     public TMP_InputField _gasFlowMain;
-    public string fluid;
+    [SerializeField] private string fluid;
 
     [SerializeField] private TextMeshProUGUI gasSpeed;
     [SerializeField] private TextMeshProUGUI waterSpeed;
