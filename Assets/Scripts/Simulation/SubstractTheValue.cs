@@ -178,43 +178,55 @@ public class SubstractTheValue : MonoBehaviour
         }
     }
     
+    // mainParent и Planes заданы не во всех сценах (в CHP нет mainParent, в Simulation2 — Planes):
+    // без проверки Update падал каждый кадр и масштаб дыма (changeParticleSystems) не применялся.
+    private void SetMainScale(float scale)
+    {
+        if (mainParent != null) mainParent.transform.localScale = new Vector3(scale, scale, scale);
+    }
+
+    private void SetPlanesActive(bool active)
+    {
+        if (Planes != null) Planes.SetActive(active);
+    }
+
     private void Update()
     {
         if (_gasFlowMain.text == "100000 м³/ч" || _gasFlowMain.text == "100000 м³/сағ" || _gasFlowMain.text == "100000 m³/h")
         {
-            mainParent.transform.localScale = new Vector3(1f, 1f, 1f);
+            SetMainScale(1f);
             changeParticleSystems(1f);
             //Planes.SetActive(true);
         }
         else if (_gasFlowMain.text == "150000 м³/ч - ТЭЦ Павлодар" || _gasFlowMain.text == "150000 м³/сағ - ЖЭС Павлодар" || _gasFlowMain.text == "150000 m³/h - CHP Pavlodar")
         {
-            mainParent.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
+            SetMainScale(1.7f);
             changeParticleSystems(1.7f);
-            Planes.SetActive(false);
+            SetPlanesActive(false);
         }
         else if (_gasFlowMain.text == "200000 м³/ч" || _gasFlowMain.text == "200000 м³/сағ" || _gasFlowMain.text == "200000 m³/h")
         {
-            mainParent.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+            SetMainScale(2.5f);
             changeParticleSystems(2.2f);
-            Planes.SetActive(false);
+            SetPlanesActive(false);
         }
         else if (_gasFlowMain.text == "250000 м³/ч - ТЭЦ Алматы" || _gasFlowMain.text == "250000 м³/сағ - ЖЭС Алматы" || _gasFlowMain.text == "250000 m³/h - CHP Almaty")
         {
-            mainParent.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+            SetMainScale(3.5f);
             changeParticleSystems(3.5f);
-            Planes.SetActive(false);
+            SetPlanesActive(false);
         }
         else if (_gasFlowMain.text == "400000 м³/ч" || _gasFlowMain.text == "400000 м³/сағ" || _gasFlowMain.text == "400000 m³/h")
         {
-            mainParent.transform.localScale = new Vector3(4.5f, 4.5f, 4.5f);
+            SetMainScale(4.5f);
             changeParticleSystems(4.5f);
-            Planes.SetActive(false);
+            SetPlanesActive(false);
         }
         else if (_gasFlowMain.text == "500000 м³/ч" || _gasFlowMain.text == "500000 м³/сағ" || _gasFlowMain.text == "500000 m³/h")
         {
-            mainParent.transform.localScale = new Vector3(5.5f, 5.5f, 5.5f); 
+            SetMainScale(5.5f);
             changeParticleSystems(5.5f);
-            Planes.SetActive(false);
+            SetPlanesActive(false);
             return;
         }
         
