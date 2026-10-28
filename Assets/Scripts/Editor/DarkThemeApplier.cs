@@ -21,10 +21,10 @@ public static class DarkThemeApplier
     private const string IconDir = "Assets/UI/Theme/Icons";
 
     [MenuItem("Tools/UI/Apply Dark Theme (Simulation)")]
-    public static void Apply() => ApplyToSimulationScene(SimulationScene);
+    public static void Apply() => ApplyToSimulationScene(SimulationScene, styleFrame: true);
 
     [MenuItem("Tools/UI/Apply Dark Theme (CHP)")]
-    public static void ApplyChp() => ApplyToSimulationScene(ChpScene);
+    public static void ApplyChp() => ApplyToSimulationScene(ChpScene, styleFrame: false);
 
     [MenuItem("Tools/UI/Apply Dark Theme (Constructor)")]
     public static void ApplyConstructor()
@@ -58,7 +58,8 @@ public static class DarkThemeApplier
         ApplyConstructor();
     }
 
-    private static void ApplyToSimulationScene(string scenePath)
+    // styleFrame — внешняя рамка и левое меню (пока только в Simulation).
+    private static void ApplyToSimulationScene(string scenePath, bool styleFrame)
     {
         if (!OpenScene(scenePath, out var scene)) return;
 
@@ -76,6 +77,7 @@ public static class DarkThemeApplier
         AddKpiBar(main, rounded, font);
         AddFacilityLabels(main, rounded, font);
         AddRightPanelTheme(main.Find("RightPanel"));
+        if (styleFrame) StyleFrame(GameObject.Find("Panel UI/Main").transform, rounded, outline, font);
         SetupUICamera(GameObject.Find("Main UI").GetComponent<Canvas>());
 
         Save(scene);
@@ -317,6 +319,252 @@ public static class DarkThemeApplier
         }
     }
 
+    // ---------- внешняя рамка и левое меню ----------
+
+    private static readonly Color FrameBackground = new Color(0.078f, 0.102f, 0.133f, 1f); // #141A22
+    private static readonly Color ViewBackground = new Color(0.165f, 0.196f, 0.251f, 1f);  // #2A3240 — поля вокруг 3D-вида
+    private static readonly Color MenuText = new Color(0.79f, 0.82f, 0.86f, 1f);           // неактивный пункт меню
+
+    private static void StyleFrame(Transform main, Sprite rounded, Sprite outline, TMP_FontAsset font)
+    {
+        var bar = UITheme.Panel;
+        bar.a = 1f;
+
+        SetImage(main.GetComponent<Image>(), null, FrameBackground);
+        var background = main.Find("BackGround Panel");
+        SetImage(background.Find("Top Panel")?.GetComponent<Image>(), null, bar);
+        SetImage(background.Find("Bottom Panel")?.GetComponent<Image>(), null, bar);
+        SetImage(background.Find("Panel Shadow")?.GetComponent<Image>(), null, UITheme.Line); // тонкая рамка 3D-вида
+        SetImage(background.Find("Panel")?.GetComponent<Image>(), null, ViewBackground);
+        foreach (var shadow in new[] { "Top Panel Shadow", "Bottom Panel Shadow", "Shadows" })
+            SetEnabled(background.Find(shadow)?.GetComponent<Image>(), false);
+
+        var title = main.Find("Text (TMP)")?.GetComponent<TextMeshProUGUI>();
+        StyleText(title, font, UITheme.Muted, 18f);
+        if (title != null) title.characterSpacing = 6f;
+        StyleText(main.Find("Certificate/Сертификат ")?.GetComponent<TextMeshProUGUI>(), font, UITheme.Muted, 18f);
+
+        var buttons = main.Find("Buttons");
+        SetImage(buttons.GetComponent<Image>(), rounded, bar);
+
+        // Пункты — плоские строки с иконкой; текущий раздел (мы в Simulation) — с подложкой и зелёной иконкой.
+        var items = new (string name, string icon, float y)[]
+        {
+            ("Симуляция", "play", 236f), ("Конструктор", "grid", 176f), ("Описание", "doc", 116f),
+            ("3D/2D", "cube", 56f), ("Разрешение", "monitor", -4f)
+        };
+        foreach (var (name, icon, y) in items)
+            StyleMenuItem(FindChild(buttons, name), rounded, MenuIcon(icon), font, y, name == "Симуляция");
+
+        var exit = buttons.Find("Выход");
+        if (exit != null)
+        {
+            StyleMenuItem(exit, outline, MenuIcon("exit"), font, -244f, false);
+            SetImage(exit.GetComponent<Image>(), outline, UITheme.Danger);
+            SetButtonTint(exit.GetComponent<Button>());
+            StyleText(exit.GetComponentInChildren<TextMeshProUGUI>(true), font, Color.Lerp(UITheme.Danger, Color.white, 0.25f), 20f);
+            SetColor(exit.Find("Icon")?.GetComponent<Image>(), UITheme.Danger);
+        }
+
+        StyleLanguageSwitch(buttons.Find("Language"), rounded, font);
+    }
+
+    private static void StyleMenuItem(Transform item, Sprite sprite, Sprite icon, TMP_FontAsset font, float y, bool current)
+    {
+        if (item == null) return;
+        var rt = (RectTransform)item;
+        Undo.RecordObject(rt, "Theme");
+        rt.sizeDelta = new Vector2(340f, 52f);
+        rt.anchoredPosition = new Vector2(0f, y);
+        FlattenDepth(rt);
+
+        SetImage(item.GetComponent<Image>(), sprite, Color.white);
+        var button = item.GetComponent<Button>();
+        if (button != null)
+        {
+            Undo.RecordObject(button, "Theme");
+            // Цвет строки задаёт ColorTint: без наведения — прозрачная (у текущего раздела — подложка).
+            var idle = current ? UITheme.Panel2 : new Color(UITheme.Panel2.r, UITheme.Panel2.g, UITheme.Panel2.b, 0f);
+            var colors = button.colors;
+            colors.normalColor = colors.selectedColor = colors.disabledColor = idle;
+            colors.highlightedColor = current ? UITheme.Line : UITheme.Panel2;
+            colors.pressedColor = UITheme.Line;
+            colors.colorMultiplier = 1f;
+            colors.fadeDuration = 0.08f;
+            button.colors = colors;
+        }
+
+        var label = item.GetComponentInChildren<TextMeshProUGUI>(true);
+        StyleText(label, font, current ? UITheme.Text : MenuText, 20f);
+        if (label != null)
+        {
+            label.alignment = TextAlignmentOptions.MidlineLeft;
+            label.margin = new Vector4(64f, 0f, 12f, 0f);
+            label.characterSpacing = 4f;
+        }
+
+        var iconTransform = item.Find("Icon");
+        if (iconTransform == null)
+        {
+            var go = new GameObject("Icon", typeof(RectTransform), typeof(Image));
+            Undo.RegisterCreatedObjectUndo(go, "Icon");
+            go.layer = item.gameObject.layer;
+            iconTransform = go.transform;
+            iconTransform.SetParent(item, false);
+        }
+        var iconRect = (RectTransform)iconTransform;
+        iconRect.anchorMin = iconRect.anchorMax = new Vector2(0f, 0.5f);
+        iconRect.pivot = new Vector2(0.5f, 0.5f);
+        iconRect.anchoredPosition = new Vector2(34f, 0f);
+        iconRect.sizeDelta = new Vector2(26f, 26f);
+        var iconImage = iconTransform.GetComponent<Image>();
+        iconImage.sprite = icon;
+        iconImage.preserveAspect = true;
+        iconImage.raycastTarget = false;
+        iconImage.color = current ? UITheme.Accent : UITheme.Muted;
+    }
+
+    // KZ / RU / EN — один переключатель; выбранный язык подсвечивает LanguageSwitchTheme во время работы.
+    private static void StyleLanguageSwitch(Transform language, Sprite rounded, TMP_FontAsset font)
+    {
+        if (language == null) return;
+        var rt = (RectTransform)language;
+        Undo.RecordObject(rt, "Theme");
+        rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0f);
+        rt.sizeDelta = new Vector2(340f, 52f);
+        rt.anchoredPosition = new Vector2(0f, 100f);
+        FlattenDepth(rt);
+        SetImage(language.GetComponent<Image>(), rounded, FrameBackground);
+
+        var layout = language.GetComponent<HorizontalLayoutGroup>();
+        if (layout != null)
+        {
+            Undo.RecordObject(layout, "Theme");
+            layout.padding = new RectOffset(4, 4, 4, 4);
+            layout.spacing = 4f;
+            layout.childControlWidth = layout.childControlHeight = true;
+            layout.childForceExpandWidth = layout.childForceExpandHeight = true;
+        }
+
+        foreach (Transform button in language)
+        {
+            bool selected = button.name == "RU";
+            SetImage(button.GetComponent<Image>(), rounded, selected ? UITheme.Accent : Color.clear);
+            SetButtonTint(button.GetComponent<Button>());
+            var label = button.GetComponentInChildren<TextMeshProUGUI>(true);
+            StyleText(label, font, selected ? Color.white : UITheme.Muted, 20f);
+            if (label != null)
+            {
+                label.text = label.text.Trim(); // было «KZ\n» — перевод строки сдвигал букву вверх
+                label.alignment = TextAlignmentOptions.Center;
+            }
+        }
+
+        var theme = language.GetComponent<LanguageSwitchTheme>();
+        if (theme == null) theme = Undo.AddComponent<LanguageSwitchTheme>(language.gameObject);
+        var so = new SerializedObject(theme);
+        so.FindProperty("translator").objectReferenceValue = Object.FindAnyObjectByType<Translator>(FindObjectsInactive.Include);
+        so.FindProperty("kazakh").objectReferenceValue = language.Find("KZ")?.GetComponent<Button>();
+        so.FindProperty("russian").objectReferenceValue = language.Find("RU")?.GetComponent<Button>();
+        so.FindProperty("english").objectReferenceValue = language.Find("EN")?.GetComponent<Button>();
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    // Иконки меню — линии на сетке 24×24 (как у наборов иконок), штрих 2; рисуются в белый PNG 96×96.
+    private static Sprite MenuIcon(string name)
+    {
+        string path = $"{IconDir}/menu_{name}.png";
+        var existing = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+        if (existing != null) return existing;
+
+        var shapes = MenuIconShapes(name);
+        const int size = 96;
+        const float scale = size / 24f, halfStroke = 1f;
+        var pixels = new Color32[size * size];
+        for (int y = 0; y < size; y++)
+        for (int x = 0; x < size; x++)
+        {
+            var p = new Vector2((x + 0.5f) / scale, 24f - (y + 0.5f) / scale);
+            float dist = float.MaxValue;
+            foreach (var line in shapes)
+                for (int i = 0; i < line.Length - 1; i++)
+                    dist = Mathf.Min(dist, DistanceToSegment(p, line[i], line[i + 1]));
+            float alpha = Mathf.Clamp01((halfStroke - dist) * scale + 0.5f);
+            pixels[y * size + x] = new Color32(255, 255, 255, (byte)(alpha * 255f));
+        }
+
+        Directory.CreateDirectory(IconDir);
+        var tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        tex.SetPixels32(pixels);
+        tex.Apply();
+        File.WriteAllBytes(Path.GetFullPath(path), tex.EncodeToPNG());
+        Object.DestroyImmediate(tex);
+
+        AssetDatabase.ImportAsset(path);
+        var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Single;
+        importer.alphaIsTransparency = true;
+        importer.mipmapEnabled = false;
+        importer.SaveAndReimport();
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+    }
+
+    // Ломаные в координатах сетки 24×24, ось Y вниз.
+    private static Vector2[][] MenuIconShapes(string name)
+    {
+        Vector2 P(float x, float y) => new Vector2(x, y);
+        switch (name)
+        {
+            case "play": return new[] { new[] { P(7, 4), P(20, 12), P(7, 20), P(7, 4) } };
+            case "grid":
+                return new[]
+                {
+                    new[] { P(4, 4), P(10, 4), P(10, 10), P(4, 10), P(4, 4) },
+                    new[] { P(14, 4), P(20, 4), P(20, 10), P(14, 10), P(14, 4) },
+                    new[] { P(4, 14), P(10, 14), P(10, 20), P(4, 20), P(4, 14) },
+                    new[] { P(14, 14), P(20, 14), P(20, 20), P(14, 20), P(14, 14) }
+                };
+            case "doc":
+                return new[]
+                {
+                    new[] { P(6, 3), P(14, 3), P(18, 7), P(18, 21), P(6, 21), P(6, 3) },
+                    new[] { P(14, 3), P(14, 7), P(18, 7) },
+                    new[] { P(9, 12), P(15, 12) },
+                    new[] { P(9, 16), P(15, 16) }
+                };
+            case "cube":
+                return new[]
+                {
+                    new[] { P(12, 3), P(20, 7.5f), P(20, 16.5f), P(12, 21), P(4, 16.5f), P(4, 7.5f), P(12, 3) },
+                    new[] { P(4, 7.5f), P(12, 12), P(20, 7.5f) },
+                    new[] { P(12, 12), P(12, 21) }
+                };
+            case "monitor":
+                return new[]
+                {
+                    new[] { P(3, 4), P(21, 4), P(21, 16), P(3, 16), P(3, 4) },
+                    new[] { P(12, 16), P(12, 20) },
+                    new[] { P(8, 20), P(16, 20) }
+                };
+            case "exit":
+                return new[]
+                {
+                    new[] { P(13, 4), P(6, 4), P(6, 20), P(13, 20) },
+                    new[] { P(10, 12), P(21, 12) },
+                    new[] { P(18, 9), P(21, 12), P(18, 15) }
+                };
+            default: return new Vector2[0][];
+        }
+    }
+
+    private static float DistanceToSegment(Vector2 p, Vector2 a, Vector2 b)
+    {
+        var ab = b - a;
+        float t = Mathf.Clamp01(Vector2.Dot(p - a, ab) / ab.sqrMagnitude);
+        return Vector2.Distance(p, a + ab * t);
+    }
+
     // ---------- новые элементы ----------
 
     private static void AddKpiBar(Transform main, Sprite rounded, TMP_FontAsset font)
@@ -457,6 +705,30 @@ public static class DarkThemeApplier
         image.type = Image.Type.Sliced;
         image.pixelsPerUnitMultiplier = 1f;
         image.color = color;
+    }
+
+    // Рамку рисует перспективная камера с канвасом в 1 единице от неё: разный Z (4 и −1) и масштаб 0,858
+    // заметно сдвигали и сжимали пункты меню. Все пункты — в плоскости канваса, без масштаба.
+    private static void FlattenDepth(RectTransform rt)
+    {
+        var p = rt.localPosition;
+        rt.localPosition = new Vector3(p.x, p.y, 0f);
+        rt.localScale = Vector3.one;
+    }
+
+    // Transform.Find считает «/» разделителем пути — «3D/2D» так не найти.
+    private static Transform FindChild(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+            if (child.name == name) return child;
+        return null;
+    }
+
+    private static void SetEnabled(Behaviour behaviour, bool enabled)
+    {
+        if (behaviour == null) return;
+        Undo.RecordObject(behaviour, "Theme");
+        behaviour.enabled = enabled;
     }
 
     private static void SetColor(Graphic graphic, Color color)
