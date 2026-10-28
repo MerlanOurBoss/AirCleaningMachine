@@ -4192,7 +4192,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u043F\u043E\u0442\u043E\u043A\u0430 CO2\r:\n\t\t     0"
+  m_text: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u043F\u043E\u0442\u043E\u043A\u0430 \nCO2:\n\t\t     0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8094ed3b5f723034a9155c4d0333f15f, type: 2}
   m_sharedMaterial: {fileID: -1148389318886441812, guid: 8094ed3b5f723034a9155c4d0333f15f, type: 2}

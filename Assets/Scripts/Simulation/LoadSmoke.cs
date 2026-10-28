@@ -29,6 +29,22 @@ public class LoadSmoke : MonoBehaviour
     /// <summary>Модули цепочки в порядке прохождения газа (по нему же идёт OUT → IN). Читает ProcessMonitor.</summary>
     public IReadOnlyList<IParameterModule> ParameterModules => _parameterModules;
 
+    [Tooltip("Тревоги ProcessMonitor, подсветка значений и показатели появляются только после «Симулировать» " +
+             "и пропадают после «Остановить». Выключите, чтобы мониторинг работал всегда.")]
+    [SerializeField] private bool monitorOnlyWhileRunning = true;
+
+    /// <summary>Нажата «Симулировать» и ещё не нажата «Остановить».</summary>
+    public bool IsRunning { get; private set; }
+
+    /// <summary>Time.time нажатия «Симулировать» — для таймера симуляции.</summary>
+    public float RunningSince { get; private set; }
+
+    /// <summary>Симуляцию запустили (true) или остановили (false).</summary>
+    public event Action<bool> RunningChanged;
+
+    /// <summary>Показывать ли сейчас результаты мониторинга (ProcessMonitor, показатели).</summary>
+    public bool MonitoringActive => !monitorOnlyWhileRunning || IsRunning;
+
     [SerializeField] private float updateInterval = 5f;
     private void Start()
     {
@@ -185,6 +201,12 @@ public class LoadSmoke : MonoBehaviour
             if (module != null)
                 module.StartModule();
         }
+
+        // Повторное «Симулировать» во время работы таймер не сбрасывает.
+        if (IsRunning) return;
+        IsRunning = true;
+        RunningSince = Time.time;
+        RunningChanged?.Invoke(true);
     }
 
     private void StopSimulation()
@@ -194,5 +216,9 @@ public class LoadSmoke : MonoBehaviour
             if (module != null)
                 module.StopModule();
         }
+
+        if (!IsRunning) return;
+        IsRunning = false;
+        RunningChanged?.Invoke(false);
     }
 }

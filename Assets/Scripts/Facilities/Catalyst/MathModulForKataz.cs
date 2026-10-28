@@ -194,7 +194,7 @@ public class MathModulForKataz : MathModuleBase
         {
             gasVelocity.text = "Скорость газа: \n\t\t   " + velocity.ToString("0.000") + " м/с";
             gasDensitie.text = "Плотность газа: \n\t\t   " + density.ToString("0.000") + " кг/м³";
-            gasmassFlow.text = "Массовый расход газа:: \n\t\t   " + massFlow.ToString("0.000") + " кг/с";
+            gasmassFlow.text = "Массовый расход газа: \n\t\t   " + massFlow.ToString("0.000") + " кг/с";
             coGaz.text = "Вых. концентрация CO: \n\t\t   " + CO_Gaz_Out.ToString("0.000") + " моль/м³";
             _sizeText.text = $"Диаметр блока: {deametr:0.0} м \n" +
                                 $"Расходники: {consumablesTotal: 0.0} тг";

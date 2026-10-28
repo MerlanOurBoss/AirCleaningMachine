@@ -234,22 +234,22 @@ public class LoadRightPanel : MonoBehaviour
         }
     }
 
+    // Вкладки раскладывает VerticalLayoutGroup, и их позиции могут поменяться уже после открытия карточки:
+    // первая карточка открывается раньше, чем колонка разложена, и уезжала вверх за край панели.
+    private void LateUpdate()
+    {
+        if (currentlySelectedPrefab != null) MoveDetailsToTop(currentlySelectedPrefab);
+    }
+
+    // Карточка ставится от исходной позиции, а не сдвигается от текущей — вызов можно повторять каждый кадр.
     private void MoveDetailsToTop(GameObject prefabObject)
     {
         Transform detailsTransform = FindChildRecursive(prefabObject.transform, "Details");
-        if (detailsTransform != null)
-    {
-        RectTransform detailsRect = detailsTransform.GetComponent<RectTransform>();
-            if (detailsRect != null)
-            {
-                RectTransform rootRect = prefabObject.GetComponent<RectTransform>();
-                float parentY = rootRect.anchoredPosition.y;
-                Vector2 newPosition = detailsRect.anchoredPosition;
-                newPosition.y = newPosition.y + (parentY*-1) - 100f;
+        if (detailsTransform == null || !originalDetailsPositions.TryGetValue(detailsTransform.gameObject, out Vector3 original))
+            return;
 
-                detailsRect.anchoredPosition = newPosition;
-            }
-        }
+        float parentY = prefabObject.GetComponent<RectTransform>().anchoredPosition.y;
+        detailsTransform.localPosition = new Vector3(original.x, original.y - parentY - 100f, original.z);
     }
 
     private void RestoreDetailsPosition(GameObject prefabObject)

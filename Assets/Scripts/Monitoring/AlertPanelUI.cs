@@ -32,7 +32,7 @@ public class AlertPanelUI : MonoBehaviour
 
     [Header("Размеры (эталон 1920×1080)")]
     [SerializeField] private float topOffset = 10f;
-    [SerializeField] private float badgeWidth = 360f;
+    [SerializeField] private float badgeWidth = 640f;
     [SerializeField] private float panelWidth = 700f;
     [SerializeField] private float panelMaxHeight = 560f;
 
@@ -40,12 +40,8 @@ public class AlertPanelUI : MonoBehaviour
              "(updateInterval модулей и LoadSmoke).")]
     [SerializeField] private float appliedHoldSeconds = 15f;
 
-    private static readonly Color NormalColor = new Color(0.18f, 0.6f, 0.32f, 0.95f);
-    private static readonly Color WarningColor = new Color(0.93f, 0.62f, 0.08f, 0.95f);
-    private static readonly Color CriticalColor = new Color(0.85f, 0.2f, 0.17f, 0.95f);
-    private static readonly Color PanelColor = new Color(0.08f, 0.1f, 0.13f, 0.94f);
-    private static readonly Color ButtonColor = new Color(0.2f, 0.45f, 0.85f);
-    private static readonly Color ButtonDoneColor = new Color(0.35f, 0.38f, 0.42f);
+    private static readonly Color ButtonColor = UITheme.Accent;
+    private static readonly Color ButtonDoneColor = UITheme.Line;
 
     private const float HeaderHeight = 44f;
     private const float Padding = 10f;
@@ -67,6 +63,7 @@ public class AlertPanelUI : MonoBehaviour
     {
         public GameObject Root;
         public Image Background;
+        public Image Stripe;
         public TextMeshProUGUI Title;
         public readonly List<RecommendationRow> Rows = new List<RecommendationRow>();
     }
@@ -77,6 +74,7 @@ public class AlertPanelUI : MonoBehaviour
     private RectTransform _content;
     private TextMeshProUGUI _header;
     private Image _badge;
+    private Image _badgeBorder;
     private TextMeshProUGUI _badgeText;
     private readonly List<AlertEntry> _entries = new List<AlertEntry>();
 
@@ -174,6 +172,17 @@ public class AlertPanelUI : MonoBehaviour
     {
         if (monitor == null || _panel == null) return;
 
+        // До «Симулировать» (и после «Остановить») ни плашки, ни списка.
+        bool active = monitor.IsActive;
+        _badge.gameObject.SetActive(active);
+        if (!active)
+        {
+            _open = false;
+            _shownWorst = AlertLevel.Normal;
+            _panel.gameObject.SetActive(false);
+            return;
+        }
+
         var lang = monitor.Language;
         var alerts = monitor.Alerts;
 
@@ -181,8 +190,18 @@ public class AlertPanelUI : MonoBehaviour
         foreach (var alert in alerts)
             if (alert.Level > worst) worst = alert.Level;
 
-        _badge.color = LevelColor(worst);
-        _badgeText.text = MonitoringText.Badge(worst, alerts.Count, lang);
+        // Тёмная плашка с рамкой цвета уровня; при тревоге — суть самой важной из них.
+        _badge.color = UITheme.Panel;
+        _badgeBorder.color = UITheme.ForLevel(worst);
+        _badgeText.color = UITheme.TextForLevel(worst);
+        string badge = MonitoringText.Badge(worst, alerts.Count, lang);
+        if (alerts.Count > 0)
+        {
+            var top = alerts[0];
+            string unit = string.IsNullOrWhiteSpace(top.Rule.unit) ? string.Empty : " " + top.Rule.unit.Trim();
+            badge += $"  ·  {MonitoringText.StageName(top.Stage, lang)}: {MonitoringText.ParameterName(top.Rule.parameterId, lang)} {MonitoringText.Number(top.Value)}{unit}";
+        }
+        _badgeText.text = badge;
         _header.text = MonitoringText.Pick(lang, "Тревоги и рекомендации", "Дабылдар мен ұсыныстар", "Alerts and recommendations");
 
         if (openOnCritical && worst == AlertLevel.Critical && _shownWorst != AlertLevel.Critical)
@@ -211,9 +230,10 @@ public class AlertPanelUI : MonoBehaviour
 
     private void Fill(AlertEntry entry, ProcessAlert alert, Translator.Language lang)
     {
-        var color = LevelColor(alert.Level);
-        entry.Background.color = new Color(color.r, color.g, color.b, 0.16f);
-        entry.Title.color = Color.Lerp(color, Color.white, 0.3f);
+        // Тёмная карточка, уровень тревоги — полосой слева и цветом заголовка.
+        entry.Background.color = UITheme.Panel2;
+        entry.Stripe.color = UITheme.ForLevel(alert.Level);
+        entry.Title.color = UITheme.TextForLevel(alert.Level);
         entry.Title.text = MonitoringText.AlertTitle(alert, lang);
 
         var recs = alert.Recommendations;
@@ -244,8 +264,9 @@ public class AlertPanelUI : MonoBehaviour
 
     private void FillNormal(AlertEntry entry, Translator.Language lang)
     {
-        entry.Background.color = new Color(NormalColor.r, NormalColor.g, NormalColor.b, 0.16f);
-        entry.Title.color = Color.Lerp(NormalColor, Color.white, 0.3f);
+        entry.Background.color = UITheme.Panel2;
+        entry.Stripe.color = UITheme.Accent;
+        entry.Title.color = UITheme.TextForLevel(AlertLevel.Normal);
         entry.Title.text = MonitoringText.Pick(lang,
             "Все параметры в норме.", "Барлық параметрлер қалыпты.", "All parameters are within limits.");
 
@@ -278,9 +299,6 @@ public class AlertPanelUI : MonoBehaviour
         _panel.sizeDelta = new Vector2(width, Mathf.Max(height, HeaderHeight));
     }
 
-    private static Color LevelColor(AlertLevel level) =>
-        level == AlertLevel.Critical ? CriticalColor : level == AlertLevel.Warning ? WarningColor : NormalColor;
-
     // ================= построение интерфейса =================
 
     private void Build()
@@ -308,16 +326,30 @@ public class AlertPanelUI : MonoBehaviour
         var badgeRt = CreateRect("Badge", _area);
         PlaceTopCenter(badgeRt, -topOffset, new Vector2(badgeWidth, BadgeHeight));
         _badge = badgeRt.gameObject.AddComponent<Image>();
+        _badge.sprite = UITheme.Rounded;
+        _badge.type = Image.Type.Sliced;
         var badgeButton = badgeRt.gameObject.AddComponent<Button>();
         badgeButton.targetGraphic = _badge;
         badgeButton.onClick.AddListener(Toggle);
-        _badgeText = CreateText("Label", badgeRt, 20f, FontStyles.Bold, TextAlignmentOptions.Center);
-        Stretch(_badgeText.rectTransform, 6f, 6f);
+        var borderRt = CreateRect("Border", badgeRt);
+        Stretch(borderRt, 0f, 0f);
+        _badgeBorder = borderRt.gameObject.AddComponent<Image>();
+        _badgeBorder.sprite = UITheme.Outline;
+        _badgeBorder.type = Image.Type.Sliced;
+        _badgeBorder.raycastTarget = false;
+        _badgeText = CreateText("Label", badgeRt, 18f, FontStyles.Normal, TextAlignmentOptions.Center);
+        _badgeText.enableAutoSizing = true;
+        _badgeText.fontSizeMin = 13f;
+        _badgeText.fontSizeMax = 18f;
+        Stretch(_badgeText.rectTransform, 14f, 6f);
 
         // Панель со списком
         _panel = CreateRect("Panel", _area);
         PlaceTopCenter(_panel, -PanelTop, new Vector2(panelWidth, panelMaxHeight));
-        _panel.gameObject.AddComponent<Image>().color = PanelColor;
+        var panelImage = _panel.gameObject.AddComponent<Image>();
+        panelImage.sprite = UITheme.Rounded;
+        panelImage.type = Image.Type.Sliced;
+        panelImage.color = UITheme.Panel;
 
         _header = CreateText("Header", _panel, 20f, FontStyles.Bold, TextAlignmentOptions.Left);
         var headerRt = _header.rectTransform;
@@ -363,9 +395,21 @@ public class AlertPanelUI : MonoBehaviour
         var rt = CreateRect("Alert", _content);
         var entry = new AlertEntry { Root = rt.gameObject };
         entry.Background = rt.gameObject.AddComponent<Image>();
+        entry.Background.sprite = UITheme.Rounded;
+        entry.Background.type = Image.Type.Sliced;
+
+        var stripeRt = CreateRect("Stripe", rt);
+        stripeRt.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+        stripeRt.anchorMin = new Vector2(0f, 0f);
+        stripeRt.anchorMax = new Vector2(0f, 1f);
+        stripeRt.pivot = new Vector2(0f, 0.5f);
+        stripeRt.offsetMin = new Vector2(0f, 6f);
+        stripeRt.offsetMax = new Vector2(4f, -6f);
+        entry.Stripe = stripeRt.gameObject.AddComponent<Image>();
+        entry.Stripe.raycastTarget = false;
 
         var layout = rt.gameObject.AddComponent<VerticalLayoutGroup>();
-        layout.padding = new RectOffset(12, 12, 8, 10);
+        layout.padding = new RectOffset(18, 12, 8, 10);
         layout.spacing = 6f;
         layout.childControlWidth = true;
         layout.childControlHeight = true;
@@ -390,7 +434,7 @@ public class AlertPanelUI : MonoBehaviour
         var row = new RecommendationRow { Root = rt.gameObject };
 
         row.Text = CreateText("Text", rt, 16f, FontStyles.Normal, TextAlignmentOptions.Left);
-        row.Text.color = new Color(0.9f, 0.92f, 0.95f);
+        row.Text.color = UITheme.Muted;
         // preferredWidth = 1 — чтобы длинный текст не выталкивал кнопку, а переносился в оставшейся ширине.
         var textLayout = row.Text.gameObject.AddComponent<LayoutElement>();
         textLayout.preferredWidth = 1f;
@@ -401,6 +445,8 @@ public class AlertPanelUI : MonoBehaviour
         buttonLayout.minWidth = buttonLayout.preferredWidth = 140f;
         buttonLayout.minHeight = buttonLayout.preferredHeight = 34f;
         row.ButtonImage = buttonRt.gameObject.AddComponent<Image>();
+        row.ButtonImage.sprite = UITheme.Rounded;
+        row.ButtonImage.type = Image.Type.Sliced;
         row.Button = buttonRt.gameObject.AddComponent<Button>();
         row.Button.targetGraphic = row.ButtonImage;
         row.ButtonLabel = CreateText("Label", buttonRt, 16f, FontStyles.Bold, TextAlignmentOptions.Center);

@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 /// в таблицах аппаратов и собирает тревоги с рекомендациями ProcessAdvisor (показывает AlertPanelUI).
 ///
 /// В сцены с LoadSmoke (Simulation, Simulation2, CHP) добавляется сам вместе с панелью тревог.
+/// Пока симуляция не запущена кнопкой «Симулировать», тревог нет (см. LoadSmoke.MonitoringActive).
 /// Если поставить ProcessMonitor в сцену вручную, автодобавление пропускается.
 /// </summary>
 public class ProcessMonitor : MonoBehaviour
@@ -37,6 +38,9 @@ public class ProcessMonitor : MonoBehaviour
     public IReadOnlyList<ProcessAlert> Alerts => _alerts;
     public ProcessLimits Limits => limits;
     public Translator.Language Language => translator != null ? translator.currentLanguage : Translator.Language.Russian;
+
+    /// <summary>Мониторинг работает: симуляция запущена (или цепочка разрешает мониторинг всегда).</summary>
+    public bool IsActive => chain == null || chain.MonitoringActive;
 
     private readonly List<ProcessAlert> _alerts = new List<ProcessAlert>();
     private readonly List<GeneralManagerBase> _modules = new List<GeneralManagerBase>();
@@ -112,12 +116,17 @@ public class ProcessMonitor : MonoBehaviour
 
         if (translator != null)
             translator.OnLanguageChanged += HandleLanguageChanged;
+
+        if (chain != null)
+            chain.RunningChanged += HandleRunningChanged;
     }
 
     private void OnDestroy()
     {
         if (translator != null)
             translator.OnLanguageChanged -= HandleLanguageChanged;
+        if (chain != null)
+            chain.RunningChanged -= HandleRunningChanged;
 
         _wantedHighlight.Clear();
         ApplyHighlight();
@@ -127,6 +136,9 @@ public class ProcessMonitor : MonoBehaviour
 
     // Тексты рекомендаций собираются на текущем языке — пересобрать сразу.
     private void HandleLanguageChanged(Translator.Language lang) => _nextCheck = 0f;
+
+    // Нажали «Симулировать» / «Остановить» — проверить сразу, не дожидаясь checkInterval.
+    private void HandleRunningChanged(bool running) => _nextCheck = 0f;
 
     private void Update()
     {
@@ -144,7 +156,9 @@ public class ProcessMonitor : MonoBehaviour
         _alerts.Clear();
         _wantedHighlight.Clear();
 
-        if (_modules.Count > 0)
+        bool active = IsActive;
+        if (!active) _levels.Clear(); // после «Остановить» следующий запуск начинается без памяти прошлых уровней
+        if (active && _modules.Count > 0)
         {
             var lang = Language;
             foreach (var rule in limits.rules)
@@ -166,7 +180,8 @@ public class ProcessMonitor : MonoBehaviour
         _alerts.Sort((a, b) => a.Level != b.Level ? b.Level.CompareTo(a.Level) : a.Order.CompareTo(b.Order));
         ApplyHighlight();
 
-        string signature = BuildSignature();
+        // Включение/выключение мониторинга — тоже изменение: панель тревог прячется или появляется.
+        string signature = (active ? "on|" : "off|") + BuildSignature();
         if (signature == _signature) return;
 
         _signature = signature;
