@@ -7,24 +7,60 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 /// <summary>
-/// Применяет тёмную тему к интерфейсу сцены Simulation (панель «Настройка системы», правая панель иконок,
-/// выпадающие окна) и добавляет строку состояния, карточки показателей и подписи над установками.
+/// Применяет тёмную тему к интерфейсу сцен. Simulation и CHP устроены одинаково: панель «Настройка системы»,
+/// правая панель иконок, выпадающие окна, плюс строка состояния, карточки показателей и подписи над установками.
+/// У Constructor своя раскладка (плитки установок, кнопки действий, сохранённые конструкции).
 /// Можно запускать повторно: уже созданные элементы обновляются, а не дублируются.
 /// </summary>
 public static class DarkThemeApplier
 {
-    private const string ScenePath = "Assets/Scenes/Simulation.unity";
+    private const string SimulationScene = "Assets/Scenes/Simulation.unity";
+    private const string ChpScene = "Assets/Scenes/CHP.unity";
+    private const string ConstructorScene = "Assets/Scenes/Constructor.unity";
+    private const string SavedSlotPrefab = "Assets/Prefabs/Constructor/SaveModel/1.prefab";
     private const string IconDir = "Assets/UI/Theme/Icons";
 
     [MenuItem("Tools/UI/Apply Dark Theme (Simulation)")]
-    public static void Apply()
+    public static void Apply() => ApplyToSimulationScene(SimulationScene);
+
+    [MenuItem("Tools/UI/Apply Dark Theme (CHP)")]
+    public static void ApplyChp() => ApplyToSimulationScene(ChpScene);
+
+    [MenuItem("Tools/UI/Apply Dark Theme (Constructor)")]
+    public static void ApplyConstructor()
     {
-        var scene = EditorSceneManager.GetActiveScene();
-        if (scene.path != ScenePath)
-        {
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
-            scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        }
+        if (!OpenScene(ConstructorScene, out var scene)) return;
+        var font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/UI/Font/Roboto-Regular SDF.asset");
+        var rounded = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/UI/Theme/Rounded.png");
+        var outline = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/UI/Theme/RoundedOutline.png");
+        var canvas = GameObject.Find("CameraUI").GetComponent<Canvas>();
+        var root = canvas.transform;
+
+        StyleConstructorPanel(root.Find("System settings"), rounded, outline, font);
+        StyleIconBar(root.Find("Settings"), rounded, font);
+        StylePopup(root.Find("Saved Concepts/Panel"), rounded);
+        StyleSavedSlotPrefab(rounded, font);
+        // 3D-модели в плитках установок должна рисовать UI-камера вместе с плитками, иначе фон плитки ляжет поверх.
+        foreach (Transform row in root.Find("System settings"))
+            if (row.name.StartsWith("Facilities"))
+                foreach (Transform tile in row)
+                    SetLayerRecursive(tile.Find("3d Model"), canvas.gameObject.layer);
+        SetupUICamera(canvas);
+
+        Save(scene);
+    }
+
+    [MenuItem("Tools/UI/Apply Dark Theme (All)")]
+    public static void ApplyAll()
+    {
+        Apply();
+        ApplyChp();
+        ApplyConstructor();
+    }
+
+    private static void ApplyToSimulationScene(string scenePath)
+    {
+        if (!OpenScene(scenePath, out var scene)) return;
 
         var rounded = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/UI/Theme/Rounded.png");
         var outline = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/UI/Theme/RoundedOutline.png");
@@ -42,9 +78,23 @@ public static class DarkThemeApplier
         AddRightPanelTheme(main.Find("RightPanel"));
         SetupUICamera(GameObject.Find("Main UI").GetComponent<Canvas>());
 
+        Save(scene);
+    }
+
+    private static bool OpenScene(string path, out UnityEngine.SceneManagement.Scene scene)
+    {
+        scene = EditorSceneManager.GetActiveScene();
+        if (scene.path == path) return true;
+        if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return false;
+        scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+        return true;
+    }
+
+    private static void Save(UnityEngine.SceneManagement.Scene scene)
+    {
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
-        Debug.Log("[DarkThemeApplier] Тёмная тема применена к Simulation.");
+        Debug.Log($"[DarkThemeApplier] Тёмная тема применена к {scene.name}.");
     }
 
     // ---------- панель «Настройка системы» ----------
@@ -116,49 +166,132 @@ public static class DarkThemeApplier
     private static void StyleToolbar(Transform rightPanel, Sprite rounded, TMP_FontAsset font)
     {
         var settings = rightPanel.Find("Settings");
-        SetImage(settings.GetComponent<Image>(), rounded, UITheme.Panel);
-        var layout = settings.GetComponent<VerticalLayoutGroup>();
-        if (layout != null) { layout.padding = new RectOffset(8, 8, 10, 10); layout.spacing = 8f; }
+        StyleIconBar(settings, rounded, font);
 
         Tooltip(settings.Find("Kataz"), "Состояние катализатора", "Катализатор күйі", "Catalyst status", font, rounded);
         Tooltip(settings.Find("HDR"), "Стены и потолок", "Қабырғалар мен төбе", "Walls and ceiling", font, rounded);
         Tooltip(settings.Find("bb"), "Основной вид", "Негізгі көрініс", "Main view", font, rounded);
         Tooltip(settings.Find("Light"), "Таблицы на установках", "Қондырғылардағы кестелер", "Unit tables", font, rounded);
-        Tooltip(settings.Find("Toggle"), "Полный экран", "Толық экран", "Fullscreen", font, rounded);
-        Tooltip(settings.Find("Power"), "Выход", "Шығу", "Exit", font, rounded);
-
         foreach (var name in new[] { "Kataz", "HDR", "bb", "Light" })
             SetIcon(settings.Find(name)?.GetComponent<Image>(), UITheme.Text);
-        SetIcon(settings.Find("Toggle/Background")?.GetComponent<Image>(), UITheme.Text);
-        SetIcon(settings.Find("Power")?.GetComponent<Image>(), UITheme.Danger);
-
-        // «Выход» — последним, после разделителя: опасное действие отдельно от инструментов вида.
-        var power = settings.Find("Power");
-        var toggle = settings.Find("Toggle");
-        if (power != null)
-        {
-            var sep = settings.Find("Separator");
-            if (sep == null)
-            {
-                var go = new GameObject("Separator", typeof(RectTransform), typeof(Image));
-                Undo.RegisterCreatedObjectUndo(go, "Separator");
-                sep = go.transform;
-                sep.SetParent(settings, false);
-                go.GetComponent<Image>().color = UITheme.Line;
-                go.GetComponent<Image>().raycastTarget = false;
-            }
-            // Layout не управляет размерами детей, поэтому размер задаём явно.
-            ((RectTransform)sep).sizeDelta = new Vector2(48f, 2f);
-            if (toggle != null) toggle.SetAsLastSibling();
-            sep.SetAsLastSibling();
-            power.SetAsLastSibling();
-        }
 
         var move = rightPanel.Find("ButtonForMove");
         if (move != null)
         {
             SetImage(move.GetComponent<Image>(), rounded, UITheme.Panel);
             SetIcon(move.Find("Strelka")?.GetComponent<Image>(), UITheme.Text);
+        }
+    }
+
+    /// <summary>Тёмная подложка панели иконок, «Полный экран» и красный «Выход» последним, за разделителем.</summary>
+    private static void StyleIconBar(Transform settings, Sprite rounded, TMP_FontAsset font)
+    {
+        if (settings == null) return;
+        var background = settings.GetComponent<Image>();
+        SetImage(background, rounded, UITheme.Panel);
+        if (background != null) background.enabled = true; // в Constructor подложка была выключена
+        var layout = settings.GetComponent<VerticalLayoutGroup>();
+        if (layout != null) { layout.padding = new RectOffset(8, 8, 10, 10); layout.spacing = 8f; }
+
+        Tooltip(settings.Find("Toggle"), "Полный экран", "Толық экран", "Fullscreen", font, rounded);
+        Tooltip(settings.Find("Power"), "Выход", "Шығу", "Exit", font, rounded);
+        SetIcon(settings.Find("Toggle/Background")?.GetComponent<Image>(), UITheme.Text);
+        SetIcon(settings.Find("Power")?.GetComponent<Image>(), UITheme.Danger);
+
+        // «Выход» — последним, после разделителя: опасное действие отдельно от инструментов вида.
+        var power = settings.Find("Power");
+        var toggle = settings.Find("Toggle");
+        if (power == null) return;
+
+        var sep = settings.Find("Separator");
+        if (sep == null)
+        {
+            var go = new GameObject("Separator", typeof(RectTransform), typeof(Image));
+            Undo.RegisterCreatedObjectUndo(go, "Separator");
+            go.layer = settings.gameObject.layer;
+            sep = go.transform;
+            sep.SetParent(settings, false);
+            go.GetComponent<Image>().color = UITheme.Line;
+            go.GetComponent<Image>().raycastTarget = false;
+        }
+        // Layout не управляет размерами детей, поэтому размер задаём явно.
+        ((RectTransform)sep).sizeDelta = new Vector2(48f, 2f);
+        if (toggle != null) toggle.SetAsLastSibling();
+        sep.SetAsLastSibling();
+        power.SetAsLastSibling();
+    }
+
+    // ---------- Constructor ----------
+
+    private static void StyleConstructorPanel(Transform panel, Sprite rounded, Sprite outline, TMP_FontAsset font)
+    {
+        SetImage(panel.GetComponent<Image>(), rounded, UITheme.Panel);
+
+        var head = panel.Find("Head").GetComponent<TextMeshProUGUI>();
+        StyleText(head, font, UITheme.Text, 26f);
+        head.alignment = TextAlignmentOptions.MidlineLeft;
+        head.margin = new Vector4(18f, 0f, 18f, 0f);
+        SetColor(panel.Find("Head/Image")?.GetComponent<Image>(), UITheme.Line);
+        SetColor(panel.Find("Image (2)")?.GetComponent<Image>(), UITheme.Line);
+        SetColor(panel.Find("Image (3)")?.GetComponent<Image>(), UITheme.Line);
+
+        // Подзаголовки разделов — мелкие приглушённые, слева, как подписи полей.
+        foreach (var name in new[] { "Установки (текст)", "Вспомогательные (текст)" })
+        {
+            var section = panel.Find(name)?.GetComponent<TextMeshProUGUI>();
+            if (section == null) continue;
+            StyleText(section, font, UITheme.Muted, 20f);
+            section.alignment = TextAlignmentOptions.MidlineLeft;
+            section.margin = new Vector4(18f, 0f, 18f, 0f);
+        }
+
+        foreach (Transform row in panel)
+        {
+            if (!row.name.StartsWith("Facilities")) continue;
+            SetColor(row.GetComponent<Image>(), Color.clear);
+            foreach (Transform tile in row)
+            {
+                SetImage(tile.GetComponent<Image>(), rounded, UITheme.Panel2);
+                SetButtonTint(tile.GetComponent<Button>());
+            }
+        }
+
+        StyleActionButton(panel.Find("Сохранить"), rounded, UITheme.Accent, Color.white, font);
+        StyleActionButton(panel.Find("Соединить трубы"), rounded, UITheme.Panel2, UITheme.Text, font);
+        StyleActionButton(panel.Find("Удалить все"), outline, UITheme.Danger, Color.Lerp(UITheme.Danger, Color.white, 0.2f), font);
+        StyleActionButton(panel.Find("Simulation Button"), rounded, UITheme.Accent, Color.white, font);
+        StyleActionButton(panel.Find("Stop Simulation Button"), outline, UITheme.Danger, Color.Lerp(UITheme.Danger, Color.white, 0.2f), font);
+    }
+
+    private static void StyleActionButton(Transform button, Sprite sprite, Color background, Color textColor, TMP_FontAsset font)
+    {
+        if (button == null) return;
+        SetImage(button.GetComponent<Image>(), sprite, background);
+        SetButtonTint(button.GetComponent<Button>());
+        StyleText(button.GetComponentInChildren<TextMeshProUGUI>(true), font, textColor, 20f);
+    }
+
+    // Кнопка сохранённой конструкции (CHP и Constructor): тёмная плитка с номером и красным крестиком.
+    private static void StyleSavedSlotPrefab(Sprite rounded, TMP_FontAsset font)
+    {
+        var root = PrefabUtility.LoadPrefabContents(SavedSlotPrefab);
+        try
+        {
+            SetImage(root.GetComponent<Image>(), rounded, UITheme.Panel2);
+            SetButtonTint(root.GetComponent<Button>());
+            var number = root.transform.Find("Text (TMP)")?.GetComponent<TextMeshProUGUI>();
+            StyleText(number, font, UITheme.Text, 30f);
+            var close = root.transform.Find("ChildButton");
+            if (close != null)
+            {
+                SetColor(close.GetComponent<Image>(), UITheme.Danger);
+                SetIcon(close.Find("Image")?.GetComponent<Image>(), Color.white);
+            }
+            PrefabUtility.SaveAsPrefabAsset(root, SavedSlotPrefab);
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(root);
         }
     }
 
@@ -266,6 +399,8 @@ public static class DarkThemeApplier
         {
             if (baseCamera.GetComponent<MatchParentCameraRect>() == null) baseCamera.gameObject.AddComponent<MatchParentCameraRect>();
             baseCamera.rect = baseCamera.transform.parent.GetComponent<Camera>().rect;
+            baseCamera.farClipPlane = UIFarClip(canvas);
+            EditorUtility.SetDirty(baseCamera);
             return;
         }
 
@@ -293,7 +428,7 @@ public static class DarkThemeApplier
         uiCamera.orthographic = baseCamera.orthographic;
         uiCamera.fieldOfView = baseCamera.fieldOfView;
         uiCamera.nearClipPlane = 0.1f;
-        uiCamera.farClipPlane = 100f;
+        uiCamera.farClipPlane = UIFarClip(canvas);
         uiCamera.rect = baseCamera.rect;
         if (uiCamera.GetComponent<MatchParentCameraRect>() == null) uiCamera.gameObject.AddComponent<MatchParentCameraRect>();
 
@@ -308,6 +443,10 @@ public static class DarkThemeApplier
         canvas.worldCamera = uiCamera;
     }
 
+    // Канвас стоит на planeDistance от камеры (в CHP — 100): дальняя плоскость с запасом, иначе элементы,
+    // чуть сдвинутые по глубине, отсекаются и сквозь интерфейс видна сцена.
+    private static float UIFarClip(Canvas canvas) => Mathf.Max(100f, canvas.planeDistance * 2f);
+
     // ---------- помощники ----------
 
     private static void SetImage(Image image, Sprite sprite, Color color)
@@ -318,6 +457,23 @@ public static class DarkThemeApplier
         image.type = Image.Type.Sliced;
         image.pixelsPerUnitMultiplier = 1f;
         image.color = color;
+    }
+
+    private static void SetColor(Graphic graphic, Color color)
+    {
+        if (graphic == null) return;
+        Undo.RecordObject(graphic, "Theme");
+        graphic.color = color;
+    }
+
+    private static void SetLayerRecursive(Transform root, int layer)
+    {
+        if (root == null) return;
+        foreach (var t in root.GetComponentsInChildren<Transform>(true))
+        {
+            Undo.RecordObject(t.gameObject, "Theme");
+            t.gameObject.layer = layer;
+        }
     }
 
     private static void SetButtonTint(Selectable selectable)

@@ -551,12 +551,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -598,14 +598,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.11372549, g: 0.61960787, b: 0.45882353, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -952,7 +952,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99421366}
-  m_Mesh: {fileID: 1606434084}
+  m_Mesh: {fileID: 1901492991}
 --- !u!4 &99421371
 Transform:
   m_ObjectHideFlags: 0
@@ -1102,6 +1102,81 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSound
   type: 1
+--- !u!1 &118382305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 118382306}
+  - component: {fileID: 118382308}
+  - component: {fileID: 118382307}
+  m_Layer: 5
+  m_Name: Separator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &118382306
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118382305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1819367534}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 48, y: 2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &118382307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118382305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.22745098, g: 0.27450982, b: 0.3372549, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &118382308
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118382305}
+  m_CullTransparentMesh: 1
 --- !u!1 &146248792
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,7 +1458,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 155822313}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1496,7 +1571,7 @@ GameObject:
   - component: {fileID: 176811330}
   - component: {fileID: 176811329}
   - component: {fileID: 176811328}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2229,7 +2304,7 @@ GameObject:
   - component: {fileID: 238217861}
   - component: {fileID: 238217860}
   - component: {fileID: 238217859}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: New Closed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3128,12 +3203,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -3187,14 +3262,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.11372549, g: 0.61960787, b: 0.45882353, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3309,7 +3384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 323285535}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Collonas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3400,7 +3475,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 330585545}
+  m_Camera: {fileID: 1993271253}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -3451,7 +3526,7 @@ GameObject:
   - component: {fileID: 329667590}
   - component: {fileID: 329667589}
   - component: {fileID: 329667588}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u044F\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0410\u0434\u0441\u043E\u0440\u0431\u0435\u0440 2\\\u041A\u043E\u0440\u043F\u0443\u0441 \u0430\u0434\u0441\u043E\u0440"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3636,7 +3711,8 @@ Transform:
   m_LocalPosition: {x: 118, y: 707, z: 646}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1993271256}
   m_Father: {fileID: 779084592}
   m_LocalEulerAnglesHint: {x: 51.262, y: -181.148, z: -0.961}
 --- !u!114 &330585547
@@ -3655,7 +3731,8 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 1993271253}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -3738,7 +3815,7 @@ GameObject:
   - component: {fileID: 348183796}
   - component: {fileID: 348183795}
   - component: {fileID: 348183794}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3900,12 +3977,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -3947,14 +4024,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.14509805, g: 0.18039216, b: 0.22745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4292,185 +4369,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 383913495}
   m_CullTransparentMesh: 1
---- !u!43 &385565788
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Pipes
-  serializedVersion: 12
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 0
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 0
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 0
-  m_KeepIndices: 0
-  m_IndexFormat: 0
-  m_IndexBuffer: 
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 0
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 0
-    _typelessdata: 
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_CookingOptions: 30
-  m_PreBakeConvexCollisionMesh: 0
-  m_PreBakeTriangleCollisionMesh: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  'm_MeshMetrics[0]': 1
-  'm_MeshMetrics[1]': 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
-  m_MeshLodInfo:
-    serializedVersion: 2
-    m_LodSelectionCurve:
-      serializedVersion: 1
-      m_LodSlope: 0
-      m_LodBias: 0
-    m_NumLevels: 1
-    m_SubMeshes:
-    - serializedVersion: 2
-      m_Levels:
-      - serializedVersion: 1
-        m_IndexStart: 0
-        m_IndexCount: 0
 --- !u!1 &389721850
 GameObject:
   m_ObjectHideFlags: 0
@@ -4744,7 +4642,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 441511927}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041A\u043B\u0430\u043F\u043E\u043D (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4779,7 +4677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 445290558}
   - component: {fileID: 445290559}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 'Collider 1 '
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -5108,7 +5006,7 @@ GameObject:
   - component: {fileID: 515433478}
   - component: {fileID: 515433477}
   - component: {fileID: 515433476}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder.026
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5503,7 +5401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 627045319}
   - component: {fileID: 627045320}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Collider 2
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -5555,7 +5453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 629320131}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041A\u043B\u0430\u043F\u043E\u043D"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5589,7 +5487,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 654194460}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Trube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5620,7 +5518,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 662643097}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5801,7 +5699,7 @@ GameObject:
   m_Component:
   - component: {fileID: 675821914}
   - component: {fileID: 675821915}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 'Collider 1 '
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -5996,14 +5894,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.10980392, g: 0.13725491, b: 0.1764706, a: 0.92156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6249,7 +6147,7 @@ GameObject:
   - component: {fileID: 746970800}
   - component: {fileID: 746970799}
   - component: {fileID: 746970798}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: New Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6423,7 +6321,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 783476938}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Oven
   m_TagString: Facilities_Oven
   m_Icon: {fileID: 0}
@@ -6809,7 +6707,7 @@ GameObject:
   - component: {fileID: 830845338}
   - component: {fileID: 830845337}
   - component: {fileID: 830845336}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6967,7 +6865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 834123828}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7113,7 +7011,7 @@ GameObject:
   m_Component:
   - component: {fileID: 862612688}
   - component: {fileID: 862612689}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Collider 2
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -7166,7 +7064,7 @@ GameObject:
   m_Component:
   - component: {fileID: 866445892}
   - component: {fileID: 866445893}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 'Collider 1 '
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -7383,7 +7281,7 @@ GameObject:
   - component: {fileID: 901381486}
   - component: {fileID: 901381485}
   - component: {fileID: 901381484}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: New Closed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8228,7 +8126,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973021421}
-  m_Mesh: {fileID: 385565788}
+  m_Mesh: {fileID: 2004306112}
 --- !u!1 &985167323
 GameObject:
   m_ObjectHideFlags: 0
@@ -8315,7 +8213,7 @@ GameObject:
   - component: {fileID: 1003504801}
   - component: {fileID: 1003504803}
   - component: {fileID: 1003504802}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: newSbor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8770,7 +8668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.22745098, g: 0.27450982, b: 0.3372549, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8991,6 +8889,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1055041995}
   - component: {fileID: 1055041996}
+  - component: {fileID: 1055041997}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -9078,6 +8977,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
+--- !u!114 &1055041997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055041994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4157547a25200ec42abb8768f5d6bf6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UITooltip
+  textRu: "\u041F\u043E\u043B\u043D\u044B\u0439 \u044D\u043A\u0440\u0430\u043D"
+  textKk: "\u0422\u043E\u043B\u044B\u049B \u044D\u043A\u0440\u0430\u043D"
+  textEn: Fullscreen
+  font: {fileID: 11400000, guid: 8094ed3b5f723034a9155c4d0333f15f, type: 2}
+  background: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
 --- !u!1 &1063090744
 GameObject:
   m_ObjectHideFlags: 0
@@ -9140,12 +9056,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -9187,14 +9103,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8862745, g: 0.29411766, b: 0.2901961, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 1c26e0467320e9e4b9e71b181bb04437, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9670,7 +9586,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1144436884}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooling2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9710,7 +9626,7 @@ GameObject:
   - component: {fileID: 1152639568}
   - component: {fileID: 1152639570}
   - component: {fileID: 1152639569}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: display (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9881,7 +9797,7 @@ GameObject:
   - component: {fileID: 1161600110}
   - component: {fileID: 1161600109}
   - component: {fileID: 1161600108}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0412\u0442\u043E\u0440\u043E\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0435\u043F\u043B\u043E\u043E\u0431\u043C\u0435\u043D\u043D\u0438\u043A 1\\\u0412\u043E\u0440\u043E.004"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10327,14 +10243,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9098039, g: 0.92941177, b: 0.9490196, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 71208d5941cb648428737c8c092e80e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ed226e8c69db174e83efd5b817666ae, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10713,12 +10629,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -10760,14 +10676,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.14509805, g: 0.18039216, b: 0.22745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10864,8 +10780,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4289765779
+  m_fontColor: {r: 0.5764706, g: 0.6313726, b: 0.6901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -10882,15 +10798,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -10921,7 +10837,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.96198845, z: 0.6874695, w: 17.697168}
+  m_margin: {x: 18, y: 0, z: 18, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11102,7 +11018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1225524209}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11212,7 +11128,7 @@ GameObject:
   - component: {fileID: 1258177745}
   - component: {fileID: 1258177747}
   - component: {fileID: 1258177746}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0431\u043B\u043E\u043A \u042D\u043B\u0435\u043A\u0442\u0440\u043E\u0444\u0438\u043B\u044C\u0442\u0440\\\u041D\u043E\u0436\u043A\u0438"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11504,8 +11420,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294110696
+  m_fontColor: {r: 0.9098039, g: 0.92941177, b: 0.9490196, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -11522,8 +11438,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11587,7 +11503,7 @@ GameObject:
   - component: {fileID: 1282003947}
   - component: {fileID: 1282003946}
   - component: {fileID: 1282003945}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: New Closed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11966,7 +11882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.22745098, g: 0.27450982, b: 0.3372549, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12003,7 +11919,7 @@ GameObject:
   - component: {fileID: 1315169523}
   - component: {fileID: 1315169522}
   - component: {fileID: 1315169521}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12252,7 +12168,7 @@ GameObject:
   - component: {fileID: 1323309726}
   - component: {fileID: 1323309725}
   - component: {fileID: 1323309724}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Gate
   m_TagString: Gate
   m_Icon: {fileID: 0}
@@ -12401,7 +12317,7 @@ GameObject:
   - component: {fileID: 1328358805}
   - component: {fileID: 1328358807}
   - component: {fileID: 1328358806}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12562,12 +12478,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -12609,14 +12525,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.14509805, g: 0.18039216, b: 0.22745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12782,7 +12698,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1346496785}
   - component: {fileID: 1346496786}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Collider 2
   m_TagString: Klapon
   m_Icon: {fileID: 0}
@@ -13045,7 +12961,7 @@ GameObject:
   - component: {fileID: 1412035077}
   - component: {fileID: 1412035076}
   - component: {fileID: 1412035075}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: New Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13159,7 +13075,7 @@ GameObject:
   - component: {fileID: 1422204856}
   - component: {fileID: 1422204855}
   - component: {fileID: 1422204854}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13262,7 +13178,7 @@ GameObject:
   - component: {fileID: 1449802389}
   - component: {fileID: 1449802388}
   - component: {fileID: 1449802387}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0412\u0442\u043E\u0440\u043E\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0435\u043F\u043B\u043E\u043E\u0431\u043C\u0435\u043D\u043D\u0438\u043A 1\\\u041A\u043E\u0440\u043E\u0431 "
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13577,12 +13493,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -13624,14 +13540,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.14509805, g: 0.18039216, b: 0.22745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13712,7 +13628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.22745098, g: 0.27450982, b: 0.3372549, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -13748,7 +13664,7 @@ GameObject:
   - component: {fileID: 1483276787}
   - component: {fileID: 1483276789}
   - component: {fileID: 1483276788}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: cylinder first
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13836,7 +13752,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1521427583}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13872,7 +13788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1521516961}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14108,7 +14024,7 @@ GameObject:
   - component: {fileID: 1528634106}
   - component: {fileID: 1528634105}
   - component: {fileID: 1528634104}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder.026 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14458,15 +14374,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.69411767}
+  m_Color: {r: 0.10980392, g: 0.13725491, b: 0.1764706, a: 0.92156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 90dfe6615a889704bbe3bcb10f191689, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -14747,8 +14663,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -14765,8 +14681,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -14865,7 +14781,7 @@ GameObject:
   - component: {fileID: 1561871772}
   - component: {fileID: 1561871774}
   - component: {fileID: 1561871773}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15091,185 +15007,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSound
   type: 1
---- !u!43 &1606434084
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Pipes
-  serializedVersion: 12
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 0
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 0
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 0
-  m_KeepIndices: 0
-  m_IndexFormat: 0
-  m_IndexBuffer: 
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 0
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 0
-    _typelessdata: 
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_CookingOptions: 30
-  m_PreBakeConvexCollisionMesh: 0
-  m_PreBakeTriangleCollisionMesh: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  'm_MeshMetrics[0]': 1
-  'm_MeshMetrics[1]': 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
-  m_MeshLodInfo:
-    serializedVersion: 2
-    m_LodSelectionCurve:
-      serializedVersion: 1
-      m_LodSlope: 0
-      m_LodBias: 0
-    m_NumLevels: 1
-    m_SubMeshes:
-    - serializedVersion: 2
-      m_Levels:
-      - serializedVersion: 1
-        m_IndexStart: 0
-        m_IndexCount: 0
 --- !u!1 &1607157613
 GameObject:
   m_ObjectHideFlags: 0
@@ -15412,8 +15149,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294110696
+  m_fontColor: {r: 0.9098039, g: 0.92941177, b: 0.9490196, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -15430,15 +15167,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -15469,7 +15206,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 4.2459717, y: 0, z: 3.8221357, w: -7.654026}
+  m_margin: {x: 18, y: 0, z: 18, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -15494,7 +15231,7 @@ GameObject:
   - component: {fileID: 1621480893}
   - component: {fileID: 1621480895}
   - component: {fileID: 1621480894}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15700,7 +15437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15954,7 +15691,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1653683205}
   - component: {fileID: 1653683206}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Water Cooling Machine
   m_TagString: Facilities_Cool
   m_Icon: {fileID: 0}
@@ -16167,8 +15904,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4289765779
+  m_fontColor: {r: 0.5764706, g: 0.6313726, b: 0.6901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -16185,15 +15922,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -16224,7 +15961,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.96198845, z: 0.11280061, w: 17.697168}
+  m_margin: {x: 18, y: 0, z: 18, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -16317,7 +16054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -16354,7 +16091,7 @@ GameObject:
   - component: {fileID: 1705231481}
   - component: {fileID: 1705231480}
   - component: {fileID: 1705231479}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u044F\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0410\u0434\u0441\u043E\u0440\u0431\u0435\u0440 2\\\u041A\u043E\u0440\u043F\u0443\u0441 \u0430\u0434\u0441\u043E\u0440 (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16464,7 +16201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1738322548}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: New Sbor
   m_TagString: Facilities_NewCapsul
   m_Icon: {fileID: 0}
@@ -16647,12 +16384,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -16694,14 +16431,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.14509805, g: 0.18039216, b: 0.22745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16798,8 +16535,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4285427688
+  m_fontColor: {r: 0.9090196, g: 0.43529412, b: 0.43215686, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -16816,8 +16553,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16950,12 +16687,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -16997,14 +16734,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.14509805, g: 0.18039216, b: 0.22745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17047,7 +16784,7 @@ GameObject:
   - component: {fileID: 1785692258}
   - component: {fileID: 1785692257}
   - component: {fileID: 1785692256}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: New Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17158,7 +16895,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1818710896}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17212,8 +16949,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2126306730}
   - {fileID: 1055041995}
+  - {fileID: 118382306}
+  - {fileID: 2126306730}
   m_Father: {fileID: 325731271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
@@ -17234,12 +16972,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 8
+    m_Right: 8
+    m_Top: 10
+    m_Bottom: 10
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: 8
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -17254,20 +16992,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819367533}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 0.10980392, g: 0.13725491, b: 0.1764706, a: 0.92156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17333,7 +17071,7 @@ GameObject:
   - component: {fileID: 1827671779}
   - component: {fileID: 1827671778}
   - component: {fileID: 1827671777}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u044F\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0410\u0434\u0441\u043E\u0440\u0431\u0435\u0440 1\\\u041A\u0440\u044B\u0448\u043A\u0430 \u0437\u0430\u0433 (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17445,7 +17183,7 @@ GameObject:
   - component: {fileID: 1854553161}
   - component: {fileID: 1854553163}
   - component: {fileID: 1854553162}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0412\u0442\u043E\u0440\u043E\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0435\u043F\u043B\u043E\u043E\u0431\u043C\u0435\u043D\u043D\u0438\u043A 1\\\u0412\u043E\u0440\u043E"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17536,7 +17274,7 @@ GameObject:
   - component: {fileID: 1869721728}
   - component: {fileID: 1869721727}
   - component: {fileID: 1869721726}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u044F\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0410\u0434\u0441\u043E\u0440\u0431\u0435\u0440 1\\\u041A\u0440\u044B\u0448\u043A\u0430 \u0437\u0430\u0433"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17694,7 +17432,7 @@ GameObject:
   - component: {fileID: 1885871777}
   - component: {fileID: 1885871779}
   - component: {fileID: 1885871778}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17778,6 +17516,185 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885871776}
   m_Mesh: {fileID: 4493585093827132993, guid: f3bdf5fba15a7de47941a3bdf1fa3d18, type: 3}
+--- !u!43 &1901492991
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Pipes
+  serializedVersion: 12
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 0
+  m_KeepIndices: 0
+  m_IndexFormat: 0
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_CookingOptions: 30
+  m_PreBakeConvexCollisionMesh: 0
+  m_PreBakeTriangleCollisionMesh: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  'm_MeshMetrics[0]': 1
+  'm_MeshMetrics[1]': 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!1 &1907420931
 GameObject:
   m_ObjectHideFlags: 0
@@ -17826,7 +17743,7 @@ GameObject:
   - component: {fileID: 1923033359}
   - component: {fileID: 1923033361}
   - component: {fileID: 1923033360}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0412\u0442\u043E\u0440\u043E\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0432\u0435\u0440\u0434\u043E\u0435 \u0442\u0435\u043B\u043E (4)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17961,7 +17878,7 @@ GameObject:
   - component: {fileID: 1968132522}
   - component: {fileID: 1968132521}
   - component: {fileID: 1968132520}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18134,12 +18051,12 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1.18, g: 1.18, b: 1.18, a: 1}
+    m_PressedColor: {r: 0.82, g: 0.82, b: 0.82, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -18193,14 +18110,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8862745, g: 0.29411766, b: 0.2901961, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 1c26e0467320e9e4b9e71b181bb04437, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -18251,6 +18168,327 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSound
   type: 3
+--- !u!1 &1993271252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1993271256}
+  - component: {fileID: 1993271253}
+  - component: {fileID: 1993271255}
+  - component: {fileID: 1993271254}
+  m_Layer: 0
+  m_Name: UI Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &1993271253
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993271252}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 4
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0.22
+    y: 0.051381964
+    width: 0.753
+    height: 0.8832791
+  near clip plane: 0.1
+  far clip plane: 100
+  field of view: 49.350933
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 2
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 32
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!114 &1993271254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993271252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd355b656ccf93445b4e062e9141effb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchParentCameraRect
+  source: {fileID: 330585545}
+--- !u!114 &1993271255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993271252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 1
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
+--- !u!4 &1993271256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993271252}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 330585546}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &2004306112
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Pipes
+  serializedVersion: 12
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 0
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 0
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 0
+  m_KeepIndices: 0
+  m_IndexFormat: 0
+  m_IndexBuffer: 
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 0
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 0
+    _typelessdata: 
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_CookingOptions: 30
+  m_PreBakeConvexCollisionMesh: 0
+  m_PreBakeTriangleCollisionMesh: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  'm_MeshMetrics[0]': 1
+  'm_MeshMetrics[1]': 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+  m_MeshLodInfo:
+    serializedVersion: 2
+    m_LodSelectionCurve:
+      serializedVersion: 1
+      m_LodSlope: 0
+      m_LodBias: 0
+    m_NumLevels: 1
+    m_SubMeshes:
+    - serializedVersion: 2
+      m_Levels:
+      - serializedVersion: 1
+        m_IndexStart: 0
+        m_IndexCount: 0
 --- !u!1 &2004967501
 GameObject:
   m_ObjectHideFlags: 0
@@ -18349,7 +18587,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 0.9090196, g: 0.43529412, b: 0.43215686, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -18366,8 +18604,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -18691,7 +18929,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -18708,8 +18946,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -18773,7 +19011,7 @@ GameObject:
   - component: {fileID: 2062259975}
   - component: {fileID: 2062259974}
   - component: {fileID: 2062259973}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0412\u0442\u043E\u0440\u043E\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0435\u043F\u043B\u043E\u043E\u0431\u043C\u0435\u043D\u043D\u0438\u043A 1\\\u0412\u043E\u0440\u043E.003"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18995,7 +19233,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2075967633}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041A\u043B\u0430\u043F\u043E\u043D (2)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19154,7 +19392,7 @@ GameObject:
   - component: {fileID: 2110952603}
   - component: {fileID: 2110952605}
   - component: {fileID: 2110952604}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0412\u0442\u043E\u0440\u043E\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0432\u0435\u0440\u0434\u043E\u0435 \u0442\u0435\u043B\u043E (3)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19401,6 +19639,7 @@ GameObject:
   - component: {fileID: 2126306732}
   - component: {fileID: 2126306731}
   - component: {fileID: 2126306734}
+  - component: {fileID: 2126306735}
   m_Layer: 5
   m_Name: Power
   m_TagString: Untagged
@@ -19496,14 +19735,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8862745, g: 0.29411766, b: 0.2901961, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e9a2328bab1bf3f4b897f53f16d20ffc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 24426d315eda51d4ba46aaf54bbf79b0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19534,6 +19773,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSound
   type: 3
+--- !u!114 &2126306735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126306729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4157547a25200ec42abb8768f5d6bf6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UITooltip
+  textRu: "\u0412\u044B\u0445\u043E\u0434"
+  textKk: "\u0428\u044B\u0493\u0443"
+  textEn: Exit
+  font: {fileID: 11400000, guid: 8094ed3b5f723034a9155c4d0333f15f, type: 2}
+  background: {fileID: 21300000, guid: 59e9a447970faa5479e76898988af54c, type: 3}
 --- !u!1 &2135284011
 GameObject:
   m_ObjectHideFlags: 0
@@ -19735,7 +19991,7 @@ GameObject:
   - component: {fileID: 996130369644708947}
   - component: {fileID: 7036888912518013531}
   - component: {fileID: 5969286433725369735}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19751,7 +20007,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3309084449301098347}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19769,7 +20025,7 @@ GameObject:
   - component: {fileID: 5914311147149599387}
   - component: {fileID: 7273577880248435734}
   - component: {fileID: 1427025303071452063}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19838,7 +20094,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8332503023749265721}
   - component: {fileID: 1964760995953945514}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DropCreating3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19920,7 +20176,7 @@ GameObject:
   - component: {fileID: 8441354003321999936}
   - component: {fileID: 5624336233538736566}
   - component: {fileID: 2523993768286430007}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20282,7 +20538,7 @@ GameObject:
   - component: {fileID: 3561639045544679627}
   - component: {fileID: 4499890308280572948}
   - component: {fileID: 1837647474947541167}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20390,7 +20646,7 @@ GameObject:
   - component: {fileID: 1467015646331800211}
   - component: {fileID: 8346134387294425542}
   - component: {fileID: 8665881544107852836}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20409,7 +20665,7 @@ GameObject:
   - component: {fileID: 6209298051792586060}
   - component: {fileID: 3626828198519962}
   - component: {fileID: 8038451692661209301}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20636,7 +20892,7 @@ GameObject:
   - component: {fileID: 988828184077371225}
   - component: {fileID: 9191512237211906742}
   - component: {fileID: 4519396415001394072}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20785,7 +21041,7 @@ GameObject:
   - component: {fileID: 5771448309211988553}
   - component: {fileID: 2806726523732038899}
   - component: {fileID: 6903826551087479333}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041A\u0443\u0431.003"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20803,7 +21059,7 @@ GameObject:
   - component: {fileID: 7095830991080674300}
   - component: {fileID: 1360459545134659357}
   - component: {fileID: 9214489988877218836}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20960,7 +21216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2688135032549713545}
   - component: {fileID: 8533749635119864020}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DropCreating2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21027,7 +21283,7 @@ GameObject:
   - component: {fileID: 5307096652300026539}
   - component: {fileID: 7664010657502379568}
   - component: {fileID: 4325026032944446338}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21103,7 +21359,7 @@ GameObject:
   - component: {fileID: 8615837908316128607}
   - component: {fileID: 5205245780167251565}
   - component: {fileID: 4532165008334298846}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21183,7 +21439,7 @@ GameObject:
   - component: {fileID: 5960103835137734390}
   - component: {fileID: 3770223933089254072}
   - component: {fileID: 3526246537661529682}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21199,7 +21455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7208953027321405044}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Oven
   m_TagString: Facilities_Oven
   m_Icon: {fileID: 0}
@@ -21255,7 +21511,7 @@ GameObject:
   - component: {fileID: 725135944283059448}
   - component: {fileID: 7754638386323487926}
   - component: {fileID: 1798488278187342889}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u043B\u043E\u0449\u0430\u0434\u043A\u0430 \u043E\u0442\u0432\u0435\u0440\u0441\u0442\u0432\u0438\u0435\u043C.013"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21338,7 +21594,7 @@ GameObject:
   - component: {fileID: 7516121629401548602}
   - component: {fileID: 8536499371294425653}
   - component: {fileID: 3219118119673911319}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21434,7 +21690,7 @@ GameObject:
   - component: {fileID: 4556152643707748405}
   - component: {fileID: 7333898933584824585}
   - component: {fileID: 4802439596528323943}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21563,7 +21819,7 @@ GameObject:
   - component: {fileID: 1431134153830007764}
   - component: {fileID: 8536117263366961233}
   - component: {fileID: 1541800410946076513}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u043B\u043E\u0449\u0430\u0434\u043A\u0430 \u043E\u0442\u0432\u0435\u0440\u0441\u0442\u0432\u0438\u0435\u043C.002"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21717,7 +21973,7 @@ GameObject:
   - component: {fileID: 2231558691870632274}
   - component: {fileID: 6492035867709663328}
   - component: {fileID: 8637133568985082328}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0432\u0435\u0440\u0434\u043E\u0435 \u0442.011"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21913,7 +22169,7 @@ GameObject:
   - component: {fileID: 2399769030996685772}
   - component: {fileID: 7993770345393854890}
   - component: {fileID: 7739628126735630788}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.025
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22057,7 +22313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3939722162889279393}
   - component: {fileID: 2721823168864383028}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: KatazBlocks 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22075,7 +22331,7 @@ GameObject:
   - component: {fileID: 1978253229551240472}
   - component: {fileID: 6195034391644114307}
   - component: {fileID: 9042854184992053242}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22373,7 +22629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6019711312959378414}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: New Katalizator (1)
   m_TagString: Facilities_Kataz
   m_Icon: {fileID: 0}
@@ -22412,7 +22668,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7597219156143212920}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22476,7 +22732,7 @@ GameObject:
   - component: {fileID: 2645432305743075873}
   - component: {fileID: 6800457497118583069}
   - component: {fileID: 4346430078483580585}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22503,7 +22759,7 @@ GameObject:
   - component: {fileID: 2669372402406109662}
   - component: {fileID: 130592936639530387}
   - component: {fileID: 2153072701474507941}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22664,7 +22920,7 @@ GameObject:
   - component: {fileID: 7287720552769933779}
   - component: {fileID: 1142171215389211936}
   - component: {fileID: 6590176790203257115}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22683,7 +22939,7 @@ GameObject:
   - component: {fileID: 2005950907745315230}
   - component: {fileID: 216196453199269030}
   - component: {fileID: 6453879591919291007}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22731,7 +22987,7 @@ GameObject:
   - component: {fileID: 5024022144902415662}
   - component: {fileID: 6195936849920650164}
   - component: {fileID: 6238420850388495180}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22787,7 +23043,7 @@ GameObject:
   - component: {fileID: 4034522924229661854}
   - component: {fileID: 1374001295110021365}
   - component: {fileID: 7621567834790639526}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23237,7 +23493,7 @@ GameObject:
   - component: {fileID: 1989685156988354481}
   - component: {fileID: 4301622270227153717}
   - component: {fileID: 5364470557534122736}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23393,7 +23649,7 @@ GameObject:
   - component: {fileID: 5459409447529908018}
   - component: {fileID: 5121784387480824189}
   - component: {fileID: 6621802135256474396}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23520,7 +23776,7 @@ GameObject:
   - component: {fileID: 4280909396252937030}
   - component: {fileID: 643838510384688408}
   - component: {fileID: 8416732517817239792}
-  m_Layer: 7
+  m_Layer: 5
   m_Name: Sphere
   m_TagString: Dots
   m_Icon: {fileID: 0}
@@ -23612,7 +23868,7 @@ GameObject:
   - component: {fileID: 8492435868661728141}
   - component: {fileID: 8400517136722457664}
   - component: {fileID: 4733553705657967140}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23630,7 +23886,7 @@ GameObject:
   - component: {fileID: 6169998662014236152}
   - component: {fileID: 5382262832719118148}
   - component: {fileID: 2666510023396363300}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23679,7 +23935,7 @@ GameObject:
   - component: {fileID: 6710713889503533943}
   - component: {fileID: 4264792580655687204}
   - component: {fileID: 1705509994414312792}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u043B\u043E\u0449\u0430\u0434\u043A\u0430 \u043E\u0442\u0432\u0435\u0440\u0441\u0442\u0432\u0438\u0435\u043C.012"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23699,7 +23955,7 @@ GameObject:
   - component: {fileID: 2438130321203015560}
   - component: {fileID: 7165026183976119010}
   - component: {fileID: 7013495468840788289}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23850,7 +24106,7 @@ GameObject:
   - component: {fileID: 5962751886347334360}
   - component: {fileID: 2841032348614532016}
   - component: {fileID: 7582840056749306278}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Emulsifiers (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23876,7 +24132,7 @@ GameObject:
   - component: {fileID: 6952868026818896656}
   - component: {fileID: 356296322994320590}
   - component: {fileID: 7192549165511980262}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23894,7 +24150,7 @@ GameObject:
   - component: {fileID: 2091054808433801805}
   - component: {fileID: 1299098667507083276}
   - component: {fileID: 1083924362493422460}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041A\u0443\u0431"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23959,7 +24215,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 382868186484179559}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u043E\u0447\u043A\u0438"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23977,7 +24233,7 @@ GameObject:
   - component: {fileID: 2423425682862325652}
   - component: {fileID: 5523179631004820275}
   - component: {fileID: 8485766496978220908}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23995,7 +24251,7 @@ GameObject:
   - component: {fileID: 7975005200912624319}
   - component: {fileID: 2864089322735432277}
   - component: {fileID: 3377577848221920746}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24013,7 +24269,7 @@ GameObject:
   - component: {fileID: 3651834110222331332}
   - component: {fileID: 9120293973495196152}
   - component: {fileID: 3305707703758114149}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0424\u0430\u043B\u044C\u0433\u0430.014"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24101,7 +24357,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7208472647163092197}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24119,7 +24375,7 @@ GameObject:
   - component: {fileID: 518559741473800095}
   - component: {fileID: 5329632958157110546}
   - component: {fileID: 6505892839474158196}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24324,7 +24580,7 @@ GameObject:
   - component: {fileID: 4821895175182915195}
   - component: {fileID: 2607289725329516782}
   - component: {fileID: 9085011005142127640}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24343,7 +24599,7 @@ GameObject:
   - component: {fileID: 3381015683879366312}
   - component: {fileID: 3086782276090208624}
   - component: {fileID: 4886804726359669325}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0424\u0430\u043B\u044C\u0433\u0430.032"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24540,7 +24796,7 @@ GameObject:
   - component: {fileID: 3776132636693652352}
   - component: {fileID: 6838026252504199919}
   - component: {fileID: 2568379375457962824}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24607,7 +24863,7 @@ GameObject:
   - component: {fileID: 4087080770345790487}
   - component: {fileID: 8713267866156654851}
   - component: {fileID: 4295287316394750154}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24783,7 +25039,7 @@ GameObject:
   - component: {fileID: 1477172154956236972}
   - component: {fileID: 5193064390725430156}
   - component: {fileID: 5845201876464780724}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.023
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24801,7 +25057,7 @@ GameObject:
   - component: {fileID: 2961347044444025808}
   - component: {fileID: 9152229561196866005}
   - component: {fileID: 7830560552930149651}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0432\u0435\u0440\u0434\u043E\u0435 \u0442.002"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24866,7 +25122,7 @@ GameObject:
   - component: {fileID: 4023476276185712983}
   - component: {fileID: 1153256133519258139}
   - component: {fileID: 120128375587407224}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24899,7 +25155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1045012601231291498}
   - component: {fileID: 1672164968765962276}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: KatazBlocks 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24964,7 +25220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4124241729992443345}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Emul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25181,7 +25437,7 @@ GameObject:
   - component: {fileID: 5672518071373643140}
   - component: {fileID: 8449737124091660173}
   - component: {fileID: 7474009491470097859}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25237,7 +25493,7 @@ GameObject:
   - component: {fileID: 4519627283057388543}
   - component: {fileID: 1908325210252865953}
   - component: {fileID: 7089419413349254197}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.016
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25404,7 +25660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 603136877756862510}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Box006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25508,7 +25764,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8033678871890166956}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u0444\u0438\u043B\u044C\u0442\u0440"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25684,7 +25940,7 @@ GameObject:
   - component: {fileID: 1409285269994698143}
   - component: {fileID: 1942386149386658798}
   - component: {fileID: 2149578684049946740}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.022
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25808,7 +26064,7 @@ GameObject:
   - component: {fileID: 2872308907975601089}
   - component: {fileID: 2305220896827552683}
   - component: {fileID: 8242633771717964512}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26050,7 +26306,7 @@ GameObject:
   - component: {fileID: 6429288895121678814}
   - component: {fileID: 5340213361344318891}
   - component: {fileID: 2545608471496550655}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.019
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26117,7 +26373,7 @@ GameObject:
   - component: {fileID: 8968874513650276005}
   - component: {fileID: 6966119036222601344}
   - component: {fileID: 2380474490491888421}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.033
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26136,7 +26392,7 @@ GameObject:
   - component: {fileID: 3506926019041114444}
   - component: {fileID: 864923861084968802}
   - component: {fileID: 967269711171435604}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quad (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26270,7 +26526,7 @@ GameObject:
   - component: {fileID: 6034036731061142614}
   - component: {fileID: 407289797074575812}
   - component: {fileID: 4269892943797493304}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: untitled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26303,7 +26559,7 @@ GameObject:
   - component: {fileID: 8585198414014951646}
   - component: {fileID: 1671796286990157072}
   - component: {fileID: 4975112263136302769}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26484,7 +26740,7 @@ GameObject:
   - component: {fileID: 340612947117328842}
   - component: {fileID: 5618887220001793931}
   - component: {fileID: 3500486951227274}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26502,7 +26758,7 @@ GameObject:
   - component: {fileID: 6006300950649486584}
   - component: {fileID: 2154640232638123121}
   - component: {fileID: 7655471556068773222}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26592,7 +26848,7 @@ GameObject:
   - component: {fileID: 3548053069948185056}
   - component: {fileID: 1086877276224770525}
   - component: {fileID: 661137246955747406}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.028
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26748,7 +27004,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4871400845198142846}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26880,7 +27136,7 @@ GameObject:
   - component: {fileID: 1235712183954272440}
   - component: {fileID: 4305960225508988559}
   - component: {fileID: 6244095079184672505}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quad (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26896,7 +27152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5560489564454881023}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: new Nasos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27127,7 +27383,7 @@ GameObject:
   - component: {fileID: 3690813024127004727}
   - component: {fileID: 4309020093948722798}
   - component: {fileID: 1696377095816215173}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27145,7 +27401,7 @@ GameObject:
   - component: {fileID: 8675047749957954575}
   - component: {fileID: 8258086199777535794}
   - component: {fileID: 71809287175652762}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27243,7 +27499,7 @@ GameObject:
   - component: {fileID: 2054238199247223194}
   - component: {fileID: 3678940164184846500}
   - component: {fileID: 8286433518916003581}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0432\u0435\u0440\u0434\u043E\u0435 \u0442.013"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27415,7 +27671,7 @@ GameObject:
   - component: {fileID: 8595415398926151816}
   - component: {fileID: 8927404919961457304}
   - component: {fileID: 707110560099455868}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BigCooler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27433,7 +27689,7 @@ GameObject:
   - component: {fileID: 511879104071633160}
   - component: {fileID: 500421660107222757}
   - component: {fileID: 8181346215833039689}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0415\u043C\u043A\u043E\u0441\u0442\u044C 1.002"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27596,7 +27852,7 @@ GameObject:
   - component: {fileID: 2549935705097817376}
   - component: {fileID: 6183589531964461858}
   - component: {fileID: 5116528339950376486}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27663,7 +27919,7 @@ GameObject:
   - component: {fileID: 4361366609456403446}
   - component: {fileID: 3661323739873487377}
   - component: {fileID: 3041000453495367339}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27689,7 +27945,7 @@ GameObject:
   - component: {fileID: 1201708520478223849}
   - component: {fileID: 6591457664649081399}
   - component: {fileID: 1061506366677204805}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u043B\u043E\u0449\u0430\u0434\u043A\u0430 \u043E\u0442\u0432\u0435\u0440\u0441\u0442\u0432\u0438\u0435\u043C.019"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27724,7 +27980,7 @@ GameObject:
   - component: {fileID: 1532204573933288199}
   - component: {fileID: 731150278741285321}
   - component: {fileID: 1549136564047633124}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.034
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27743,7 +27999,7 @@ GameObject:
   - component: {fileID: 8892034008140969015}
   - component: {fileID: 3548188650622541401}
   - component: {fileID: 263663823462572007}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27848,7 +28104,7 @@ GameObject:
   - component: {fileID: 3933960064215620348}
   - component: {fileID: 5165819954746123545}
   - component: {fileID: 4533591267012064915}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: front cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27867,7 +28123,7 @@ GameObject:
   - component: {fileID: 2148132362006171847}
   - component: {fileID: 5113058443206680199}
   - component: {fileID: 1428262856958884436}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27886,7 +28142,7 @@ GameObject:
   - component: {fileID: 2869742611660064376}
   - component: {fileID: 5388670698291841250}
   - component: {fileID: 4075397009986878499}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0435\u043B\u0430 \u0441\u043A\u0440\u0443\u0431\u0431"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28059,7 +28315,7 @@ GameObject:
   - component: {fileID: 7374654814793233712}
   - component: {fileID: 321558396468621870}
   - component: {fileID: 7384559052575237022}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28141,7 +28397,7 @@ GameObject:
   - component: {fileID: 4597884861327962834}
   - component: {fileID: 3034255575856264799}
   - component: {fileID: 7939962705526796101}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.032
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28434,7 +28690,7 @@ GameObject:
   - component: {fileID: 97296765433925344}
   - component: {fileID: 2720129508933628774}
   - component: {fileID: 3884898819526729671}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0435\u043B\u043E \u0441\u043A\u0440\u0443.002"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28470,7 +28726,7 @@ GameObject:
   - component: {fileID: 639438189306248620}
   - component: {fileID: 6113860383866030552}
   - component: {fileID: 4263825747834797816}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quad (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28489,7 +28745,7 @@ GameObject:
   - component: {fileID: 4632880761875930005}
   - component: {fileID: 1447957061930011227}
   - component: {fileID: 13144683197088359}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28605,7 +28861,7 @@ GameObject:
   - component: {fileID: 734382281340505197}
   - component: {fileID: 1815875667454559912}
   - component: {fileID: 7679234289030944077}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.031
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28719,7 +28975,7 @@ GameObject:
   - component: {fileID: 4597272292594382849}
   - component: {fileID: 8886020201768234465}
   - component: {fileID: 7806051844036462449}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quad (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28812,7 +29068,7 @@ GameObject:
   - component: {fileID: 2425337955537855303}
   - component: {fileID: 7542584714036555976}
   - component: {fileID: 4025502209281547769}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.014
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28830,7 +29086,7 @@ GameObject:
   - component: {fileID: 424725849678690418}
   - component: {fileID: 7105377027754046615}
   - component: {fileID: 4410771614183648097}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u043B\u043E\u0449\u0430\u0434\u043A\u0430 \u043E\u0442\u0432\u0435\u0440\u0441\u0442\u0432\u0438\u0435\u043C.017"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28983,7 +29239,7 @@ GameObject:
   - component: {fileID: 1657794837424151310}
   - component: {fileID: 7507524400131786096}
   - component: {fileID: 1672803977086390061}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29075,7 +29331,7 @@ GameObject:
   - component: {fileID: 6726778989144403501}
   - component: {fileID: 8990510739383743828}
   - component: {fileID: 3438123178929094333}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.020
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29173,7 +29429,7 @@ GameObject:
   - component: {fileID: 7876808861758179580}
   - component: {fileID: 7972066298665695122}
   - component: {fileID: 7356098566024487949}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Emulsifiers#3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29191,7 +29447,7 @@ GameObject:
   - component: {fileID: 7017832107515024319}
   - component: {fileID: 2994910236129030258}
   - component: {fileID: 3452429801435556613}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29443,7 +29699,7 @@ GameObject:
   - component: {fileID: 5461046847719836040}
   - component: {fileID: 6859012390356134438}
   - component: {fileID: 462131432343476699}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: collec
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29462,7 +29718,7 @@ GameObject:
   - component: {fileID: 6014954654370451019}
   - component: {fileID: 6454504220458801072}
   - component: {fileID: 6629765391059560150}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29564,7 +29820,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1391106496990853491}
   - component: {fileID: 2566478441229153608}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DropCreating1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29582,7 +29838,7 @@ GameObject:
   - component: {fileID: 7263736308031109506}
   - component: {fileID: 1779753845751515233}
   - component: {fileID: 2428346541124628665}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29600,7 +29856,7 @@ GameObject:
   - component: {fileID: 7335945407319149452}
   - component: {fileID: 1896635531479729323}
   - component: {fileID: 6512327856331267569}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29800,7 +30056,7 @@ GameObject:
   - component: {fileID: 8831513455340338050}
   - component: {fileID: 2142377336782929522}
   - component: {fileID: 1759347608263069956}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041F\u043B\u043E\u0449\u0430\u0434\u043A\u0430 \u043E\u0442\u0432\u0435\u0440\u0441\u0442\u0432\u0438\u0435\u043C.009"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29881,7 +30137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6737169276963896799}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Liquid Ring Vacuum Pump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29900,7 +30156,7 @@ GameObject:
   - component: {fileID: 1473575837421934348}
   - component: {fileID: 2612929356565470866}
   - component: {fileID: 4444179659313691488}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29926,7 +30182,7 @@ GameObject:
   - component: {fileID: 1110156178439473383}
   - component: {fileID: 3745433178184383118}
   - component: {fileID: 3861249410551065584}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29942,7 +30198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9035622294329408215}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u0444\u0438\u043B\u044C\u0442\u0440"
   m_TagString: Facilities
   m_Icon: {fileID: 0}
@@ -29990,7 +30246,7 @@ GameObject:
   - component: {fileID: 3995750934524716918}
   - component: {fileID: 3379685338174486957}
   - component: {fileID: 5957023630186650734}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: display (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30040,7 +30296,7 @@ GameObject:
   - component: {fileID: 5738472348457324883}
   - component: {fileID: 5455869009126635091}
   - component: {fileID: 7785197936836914204}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quad (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30138,7 +30394,7 @@ GameObject:
   - component: {fileID: 3976942942357656902}
   - component: {fileID: 6694381463901483542}
   - component: {fileID: 3488645888576437677}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0432\u0435\u0440\u0434\u043E\u0435 \u0442.014"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30352,7 +30608,7 @@ GameObject:
   - component: {fileID: 8991914148317662403}
   - component: {fileID: 7145759529876104606}
   - component: {fileID: 6076856341129281548}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30479,7 +30735,7 @@ GameObject:
   - component: {fileID: 1935847739750492014}
   - component: {fileID: 513835550812672087}
   - component: {fileID: 7726446223926042377}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30550,7 +30806,7 @@ GameObject:
   - component: {fileID: 1259593055271641147}
   - component: {fileID: 1089257902767407034}
   - component: {fileID: 348520802938502975}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30591,7 +30847,7 @@ GameObject:
   - component: {fileID: 8350340186394101631}
   - component: {fileID: 6201129647507292608}
   - component: {fileID: 8674581717541515345}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u0444\u0438\u043B\u044C\u0442\u0440 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30609,7 +30865,7 @@ GameObject:
   - component: {fileID: 9095024064392981241}
   - component: {fileID: 2292610145485638386}
   - component: {fileID: 3861944962604953703}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30781,7 +31037,7 @@ GameObject:
   - component: {fileID: 1296204977394411191}
   - component: {fileID: 2302001197130560220}
   - component: {fileID: 5420735416268696542}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30838,7 +31094,7 @@ GameObject:
   - component: {fileID: 5819677667819578359}
   - component: {fileID: 7491595751372711247}
   - component: {fileID: 2196547436020629138}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30977,7 +31233,7 @@ GameObject:
   - component: {fileID: 291882218633331629}
   - component: {fileID: 2977601689362523788}
   - component: {fileID: 6608147121411553167}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30995,7 +31251,7 @@ GameObject:
   - component: {fileID: 1152526717960707449}
   - component: {fileID: 1366487708005717521}
   - component: {fileID: 8682088295674256541}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0435\u043B\u043E \u0441\u043A\u0440\u0443.001"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31211,7 +31467,7 @@ GameObject:
   - component: {fileID: 5232325440806143140}
   - component: {fileID: 3980518802334837646}
   - component: {fileID: 7448688590870715221}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.018
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31327,7 +31583,7 @@ GameObject:
   - component: {fileID: 2761728473642994933}
   - component: {fileID: 7960571982897340444}
   - component: {fileID: 19923403188059219}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.026
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31412,7 +31668,7 @@ GameObject:
   - component: {fileID: 3839902998204263785}
   - component: {fileID: 2107650335381504021}
   - component: {fileID: 5814677572401999835}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.035
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31616,7 +31872,7 @@ GameObject:
   - component: {fileID: 8334456527566613416}
   - component: {fileID: 1357165900506817536}
   - component: {fileID: 1066866061423893677}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0432\u0435\u0440\u0434\u043E\u0435 \u0442.019"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31680,7 +31936,7 @@ GameObject:
   - component: {fileID: 5416309588043637477}
   - component: {fileID: 934148316939618880}
   - component: {fileID: 7161866505256913303}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31706,7 +31962,7 @@ GameObject:
   - component: {fileID: 1317893068748670029}
   - component: {fileID: 2437699896833677604}
   - component: {fileID: 6604810407359710774}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.027
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31736,7 +31992,7 @@ GameObject:
   - component: {fileID: 4815071126323004563}
   - component: {fileID: 6727981010695361119}
   - component: {fileID: 8843705470158740652}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.030
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31752,7 +32008,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8249650700996771194}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31834,7 +32090,7 @@ GameObject:
   - component: {fileID: 9004229737572916961}
   - component: {fileID: 5319616557207161587}
   - component: {fileID: 5478040620771672044}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u041A\u0440\u044B\u0448\u043A\u0430 \u0441\u043A.001"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31852,7 +32108,7 @@ GameObject:
   - component: {fileID: 5052170806371624417}
   - component: {fileID: 4125305612845315506}
   - component: {fileID: 2366748891856675828}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: testsss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31958,7 +32214,7 @@ GameObject:
   - component: {fileID: 5815519528277628588}
   - component: {fileID: 4253858523868349446}
   - component: {fileID: 3579585248396958090}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31977,7 +32233,7 @@ GameObject:
   - component: {fileID: 6999869707776131678}
   - component: {fileID: 6567668348146138429}
   - component: {fileID: 5903722431978201376}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32238,7 +32494,7 @@ GameObject:
   - component: {fileID: 4910722674264858834}
   - component: {fileID: 4337426921410648020}
   - component: {fileID: 303490808640792412}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Emulsifiers#2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32256,7 +32512,7 @@ GameObject:
   - component: {fileID: 3307222721195542005}
   - component: {fileID: 3028812127345165491}
   - component: {fileID: 5033401670091924657}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u041A\u0443\u0431.002"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32320,7 +32576,7 @@ GameObject:
   - component: {fileID: 7233759379091761475}
   - component: {fileID: 8065862012563712055}
   - component: {fileID: 7448823984187777499}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.021
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32339,7 +32595,7 @@ GameObject:
   - component: {fileID: 1576083698412522868}
   - component: {fileID: 6279925752776515537}
   - component: {fileID: 6745423511716671322}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quad (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32359,7 +32615,7 @@ GameObject:
   - component: {fileID: 6107390654509759681}
   - component: {fileID: 3015666172655464780}
   - component: {fileID: 8100296653075974490}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Cube (4)
   m_TagString: Finish
   m_Icon: {fileID: 0}
@@ -32509,7 +32765,7 @@ GameObject:
   - component: {fileID: 8385826635312411272}
   - component: {fileID: 5041111439364735976}
   - component: {fileID: 4994048711332198708}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.024
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32653,7 +32909,7 @@ GameObject:
   - component: {fileID: 383558405433056693}
   - component: {fileID: 1967378221486424471}
   - component: {fileID: 1443803360043214704}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32796,7 +33052,7 @@ GameObject:
   - component: {fileID: 7035837185222735984}
   - component: {fileID: 4460091645476152224}
   - component: {fileID: 9073034085052590617}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: SpawnArea
   m_TagString: Finish
   m_Icon: {fileID: 0}
@@ -32814,7 +33070,7 @@ GameObject:
   - component: {fileID: 1023531184224786719}
   - component: {fileID: 514416979580727477}
   - component: {fileID: 4643015583985195665}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.017
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32832,7 +33088,7 @@ GameObject:
   - component: {fileID: 6795737405490054614}
   - component: {fileID: 7083296591534641585}
   - component: {fileID: 7252296003033806473}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: display (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32850,7 +33106,7 @@ GameObject:
   - component: {fileID: 3837404987927896426}
   - component: {fileID: 8565590833208239995}
   - component: {fileID: 6807555169642958399}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0422\u0440\u0435\u0442\u0438\u0439-\u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044B\u0439 \u0431\u043B\u043E\u043A\\\u0422\u0432\u0435\u0440\u0434\u043E\u0435 \u0442.059"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32884,7 +33140,7 @@ GameObject:
   - component: {fileID: 1155719664140475760}
   - component: {fileID: 3376472252098889076}
   - component: {fileID: 8764270006527982475}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Emulsifiers#3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33127,7 +33383,7 @@ GameObject:
   - component: {fileID: 3952905645156009274}
   - component: {fileID: 4865172293560301978}
   - component: {fileID: 7565928488391863967}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33208,7 +33464,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8384439922407210026}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: "\u0412\u043E\u0434\u044F\u043D\u043E\u0439 \u044D\u043C\u0443\u043B\u044C \u043C\u044D\u0448 (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33247,7 +33503,7 @@ GameObject:
   - component: {fileID: 3188162308956359058}
   - component: {fileID: 4328202866727341057}
   - component: {fileID: 6044167989041167296}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plane (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33301,7 +33557,7 @@ GameObject:
   - component: {fileID: 8639822530416533206}
   - component: {fileID: 1659679414513287683}
   - component: {fileID: 5740338048771491379}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cube.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33385,7 +33641,7 @@ GameObject:
   - component: {fileID: 8679232314914824429}
   - component: {fileID: 4186503315071118176}
   - component: {fileID: 8461667460918100929}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33452,7 +33708,7 @@ GameObject:
   - component: {fileID: 1417637261467929559}
   - component: {fileID: 3468733514628763652}
   - component: {fileID: 3828283117159506438}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cooler.029
   m_TagString: Untagged
   m_Icon: {fileID: 0}
